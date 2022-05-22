@@ -17,12 +17,41 @@
 	<name>tco-tool-core</name>
 	<description>TCO-Tool Launcher (UI)</description>
 
-	<properties>
-	</properties>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
+		<!--dependency>
+			<groupId>ch.ehi</groupId>
+			<artifactId>ehibasics</artifactId>
+			<version>1.4.1</version>
+		</dependency-->
 
-	<!--dependencies>
+		<dependency>
+			<groupId>org.tcotool</groupId>
+			<artifactId>sebase</artifactId>
+			<version>1.5.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tcotool</groupId>
+			<artifactId>jomm</artifactId>
+			<version>1.5.2-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
+		<!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.24</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
+		<!--dependency>
+			<groupId>org.jhotdraw</groupId>
+			<artifactId>jhotdraw</artifactId>
+			<version>7.4.1</version>
+		</dependency-->
+
+
+		<!--dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
@@ -31,13 +60,20 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+			<version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+		<dependency>
+			<groupId>net.sf.jfcunit</groupId>
+			<artifactId>jfcunit</artifactId>
+			<version>${jfcunit.version}</version>
+			<scope>test</scope>
+		</dependency>
+        <!--dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
@@ -46,12 +82,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
-        </dependency>
-    </dependencies-->
-
-	<build>
-	</build>
-	<profiles>
-	</profiles>
+        </dependency-->
+    </dependencies>
 
 </project>

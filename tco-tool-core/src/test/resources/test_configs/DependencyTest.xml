@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TRANSFER xmlns="http://www.interlis.ch/INTERLIS2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.interlis.ch/INTERLIS2.2 TcoTool.xsd">
+  <!-- SCHEMA-VALIDATION: This XML-Instance does not validate completely to given 'schemaLocation' yet (Future Use)! -->
+  <HEADERSECTION VERSION="2.2" SENDER="www.tcotool.org (V1.3.1)">
+    <ALIAS/>
+  </HEADERSECTION>
+  <DATASECTION>
+    <!-- UNIQUE-ID of contained Object's is maintained by: TID -->
+    <!--    => Please allocate new TID's above MAX-TID in File -->
+    <tcotool.model BID="x1000054">
+      <!-- 1) Codes (global declaration => will be referenced in Model-Tree (see further below) -->
+      <CODE TYPE="tcotool.model.Catalogue">
+        <tcotool.model.Catalogue TID="x14001">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>EJPD-Arbeitsplatz</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14003">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>ISB-Arbeitsplatz</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14005">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>LDAP (Verzeichnisdienst)</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14007">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>DNS (Domain Name Service)</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14009">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>DHCP (Dynamic Host Configuration Protocol)</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14011">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>File Service</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14013">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Print Service</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+        <tcotool.model.Catalogue TID="x14015">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Messaging Service (E-Mail)</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Catalogue>
+      </CODE>
+      <CODE TYPE="tcotool.model.Site">
+        <tcotool.model.Site TID="x12001">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Firmensitz</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Site>
+      </CODE>
+      <CODE TYPE="tcotool.model.ProjectPhase">
+        <tcotool.model.ProjectPhase TID="x10001">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Initialisierung</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+        <tcotool.model.ProjectPhase TID="x10003">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Voranalyse</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+        <tcotool.model.ProjectPhase TID="x10005">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Konzept</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+        <tcotool.model.ProjectPhase TID="x10007">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Realisierung</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+        <tcotool.model.ProjectPhase TID="x10009">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Einf&#252;hrung</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+        <tcotool.model.ProjectPhase TID="x10011">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Abschluss</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ProjectPhase>
+      </CODE>
+      <CODE TYPE="tcotool.model.Activity">
+        <tcotool.model.Activity TID="x10301">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>1st Level-Support</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Activity>
+        <tcotool.model.Activity TID="x10303">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>2nd Level-Support</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Activity>
+        <tcotool.model.Activity TID="x10305">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>3rd Level-Support</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Activity>
+        <tcotool.model.Activity TID="x10307">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Reisezeit</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Activity>
+      </CODE>
+      <CODE TYPE="tcotool.model.Process">
+        <tcotool.model.Process TID="x13001">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P01 Informatik steuern</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13003">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P02 F&#228;higkeiten entwickeln</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13005">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P03 G&#252;ter und Dienstleistungen beschaffen</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13007">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P04 Informatik f&#252;hren</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13009">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P05 L&#246;sungen entwickeln</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13011">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P06 Infrastruktur betreiben</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13013">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P07 Benutzer unterst&#252;tzen</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13015">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P08 Prozesse pflegen</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+        <tcotool.model.Process TID="x13017">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>P09 Finanzielle F&#252;hrung unterst&#252;tzen</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Process>
+      </CODE>
+      <CODE TYPE="tcotool.model.CostCentre">
+        <tcotool.model.CostCentre TID="x11001">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Intern</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.CostCentre>
+        <tcotool.model.CostCentre TID="x11003">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Infrastruktur</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.CostCentre>
+      </CODE>
+      <CODE TYPE="tcotool.model.ServiceCategory">
+        <tcotool.model.ServiceCategory TID="x13507">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Product</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ServiceCategory>
+        <tcotool.model.ServiceCategory TID="x13509">
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Marktleistung</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.ServiceCategory>
+      </CODE>
+      <CODE TYPE="tcotool.model.Role">
+        <tcotool.model.Role TID="x10101">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Projektleiter</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10103">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Auftraggeber</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10105">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>L&#246;sungsarchitekt</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10107">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Anwendervertreter</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10109">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Qualit&#228;tsverantwortlicher</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10111">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Risikoverantwortlicher</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+        <tcotool.model.Role TID="x10113">
+          <currency>CHF</currency>
+          <hourlyRate>100.0</hourlyRate>
+          <internal>true</internal>
+          <employmentPercentageAvailable>100</employmentPercentageAvailable>
+          <fullTimeEquivalent>170000.0</fullTimeEquivalent>
+          <yearlyHours>1700</yearlyHours>
+          <name>
+            <softEnvironment.Nls>
+              <translation>
+                <softEnvironment.Translation>
+                  <language>de</language>
+                  <nlsText>Leistungserbringer</nlsText>
+                </softEnvironment.Translation>
+              </translation>
+            </softEnvironment.Nls>
+          </name>
+        </tcotool.model.Role>
+      </CODE>
+      <!-- 2) Model-Tree -->
+      <tcotool.model.TcoPackage TID="x-1667">
+        <namespace REF="x1000049"/>
+        <name>DependencyTest</name>
+        <multitude>1.0</multitude>
+        <ownedElement REF="x-1674"/>
+        <service REF="x-1668"/>
+        <service REF="x-1672"/>
+        <service REF="x-1673"/>
+      </tcotool.model.TcoPackage>
+      <tcotool.model.Service TID="x-1672">
+        <group REF="x-1667"/>
+        <name>B</name>
+        <multitude>2.0</multitude>
+        <driver REF="x-306"/>
+        <clientId REF="x-1676"/>
+        <supplierId REF="x-1884"/>
+      </tcotool.model.Service>
+      <tcotool.model.Dependency TID="x-1676">
+        <variant>false</variant>
+        <client REF="x-1668"/>
+        <supplier REF="x-1672"/>
+        <supplierInfluence>Neutral0</supplierInfluence>
+        <distribution>50.0</distribution>
+      </tcotool.model.Dependency>
+      <tcotool.model.CostDriver TID="x-306">
+        <service REF="x-1672"/>
+        <name>*Costdriver*</name>
+        <multitude>1.0</multitude>
+        <cost REF="x-307"/>
+      </tcotool.model.CostDriver>
+      <tcotool.model.FactCost TID="x-307">
+        <depreciationDuration>48</depreciationDuration>
+        <usageDuration>48</usageDuration>
+        <type>OperationHardware</type>
+        <currency>CHF</currency>
+        <amount>1000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-306"/>
+        <name>*FC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.FactCost>
+      <tcotool.model.Dependency TID="x-1884">
+        <variant>false</variant>
+        <client REF="x-1672"/>
+        <supplier REF="x-1673"/>
+        <supplierInfluence>Neutral0</supplierInfluence>
+        <distribution>10.0</distribution>
+      </tcotool.model.Dependency>
+      <tcotool.model.Service TID="x-1673">
+        <group REF="x-1667"/>
+        <name>C</name>
+        <multitude>3.0</multitude>
+        <driver REF="x-308"/>
+        <clientId REF="x-1884"/>
+      </tcotool.model.Service>
+      <tcotool.model.CostDriver TID="x-308">
+        <service REF="x-1673"/>
+        <name>*Costdriver*</name>
+        <multitude>1.0</multitude>
+        <cost REF="x-309"/>
+        <cost REF="x-310"/>
+      </tcotool.model.CostDriver>
+      <tcotool.model.FactCost TID="x-310">
+        <depreciationDuration>48</depreciationDuration>
+        <usageDuration>48</usageDuration>
+        <type>Infrastructure</type>
+        <currency>CHF</currency>
+        <amount>30000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-308"/>
+        <name>*FC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.FactCost>
+      <tcotool.model.PersonalCost TID="x-309">
+        <internal>true</internal>
+        <type>Installation</type>
+        <currency>CHF</currency>
+        <amount>20000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>true</repeatable>
+        <driver REF="x-308"/>
+        <name>*PC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.PersonalCost>
+      <tcotool.model.TcoPackage TID="x-1674">
+        <namespace REF="x-1667"/>
+        <name>SubGroup</name>
+        <multitude>1.0</multitude>
+        <service REF="x-1675"/>
+        <clientId REF="x-1936"/>
+      </tcotool.model.TcoPackage>
+      <tcotool.model.Service TID="x-1675">
+        <group REF="x-1674"/>
+        <name>D</name>
+        <multitude>1.0</multitude>
+        <driver REF="x-525"/>
+      </tcotool.model.Service>
+      <tcotool.model.CostDriver TID="x-525">
+        <service REF="x-1675"/>
+        <name>*Costdriver*</name>
+        <multitude>1.0</multitude>
+        <cost REF="x-526"/>
+        <cost REF="x-527"/>
+        <cost REF="x-528"/>
+      </tcotool.model.CostDriver>
+      <tcotool.model.FactCost TID="x-528">
+        <depreciationDuration>48</depreciationDuration>
+        <usageDuration>48</usageDuration>
+        <type>Installation</type>
+        <currency>CHF</currency>
+        <amount>6000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-525"/>
+        <name>*FC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.FactCost>
+      <tcotool.model.Dependency TID="x-1936">
+        <variant>false</variant>
+        <client REF="x-1668"/>
+        <supplier REF="x-1674"/>
+        <supplierInfluence>Neutral0</supplierInfluence>
+        <distribution>30.0</distribution>
+      </tcotool.model.Dependency>
+      <tcotool.model.PersonalCost TID="x-527">
+        <internal>true</internal>
+        <type>Integration</type>
+        <currency>CHF</currency>
+        <amount>80000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>true</repeatable>
+        <driver REF="x-525"/>
+        <name>*PC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.PersonalCost>
+      <tcotool.model.FactCost TID="x-526">
+        <depreciationDuration>48</depreciationDuration>
+        <usageDuration>48</usageDuration>
+        <type>OperationSoftware</type>
+        <currency>CHF</currency>
+        <amount>500000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-525"/>
+        <name>*FC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.FactCost>
+      <tcotool.model.Service TID="x-1668">
+        <group REF="x-1667"/>
+        <name>A</name>
+        <multitude>4.0</multitude>
+        <driver REF="x-1669"/>
+        <supplierId REF="x-1676"/>
+        <supplierId REF="x-1936"/>
+      </tcotool.model.Service>
+      <tcotool.model.CostDriver TID="x-1669">
+        <service REF="x-1668"/>
+        <name>*Costdriver*</name>
+        <multitude>1.0</multitude>
+        <cost REF="x-1670"/>
+        <cost REF="x-1671"/>
+      </tcotool.model.CostDriver>
+      <tcotool.model.FactCost TID="x-1670">
+        <depreciationDuration>48</depreciationDuration>
+        <usageDuration>48</usageDuration>
+        <type>Hardware</type>
+        <currency>CHF</currency>
+        <amount>1000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-1669"/>
+        <name>*FC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.FactCost>
+      <tcotool.model.PersonalCost TID="x-1671">
+        <internal>true</internal>
+        <type>Hardware</type>
+        <currency>CHF</currency>
+        <amount>5000.0</amount>
+        <estimated>false</estimated>
+        <repeatable>false</repeatable>
+        <driver REF="x-1669"/>
+        <name>*PC*</name>
+        <multitude>1.0</multitude>
+      </tcotool.model.PersonalCost>
+      <tcotool.model.SystemParameter TID="x1000052">
+        <reportDepreciationDuration>48</reportDepreciationDuration>
+        <reportUsageDuration>60</reportUsageDuration>
+        <defaultUsageDuration>48</defaultUsageDuration>
+        <defaultDepreciationDuration>48</defaultDepreciationDuration>
+        <defaultCurrency>CHF</defaultCurrency>
+        <manYearHoursInternal>1700</manYearHoursInternal>
+        <manYearHoursExternal>1800</manYearHoursExternal>
+        <reportCostExponent>AsIs</reportCostExponent>
+        <depreciationInterestRate>10.986</depreciationInterestRate>
+        <model REF="x1000049"/>
+      </tcotool.model.SystemParameter>
+      <!-- 3) THE Root-Element of Model-Tree (at last!) -->
+      <tcotool.model.TcoModel TID="x1000049">
+        <version>V1.0.2</version>
+        <systemParameter REF="x1000052"/>
+        <author>Peter Hirzel (softEnvironment)</author>
+        <name>DependencyTest.xml</name>
+        <documentation>S&#228;mtliche Zahlen sind willk&#252;rlich und haben keinen Anspruch auf Echtheit in bezug auf reale Konfigurationen.</documentation>
+        <baseDate>2004-12-14</baseDate>
+        <multitude>1.0</multitude>
+        <ownedElement REF="x-1667"/>
+      </tcotool.model.TcoModel>
+    </tcotool.model>
+  </DATASECTION>
+</TRANSFER>

@@ -14,15 +14,23 @@
     <organization>
         <name>softEnvironment GmbH (liq.), Peter Hirzel</name>
     </organization>
-    <description>Total Cost of Ownership calculation (Standalone Java UI Application with XML files for your Project-Data).</description>
+    <description>Total Cost of Ownership calculation (Standalone Java UI Application with XML files
+        for your Project-Data).
+    </description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <junit.version>4.13.2</junit.version>
+        <jfcunit.version>2.08</jfcunit.version>
     </properties>
 
     <modules>
+        <module>sebase</module>
+        <module>jomm</module>
         <module>tco-tool-core</module>
+        <module>ehibasics</module>
     </modules>
 
 </project>
