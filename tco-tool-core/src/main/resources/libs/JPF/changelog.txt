@@ -1,0 +1,305 @@
+$Id: changelog.txt,v 1.40 2007/05/19 14:58:05 ddimon Exp $
+
+History of changes for the JPF (Java Plug-in Framework) project.
+
+Changes are chronologically ordered from top (most recent) to bottom
+(least recent). For more information about the JPF project, see the project
+web site at http://jpf.sourceforge.net
+
+Legend:
++ New Feature
+- Bug fixed
+* General comment
+----------------------------------------------------------------------------
+2007-05-19 : JPF 1.0.2
++ Changed plug-in DTD to allow arrange of <extension> and <extension-point> tags
+  in mixed order.
++ Added jpf-sort Ant task to JPF-Tools. It helps to sort plug-ins in correct
+  order to automate build process using tasks like <subant>.
++ Added German translation of resources. Thanks to Stefan Rado for contribution.
++ Significant improvements in classloader performance. See new configuration
+  options in org.java.plugin.standard.StandardPluginLifecycleHandler class. New
+  performance optimizations are ON by default.
++ JPF version number is now available as system property.
+  See org.java.plugin.PluginManager for details.
+
+2007-03-04 : JPF 1.0.1
+- Directory based Ant tasks in JPF-Tools library are now support nested
+  <fileset> tags like many other standard Ant tasks.
+- Fixed problems with file names and URL's that contain non-ASCII characters.
+* Improved handling of "reverse lookup" plug-in dependencies.
+* Improved interpreting of "jpf.boot.config" property in JPF-Boot library. This
+  configuration parameter may now contain FQN of a configuration file. Thanks to
+  Eduardo M. Costa for an idea suggestion.
++ Added jpf-path Ant task to JPF-Tools. It helps to automatically compose
+  plug-in classpath for using in various tasks like java, javac...
+- Fixed potential deadlock situation in StandardPluginClassLoader. Thanks to
+  Chris Ward for assistance.
+
+2007-01-08 : JPF 1.0
+* Plug-in manifest DTD version number changed to 1.0 All references to previous
+  versions are mapped to this one now.
+* Previously deprecated API has been removed from code.
++ Improved Splash Screen API in JPF-Boot library. It is now allows more flexible
+  handling of splash screen behavior and configuration.
++ ShadingPathResolver may now filter files to be shadowed. This is regulated
+  by includes/excludes configuration parameters.
++ Added black/white lists support to all batch plug-ins processing Ant tasks in
+  JPF-Tools library.
+
+2006-09-16 : JPF 0.12
++ To JPF-Tools library added set of mock classes to simplify JPF usage in unit
+  tests.
+* Nice looking 3D-style JPF logo contributed by Johnny Grattan.
+* Numerous minor improvements in JPF-Boot library.
++ Added version update Ant task to JPF-Tools. Thanks to Jonathan Giles for an
+  idea and initial implementation.
+- Fixed error with caching of native libraries in StandardPluginClassLoader.
+  Thanks to Sebastian Kopsan.
+* Improvements in StandardPluginClassLoader preventing several deadlock
+  situations.
++ Added possibility to specify default value in extension point parameter
+  definition. To make this new feature available in your plug-in manifests,
+  refer to new version of DTD (0.7).
++ Added build instructions to the source code distribution package.
+- Fixed bug #1538888.
+* Splash image related improvements in JPF-Boot library.
+
+2006-06-29 : JPF 0.11
++ To the DefaultApplicationInitializer class from JPF-Boot library added
+  possibility to provide lists of plug-ins to be included/excluded from
+  application (white and black lists). See javadoc for details. Thanks to
+  Jonathan Giles for an idea.
++ All Ant tasks improved to be able to work with single file plug-ins (JAR'ed
+  or ZIP'ed). Thanks to Prashant M. R.
++ Added possibility of advanced control of application splash screen in
+  JPF-Boot library. See additional configuration parameters and new
+  org.java.plugin.boot.SplashHandler interface.
++ main() method in JPF-Boot library is now refactored into several separate
+  methods to allow more accurate controlling of application bootstrap procedure.
+  Among other benefits, this allows to write unit tests for plug-ins and JPF
+  based applications.
++ Improved JPF-Boot library. Implemented more flexible boot configuration lookup
+  procedure. Thanks to Chris Ward.
++ Added "reverse-lookup" attribute to the "import" tag. Setting this attribute
+  to "true" allows imported plug-in to see classes in depending plug-in. This
+  flag helps creating plug-ins that can see classes in other plug-ins not
+  depending on them. This feature is very similar to Eclipse' "buddy
+  class loading" behavior. To make this new function available in your plug-in
+  manifests, refer to new version of DTD (0.6).
+* Improved error logging in StandardPluginManager and StandardPluginClassLoader.
+  Thanks to Peter van der Winkel.
+- Fixed handling JAR file URL's in StandardPluginClassLoader and
+  StandardPathResolver. Thanks to Prashant M. R.
+
+2006-05-03 : JPF 0.10
+- Fixed error in StandardPluginClassLoader incorrectly handled optional
+  prerequisites. Thanks to Peter van der Winkel.
++ Added German translation of some documentation. Thanks to Frank Gernart.
++ Introduced StandardPluginLocation class that implements
+  PluginManager.PluginLocation interface and helps handling of plug-in files and
+  folders. Thanks to Per Cederberg for an idea.
++ Added probeParentLoaderLast configuration parameter to
+  StandardPluginLifecycleHandler. This allows regulating of plug-in classloader
+  delegation behavior. Thanks to Richard Bjarne (rjvduijn) for an idea.
+* Improved logging support in plug-in classloader. Debug log statements are now
+  more informative and allow easy find problems with classes and resources
+  loading.
+* Improved extension point / extension API and validating algorithms.
+* Improved handling of plug-ins dependencies loop. This situation now should
+  not raise an exception but simply put warning in log file.
+* Refactored PathResolver to be interface instead of abstract class. Thanks to
+  Per Cederberg.
+* Fixed typo in PathResolver.getRegisteredConext() method name. Thanks to
+  Per Cederberg.
+* Improved handling of "resource" type extension parameters.
+* Improved handling boot errors in JPF-Boot library.
+* Improved handling of ZIP and JAR files to prevent their locking.
+* Improved "Plug-in Info" Ant task to make it consistent with
+  PluginRegistry.ManifestInfo interface. This change may break existing Ant
+  scripts that uses jpf-info Ant task.
+
+2006-02-23 : JPF 0.9
++ Added getMatch() method to PluginRegistry interface to get complete access to
+  full information in manifest. Thanks to Sebastian Kopsan for the idea.
++ Introduced utility method PluginRegistry.readManifestInfo() to read basic
+  manifest info (plug-in ID, version and such).
+* ShadingPathResolver now uses relative paths whenever that possible. This
+  allows, for example, run JPF based application from different network
+  locations without disturbing shadowed plug-ins.
+* Minor internal improvements in JPF-Boot library.
++ Now JPF-Boot library passes given command-line arguments to the application.
+  To support this function, ApplicationPlugin API and JPF-Boot starting up
+  arguments have been changed.
+* JPF documentation was reviewed and updated by Michael Dawson (this work is in
+  progress now).
+* Minor internal improvements in StandardPluginClassLoader.
++ Added support for splash window in JPF Boot library. See additional
+  configuration parameter in Boot class.
+- Fixed bug in StandardPathResolver.resolvePath() method. Thanks to Sebastian
+  Kopsan.
+- Fixed bug in ExtensionPointImpl.updateConnectedExtensionsList() method. Thanks
+  to Sebastian Kopsan.
+
+2005-12-10 : JPF 0.8
++ Introduced UniqueIdentity interface in the registry API to mark all plug-in
+  elements that may have unique identifier (plug-in descriptor, plug-in
+  fragment, plug-in prerequisite, library, extension point and extension).
++ Slightly improved public API of PathResolver abstract class: added methods
+  boolean isContextRegistered(String) and URL getRegisteredConext(String).
++ Introduced special implementation of PathResolver that transparently makes
+  shadow copy of plug-in before resolving it to the application. Among other
+  things this helps to avoid locking of JAR files by application that prevents
+  "hot updating" of plug-ins. For implementation details and configuration
+  options see javadoc for org.java.plugin.standard.ShadingPathResolver class.
++ Introduced "Single File Plug-in" Ant task to package plug-ins as ZIP files
+  that may be executed later directly (part of JPF Tools).
++ Introduced "Plug-in Info" Ant task to read plug-in ID and version from
+  manifest file into project properties (part of JPF Tools).
++ Introduced "JPF Boot" library to simplify running JPF based applications.
+* Added Path and version info elements to jpf*.jar manifests. Version number no
+  longer included into JAR file name.
+* The call of method java.io.File.toURL() replaced with call of
+  org.java.plugin.util.IoUtil.file2url(), this should solve some rare issues
+  with JPF, such as of running it from a location that have spaces in path.
++ Introduced utility class org.java.plugin.util.IoUtil to hold useful I/O, File
+  and URL manipulations. Methods url2file(URL) and isResourceExists(URL) in
+  org.java.plugin.PathResolver are deprecated and moved to the new class.
+
+2005-09-24 : JPF 0.7
++ Introduced interface PluginLocation that encapsulates info about plug-in
+  manifest and plug-in data locations.
++ Introduced class ObjectFactory that is used to get instances of main Framework
+  objects (plug-in manager, registry and path resolver).
+* The Framework API has been significantly restructured to make it much more
+  flexible, consistent and extendible. To start using version 0.7 existing
+  application should be modified. Most changes are related to moving classes
+  between packages.
+* Improved documentation tool - added printing of documentation notes for
+  extension point parameters definitions. Thanks to Jeff Brown.
+* Updated project documentation: added Java IDE configuration section.
+
+2005-06-24 : JPF 0.6
++ Added utility methods to PluginRegistry and PluginDescriptor interfaces that
+  allow simplify checking availability of various plug-in elements. Thanks to
+  Lukasz Grabski.
++ Implemented basic Framework localization. All locale sensitive strings are now
+  externalized.
++ Revised API exceptions policy and introduced a number of JPF specific
+  exceptions.
++ Added new type ("resource") to extension point parameter definition. To make
+  it available in your plug-in manifests, refer to new version of DTD (0.5).
++ Added optional "version" attribute into "library" manifest tag and implemented
+  corresponding method in the API.
++ Significantly reworked and improved plug-ins archive Tool. Plug-ins archive
+  file format has changed. Current implementation doesn't considering to be
+  final and is subject of future changes before 1.0 release.
++ Now PluginManager uses default (or no-arguments) constructor to instantiate
+  Plugin class. Old two-arguments constructor is deprecated and will be removed
+  before 1.0 release. Thanks to Lukasz Grabski.
+
+2005-04-03 : JPF 0.5
++ Added methods to PluginRegistry to get plug-ins registration report separately
+  from integrity check report.
++ "Documentation generator" tool is now based on JXP (Java scripted page)
+  templates (http://jxp.sourceforge.net).
+* Changed return type of methods Extension.getParameters(String),
+  Extension.Parameter.getSubParameters(String),
+  PluginAttribute.getSubAttributes(String) and
+  PluginDescriptor.getSubAttributes(String) from an array to Collection.
+  This is done to make API more consistent and may broke current code (if it use
+  those methods). Thanks to slonopotamus.
++ Added methods to RegistryChangeData interface to help filter extensions by
+  corresponding extension points.
+* Changed signature of unregister() method in PluginRegistry interface. It is
+  now accepts plug-in identifiers (ID) but not unique identifiers (UID). This
+  change is related to general registry policy modification: the registry now
+  may handle only one version of plug-in at the same time (no "older" versions).
++ Implemented possibility to discover Framework configuration
+  (see createStandarRegistry() static method documentation in PlugonManager
+  class).
+* Two methods getOldPluginDescriptors(String pluginId) and
+  getOldPluginFragments(String pluginFragmentId) are marked as deprecated in
+  PluginRegistry interface without any replacement. Their standard
+  implementation returns empty collections.
+* PluginRegistry implementation reworked so that it is now uses SAX XML parser
+  to process plug-in manifests. Implementation is compatible with JAXP 1.1
+  specification and based on the SAX 2 API.
+- Fixed bug in "hot deploy" function.
++ Method registerContext() moved from StandardPathResolver class to PathResolver
+  interface.
++ Added registerPlugins() method to PluginManager class. It is the method that
+  should be used when adding plug-ins in runtime.
+
+2005-02-08 : JPF 0.4
++ Added possibility to register/unregister plug-ins in runtime. It is now
+  possible to "add/remove" plug-ins and plug-in fragments "on the fly".
++ Added notification system to plug-in registry that now allows all interested
+  classes to be notified when changes are made to plug-in registry. See
+  PluginRegistry and PluginRegistry.RegistryChangeListener interfaces for
+  details.
+- Fixed bug #1097854 in Version.isCompatibleWith() method (thanks to janssk1).
++ Minor improvements in Version class (it is now implements Comparable
+  and Serializable interfaces).
++ Removed internal code dependency on java.net.URI class. Now JPF should be able
+  to run on JRE 1.3 (or even any Java 2 compliant VM).
++ Added notification system to plug-in manager. It is now possible for all
+  interested classes to be notified when plug-ins are activated/deactivated
+  and disabled/enabled. See PluginManager class and PluginManager.EventListener
+  interface for details.
++ Added possibility to deactivate plug-ins in runtime.
++ Added possibility to disable/enable plug-ins in runtime. Disabled plug-ins
+  can't be activated or even accessed for their resources. Information about
+  disabled plug-ins is not persisted by Framework and should be managed by
+  "host" application.
+- Fixed bug in PluginRegistry implementation that incorrectly handles plug-ins
+  registering.
++ Added static method "lookup" to PluginManager that allows application to find
+  instance of already created plug-in manager.
++ Added new attribute "custom-data" to extension point parameter definition
+  declaration. It allows additionally customize behavior of some value types.
+  To make it available in your plug-in manifests, refer to new version of DTD.
++ Added new type ("fixed") to extension point parameter definition. To make
+  it available in your plug-in manifests, refer to new version of DTD.
++ Added support for extension points "inheritance". You can define parents for
+  extension points. Also possible to define "abstract" extension points that
+  can't have "connected" extensions and may be used as parents for other
+  extension points only.
+
+2004-11-05 : JPF 0.3
++ Small API additions (non-breaking changes for API client code):
+  - added method makeUniqueId (overloaded) to PluginRegistry interface;
+  - added method getDeclaringIdentity to Documentation.Reference interface.
+* Minor internal code improvements.
++ Initial release of "Plug-in archiver" and wrapper Ant tasks
+  (part of JPF Tools).
++ Initial release of "Documentation Generator" and wrapper Ant task
+  (part of JPF Tools).
++ Initial release of "Integrity Check" Ant task (part of JPF Tools).
+- Renamed some internal variable names that prevent compiling with Sun JDK 1.5
+  (5.0)
+* Now JPF may use any JAXP compatible XML parser implementation.
+- Added missing attributes declarations for tag "attribute" in plug-in DTD.
+  If you need to use plug-in attributes in manifest, you have to change public
+  ID in DTD declaration to refer to this new DTD version. Thanks to 'david'.
+
+2004-09-01 : JPF 0.2
+- Fixed bug with plug-in attributes retrieval.
++ Introduced PathResolver interface which "connects" plug-in registry and
+  manager. Now all resource locations are handled via URLs only.
+* Multiple changes in API aimed to clear separate roles of plug-in registry and
+  manager.
+* Multiple changes in API aimed to provide support for tools to instrument JPF.
+- Fixed bug #987894 in plug-in DTD.
+* Minor changes in plug-in DTD elements. Added additional parameter types.
++ Introduced public ID for DTD. This will break all current plug-ins :(
+  To get them working again change DOCTYPE definition to
+  <!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 0.2" "http://jpf.sourceforge.net/plugin_0_2.dtd">
+  or
+  <!DOCTYPE plugin-fragment PUBLIC "-//JPF//Java Plug-in Manifest 0.2" "http://jpf.sourceforge.net/plugin_0_2.dtd">
+* Documentation improvements (JavaDoc, DTD elements comments).
+* Implemented extensions and extension points validation.
++ Initial implementation of remote libraries cache (PluginClassLoader).
+
+2004-05-28 : JPF 0.1
+* Initial public release.
