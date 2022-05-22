@@ -1,0 +1,128 @@
+INTERLIS 2.2;
+
+/** Product independent Model (according to MDA).
+ */
+MODEL PIM (en) =
+
+  /** Contains JOMM specific datatypes, which are especially treated by softEnvironment MDA-plugin for UML/INTERLIS-Editor.
+   */
+  TOPIC datatypes =
+
+    DOMAIN
+
+      /** for e.g. "2006-04-26"
+       */
+      JOMM_Date(ABSTRACT)= NUMERIC [INTERLIS.TIME];
+
+      /** for e.g. "2006-04-26 18:01:00"
+       */
+      JOMM_DateTime(ABSTRACT)= NUMERIC [INTERLIS.TIME];
+
+      /** for e.g. "18:01:00"
+       */
+      JOMM_Time(ABSTRACT)= NUMERIC [INTERLIS.TIME];
+
+    /** i18n String (JOMM datatype)
+     */
+    STRUCTURE DbNlsString =
+    END DbNlsString;
+
+  END datatypes;
+
+  /** Useful Domain-types which are used across projects.
+   */
+  TOPIC othertypes =
+
+    DOMAIN
+
+      Amount= -9999999.00..9999999.00;
+
+      PositiveLong= 0..999999999;
+
+  END othertypes;
+
+END PIM.
+
+/** Product specific Model (according to MDA).
+ */
+MODEL PSM (en) =
+  IMPORTS PIM;
+
+  DOMAIN
+
+    /** Unique Id value type
+     */
+    T_Id= 1..9999999999999;
+
+    T_User= TEXT*30;
+
+  TOPIC Key_Sequence =
+
+    CLASS T_Key_Object(ABSTRACT) =
+      /** Table name to manage an ID-Sequence.
+       */
+      T_Key : MANDATORY TEXT*30;
+      /** Keep the latest ID assigned to an object (entity).
+       */
+      T_LastUniqueId : MANDATORY PSM.T_Id;
+      T_CreateDate (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_LastChange (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_User : MANDATORY PSM.T_User;
+    END T_Key_Object;
+
+  END Key_Sequence;
+
+  /** Phyisical Schema for SQL
+   */
+  TOPIC NLS_i18n =
+
+    /** Used in case of Multi-Assignment of a String, for e.g:
+     * firstName[0..*] : DbNlsString
+     */
+    CLASS T_MAP_NLS(ABSTRACT) =
+      T_Id_Owner : MANDATORY PSM.T_Id;
+      T_Type_Owner : MANDATORY TEXT*30;
+      T_Attribute_Owner : MANDATORY TEXT*30;
+      T_Id_Value : MANDATORY PSM.T_Id;
+      T_LastChange (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_CreateDate (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_User : MANDATORY PSM.T_User;
+    END T_MAP_NLS;
+
+    /** Contains References for a translatable String. Its Primary Key (T_Id) will map to DbNlsString.id in Java.
+     */
+    CLASS T_NLS(ABSTRACT) =
+      /** Just to help understand what kind of translations are to be found for an entry in T_Translation (in case you don't speak the translated entries). This will be a name which is to be understood by the most user of Translations.
+       */
+      T_Id : MANDATORY PSM.T_Id;
+      Symbol : TEXT*61;
+      T_LastChange (ABSTRACT) : MANDATORY TEXT*20;
+      T_CreateDate (ABSTRACT) : MANDATORY TEXT*20;
+      T_User : MANDATORY PSM.T_User;
+    END T_NLS;
+
+    /** Concrete Translations for a symbolic entry in T_NLS.
+     */
+    CLASS T_Translation(ABSTRACT) =
+      T_Id_Nls : MANDATORY PSM.T_Id;
+      language : MANDATORY TEXT*2;
+      country : TEXT*2;
+      nlsText : MANDATORY TEXT*256;
+      T_LastChange (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_CreateDate (ABSTRACT) : MANDATORY PIM.datatypes.JOMM_DateTime;
+      T_User : MANDATORY PSM.T_User;
+    END T_Translation;
+
+    ASSOCIATION NlsMap =
+      nls -<#> {1} T_NLS;
+      map_nls -- {0..*} T_MAP_NLS;
+    END NlsMap;
+
+    ASSOCIATION NlsTranslation =
+      nls -<#> {1} T_NLS;
+      translation -- {1..*} T_Translation;
+    END NlsTranslation;
+
+  END NLS_i18n;
+
+END PSM.

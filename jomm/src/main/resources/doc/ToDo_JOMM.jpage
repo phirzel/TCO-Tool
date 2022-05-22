@@ -1,0 +1,80 @@
+ToDo:
+=====
+(ULTRA-HIGH) 
+			BUG: T_MAP (inherited) are filled in with wrong Table (ex. T_MAP_GM03Core_MD_TpcCtgryCode CAT ON  DATA.T_ID=CAT.T_Id_Owner WHERE (T_Type_Owner='GM03Core_MD_Identifction') AND (T_Attribute_Owner='topicCategory')
+			MAKE Sure Same DbObject is opened only ONCE
+            reflection => METHODS INSTEAD OF FIELD => DbObject.mapAggregates
+			n:n
+			sequence-ordering by SQL (Category should be ordered by DESCRIPTOR)
+			addMandatory only for aggregates if parent sets List(1..n)
+			implement dispose() on DetailViews() to remove (Controller-Listener)
+			Account.createDescriptor() => type-CARDINALITY must be 1
+			Account/Address() && isModified() => auto-check for DEFAULT-Attribute-Values
+(ULTRA-HIGH)	DbNlsString should be deleted if owner gets deleted (for e.g. CostCentre)
+(ULTRA-HIGH) 	move (DbObject constants like PROPERTY_NAME etc to DbMapper
+(HIGH)			Reduce UPDATE's for Inheritance Chains or Composites (of DbNlsString, List's etc)
+(BUG)			DbObjSrv.retrieveAll(Class dbObject, DbQueryBuilder builder, boolean cached)  Mapping only for non-inherited objects
+(HIGH) 			getProperty() {refresh(false); return property; }// read lazy initialized objects DbObject.refresh(forced) for getters
+(HIGH) 			DbDescriptor iteratorProperties && 1:n Properties DbDescriptor.getAttribute(property), propertyIterator(), contains() and ? reference N PropertyMap's => Developer Dangerous
+(HIGH) 			move ATTRIBUTE_* => DbMapper (DbObject, DbCode, ...)
+(HIGH) 			make sure aggregates will object fault automatically at getting any aggregate Attribute instead of #refresh() by developer
+(MEDIUM) 		Rework ObjecServer getNlsId() & retrieveAllLanguages => use DbCache
+(MEDIUM) 		externalize ConsistencyTest's from DbEntityBean (Generated Code as ReadOnly)
+(MEDIUM) 		SELECT Limit FetchBlockSize -> Try SELECT LIMIT; use SELECT ... LIMIT nrOfRows (in MySQL for e.g.)
+(MEDIUM)		Auto-Increment MS Access http://support.microsoft.com/default.aspx?scid=kb;en-us;132397
+(MEDIUM) 		ConsistencyController.setIs* should be private
+(MEDIUM) 		MS Access Login might not use specific users (admin assumed?)
+(LOW) 			DbConnection REWORK the many Map's
+(LOW) 			DbDescriptor REWORK the many Map's
+(LOW) 			Try Date search by {d 'dd-mm-yyyy'} AND Ms ACCESS ANSI Options in ODBC Source
+(LOW) 			Implement database-Statistics as Singleton
+(LOW)			BLOB-Data s.a. http://support.microsoft.com/kb/q175261/; http://www.lebans.com/oletodisk.htm
+(TUNE) 			removing DbRelationshipBean's should be done by T_Id instead of UNIQUE FK-Set if available (not NEW)
+(TUNE) 			do not SELECT Key in ORACLE use nextValue & currentValue
+(TUNE) 			do not update Owner of DbNlsString if DbNlsString.save() changed only
+(TUNE) 			do not update Owner of oneToOne-Reference-Object aggregate changed only
+(TUNE) 			suppress SELECT for T_Type if Object is in Cache already
+(TUNE) 			if RootClass==ConcreteClass suppresse special Query for T_Type => do it in One Statement with attributeList: "T_Type, *"
+(TUNE) 			Use prepared Statements for T_Type selection
+(TUNE)			check why createDescriptor is executed several times during application initialization
+
+
+etc
+===
+    1:n Linie.setPoints(List) must save all FK's incl. ordering
+    UML-Editor: ch.ehi.uml1.4.implementation.AbstractNamespace => Attrib.Assoc (Linie->Points with Attribs on Assoc)
+
+    JDO-Transaction:
+        Transaction t = pm.currentTransaction();
+        t.begin();
+//         transactional operation
+        myObj.setValue(xx);
+        t.commit();
+
+
+        JDO-Query:
+        Query q = pm.newQuery(MyCode.class); // like retrieve(DbCode.class)
+        Collection result = (Collection)q.execute();
+        q.close(result);
+
+
+        database.script.file       The path to the sql script that will create the database
+        database.driver.file       The path to the jar file containing the database's JDBC driver
+        database.driver.classpath  Usually ${database.driver.file}, but in some cases several jars (like for mckoi)
+        database.driver            The fully qualified name of the database driver class
+        database.url               The URL to the database
+        database.userid            The userid used to connect to the database
+        database.password          The password used to connect to the database
+        database.schema            The database schema from which the metadata should be read
+        database.catalog           The database catalog from which the metadata should be read
+
+
+SQLState messages reported by JDBC => BaseFrame#showException():
+-DB2:
+-SQLSTATE 	Description 	Explanation
+-0100C 	One or more adhoc result sets were returned. 	DB2 Everyplace does not support ResultSet.CONCUR_UPDATABLE for the concurrency mode of a ResultSet object. ResultSet.CONCUR_READ_ONLY is used instead.
+-0641E 	There is a SELECT statement in the batch. 		A SELECT statement is not allowed in the batch.
+-0643E 	There is no statement in the batch. 			The batch does not have any statement.
+-22005 	Error in assignment. 							A parameter type is incompatible with the target data type.
+-22011 	A substring error occurred. 					Invalid ordinal position for the first byte in the BLOB value to be extracted.
+-S1010 	Function sequence error. 						CallableStatement get method is called without first calling registerOutParameter.

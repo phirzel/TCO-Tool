@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="jar" name="jomm">
+    <description>
+        Build the Persistence-Mapping Framework "JOMM" using ant.
+        By http://www.softenvironment.ch
+    </description>
+
+    <!-- set global properties for this build -->
+    <property name="src" value="${basedir}/src"/>
+    <property name="lib" value="${basedir}/../libs"/>
+    <property name="build" value="${basedir}/build"/>
+    <property name="buildnr" value="1.1"/>
+    <property name="dist" value="${basedir}/dist"/>
+
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <property name="projectjar" value="${build}/jar/${ant.project.name}.jar"/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+        <mkdir dir="${build}/jar"/>
+    </target>
+
+    <target depends="init" name="compile">
+        <!-- build dependendent libs -->
+        <!--ant inheritAll="false" antfile="../sebase/build.xml" target="jar"/-->
+        <!-- Compile the java code from ${src} into ${build}/classes -->
+        <mkdir dir="${build}/classes"/>
+        <javac destdir="${build}/classes" includes="**/*.java" excludes="**/test/*.java" source="8"
+               target="1.8">
+            <classpath>
+                <!--pathelement location="../sebase/lib/ehibasics.jar"/-->
+                <pathelement location="lib/ehibasics.jar"/>
+                <!--pathelement location="../sebase/build/jar/sebase.jar"/-->
+                <pathelement location="lib/sebase.jar"/>
+                <pathelement location="lib/jta.jar"/>
+                <pathelement location="lib/jdo.jar"/>
+                <!--pathelement location="lib/xerces.jar"/-->
+            </classpath>
+            <src path="${src}"/>
+        </javac>
+    </target>
+
+    <target depends="init,compile" name="jar">
+        <delete file="${projectjar}" quiet="true"/>
+        <jar jarfile="${projectjar}">
+            <fileset dir="${build}/classes" includes="**/*.class"
+                     excludes="test/**, **/test/*.class,**/demoapp/**/*.class"/>
+            <fileset dir="${src}" includes="**/*.properties"/>
+            <fileset dir="${src}" includes="**/*.gif"/>
+            <fileset dir="${src}" includes="**/*.jpg"/>
+            <fileset dir="${src}" includes="**/*.png"/>
+            <fileset dir="." includes="other/*"/>
+            <!--zipfileset src="../sebase/build/jar/sebase.jar"/-->
+            <zipfileset src="lib/sebase.jar"/>
+            <zipfileset src="lib/jta.jar"/>
+            <zipfileset src="lib/jdo.jar"/>
+            <!-- Add OPTIONALLY in your project if XML mapping is used -->
+            <!--zipfileset src="../xerces-1_4_4/xerces.jar"/ RESP: xerces-2_9_0 ("xercesImpl,jar" & "xml-apis.jar")-->
+        </jar>
+    </target>
+
+
+    <target depends="init" name="javadocs">
+        <mkdir dir="${build}/javadoc/api"/>
+        <javadoc Public="true" Windowtitle="${ant.project.name}" destdir="${build}/javadoc/api">
+            <sourcepath path="${src}"/>
+        </javadoc>
+    </target>
+
+    <target depends="init" name="srcdist">
+        <mkdir dir="${dist}"/>
+        <delete file="${dist}/${ant.project.name}-${buildnr}.src.zip" quiet="true"/>
+        <zip zipfile="${dist}/${ant.project.name}-${buildnr}.src.zip">
+            <zipfileset dir="." prefix="${ant.project.name}-${buildnr}">
+                <patternset includes="build.xml"/>
+                <patternset includes="lib/**"/>
+                <patternset includes="other/manifest"/>
+                <patternset includes="other/LICENSE.*"/>
+                <patternset includes="other/README"/>
+                <patternset includes="src/**" excludes="**/CVS/*;**/bak~/*"/>
+                <patternset includes="resources/de/**/*.properties"/>
+                <patternset includes="resources/fr/**/*.properties"/>
+                <patternset includes="resources/it/**/*.properties"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="clean">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+
+</project>

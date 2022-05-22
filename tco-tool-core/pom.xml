@@ -10,7 +10,7 @@
 	<parent>
         <groupId>org.tcotool</groupId>
         <artifactId>tco-tool-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -28,12 +28,12 @@
 		<dependency>
 			<groupId>org.tcotool</groupId>
 			<artifactId>sebase</artifactId>
-			<version>1.5.2-SNAPSHOT</version>
+			<version>1.6.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tcotool</groupId>
 			<artifactId>jomm</artifactId>
-			<version>1.5.2-SNAPSHOT</version>
+			<version>1.6.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
@@ -42,9 +42,22 @@
 			<artifactId>jcommon</artifactId>
 			<version>1.0.24</version>
 		</dependency>
+		<!--TODO update https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.15</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
+		<!-- not found dependency>
+			<groupId>org.java.plugin</groupId>
+			<artifactId>jpf-gaby</artifactId>
+			<version>1.5</version>
+		</dependency-->
 
 		<!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-		<!--dependency>
+		<!--TODO migrate v6Beta dependency>
 			<groupId>org.jhotdraw</groupId>
 			<artifactId>jhotdraw</artifactId>
 			<version>7.4.1</version>

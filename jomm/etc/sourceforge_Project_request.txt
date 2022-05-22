@@ -1,0 +1,18 @@
+Project Information
+-------------------
+
+1. Submitter: phirzel
+
+2. Project UNIX Name: jomm
+
+3. Project Descriptive Name: JOMM
+
+4. License: GNU Library or Lesser Public License (LGPL)
+
+License other: 
+
+5. Project Description:
+Java Object Model Mapping (JOMM) is a Framework about generic persistence mapping between different worlds of models, such as Java model classes, SQL relational schema  or XML.
+
+6. Registration Description: 
+This project is part of an MDA development approach. JOMM may be used as a Mapping Framework during runtime of Java-Applications: for Java<=>SQL or Java<=>XML. Further on JOMM fits well in combination with the sourceforge.net/projects/umleditor, by means code generator plugins will generate appropriate Model code out of a platform independent model, designed as UML classdiagram (XSD-Schema generation is already available, Java and SQL exists but not yet released). The UML-Editor generator Plugin will generate Model-Code transformable by JOMM from the platform specific models into another. Though there are many other persistency frameworks this complete MDA approach makes this project different, because a total OSS solution will be provided. JOMM is designed on ideas borrowed of TOPLink, EJB, ODMG, JDO and INTERLIS and is productively used in customer projects of the author (for e.g. JOMM's XML mapping in www.tcotool.org). JOMM already exists for usage with XML, MySQL, ORACLE, PostgreSQL and MS Access. Its main features are persistency mapping, abstracted Query building and a Consistency-Controller for GUI interactions. If the project will be accepted source code of JOMM, some JUnit TestCases and a Sample-Application will be checked in.

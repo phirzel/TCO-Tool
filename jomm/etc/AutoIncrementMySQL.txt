@@ -1,0 +1,8 @@
+MySQL - autoincrement key fields
+================================
+
+Insert into (autId, ..) VALUES (NULL, ..);
+SELECT LAST_INSERT_ID();
+
+or for newly inserted rows:
+SELECT * FROM tbl WHERE autoId IS NULL;

@@ -1,0 +1,71 @@
+INTERLIS 2.2;
+
+MODEL project (en) =
+  IMPORTS PIM;
+
+  TOPIC model =
+
+    DOMAIN
+
+      /** de-CH: Kanton
+       */
+      Canton= (
+        ZH
+        ,BE
+        ,AG
+      );
+
+      /** Search-Terms.
+       */
+      Category= (
+      );
+
+      JudicalAuthority= (
+        Bundesrat
+        ,BGer
+      );
+    STRUCTURE Category_ = value : MANDATORY Category; END Category_;
+
+    /** de: Entscheid
+     */
+    CLASS Adjudication =
+      verdictDate : PIM.datatypes.JOMM_Date;
+      kNumber : MANDATORY TEXT*8;
+      publication : TEXT*400;
+      contentLead : MANDATORY TEXT*1024;
+      verdict : TEXT*400;
+      /** de: Zitat
+       */
+      quote : TEXT*5000;
+      /** de: Resümee
+       */
+      summary : TEXT*30000;
+      /** URL, Website of original verdict.
+       */
+      link : INTERLIS.URI;
+      instance : MANDATORY JudicalAuthority;
+      /** Reference to well defined Search-Terms.
+       */
+      category : BAG {0..*} OF Category_;
+      /** of verdict documentation
+       * [implementation by MySQL-Enum ('de', 'fr', 'it')]
+       */
+      language : TEXT*2;
+    END Adjudication;
+
+    /** de-CH: Gemeinde
+     */
+    CLASS Community =
+      canton : MANDATORY Canton;
+      zipCode : 1000..9999;
+      name : MANDATORY PIM.datatypes.DbNlsString;
+    END Community;
+
+    ASSOCIATION AssociationDef28 =
+      adjudication -<> {0..*} Adjudication;
+      community -- {0..1} Community;
+    END AssociationDef28;
+
+  END model;
+
+END project.
