@@ -16,6 +16,7 @@ import ch.ehi.basics.logging.EhiLogger;
 import ch.ehi.basics.logging.LogEvent;
 import ch.ehi.basics.logging.LogListener;
 import ch.ehi.basics.logging.StdLogEvent;
+import java.io.PrintStream;
 
 /**
  * This is a <b>Developer Tracing-Tool</b>, meant to trace important info a Developer should be aware of <b>while developing and testing an application</b>. Except of the runtime-logs the API of this
@@ -27,8 +28,10 @@ import ch.ehi.basics.logging.StdLogEvent;
  * Design Pattern: Singleton
  *
  * @author Peter Hirzel, softEnvironment GmbH
- * @see ch.ehi.basics.logging.* (underlying logger)
+ * @see ch.ehi.basics.logging.EhiLogger (underlying logger)
+ * @deprecated replace by SLF4J
  */
+@Deprecated(since = "1.6.0")
 public class Tracer implements LogListener {
 	// Mode's
 	/**
@@ -63,7 +66,7 @@ public class Tracer implements LogListener {
 	/**
 	 * Tracer constructor.
 	 *
-	 * @see start(..)
+	 * @see #start(int)
 	 */
 	private Tracer() {
 		super();
