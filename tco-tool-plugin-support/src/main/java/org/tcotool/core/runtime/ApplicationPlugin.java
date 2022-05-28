@@ -57,7 +57,6 @@ public final class ApplicationPlugin extends Plugin {
      *
      * @param descr plug-in descriptor
      * @return plug-in data folder
-     * @throws IOException if folder doesn't exist and can't be created
      * @deprecated
      */
     @Deprecated
@@ -90,7 +89,7 @@ public final class ApplicationPlugin extends Plugin {
      * Application entry point. This method should be called once during application start up by convention.
      *
      * @param theDataFolder plug-ins data folder
-     * @see org.tcotool.core.runtime.PluginUtility#inkokePlugins()
+     * @see org.tcotool.pluginsupport.PluginUtility#invokePlugins(String)
      */
     public void run(final File theDataFolder) {
         // started as "Plugin-Collection"
@@ -152,7 +151,7 @@ public final class ApplicationPlugin extends Plugin {
     /**
      * This will cause dependent plug-in activation, resp. triggers MenuItem.actionPerformed().
      *
-     * @param toolComponent
+     * @param component of TCO-Tool
      */
     private void activate(final JComponent component, final ClassLoader loader) {
         Extension ext = (Extension) component.getClientProperty(CLIENT_PROPERTY);
@@ -184,10 +183,11 @@ public final class ApplicationPlugin extends Plugin {
 
     /**
      * Create JMenuItem out of the extension-plugin contents.
+     * <p>
+     * See resource/plugin.xml
      *
      * @param ext
      * @return
-     * @see plugin.xml
      */
     private JMenuItem createMenuItem(Extension ext) {
         final JMenuItem item = new JMenuItem();
