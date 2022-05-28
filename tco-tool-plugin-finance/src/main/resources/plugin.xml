@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 0.4"
+        "http://jpf.sourceforge.net/plugin_0_4.dtd">
+<plugin id="ch.softenvironment.tcotool.finance" version="0.0.1"
+        class="ch.softenvironment.tcotool.finance.SEPlugin">
+    <requires>
+        <import plugin-id="org.tcotool.core.runtime"/>
+    </requires>
+    <runtime>
+        <library id="seFinance" path="classes/" type="code">
+            <export prefix="*"/>
+        </library>
+        <!--library type="resources" path="resources/" id="propertiesAndIcons"/-->
+        <library type="resources" path="resources/" id="rsc"/>
+    </runtime>
+
+    <extension plugin-id="org.tcotool.core.runtime" point-id="ReportFinance" id="depreciation">
+        <parameter id="class" value="ch.softenvironment.tcotool.finance.SEPlugin"/>
+        <parameter id="textKey" value="MniReportFinancialTotal_text"/>
+        <parameter id="icon" value="MenuIcon.png"/>
+        <parameter id="hasLeadingSeparator" value="false"/>
+        <parameter id="isGroupSpecific" value="true"/>
+    </extension>
+    <extension plugin-id="org.tcotool.core.runtime" point-id="ReportFinance"
+               id="depreciationCostBlockTotal">
+        <parameter id="class" value="ch.softenvironment.tcotool.finance.SEPlugin"/>
+        <parameter id="textKey" value="MniReportFinancialCostBlockTotal_text"/>
+        <parameter id="icon" value="MenuIcon.png"/>
+        <parameter id="hasLeadingSeparator" value="false"/>
+        <parameter id="isGroupSpecific" value="true"/>
+    </extension>
+    <extension plugin-id="org.tcotool.core.runtime" point-id="ReportFinance"
+               id="depreciationCostBlockDetailed">
+        <parameter id="class" value="ch.softenvironment.tcotool.finance.SEPlugin"/>
+        <parameter id="textKey" value="MniReportFinancialCostBlockDetailed_text"/>
+        <parameter id="icon" value="MenuIcon.png"/>
+        <parameter id="hasLeadingSeparator" value="false"/>
+        <parameter id="isGroupSpecific" value="false"/>
+    </extension>
+
+    <extension plugin-id="org.tcotool.core.runtime" point-id="ReportFinance"
+               id="checkPersonalEffort">
+        <parameter id="class" value="ch.softenvironment.tcotool.finance.SEPlugin"/>
+        <parameter id="textKey" value="MniCheckPersonalEffort_text"/>
+        <parameter id="descriptionKey" value="MniCheckPersonalEffort_toolTipText"/>
+        <parameter id="icon" value="MenuIcon.png"/>
+        <parameter id="hasLeadingSeparator" value="true"/>
+        <parameter id="isGroupSpecific" value="false"/>
+    </extension>
+
+    <extension plugin-id="org.tcotool.core.runtime" point-id="ReportFinance" id="budgetPlan">
+        <parameter id="class" value="ch.softenvironment.tcotool.finance.SEPlugin"/>
+        <parameter id="textKey" value="MniReportBudgetPlan_text"/>
+        <parameter id="descriptionKey" value="MniReportBudgetPlan_toolTipText"/>
+        <parameter id="icon" value="MenuIcon.png"/>
+        <parameter id="hasLeadingSeparator" value="false"/>
+        <parameter id="isGroupSpecific" value="false"/>
+    </extension>
+</plugin>

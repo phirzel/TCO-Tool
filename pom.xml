@@ -31,6 +31,8 @@
         <module>jomm</module>
         <module>tco-tool-core</module>
         <module>ehibasics</module>
+        <module>tco-tool-core-plugin</module>
+        <module>tco-tool-plugin-dependency</module>
     </modules>
 
 </project>
