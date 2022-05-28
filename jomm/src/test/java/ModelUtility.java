@@ -1,5 +1,3 @@
-package test;
-
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.Tracer;
 

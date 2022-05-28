@@ -4,7 +4,7 @@
 <plugin id="org.tcotool.core.runtime" version="0.0.1"
         class="org.tcotool.core.runtime.ApplicationPlugin">
     <runtime>
-        <library id="core" path="classes/" type="code">
+        <library id="core" path="target/classes/" type="code">
             <!--doc caption="API documentation">
                 <doc-ref path="api/index.html" caption="javadoc"/>
             </doc-->

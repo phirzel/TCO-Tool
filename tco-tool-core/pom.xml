@@ -57,10 +57,17 @@
 		</dependency-->
 
 		<!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-		<!--TODO migrate v6Beta dependency>
+		<!--TODO migrate v6Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
 			<groupId>org.jhotdraw</groupId>
 			<artifactId>jhotdraw</artifactId>
 			<version>7.4.1</version>
+		</dependency-->
+		<!-- https://mvnrepository.com/artifact/insight/JHotDraw -->
+		<!-- not found
+		<dependency>
+			<groupId>insight</groupId>
+			<artifactId>JHotDraw</artifactId>
+			<version>7.0.9</version>
 		</dependency-->
 
 
