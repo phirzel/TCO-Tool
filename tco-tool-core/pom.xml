@@ -49,13 +49,6 @@
             <version>1.0.15</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
-        <!-- not found dependency>
-            <groupId>org.java.plugin</groupId>
-            <artifactId>jpf-gaby</artifactId>
-            <version>1.5</version>
-        </dependency-->
-
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
@@ -74,11 +67,18 @@
             <version>7.4.1</version>
         </dependency-->
 
-        <dependency>
+        <!--not resolvable https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
+        <!--dependency>
+            <groupId>org.java.plugin</groupId>
+            <artifactId>jpf-gaby</artifactId>
+            <version>1.5</version>
+        </dependency-->
+        <!--dependency does not work -> strange >
             <groupId>org.jpf</groupId>
             <artifactId>jpf</artifactId>
             <version>1.5.1</version>
-        </dependency>
+        </dependency-->
+
         <!--dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -134,7 +134,7 @@
                             <packaging>jar</packaging>
                         </configuration>
                     </execution>
-                    <execution>
+                    <!--execution>
                         <id>sourceforge-jpf</id>
                         <phase>initialize</phase>
                         <goals>
@@ -147,7 +147,7 @@
                             <version>1.5.1</version>
                             <packaging>jar</packaging>
                         </configuration>
-                    </execution>
+                    </execution-->
                 </executions>
             </plugin>
         </plugins>
