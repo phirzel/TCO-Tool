@@ -4,74 +4,82 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tco-tool-core</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>tco-tool-core</artifactId>
+    <packaging>jar</packaging>
 
-	<parent>
+    <parent>
         <groupId>org.tcotool</groupId>
         <artifactId>tco-tool-parent</artifactId>
         <version>1.6.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-	<name>tco-tool-core</name>
-	<description>TCO-Tool Launcher (UI)</description>
+    <name>tco-tool-core</name>
+    <description>TCO-Tool Launcher (UI)</description>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
-		<!--dependency>
-			<groupId>ch.ehi</groupId>
-			<artifactId>ehibasics</artifactId>
-			<version>1.4.1</version>
-		</dependency-->
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
+        <!--dependency>
+            <groupId>ch.ehi</groupId>
+            <artifactId>ehibasics</artifactId>
+            <version>1.4.1</version>
+        </dependency-->
 
-		<dependency>
-			<groupId>org.tcotool</groupId>
-			<artifactId>sebase</artifactId>
-			<version>1.6.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.tcotool</groupId>
-			<artifactId>jomm</artifactId>
-			<version>1.6.0-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>org.tcotool</groupId>
+            <artifactId>sebase</artifactId>
+            <version>1.6.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tcotool</groupId>
+            <artifactId>jomm</artifactId>
+            <version>1.6.0-SNAPSHOT</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>1.0.24</version>
-		</dependency>
-		<!--TODO update https://mvnrepository.com/artifact/org.jfree/jfreechart -->
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.15</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.24</version>
+        </dependency>
+        <!--TODO update https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.15</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
-		<!-- not found dependency>
-			<groupId>org.java.plugin</groupId>
-			<artifactId>jpf-gaby</artifactId>
-			<version>1.5</version>
-		</dependency-->
+        <!-- https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
+        <!-- not found dependency>
+            <groupId>org.java.plugin</groupId>
+            <artifactId>jpf-gaby</artifactId>
+            <version>1.5</version>
+        </dependency-->
 
-		<!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-		<!--TODO migrate v6Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
-			<groupId>org.jhotdraw</groupId>
-			<artifactId>jhotdraw</artifactId>
-			<version>7.4.1</version>
-		</dependency-->
-		<!-- https://mvnrepository.com/artifact/insight/JHotDraw -->
-		<!-- not found
-		<dependency>
-			<groupId>insight</groupId>
-			<artifactId>JHotDraw</artifactId>
-			<version>7.0.9</version>
-		</dependency-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <version>2.4</version>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jhotdraw</groupId>
+            <artifactId>jhotdraw</artifactId>
+            <version>6.0.b1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
+        <!--TODO migrate v6Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
+            <groupId>org.jhotdraw</groupId>
+            <artifactId>jhotdraw</artifactId>
+            <version>7.4.1</version>
+        </dependency-->
 
-
-		<!--dependency>
+        <dependency>
+            <groupId>org.jpf</groupId>
+            <artifactId>jpf</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <!--dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
@@ -84,15 +92,15 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>net.sf.jfcunit</groupId>
-			<artifactId>jfcunit</artifactId>
-			<version>${jfcunit.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>net.sf.jfcunit</groupId>
+            <artifactId>jfcunit</artifactId>
+            <version>${jfcunit.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!--dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -105,4 +113,43 @@
         </dependency-->
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>sourceforge-jhotdraw</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>./../lib/jhotdraw60b1/jhotdraw.jar</file>
+                            <groupId>org.jhotdraw</groupId>
+                            <artifactId>jhotdraw</artifactId>
+                            <version>6.0.b1</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>sourceforge-jpf</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>./../lib/jpf-bin-1.5.1.zip</file>
+                            <groupId>org.jpf</groupId>
+                            <artifactId>jpf</artifactId>
+                            <version>1.5.1</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

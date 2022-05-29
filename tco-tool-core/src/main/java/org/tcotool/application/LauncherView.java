@@ -1119,8 +1119,6 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
 
     /**
      * Find a given Menu in MenuBar.
-     *
-     * @param menuBar
      * @param name
      * @return JMenu
      * @deprecated (public for ApplicationPlugin only)

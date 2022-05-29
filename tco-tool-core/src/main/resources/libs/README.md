@@ -1,1 +1,0 @@
-The given obsolete libraries could not be added by Maven, therefore they are just passed as is (please consider their licence model if used).
