@@ -26,6 +26,7 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.serialize.CsvSerializer;
 import ch.softenvironment.jomm.target.xml.IliBasket;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
+import ch.softenvironment.tcotool.tco.SEPlugin;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
@@ -78,7 +79,7 @@ import org.tcotool.model.Site;
 import org.tcotool.model.TcoModel;
 import org.tcotool.model.TcoObject;
 import org.tcotool.model.TcoPackage;
-import org.tcotool.pluginsupport.PluginUtility;
+import org.tcotool.pluginsupport.ApplicationPlugin;
 import org.tcotool.presentation.Diagram;
 import org.tcotool.standard.charts.ChartTool;
 import org.tcotool.standard.drawing.DependencyView;
@@ -102,7 +103,6 @@ import org.tcotool.tools.ModelUtility;
  *
  * @author Peter Hirzel, softEnvironment GmbH
  */
-@SuppressWarnings("serial")
 public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements FileHistoryListener, java.beans.PropertyChangeListener {
 
     @Deprecated
@@ -3289,7 +3289,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
     }
 
     /**
-     * @see ApplicationPlugin.showBusy()
+     * @see ApplicationPlugin#showBusy(Runnable)
      */
     @Deprecated
     public void runBlock(Runnable block) {
@@ -3444,7 +3444,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
     /**
      * Set the Language of User Interface.
      *
-     * @see main()
+     * @see #main(String[])
      */
     private void setLanguage() {
         try {
@@ -3500,9 +3500,8 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      * Set a new Utility to handle Model.
      *
      * @param utility Model (contains root-Element)
-     * @param file File where TCO-Configuration is saved in
      */
-    private void setUtility(ModelUtility utility) throws Exception {
+    private void setUtility(ModelUtility utility) {
         this.utility = utility;
 
         // close all View's of old model
@@ -3534,10 +3533,10 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         getInstance().getStbStatus().setRights(viewOptions.getViewManager().getRights(TcoModel.class));
 
         try {
-            // TODO Future use: instantiate LauncherView in
             // ApplicationPlugin#createAndShowGUI()
             /* getInstance().pluginManager = */
-            PluginUtility.invokePlugins("org.tcotool.core.runtime");
+            //PluginUtility.invokePlugins("org.tcotool.core.runtime");
+            ApplicationPlugin.invokePlugins(new SEPlugin());
         } catch (Exception e) {
             // TODO NLS
             BaseDialog.showError(getInstance(), "Plugin-Initialisierung",

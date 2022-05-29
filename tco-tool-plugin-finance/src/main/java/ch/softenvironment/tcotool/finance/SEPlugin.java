@@ -60,6 +60,7 @@ public final class SEPlugin extends Plugin implements org.tcotool.pluginsupport.
      *
      * @see org.tcotool.pluginsupport.Menu#init(javax.swing.JComponent)
      */
+    @Override
     public void actionPerform(final JComponent item, final Object object) {
         ApplicationPlugin.showBusy(new Runnable() {
             @Override

@@ -61,22 +61,10 @@
             <version>6.0.b1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-        <!--TODO migrate v6Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
+        <!--TODO migrate v6.0.1Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
             <groupId>org.jhotdraw</groupId>
             <artifactId>jhotdraw</artifactId>
             <version>7.4.1</version>
-        </dependency-->
-
-        <!--not resolvable https://mvnrepository.com/artifact/org.java.plugin/jpf-gaby -->
-        <!--dependency>
-            <groupId>org.java.plugin</groupId>
-            <artifactId>jpf-gaby</artifactId>
-            <version>1.5</version>
-        </dependency-->
-        <!--dependency does not work -> strange >
-            <groupId>org.jpf</groupId>
-            <artifactId>jpf</artifactId>
-            <version>1.5.1</version>
         </dependency-->
 
         <!--dependency>

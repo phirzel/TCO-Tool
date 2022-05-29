@@ -22,8 +22,8 @@ import javax.swing.JComponent;
  * Application Interface any Plugin to extend TCO-Tool may implement.
  *
  * @author Peter Hirzel, softEnvironment GmbH
- * @see org.tcotool.core.runtime.ApplicationPlugin (in /plugins folder)
  */
+@Deprecated(since = "own plugin")
 public interface Menu {
 
     // @see plugins->org.tcotool.core.runtime/plugins.xml [ReportFinance.isGroupSpecific]
@@ -35,5 +35,6 @@ public interface Menu {
      * @param item MenuItem triggered
      * @param object according to plugin.xml Manifest, the selected node in NavigationTree
      */
+    @Deprecated(since = "own plugin")
     void actionPerform(final JComponent item, final Object object);
 }

@@ -33,7 +33,6 @@
         <module>tco-tool-core</module>
         <!-- optional plugin modules -->
         <module>tco-tool-plugin-support</module>
-        <module>tco-tool-plugin-dependency</module>
         <module>tco-tool-plugin-finance</module>
     </modules>
 

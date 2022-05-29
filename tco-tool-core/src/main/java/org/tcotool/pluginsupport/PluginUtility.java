@@ -21,6 +21,7 @@ import org.java.plugin.registry.IntegrityCheckReport;
  *
  * @author Peter Hirzel, softEnvironment GmbH
  */
+@Deprecated(since = "own mechanism")
 public final class PluginUtility {
 
     private static final String PLUGINS_FOLDER = "./plugins";
