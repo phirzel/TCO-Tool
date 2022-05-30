@@ -58,7 +58,7 @@ class ReportDependency extends ReportTool {
      * Summarize all Depreciation-Cost for given root-object and sub-packages.
      */
     public static ReportTool createBlock(ModelUtility utility, TcoObject root, long maxUsage, boolean allServices) throws Exception {
-        ReportDependency tool = new ReportDependency(utility, ResourceManager.getResource(SEPlugin.class,
+        ReportDependency tool = new ReportDependency(utility, ResourceManager.getResource(TCOPlugin.class,
             allServices ? "MniReportTcoDepenendencyDetailsAll_text" : "MniReportTcoDepenendencyDetails_text"));
         tool.calculator = new CalculatorTco(LauncherView.getInstance().getUtility(), (TcoPackage) LauncherView.getInstance().getUtility().getRoot() /*
          * always
@@ -205,7 +205,7 @@ class ReportDependency extends ReportTool {
     @Override
     public void startBody(AttributeList list) throws IOException {
         super.startBody(list);
-        image(ch.softenvironment.tcotool.tco.SEPlugin.getHeader(), "", 0);
+        image(TCOPlugin.getHeader(), "", 0);
     }
 
     /**

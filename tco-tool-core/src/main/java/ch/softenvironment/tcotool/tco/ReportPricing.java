@@ -49,7 +49,7 @@ class ReportPricing extends ReportDependency {
      */
     public static ReportTool createBlock(ModelUtility utility, TcoObject root, long maxUsage, boolean allServices, double multitude)
         throws Exception {
-        ReportPricing tool = new ReportPricing(utility, ResourceManager.getResource(SEPlugin.class, "MniReportPricing_text"));
+        ReportPricing tool = new ReportPricing(utility, ResourceManager.getResource(TCOPlugin.class, "MniReportPricing_text"));
         tool.calculator = new CalculatorTco(LauncherView.getInstance().getUtility(), (TcoPackage) LauncherView.getInstance().getUtility().getRoot() /*
          * always
          * calculate

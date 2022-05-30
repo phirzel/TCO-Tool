@@ -57,7 +57,7 @@ class ReportTcoEstimated extends ReportTco {
      * Summarize all other TCO-Costs within given object and sub-packages.
      */
     public static ReportTool createBlock(ModelUtility utility, TcoObject root, long maxUsage) throws Exception {
-        ReportTcoEstimated tool = new ReportTcoEstimated(utility, ResourceManager.getResource(SEPlugin.class, "MniReportTcoEstimated_text"));
+        ReportTcoEstimated tool = new ReportTcoEstimated(utility, ResourceManager.getResource(TCOPlugin.class, "MniReportTcoEstimated_text"));
         tool.calculator = new CalculatorTco(LauncherView.getInstance().getUtility(), root, maxUsage);
         tool.totalCost(root);
         return tool;
@@ -66,7 +66,7 @@ class ReportTcoEstimated extends ReportTco {
     @Override
     public void startBody(AttributeList list) throws IOException {
         super.startBody(list);
-        image(ch.softenvironment.tcotool.tco.SEPlugin.getHeader(), "", 0);
+        image(TCOPlugin.getHeader(), "", 0);
     }
 
     @Override

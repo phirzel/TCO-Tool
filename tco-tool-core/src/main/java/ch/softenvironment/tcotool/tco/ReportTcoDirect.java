@@ -61,7 +61,7 @@ class ReportTcoDirect extends ReportTco {
      * Summarize all other TCO-Costs within given object and sub-packages.
      */
     public static ReportTool createBlock(ModelUtility utility, TcoObject root, long maxUsage) throws Exception {
-        ReportTcoDirect tool = new ReportTcoDirect(utility, ResourceManager.getResource(SEPlugin.class, "MniReportTcoDirectIndirect_text"));
+        ReportTcoDirect tool = new ReportTcoDirect(utility, ResourceManager.getResource(TCOPlugin.class, "MniReportTcoDirectIndirect_text"));
         tool.calculator = new CalculatorTco(LauncherView.getInstance().getUtility(), root, maxUsage);
         tool.totalCost(root);
         return tool;
@@ -70,7 +70,7 @@ class ReportTcoDirect extends ReportTco {
     @Override
     public void startBody(AttributeList list) throws IOException {
         super.startBody(list);
-        image(ch.softenvironment.tcotool.tco.SEPlugin.getHeader(), "", 0);
+        image(TCOPlugin.getHeader(), "", 0);
     }
 
     @Override
@@ -139,14 +139,14 @@ class ReportTcoDirect extends ReportTco {
         tableData("*");
         tableDataBold(ResourceManager.getResource(ServiceDetailView.class, "TbcTotal_text") + " " + labelDirect);
         for (Double aDouble : direct) {
-            tableDataAmount(aDouble.doubleValue(), true);
+            tableDataAmount(aDouble, true);
         }
         endTableRow();
         startTableRow();
         tableData("*");
         tableDataBold(ResourceManager.getResource(ServiceDetailView.class, "TbcTotal_text") + " " + labelIndirect);
-        for (int i = 0; i < indirect.size(); i++) {
-            tableDataAmount(indirect.get(i), true);
+        for (Double value : indirect) {
+            tableDataAmount(value, true);
         }
         endTableRow();
         startTableRow();

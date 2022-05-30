@@ -8,3 +8,5 @@ Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
 * ANT to Maven build refactored
 * update to OpenJDK 11
 * library updates (where found on Maven central)
+* optional commercial softEnvironment Plugins added/sponsored
+* JPF (Java Plugin Framework removed, considered als old and badly maintained)

@@ -1,8 +1,7 @@
 package org.tcotool.pluginsupport;
 
-import ch.ehi.basics.i18n.ResourceBundle;
+import ch.softenvironment.tcotool.tco.TCOPlugin;
 import ch.softenvironment.util.Tracer;
-import java.net.URL;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -67,10 +66,7 @@ public interface Plugin {
         item.putClientProperty(CLIENT_PROPERTY, ext); // !!!
         item.setActionCommand(ext.getId());
 
-        if (ext.getIcon() != null) {
-            URL iconUrl = ResourceBundle.getURL(this.getClass(), ext.getIcon());
-            item.setIcon(new javax.swing.ImageIcon(iconUrl));
-        }
+        item.setIcon(new javax.swing.ImageIcon(TCOPlugin.getIconURL()));
 
         item.setText(ext.getText());
         item.setToolTipText(ext.getToolTipText()); // ResourceManager.getResource(NavigationView.class,

@@ -23,7 +23,6 @@ import javax.swing.JComponent;
  *
  * @author Peter Hirzel, softEnvironment GmbH
  */
-@Deprecated(since = "own plugin")
 public interface Menu {
 
     // @see plugins->org.tcotool.core.runtime/plugins.xml [ReportFinance.isGroupSpecific]

@@ -35,7 +35,7 @@ public class MenuExtension {
         return groupSpecific;
     }
 
-    //TODO
+    //TODO remove or use
     public void setGroupSpecific(boolean groupSpecific) {
         this.groupSpecific = groupSpecific;
     }
@@ -45,23 +45,4 @@ public class MenuExtension {
     String toolTipText;
 
     boolean groupSpecific;
-
-    // resource-url
-    public String getIcon() {
-        /*
-        Parameter iconParam = ext.getParameter("icon");
-        URL iconUrl = null;
-        if (iconParam != null) {
-            iconUrl = ResourceBundle.getURL(iconParam.valueAsString());
-            item.setIcon(new javax.swing.ImageIcon(iconUrl));
-        }
-         */
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    String icon;
 }

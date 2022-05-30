@@ -26,7 +26,8 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.serialize.CsvSerializer;
 import ch.softenvironment.jomm.target.xml.IliBasket;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
-import ch.softenvironment.tcotool.tco.SEPlugin;
+import ch.softenvironment.tcotool.finance.FinancePlugin;
+import ch.softenvironment.tcotool.tco.TCOPlugin;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
@@ -2589,7 +2590,8 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      * Return Version.
      */
     public static String getVersion() {
-        return "V1.5.2";
+        //TODO read from parent pom
+        return "V1.6.0";
     }
 
     /**
@@ -3533,10 +3535,8 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         getInstance().getStbStatus().setRights(viewOptions.getViewManager().getRights(TcoModel.class));
 
         try {
-            // ApplicationPlugin#createAndShowGUI()
-            /* getInstance().pluginManager = */
-            //PluginUtility.invokePlugins("org.tcotool.core.runtime");
-            ApplicationPlugin.invokePlugins(new SEPlugin());
+            ApplicationPlugin.invokePlugins(new TCOPlugin());
+            ApplicationPlugin.invokePlugins(new FinancePlugin());
         } catch (Exception e) {
             // TODO NLS
             BaseDialog.showError(getInstance(), "Plugin-Initialisierung",
