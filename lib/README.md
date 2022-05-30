@@ -4,4 +4,9 @@ The given obsolete libraries could not be added by Maven, therefore they are jus
 
 [Version 6.0.1b](https://sourceforge.net/projects/jhotdraw/files/JHotDraw/JHotDraw60b1/)
 
-# [Java Plugin Framework](https://sourceforge.net/projects/jpf/)
+# ehibasics
+
+KUDOs to Claude Eisenhut  
+reusable utilities (which might be found nowadays in Apache Commons, Spring and the like)
+
+

@@ -18,13 +18,6 @@
     <description>TCO-Tool Launcher (UI)</description>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
-        <!--dependency>
-            <groupId>ch.ehi</groupId>
-            <artifactId>ehibasics</artifactId>
-            <version>1.4.1</version>
-        </dependency-->
-
         <dependency>
             <groupId>org.tcotool</groupId>
             <artifactId>sebase</artifactId>
@@ -61,43 +54,10 @@
             <version>6.0.b1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-        <!--TODO migrate v6.0.1Beta dependency, see https://www.randelshofer.ch/oop/jhotdraw/>
+        <!--TODO upgrade v6.0.1Beta dependency: NOT EASY!!!, see https://www.randelshofer.ch/oop/jhotdraw/>
             <groupId>org.jhotdraw</groupId>
             <artifactId>jhotdraw</artifactId>
             <version>7.4.1</version>
-        </dependency-->
-
-        <!--dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.jfcunit</groupId>
-            <artifactId>jfcunit</artifactId>
-            <version>${jfcunit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!--dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
         </dependency-->
     </dependencies>
 

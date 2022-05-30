@@ -13,6 +13,12 @@
     <artifactId>sebase</artifactId>
 
     <dependencies>
+        <!--TODO not found by MVN central, include lib/ehibasics.jar instead https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
+        <!--dependency>
+            <groupId>ch.ehi</groupId>
+            <artifactId>ehibasics</artifactId>
+            <version>1.4.1</version>
+        </dependency-->
         <dependency>
             <groupId>org.tcotool</groupId>
             <artifactId>ehibasics</artifactId>
@@ -32,7 +38,6 @@
             <version>${jfcunit.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
 </project>

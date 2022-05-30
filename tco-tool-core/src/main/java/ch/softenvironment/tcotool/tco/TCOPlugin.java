@@ -97,6 +97,7 @@ public final class TCOPlugin implements org.tcotool.pluginsupport.Plugin, org.tc
         extension = new MenuExtension();
         extension.setId("pricing");
         extension.setText(ResourceManager.getResource(TCOPlugin.class, "MniReportPricing_text"));
+        extension.setToolTipText(ResourceManager.getResource(TCOPlugin.class, "MniReportPricing_toolTipText"));
         loadPlugins("ReportTco", false, false, false, extension);
     }
 
