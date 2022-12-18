@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 /**
  * Test DbObjectId.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbObjectIdTestCase extends TestCase {
 

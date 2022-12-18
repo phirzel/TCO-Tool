@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -34,14 +35,19 @@ import org.xml.sax.SAXParseException;
 /**
  * Utility for DOM-handling. Based on JAXP.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class DOMUtils {
+@Slf4j
+public final class DOMUtils {
+
+    private DOMUtils() {
+        throw new IllegalStateException("utility class");
+    }
 
     /**
      * Default Error-Handler for DOM-Parser.
-     *
-     * @see #readDOM()
+     * <p>
+     * see #readDOM()
      */
     private static class DefaultErrorHandler implements ErrorHandler {
 
@@ -55,17 +61,17 @@ public class DOMUtils {
 
         @Override
         public void warning(SAXParseException error) {
-            Tracer.getInstance().runtimeWarning(getDetailedMessage(error));
+            log.warn("{}", getDetailedMessage(error));
         }
 
         @Override
         public void error(SAXParseException error) {
-            Tracer.getInstance().runtimeError(getDetailedMessage(error), error);
+            log.error("{}", getDetailedMessage(error), error);
         }
 
         @Override
         public void fatalError(SAXParseException error) {
-            Tracer.getInstance().developerError(getDetailedMessage(error));
+            log.error("Developer error: {}", getDetailedMessage(error));
         }
     }
 
@@ -78,11 +84,11 @@ public class DOMUtils {
      */
     public static DocumentBuilder createDocumentBuilder(boolean validating) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        Tracer.getInstance().debug("DocumentBuilderFactory=" + factory);
+        log.debug("DocumentBuilderFactory={}", factory);
         factory.setValidating(validating);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setErrorHandler(new DefaultErrorHandler());
-        Tracer.getInstance().debug("DocumentBuilder=" + builder);
+        log.debug("DocumentBuilder={}", builder);
         return builder;
     }
 
@@ -138,17 +144,17 @@ public class DOMUtils {
                 org.w3c.dom.Document document = tmp.parse(file);
                 return document;
             } catch (SAXParseException pe) {
-                Tracer.getInstance().runtimeError(filename + " Parse-Error (row=" + pe.getLineNumber() + ")", pe);
+                log.error("{} Parse-Error (row={})", filename, pe.getLineNumber(), pe);
                 throw pe;
             } catch (IOException ioe) {
-                Tracer.getInstance().runtimeError(filename + " IOException", ioe);
+                log.error("{}", filename, ioe);
                 throw ioe;
             } catch (SAXException saxe) {
-                Tracer.getInstance().runtimeError(filename + " SAXException", saxe);
+                log.error("{}", filename, saxe);
                 throw saxe;
             }
         } else {
-            Tracer.getInstance().runtimeWarning(filename + " not existing or readable!");
+            log.warn("not existing or readable: {}", filename);
         }
 
         return null;

@@ -29,12 +29,12 @@ import ch.softenvironment.jomm.DbQueryBuilder;
  * <p>
  * The identities of A AND B both together are UNIQUE within C.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class DbRelationshipBean extends DbChangeableBean {
 
     /**
-     * @see #DbObject(DbObjectServer)
+     * @see DbObject(DbObjectServer)
      */
     protected DbRelationshipBean(DbObjectServer objectServer) {
         super(objectServer);

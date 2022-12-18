@@ -23,15 +23,17 @@ import ch.softenvironment.jomm.implementation.DbState;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.HashSet;
+import javax.jdo.spi.StateManager;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Behavior of a a persistent Object represented by appropriate entities in a database. Each such object: - has a unique Identity. - is managed by ONE ObjectServer Design Pattern: Data Access Object
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see javax.jdo.spi.PersistenceCapable
  */
+@Slf4j
 public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 
 	// The allocated ObjectServer handling this Object
@@ -82,7 +84,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * DbObject constructor. Do NOT use this constructor in application. Creation of new transient Objects is part of the responsibility of DbObjectServer.
 	 *
 	 * @param server managing this instance
-	 * @see DbObjectServer#createInstance()
+	 * @see DbObjectServer#createInstance(Class)
 	 */
 	protected DbObject(DbObjectServer server) {
 		super();
@@ -106,7 +108,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	public static String convertName(final String property) {
 		if (property != null) {
 			if (!property.substring(0, 1).toLowerCase().equals(property.substring(0, 1))) {
-				Tracer.getInstance().developerWarning("Property must start as lowercase: <" + property + ">");
+				log.warn("Developer warning: Property must start as lowercase: {}", property);
 				return property.substring(0, 1).toLowerCase() + property.substring(1);
 			}
 		}
@@ -116,7 +118,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	/**
 	 * Object-Identity is kept by PROPERTY_ID.
 	 *
-	 * @see javax.ejb.EJBObject#isIdentical(EJBObject)
+	 * see javax.ejb.EJBObject#isIdentical(EJBObject)
 	 */
 	@Override
 	public boolean equals(Object arg) {
@@ -128,7 +130,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 				// compare by persistent Technical-Id
 				return getId().equals(((DbObject) arg).getId());
 			} else {
-				Tracer.getInstance().developerError("no #ID set in DbObject <" + arg + "> (use DbObjectServer#createInstance() instead of new DbObject())");
+				log.error("Developer error: no #ID set in DbObject <{}> (use DbObjectServer#createInstance() instead of new DbObject())", arg);
 				return super.equals(arg);
 			}
 		}
@@ -164,7 +166,6 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * Gets the createDate property (java.util.Date) value.
 	 *
 	 * @return The createDate property value.
-	 * @see #setCreateDate
 	 */
 	public final java.util.Date getCreateDate() {
 		return fieldCreateDate;
@@ -174,7 +175,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * Return unique Object-Id.
 	 *
 	 * @return long
-	 * @see javax.ejb.EJBObject#getPrimaryKey()
+	 * see javax.ejb.EJBObject#getPrimaryKey()
 	 */
 	public final synchronized Long getId() {
 		return fieldId;
@@ -185,7 +186,6 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <b>optimistic Locking</b> and simple change history.
 	 *
 	 * @return The lastChange property value.
-	 * @see #setLastChange
 	 */
 	public final java.util.Date getLastChange() {
 		return fieldLastChange;
@@ -202,7 +202,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 			return getPersistencyState().toString();
 		} else {
 			if (getLastChange() == null) {
-				Tracer.getInstance().developerWarning("LastChange is null");
+				log.warn("Developer warning: LastChange is null");
 				return "<Timestamp>" + " " + getUserId();
 			} else {
 				return NlsUtils.formatDateTime(getLastChange()) + " " + getUserId();
@@ -220,9 +220,9 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	/**
 	 * Return unique Object-Id.
 	 *
+	 * see javax.ejb.EJBObject#getPrimaryKey()
 	 * @return long
-	 * @see javax.ejb.EJBObject#getPrimaryKey()
-	 * @see DbIdentity
+	 * @see ch.softenvironment.jomm.DbIdentity
 	 * @deprecated
 	 */
 	public final DbObjectId getOid() {
@@ -241,7 +241,6 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <b>optimistic Locking</b> and simple change history.
 	 *
 	 * @return The userId property value.
-	 * @see #setUserId
 	 */
 	public final java.lang.String getUserId() {
 		return fieldUserId;
@@ -253,8 +252,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	@Override
 	public final int hashCode() {
 		if (getId() == null) {
-			Tracer.getInstance().developerError(
-				"DbObject <" + getClass() + "> instantiated by Constructor => use DbObjectServer#createInstance(Class) instead!");
+			log.error("Developer error: DbObject <{}> instantiated by Constructor => use DbObjectServer#createInstance(Class) instead!", getClass());
 		}
 
 		return super.hashCode();
@@ -263,7 +261,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	/**
 	 * Return whether the given Class-Type is DbCode or DbEnumeration resp. implements DbCodeType.
 	 */
-	public static final boolean isCode(Class<? extends DbObject> dbObject) {
+	public static boolean isCode(Class<? extends DbObject> dbObject) {
 		Class<?> parent = dbObject.getSuperclass();
 
 		while ((parent != null) && (!parent.equals(DbObject.class))) {
@@ -388,8 +386,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * If the JDO identity is being changed in the transaction, this method returns the object id as of the beginning of the current transaction.
 	 *
 	 * @return a copy of the ObjectId of this instance as of the beginning of the transaction.
-	 * @see PersistenceManager#getObjectId(Object pc)
-	 * @see PersistenceManager#getObjectById(Object oid, boolean validate)
+	 * @see javax.jdo.PersistenceManager#getObjectId(Object pc)
+	 * @see javax.jdo.PersistenceManager#getObjectById(Object oid, boolean validate)
 	 */
 	@Override
 	public java.lang.Object jdoGetObjectId() {
@@ -419,8 +417,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 *
 	 * @return a copy of the ObjectId of this instance as modified in the transaction.
 	 * @see #jdoGetObjectId()
-	 * @see PersistenceManager#getObjectId(Object pc)
-	 * @see PersistenceManager#getObjectById(Object oid, boolean validate)
+	 * @see javax.jdo.PersistenceManager#getObjectId(Object pc)
+	 * @see javax.jdo.PersistenceManager#getObjectById(Object oid, boolean validate)
 	 */
 	@Override
 	public java.lang.Object jdoGetTransactionalObjectId() {
@@ -437,8 +435,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <p>
 	 *
 	 * @return true if this instance was deleted in the current transaction.
-	 * @see JDOHelper#isDeleted(Object pc)
-	 * @see PersistenceManager#deletePersistent(Object pc)
+	 * @see javax.jdo.JDOHelper#isDeleted(Object pc)
+	 * @see javax.jdo.PersistenceManager#deletePersistent(Object pc)
 	 */
 	@Override
 	public boolean jdoIsDeleted() {
@@ -455,8 +453,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <p>
 	 *
 	 * @return true if this instance has been modified in the current transaction.
-	 * @see JDOHelper#isDirty(Object pc)
-	 * @see JDOHelper#makeDirty(Object pc, String fieldName)
+	 * @see javax.jdo.JDOHelper#isDirty(Object pc)
+	 * @see javax.jdo.JDOHelper#makeDirty(Object pc, String fieldName)
 	 * @see #jdoMakeDirty(String fieldName)
 	 */
 	@Override
@@ -474,8 +472,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <p>
 	 *
 	 * @return true if this instance was made persistent in the current transaction.
-	 * @see JDOHelper#isNew(Object pc)
-	 * @see PersistenceManager#makePersistent(Object pc)
+	 * @see javax.jdo.JDOHelper#isNew(Object pc)
+	 * @see javax.jdo.PersistenceManager#makePersistent(Object pc)
 	 */
 	@Override
 	public boolean jdoIsNew() {
@@ -486,8 +484,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * Tests whether this object is persistent. Instances that represent persistent objects in the data store return true.
 	 *
 	 * @return true if this instance is persistent.
-	 * @see JDOHelper#isPersistent(Object pc)
-	 * @see PersistenceManager#makePersistent(Object pc)
+	 * @see javax.jdo.JDOHelper#isPersistent(Object pc)
+	 * @see javax.jdo.PersistenceManager#makePersistent(Object pc)
 	 */
 	@Override
 	public boolean jdoIsPersistent() {
@@ -504,8 +502,8 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * <p>
 	 *
 	 * @return true if this instance is transactional.
-	 * @see JDOHelper#isTransactional(Object pc)
-	 * @see PersistenceManager#makeTransactional(Object pc)
+	 * @see javax.jdo.JDOHelper#isTransactional(Object pc)
+	 * @see javax.jdo.PersistenceManager#makeTransactional(Object pc)
 	 */
 	@Override
 	public boolean jdoIsTransactional() {
@@ -539,7 +537,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 *
 	 * @param sm the StateManager that will own the new instance.
 	 * @return a new instance of this class.
-	 * @see JDOImplHelper#newInstance(Class pcClass, StateManager sm)
+	 * @see javax.jdo.spi.JDOImplHelper#newInstance(Class, StateManager)
 	 */
 	@Override
 	public javax.jdo.spi.PersistenceCapable jdoNewInstance(javax.jdo.spi.StateManager sm) {
@@ -555,7 +553,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * @param sm the StateManager that will own the new instance.
 	 * @param oid an instance of the object id class (application identity).
 	 * @return a new instance of this class.
-	 * @see JDOImplHelper#newInstance(Class pcClass, StateManager sm)
+	 * @see javax.jdo.spi.JDOImplHelper#newInstance(Class pcClass, StateManager sm)
 	 */
 	@Override
 	public javax.jdo.spi.PersistenceCapable jdoNewInstance(javax.jdo.spi.StateManager sm, java.lang.Object oid) {
@@ -634,7 +632,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 *
 	 * @param sm The StateManager which will own this instance, or null to reset the instance to transient state
 	 * @throws SecurityException if the caller does not have JDOPermission
-	 * @see JDOPermission
+	 * @see javax.jdo.spi.JDOPermission
 	 */
 	@Override
 	public void jdoReplaceStateManager(javax.jdo.spi.StateManager sm) throws java.lang.SecurityException {
@@ -651,7 +649,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 			try {
 				getObjectServer().refresh(this);
 			} catch (Exception e) {
-				Tracer.getInstance().runtimeError(null, e);
+				log.error("", e);
 				throw new IllegalStateException(e.getLocalizedMessage());
 			}
 			// refreshing = false;
@@ -662,8 +660,6 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 	 * Reset internal state <b>of persistent DbObject's</b> to SAVED or READ_ONLY.
 	 *
 	 * @param refreshed (true->This Object was read at least once COMPLETELY from Target-System)
-	 * @see save()
-	 * @see refresh()
 	 */
 	public synchronized void reset(boolean refreshed) {
 		if ((getId() == null) || (getId().longValue() < 0 /*
@@ -671,7 +667,7 @@ public abstract class DbObject implements javax.jdo.spi.PersistenceCapable {
 		 * persistent
 		 */)) {
 			// IMPORTANT: prevent UPDATE without specific Id!
-			Tracer.getInstance().developerWarning("cannot reset because Id not set");
+			log.warn("Developer warning: cannot reset because Id not set");
 		} else {
 			if (this instanceof DbChangeableBean) {
 				getPersistencyState().setNext(DbState.SAVED);

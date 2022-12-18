@@ -35,16 +35,20 @@ import org.w3c.dom.Node;
 /**
  * Image encoding Utility.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class ImageUtils {
+public final class ImageUtils {
+
+    private ImageUtils() {
+        throw new IllegalStateException("utility class");
+    }
 
     /**
      * Save current Screen-Contents to given filename in PNG-Format (suffix will be set if missing in filename).
      *
      * @param filename
      * @throws AWTException
-     * @see http://schmidt.devlib.org/java/save-screenshot.html
+     * @see <a href="http://schmidt.devlib.org/java/save-screenshot.html">save-screenshot</a>
      */
     public static void screenShot(String filename) throws IOException, AWTException {
         // wait for a user-specified time

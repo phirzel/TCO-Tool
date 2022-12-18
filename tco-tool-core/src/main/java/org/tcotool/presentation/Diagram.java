@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * A Diagram groups different PresentationElement's in graphical manner.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class Diagram extends DbEntityBean {
 
@@ -29,7 +29,7 @@ public class Diagram extends DbEntityBean {
         firePropertyChange("name", oldValue, fieldName);
     }
 
-    public java.util.List<PresentationElement> fieldPresentationElement = new java.util.ArrayList<PresentationElement>();
+    public java.util.List<PresentationElement> fieldPresentationElement = new java.util.ArrayList<>();
 
     public java.util.List<PresentationElement> getPresentationElement() {
         refresh(false); // read lazy initialized objects

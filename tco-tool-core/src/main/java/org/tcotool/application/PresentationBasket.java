@@ -20,7 +20,7 @@ import org.tcotool.presentation.Diagram;
 /**
  * Encapsulates the org.tcotool.presentation.* Classes in an INTERLIS Basket.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class PresentationBasket implements IliBasket {
 
@@ -68,7 +68,8 @@ public class PresentationBasket implements IliBasket {
      */
     @Override
     public DbObjectId getObjectId() {
-        return new DbObjectId(Diagram.class, Long.valueOf(-1 /*Unknown*/));
+        /*Unknown*/
+        return new DbObjectId(Diagram.class, (long) -1);
     }
 
     /* (non-Javadoc)

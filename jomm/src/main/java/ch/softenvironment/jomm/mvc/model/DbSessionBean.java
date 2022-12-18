@@ -16,7 +16,6 @@ package ch.softenvironment.jomm.mvc.model;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.DbConnection;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
@@ -31,7 +30,7 @@ import ch.softenvironment.jomm.implementation.DbPropertyChange;
  * A SessionBean id is defined as follows: - is usually tightly adapted to a View (for e.g. SearchView). - represents mainly one EntityBean with joins of aggregated EntityBeans, like an SQL-View -
  * must not be updated -> use DbEntityBean instead
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class DbSessionBean extends DbObject {
 
@@ -52,7 +51,7 @@ public abstract class DbSessionBean extends DbObject {
 	}
 
 	/**
-	 * @see #DbObject(DbObjectServer)
+	 * @see DbObject(DbObjectServer)
 	 */
 	protected DbSessionBean(DbObjectServer objectServer) {
 		super(objectServer);
@@ -103,7 +102,7 @@ public abstract class DbSessionBean extends DbObject {
 	 * this is a reasonable behavior, because they really mean the same Objects indeed.
 	 *
 	 * @see #getEntityBeanClass()
-	 * @see #refresh()
+	 * @see #refresh(boolean)
 	 */
 	public final DbChangeableBean getEntityBean() throws Exception {
 		if (eb == null) {
@@ -129,7 +128,7 @@ public abstract class DbSessionBean extends DbObject {
 	 * Return the main class represented by this SessionBean.
 	 *
 	 * @see #getEntityBean()
-	 * @see DbConnection#getTableFor(Class)
+	 * see DbConnection#getTableFor(Class)
 	 */
 	public static Class<? extends DbChangeableBean> getEntityBeanClass() {
 		throw new ch.softenvironment.util.DeveloperException("Overwrite this method in each SessionBean-Specialization!");
@@ -139,7 +138,7 @@ public abstract class DbSessionBean extends DbObject {
 	 * Return the DbEntityBean class represented by this SessionBean.
 	 *
 	 * @see #getEntityBean()
-	 * @see DbConnection#getTableFor(Class)
+	 * see DbConnection#getTableFor(Class)
 	 */
 	public static final Class getEntityBeanClass(java.lang.Class dbSessionBean) {
 		try {

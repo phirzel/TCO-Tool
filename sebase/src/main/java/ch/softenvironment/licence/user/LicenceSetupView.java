@@ -1,13 +1,14 @@
 package ch.softenvironment.licence.user;
 
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * GUI for a Customer to licence a Product.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 class LicenceSetupView extends ch.softenvironment.view.BaseDialog {
 
 	private transient LicenceChecker checker = null;
@@ -505,7 +506,7 @@ class LicenceSetupView extends ch.softenvironment.view.BaseDialog {
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getBtnLicence().addActionListener(ivjEventHandler);
@@ -538,7 +539,7 @@ class LicenceSetupView extends ch.softenvironment.view.BaseDialog {
 	/**
 	 * Initialize View. Call this method in a View's standard initialize method to setup your stuff.
 	 *
-	 * @see #initialize() // user code begin {1}..user code end
+	 * see #initialize()  // user code begin {1}..user code end
 	 */
 	protected void initializeView() throws Exception {
 	}
@@ -549,16 +550,16 @@ class LicenceSetupView extends ch.softenvironment.view.BaseDialog {
 	private void validateLicence() {
 		try {
 			checker.checkIn(getTxtKey().getText(), getTxtHolder().getText());
-			Tracer.getInstance().debug("checkIn=>OK");
+			log.debug("checkIn=>OK");
 			getTxtNumberOfUsers().setText("" + checker.getNumberOfUsers());
-			Tracer.getInstance().debug("usr=" + checker.getNumberOfUsers());
+			log.debug("usr={}", checker.getNumberOfUsers());
 			getTxtExpirationDate().setDate(checker.getExpirationDate());
-			Tracer.getInstance().debug("exp=" + checker.getExpirationDate());
+			log.debug("exp={}", checker.getExpirationDate());
 			getBtnLicence().setEnabled(false);
 			getBtnOK().setEnabled(true);
 			getBtnCancel().setEnabled(false);
 		} catch (Throwable e) {
-			Tracer.getInstance().debug(e.getLocalizedMessage());
+			log.debug(e.getLocalizedMessage());
 			getTxtNumberOfUsers().setText(getResourceString("CEError"));
 			getTxtExpirationDate().setText(getResourceString("CEError"));
 		}

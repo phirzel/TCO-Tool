@@ -14,17 +14,17 @@ package ch.softenvironment.view;
 
 /**
  * Method-Set for a SearchView
+ * <p>
+ * see ApplicationFrame (as a Parent-Class)
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ApplicationFrame (as a Parent-Class)
+ * @author Peter Hirzel
  */
 public interface SearchView extends ListMenuChoice {
 
     /**
      * Assign the selected Objects in a SearchTable to the caller.
      *
-     * @throws Throwable Handled by this GUI-Method.
-     * @see DbTableModel
+     * see DbTableModel
      */
     void assignObjects();
 
@@ -36,8 +36,7 @@ public interface SearchView extends ListMenuChoice {
     /**
      * Search for Objects.
      *
-     * @throws Throwable Handled by this GUI-Method.
-     * @see DbTableModel#setQuery(..)
+     * see DbTableModel#setQuery(..)
      */
     void searchObjects();
 }

@@ -16,16 +16,17 @@ package ch.softenvironment.view.tree;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.awt.Component;
 import javax.swing.JTree;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TreeCellRenderer for a TreeNode.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class NavigationTreeCellRenderer extends javax.swing.tree.DefaultTreeCellRenderer {
 
     /**
@@ -37,8 +38,8 @@ public class NavigationTreeCellRenderer extends javax.swing.tree.DefaultTreeCell
 
     /**
      * Adapt the correct LeafIcon.
-     *
-     * @see NavigationView.initializeTree()
+     * <p>
+     * see NavigationView.initializeTree()
      */
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
@@ -57,7 +58,7 @@ public class NavigationTreeCellRenderer extends javax.swing.tree.DefaultTreeCell
                 setToolTipText(utility.getToolTip(value));
             }
         } else {
-            Tracer.getInstance().developerWarning("tree expected as instanceof AutoScrollingTree with a non-null #getUtility()");
+            log.warn("Developer warning: tree expected as instanceof AutoScrollingTree with a non-null #getUtility()");
         }
 
         return this;

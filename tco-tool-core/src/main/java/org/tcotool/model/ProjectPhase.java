@@ -4,14 +4,11 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.mvc.model.DbCode;
 
 /**
- * @deprecated
- */
-
-/**
  * Attach a ProjectPhase of a certain process-model to a CostDriver.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Deprecated
 public final class ProjectPhase extends DbCode {
 
     public static final String INITIALISATION = "Initialisation";

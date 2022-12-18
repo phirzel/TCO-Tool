@@ -27,18 +27,18 @@ import ch.softenvironment.jomm.demoapp.model.RoleType;
 import ch.softenvironment.jomm.demoapp.model.WorkProduct;
 import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * JUnit Testcase to testsuite JOMM with DemoApp-Model. This Testcase will: - create some Test-Data - manipulate the Test-Data
+ * JUnit Testcase to testsuite JOMM with DemoApp-Model. This Testcase will: - create some Test-Data - manipulate the Test-Data see ch.softenvironment.jomm.demoapp.*TestSuite to run this TestCase
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ch.softenvironment.jomm.demoapp.*TestSuite to run this TestCase
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DemoAppTestCase extends TestCase {
 
 	protected static final String PROJECT_NAME = "MyProject";
@@ -84,7 +84,7 @@ public class DemoAppTestCase extends TestCase {
 			prj.remove(true);
 			assertTrue("Project->removed", prj.getPersistencyState().isRemoved());
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError(null, e);
+			log.error("testModelMapping", e);
 			fail("testModelMapping()");
 		}
 	}

@@ -43,14 +43,14 @@ import org.tcotool.standard.report.ReportTool;
 /**
  * Utility to find References in TCO-tree and present results in a search-list.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ModelUtility#find*()
+ * @author Peter Hirzel
+ * @see ModelUtility#findParent(Object)
  */
 public class FindTool {
 
 	private ModelUtility utility = null;
 	// hits after find*()
-	private List<String> searchList = new ArrayList<String>();
+	private List<String> searchList = new ArrayList<>();
 	private DbCodeType code = null;
 	private String expression = null;
 	private String undefinedLabel = "<UNDEFINED>";
@@ -68,7 +68,7 @@ public class FindTool {
 	 */
 	public List<String> findByCode(DbCodeType code) {
 		this.code = code;
-		searchList = new ArrayList<String>();
+		searchList = new ArrayList<>();
 		CodeRefBuilder builder = new CodeRefBuilder((TcoModel) utility.getRoot(), code);
 		Iterator<TcoObject> hits = builder.getHits().iterator();
 		while (hits.hasNext()) {
@@ -87,7 +87,7 @@ public class FindTool {
 	 * @return HTML formatted href's
 	 */
 	public List<String> findByText(final String expression, boolean checkName, boolean checkDocumentation, boolean checkCaseSensitive) {
-		searchList = new ArrayList<String>();
+		searchList = new ArrayList<>();
 		if (!StringUtils.isNullOrEmpty(expression)) {
 			this.expression = expression;
 			find((TcoModel) utility.getRoot(), null, checkName, checkDocumentation, checkCaseSensitive);
@@ -102,7 +102,7 @@ public class FindTool {
 	 * @return
 	 */
 	public List<String> findByUndefinedCode(final String undefinedCode) {
-		searchList = new ArrayList<String>();
+		searchList = new ArrayList<>();
 		if (!StringUtils.isNullOrEmpty(undefinedCode)) {
 			find((TcoModel) utility.getRoot(), undefinedCode, false, false, false);
 		}

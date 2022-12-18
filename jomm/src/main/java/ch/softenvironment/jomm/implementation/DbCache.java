@@ -23,15 +23,16 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Cache already read Persistent-Objects in a HashMap. Key is a reference to Class and value is a Map of instances of this type. Saves performance during runtime.
  * <p>
  * HashMap classes (key => DbObject.class (parentClass)) (values => HashMap) (key => aDbObject.Id) (value => aDbObject)
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbCache {
 
 	private final transient java.util.Map classes = new java.util.HashMap();
@@ -48,7 +49,7 @@ public class DbCache {
 	 * Cache all objects for a certain class and keep the incoming Order. Add the given objects to already cached codes of that type.
 	 *
 	 * @param code of type DbEnumeration or DbCode
-	 * @param objects Instances of code-type
+	 * @param codes Instances of code-type
 	 */
 	public synchronized void addAll(Class code, java.util.Collection codes) {
 		if (!DbObject.isCode(code)) {
@@ -75,7 +76,6 @@ public class DbCache {
 	 *
 	 * @param dbObject Classtype (parent class will be determined => Polymorphism)
 	 * @param dbId UNIQUE-Id for given dbObject
-	 * @see #put(Class, Long)
 	 */
 	public DbObject get(Class dbObject, final Long dbId) {
 		if (DbObject.isCode(dbObject)) {
@@ -90,8 +90,7 @@ public class DbCache {
 						return object;
 					}
 				}
-				ch.softenvironment.util.Tracer.getInstance().developerWarning(
-					"Code <" + dbObject.getName() + "->Key=" + dbId + "> not contained in cached Set!");
+				log.warn("Developer warning: Code <" + dbObject.getName() + "->Key=" + dbId + "> not contained in cached Set!");
 			}
 		}
 
@@ -174,7 +173,7 @@ public class DbCache {
 	 * Cache an Object of this Class type.
 	 *
 	 * @param dbObject Classtype to cache (parent class will be determined => Polymorphism)
-	 * @param dbId UNIQUE-Id for given dbObject
+	 * @param object UNIQUE-Id for given dbObject
 	 * @see #get(Class, Long)
 	 */
 	public synchronized void put(Class<? extends DbObject> dbObject, DbObject object) {
@@ -187,7 +186,7 @@ public class DbCache {
 
 			objects.put(object.getId(), object);
 		} else {
-			ch.softenvironment.util.Tracer.getInstance().developerWarning("DbObject's without ID cannot be cached");
+			log.warn("Developer warning: DbObject's without ID cannot be cached");
 		}
 	}
 
@@ -211,7 +210,7 @@ public class DbCache {
 	 */
 	public synchronized void uncache(DbObject dbClass) {
 		if (DbObject.isCode(dbClass.getClass())) {
-			Tracer.getInstance().debug("uncaching all codes for: " + dbClass);
+			log.debug("uncaching all codes for: {}", dbClass);
 			uncache(dbClass);
 		}
 

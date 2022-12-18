@@ -15,12 +15,12 @@ package ch.softenvironment.jomm.serialize;
 /**
  * Utility to encapsulate element-Attributes within an XML-Stream. For e.g. <MyElement attrName="attrValue"...
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class AttributeList {
 
 	// ordered map of attribute name/value pairs
-	private final java.util.List<java.util.List<String>> attributes = new java.util.ArrayList<java.util.List<String>>();
+	private final java.util.List<java.util.List<String>> attributes = new java.util.ArrayList<>();
 
 	/**
 	 * AttributeList constructor comment.
@@ -42,7 +42,7 @@ public class AttributeList {
 	 * Add an attribute name/value pair to ordered Attribute-List.
 	 */
 	public void add(final String attributeName, final String attributeValue) {
-		java.util.List<String> entry = new java.util.ArrayList<String>(2);
+		java.util.List<String> entry = new java.util.ArrayList<>(2);
 		entry.add(attributeName);
 		entry.add((attributeValue == null) ? "" : attributeValue);
 		attributes.add(entry);

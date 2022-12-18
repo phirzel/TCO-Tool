@@ -7,7 +7,11 @@ import java.util.List;
  *
  * @author Frank Meyer
  */
-public class TestCycles {
+public final class TestCycles {
+
+    private TestCycles() {
+        throw new IllegalStateException("utility class");
+    }
 
     /**
      * @param args
@@ -62,5 +66,4 @@ public class TestCycles {
             System.out.print("\n");
         }
     }
-
 }

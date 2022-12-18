@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_access;
+package ch.softenvironment.jomm.target.sql.msaccess;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@ package ch.softenvironment.jomm.target.sql.ms_access;
  * <p>
  * Design Pattern: <b>Adapter</b>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MsAccessMapper extends ch.softenvironment.jomm.target.sql.SqlMapper {
 

@@ -6,7 +6,7 @@ import java.util.Locale;
 /**
  * Test BeanReflector
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class BeanReflectorTestCase extends junit.framework.TestCase {
 
@@ -102,51 +102,51 @@ public class BeanReflectorTestCase extends junit.framework.TestCase {
 
 	@Override
 	protected void setUp() {
-		bean = new TestBean();
-		bean.setText("Hello");
-		bean.setDVal(new Double(3.2));
-		bean.setLVal(Long.valueOf(1989));
-		bean.setIVal(Integer.valueOf(38));
-		bean.setBVal(Boolean.TRUE);
-		bean.setDate(new Date());
-		bean.setBPrimitive(true);
-		bean.setIPrimitive(25);
-	}
+        bean = new TestBean();
+        bean.setText("Hello");
+        bean.setDVal(3.2);
+        bean.setLVal(1989L);
+        bean.setIVal(38);
+        bean.setBVal(Boolean.TRUE);
+        bean.setDate(new Date());
+        bean.setBPrimitive(true);
+        bean.setIPrimitive(25);
+    }
 
 	public void testGetValue() throws Exception {
-		BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "text");
-		String value = "Bye";
-		br.setValue(value);
-		assertTrue("BeanReflector.getValue(String)", br.getValue().equals(value));
-		assertTrue("BeanReflector.getValue(String)", br.getValue() == value);
-	}
+        BeanReflector<TestBean> br = new BeanReflector<>(bean, "text");
+        String value = "Bye";
+        br.setValue(value);
+        assertTrue("BeanReflector.getValue(String)", br.getValue().equals(value));
+        assertTrue("BeanReflector.getValue(String)", br.getValue() == value);
+    }
 
 	public void testSetPublicField() throws Exception {
-		String msg = "TEST";
-		BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "test");
-		br.setField(msg);
-		assertTrue("BeanReflector->setField", bean.fieldTest.equals(msg));
-		assertTrue("BeanReflector->getField", br.getField().get(bean).equals(msg));
-	}
+        String msg = "TEST";
+        BeanReflector<TestBean> br = new BeanReflector<>(bean, "test");
+        br.setField(msg);
+        assertTrue("BeanReflector->setField", bean.fieldTest.equals(msg));
+        assertTrue("BeanReflector->getField", br.getField().get(bean).equals(msg));
+    }
 
-	public void testCreateInstance() throws Exception {
-		Object tb = BeanReflector.createInstance(TestBean.class);
-		assertNotNull(tb);
-		assertTrue("BeanReflector.createInstance(TestBean)", tb instanceof TestBean);
-	}
+    public void testCreateInstance() throws Exception {
+        Object tb = BeanReflector.createInstance(TestBean.class);
+        assertNotNull(tb);
+        assertTrue("BeanReflector.createInstance(TestBean)", tb instanceof TestBean);
+    }
 
-	public void testHasProperty() throws Exception {
-		BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "iVal");
-		assertTrue("BeanReflector", br.hasProperty() == BeanReflector.GETTER_AND_SETTER);
+    public void testHasProperty() {
+        BeanReflector<TestBean> br = new BeanReflector<>(bean, "iVal");
+        assertTrue("BeanReflector", br.hasProperty() == BeanReflector.GETTER_AND_SETTER);
 
-		BeanReflector<Locale> bl = new BeanReflector<Locale>(Locale.getDefault(), "language");
-		assertTrue("BeanReflector", bl.hasProperty() == BeanReflector.GETTER);
-	}
+        BeanReflector<Locale> bl = new BeanReflector<Locale>(Locale.getDefault(), "language");
+        assertTrue("BeanReflector", bl.hasProperty() == BeanReflector.GETTER);
+    }
 
-	public void testCloneValue() throws Exception {
-		BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "text");
-		Object clonedValue = br.cloneValue();
-		assertTrue("BeanReflector->String-Contents is equal", bean.getText().equals(clonedValue));
+    public void testCloneValue() throws Exception {
+        BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "text");
+        Object clonedValue = br.cloneValue();
+        assertTrue("BeanReflector->String-Contents is equal", bean.getText().equals(clonedValue));
 
 		br = new BeanReflector<TestBean>(bean, "dVal");
 		clonedValue = br.cloneValue();
@@ -195,17 +195,17 @@ public class BeanReflectorTestCase extends junit.framework.TestCase {
 	}
 
 	public void testPrimitiveInt() {
-		BeanReflector<TestBean> br = new BeanReflector<TestBean>(bean, "iPrimitive");
-		try {
-			assertTrue("AMAZING: int => Integer", br.getValue().equals(Integer.valueOf(25)));
+        BeanReflector<TestBean> br = new BeanReflector<>(bean, "iPrimitive");
+        try {
+            assertTrue("AMAZING: int => Integer", br.getValue().equals(Integer.valueOf(25)));
 
-			br.setValue(Integer.valueOf(-89));
-			assertTrue("AMAZING: int => Integer", br.getValue().equals(Integer.valueOf(-89)));
+            br.setValue(Integer.valueOf(-89));
+            assertTrue("AMAZING: int => Integer", br.getValue().equals(Integer.valueOf(-89)));
 
-			Class<?> type = br.getGetterReturnType();
-			assertTrue("BeanReflector->Integer-Contents is equal", type == int.class);
-			assertTrue(type.getName().equals("int"));
-		} catch (Throwable e) {
+            Class<?> type = br.getGetterReturnType();
+            assertTrue("BeanReflector->Integer-Contents is equal", type == int.class);
+            assertTrue(type.getName().equals("int"));
+        } catch (Throwable e) {
 			System.out.println(e.getLocalizedMessage());
 			fail(e.getLocalizedMessage());
 		}

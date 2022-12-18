@@ -16,6 +16,7 @@ package ch.softenvironment.view.tree;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import java.beans.PropertyChangeEvent;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.event.TreeModelEvent;
@@ -26,7 +27,7 @@ import javax.swing.tree.TreePath;
  * Implements an adapter to the meta-model as required by the NavigationView's JTree.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class NavigationTreeModel implements javax.swing.tree.TreeModel, java.beans.PropertyChangeListener {
 
@@ -88,7 +89,7 @@ public class NavigationTreeModel implements javax.swing.tree.TreeModel, java.bea
     /**
      * Invoked after a node (or a set of siblings) has changed in some way.
      *
-     * @see #propertyChange()
+     * @see #propertyChange(PropertyChangeEvent)
      */
     protected void fireTreeNodesChanged(Object node) {
         // ch.softenvironment.util.Tracer.getInstance().debug(this,
@@ -144,7 +145,7 @@ public class NavigationTreeModel implements javax.swing.tree.TreeModel, java.bea
     /**
      * Invoked after the tree has drastically changed structure from the given node down.
      *
-     * @see #propertyChange()
+     * @see #propertyChange(PropertyChangeEvent)
      */
     protected void fireTreeStructureChanged(Object node) {
         // ch.softenvironment.util.Tracer.getInstance().debug(this,
@@ -246,7 +247,7 @@ public class NavigationTreeModel implements javax.swing.tree.TreeModel, java.bea
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -291,7 +292,7 @@ public class NavigationTreeModel implements javax.swing.tree.TreeModel, java.bea
      * <p>
      * Triggered if JTree's attribute invokesStopCellEditing is set to true only.
      *
-     * @see #propertyChange(..)
+     * @see #propertyChange(PropertyChangeEvent)
      */
     @Override
     public void valueForPathChanged(TreePath path, Object newValue) {

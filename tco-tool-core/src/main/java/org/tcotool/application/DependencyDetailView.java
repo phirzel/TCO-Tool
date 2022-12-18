@@ -37,9 +37,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of a Dependency between 2 TcoObject's. The client depends on supplier by a distribution in %.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
     java.beans.PropertyChangeListener {
 
@@ -278,7 +278,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
             getTxtSupplierCost().setText(af.format(supplierCost));
 
             // Client-Distribution
-            getTxtClientCost().setText(af.format(supplierCost / 100.0 * getObject().getDistribution().doubleValue()));
+            getTxtClientCost().setText(af.format(supplierCost / 100.0 * getObject().getDistribution()));
             getSliClient().setValue(getObject().getDistribution().intValue());
 
             // Supplier-Distribution
@@ -287,7 +287,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
             while (iterator.hasNext()) {
                 Dependency dependency = iterator.next();
                 if (dependency.getDistribution() != null) {
-                    distribution = distribution + dependency.getDistribution().doubleValue();
+                    distribution = distribution + dependency.getDistribution();
                 }
                 // TcoObject object =
                 // LauncherView.getInstance().getUtility().findClient(dependency);
@@ -440,7 +440,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
                 // user code end
                 ivjConnPtoP1Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setDistribution(new Double(Integer.valueOf(getSliClient().getValue()).doubleValue()));
+                    getObject().setDistribution(Integer.valueOf(getSliClient().getValue()).doubleValue());
                 }
                 // user code begin {2}
                 // user code end
@@ -622,7 +622,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
                 // user code end
                 ivjConnPtoP4Aligning = true;
                 if ((getObject() != null)) {
-                    getChxVariant().setSelected((getObject().getVariant()).booleanValue());
+                    getChxVariant().setSelected(getObject().getVariant());
                 }
                 // user code begin {2}
                 // user code end
@@ -1604,7 +1604,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -1658,7 +1658,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -1734,7 +1734,7 @@ public class DependencyDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject Example Code: <code> try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() !=null) {
+     * @param object Example Code: <code> try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() !=null) {
      *     getObject().removeChangeListener(getConsistencyController()); } ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Exception
      *     e) { handleException(e); }
      *     </code>

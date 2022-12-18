@@ -3,7 +3,7 @@ package ch.softenvironment.persistence.types;
 /**
  * Binary large object. Special type
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface Blob {
 

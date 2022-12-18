@@ -39,7 +39,7 @@ import java.util.Set;
  * <p>
  * SQL knows three different language-types: - Data Definition Language (DDL) => CREATE/ALTER/DROP - Data Manipulation Language (DML) => INSERT/UPDATE/DELETE - Data Query Language (DQL) => SELECT
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class DbQueryBuilder {
 
@@ -371,7 +371,7 @@ public abstract class DbQueryBuilder {
      * For e.g.: Adjudication.category[0..*] SELECT DbMapper.ATTRIBUTE_MAP_VALUE_ID,* FROM T_MAP_Category WHERE (T_Type_Owner='Adjudication') AND (T_Id_Owner=12) AND
      * (T_Attribute_Owner='T_Id_Category')"
      *
-     * @param DbQueryBuilder .SELECT/INSERT/DELETE
+     * @param queryType .SELECT/INSERT/DELETE
      * @return DbQueryBuilder
      */
     public static final DbQueryBuilder createMapClause(final int queryType, DbObject instance, DbDescriptorEntry entry) throws Exception {
@@ -560,7 +560,7 @@ public abstract class DbQueryBuilder {
      * Return a generic Deletion Query for a given DbObject (for e.g. SQL DELETE). Aggregates and Composites must be treated separately, resp. Referential Integrity Conditions are assumed by
      * Target-Schema.
      *
-     * @param dbObject DbObject to be removed
+     * @param object DbObject to be removed
      */
     public static final DbQueryBuilder createRemoveObject(DbObject /* DbChangeableBean */object) {
         DbQueryBuilder builder = object.getObjectServer().createQueryBuilder(DELETE, object.getClass().getName() + " by ID");
@@ -633,9 +633,10 @@ public abstract class DbQueryBuilder {
             case RAW: {
                 return "RAW => " + useCase;
             }
+            default:
+                // TODO
+                throw new DeveloperException("NYI");
         }
-        // TODO
-        throw new DeveloperException("NYI");
     }
 
     /**
@@ -823,7 +824,7 @@ public abstract class DbQueryBuilder {
      * Return all DbNlsString's for field nlsText of all codes given by dbCode. Used for caching.
      *
      * @param dbCode DbEnumeration type
-     * @see DbObjectServer#cacheNlsStrings(..)
+     * see DbObjectServer#cacheNlsStrings(..)
      */
     public abstract DbQueryBuilder toCodeNlsBuilder(Class<DbCodeType> dbCode, Locale locale);
 

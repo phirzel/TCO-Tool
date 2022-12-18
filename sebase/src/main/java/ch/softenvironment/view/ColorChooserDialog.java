@@ -17,9 +17,9 @@ import java.awt.Color;
 /**
  * Show a Dialog to select a Color.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class ColorChooserDialog extends BaseDialog {
 
     private java.awt.Color chosenColor = null;
@@ -190,7 +190,7 @@ public class ColorChooserDialog extends BaseDialog {
     /**
      * Return the selected Color.
      *
-     * @see undo()
+     * @see #undo()
      */
     public Color getChosenColor() {
         if (isSaved() && (chosenColor == null)) {
@@ -238,7 +238,7 @@ public class ColorChooserDialog extends BaseDialog {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnCancel().addActionListener(ivjEventHandler);
@@ -277,7 +277,7 @@ public class ColorChooserDialog extends BaseDialog {
     /**
      * Resets chosen color to null.
      *
-     * @see cancelPressed()
+     * @see #cancelPressed()
      */
     @Override
     protected void undo() {

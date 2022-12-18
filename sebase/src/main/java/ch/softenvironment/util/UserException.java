@@ -17,9 +17,8 @@ import ch.softenvironment.client.ResourceManager;
 /**
  * Show failures within Application a User must know.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class UserException extends DeveloperException {
 
 	/**
@@ -30,23 +29,13 @@ public class UserException extends DeveloperException {
 	 * @param e Original exception
 	 */
 	public UserException(String message, String title, Throwable e) {
-		super(message, (title == null ? ResourceManager.getResource(UserException.class, "CTApplicationError") : title), e, 0 /*
-		 * this
-		 * constructor
-		 * &
-		 * super
-		 */);
+		super(message, (title == null ? ResourceManager.getResource(UserException.class, "CTApplicationError") : title), e);
 	}
 
 	/**
 	 * @see #UserException(String, String, Throwable)
 	 */
 	public UserException(String message, String title) {
-		super(message, (title == null ? ResourceManager.getResource(UserException.class, "CTApplicationError") : title), null, 0 /*
-		 * this
-		 * constructor
-		 * &
-		 * super
-		 */);
+		this(message, (title == null ? ResourceManager.getResource(UserException.class, "CTApplicationError") : title), null);
 	}
 }

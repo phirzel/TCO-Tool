@@ -16,23 +16,28 @@ package org.tcotool.tools;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.model.Course;
 import org.tcotool.model.Currency;
 
 /**
  * Utility to calculate currency course transformations.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class CourseUtils {
+@Slf4j
+public final class CourseUtils {
+
+	private CourseUtils() {
+		throw new IllegalStateException("utility class");
+	}
 
 	/**
 	 * Return the targetAmount, which is: targetAmount = sourceAmount * factor
 	 *
-	 * @see #getCourse(Currency, Currency)
+	 * @see #getCourse(ModelUtility, Currency, Currency)
 	 */
 	public static double getAmount(ModelUtility utility, double sourceAmount, Currency source, Currency target) throws UserException {
 		return sourceAmount * getCourse(utility, source, target);
@@ -61,7 +66,7 @@ public class CourseUtils {
 		try {
 			list = utility.getSystemParameter().getCourse();
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("SystemParameter fault <Course>: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <Course>", e);
 			list = new ArrayList<Course>();
 		}
 		java.util.Iterator<Course> it = list.iterator();

@@ -21,7 +21,6 @@ import ch.softenvironment.jomm.DbQuery;
 import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.DbUserTransactionBlock;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.AboutDialog;
 import ch.softenvironment.view.FileNamePanel;
 import ch.softenvironment.view.SimpleEditorPanel;
@@ -50,9 +49,9 @@ import javax.swing.JTextField;
 /**
  * Tool to execute any-SQL-Code.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame {
 
 	private DbObjectServer server = null;
@@ -155,7 +154,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 					WaitDialog.updateProgress(5, "Table-types");
 					ResultSet rs = dbmd.getTableTypes();
 					getPnlLog().append("Available Table-types for Database:\n");
-					java.util.Set<String> tableTypes = new java.util.HashSet<String>();
+					java.util.Set<String> tableTypes = new java.util.HashSet<>();
 					while (rs.next()) {
 						// check for TABLE, VIEW, ...
 						String type = rs.getString("TABLE_TYPE");
@@ -177,8 +176,8 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 					getPnlLog().append("\n-----------------------\n");
 					getPnlLog().append("Catalogs\n");
 					rs = dbmd.getCatalogs();
-					java.util.List<String> tables = new java.util.ArrayList<String>();
-					java.util.List<String> views = new java.util.ArrayList<String>();
+					java.util.List<String> tables = new java.util.ArrayList<>();
+					java.util.List<String> views = new java.util.ArrayList<>();
 					while (rs.next()) {
 						String catalog = rs.getString(1);
 						getPnlLog().append("CATALOG=" + catalog + "\n");
@@ -399,7 +398,6 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 				// "jdbc:mysql://localhost:3306/workflow");
 				new ch.softenvironment.jomm.mvc.view.DbLoginDialog(null, "jdbc:oracle:thin:@localhost:1521/XE");
 			if (!dialog.isSaved()) {
-				Tracer.getInstance().stop();
 				System.exit(0);
 			}
 
@@ -1244,7 +1242,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getMncStatusbar().addActionListener(ivjEventHandler);
@@ -1293,7 +1291,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 
 		javax.jdo.PersistenceManagerFactory pmFactory = // new
 			// ch.softenvironment.jdo.oracle.OracleObjectServerFactory();
-			new ch.softenvironment.jomm.target.sql.ms_access.MsAccessObjectServerFactory();
+			new ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory();
 		pmFactory.setConnectionURL(url);
 		pmFactory.setNontransactionalRead(false); // NO autoCommit while reading
 		pmFactory.setNontransactionalWrite(false); // NO autoCommit while
@@ -1322,8 +1320,6 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 	public static void main(java.lang.String[] args) {
 		DbSchemaAnalyzerView instance = null;
 		try {
-			Tracer.start(args);
-
 			setSystemLookAndFeel();
 
 			showSplashScreen(new java.awt.Dimension(500, 400), ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DbSchemaAnalyzerView.class, "splash.png"));
@@ -1343,7 +1339,6 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 			 * resLauncherView.getString("CTLoginFailure"
 			 * ), "...",
 			 */exception); //$NON-NLS-1$
-			Tracer.getInstance().stop();
 			System.exit(-1);
 		}
 	}
@@ -1441,7 +1436,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 					WaitDialog.updateProgress(5, "collect tables...");
 					DatabaseMetaData dbmd = server.getMetaData();
 					ResultSet rs = dbmd.getCatalogs();
-					final java.util.Map<String, java.util.List<java.util.List<String>>> tables = new java.util.HashMap<String, java.util.List<java.util.List<String>>>();
+					final java.util.Map<String, java.util.List<java.util.List<String>>> tables = new java.util.HashMap<>();
 					while (rs.next()) {
 						String catalog = rs.getString(1);
 						// getPnlLog().append("\nCATALOG=" + catalog + "\n");
@@ -1477,8 +1472,8 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 
 									// determine String-textColumns
 									ResultSetMetaData rsmd = rstextColumns.getMetaData();
-									java.util.List<String> textColumns = new java.util.ArrayList<String>();
-									java.util.List<String> numberColumns = new java.util.ArrayList<String>();
+									java.util.List<String> textColumns = new java.util.ArrayList<>();
+									java.util.List<String> numberColumns = new java.util.ArrayList<>();
 									int numberOftextColumns = rsmd.getColumnCount();
 									for (int i = 1; i <= numberOftextColumns; i++) {
 										// tableName = rsmd.getTableName(i);

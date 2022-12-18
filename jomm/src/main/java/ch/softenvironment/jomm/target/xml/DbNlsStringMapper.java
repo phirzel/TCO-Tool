@@ -19,15 +19,16 @@ import ch.softenvironment.jomm.serialize.ObjectWriter;
 import ch.softenvironment.jomm.serialize.Serializer;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Mapping-Utility to encode and decode a DbNlsString to/from an XML-Instance. The structure of a DbNlsString is always the same, therefore no Visitor is necessary her.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class DbNlsStringMapper implements ObjectWriter /* , Visitor */ {
 
     // DbNlsString tag's in XML-instance
@@ -42,7 +43,7 @@ class DbNlsStringMapper implements ObjectWriter /* , Visitor */ {
      *
      * @param tag
      * @return boolean
-     * @see SE_NLS
+     * see SE_NLS
      */
     protected static boolean isNlsString(String tag) {
         return (tag != null) && tag.equals(XmlMapper.SE_NLS);
@@ -52,22 +53,22 @@ class DbNlsStringMapper implements ObjectWriter /* , Visitor */ {
      * Constructor for decoding an XML-instance.
      *
      * @param server
-     * @see #handleStart()
-     * @see #handleEnd()
+     * @see #handleStart(String)
+     * @see #handleEnd(String, StringBuffer)
      */
     protected DbNlsStringMapper(DbObjectServer server) {
         super();
         try {
             nlsString = (DbNlsString) server.createInstance(DbNlsString.class);
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError(null, e);
+            log.error(null, e);
         }
     }
 
     /**
      * Constructor for encoding an XML-instance.
      *
-     * @see #writeObject()
+     * @see #writeObject(Object, Serializer)
      */
     protected DbNlsStringMapper() {
         super();
@@ -136,7 +137,7 @@ class DbNlsStringMapper implements ObjectWriter /* , Visitor */ {
     /**
      * Write a DbNlsString into XML-Stream.
      *
-     * @param element Property representing the given nlsString
+     * @param object Property representing the given nlsString
      */
     @Override
     public void writeObject(Object object, Serializer cb) throws java.io.IOException {

@@ -23,7 +23,7 @@ import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 /**
  * Logical VIEW of a Project.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ProjectSessionBean extends DbSessionBean {
 
@@ -68,7 +68,6 @@ public class ProjectSessionBean extends DbSessionBean {
      * Gets the name property (java.lang.String) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     public Boolean getActive() {
         return fieldActive;
@@ -78,7 +77,6 @@ public class ProjectSessionBean extends DbSessionBean {
      * Gets the name property (java.lang.String) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     public java.lang.String getCustomerString() {
         return "<NYI>";
@@ -95,7 +93,6 @@ public class ProjectSessionBean extends DbSessionBean {
      * Gets the name property (java.lang.String) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     public java.lang.String getName() {
         return fieldName;
@@ -105,7 +102,6 @@ public class ProjectSessionBean extends DbSessionBean {
      * Gets the name property (java.lang.String) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     public java.lang.String getRealizerString() {
         return "<NYI>";
@@ -115,7 +111,6 @@ public class ProjectSessionBean extends DbSessionBean {
      * Gets the name property (java.lang.String) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     public java.util.Date getStart() {
         return fieldStart;

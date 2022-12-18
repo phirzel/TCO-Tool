@@ -32,9 +32,13 @@ import org.tcotool.model.TcoPackage;
 /**
  * Utility to validate any Dependency in the model.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class DependencyValidator {
+public final class DependencyValidator {
+
+	private DependencyValidator() {
+		throw new IllegalStateException("utility class");
+	}
 
 	/**
 	 * Before creating a new Dependency it should be validated, otherwise unwanted failures might result, such as a recursive StackOverflow.
@@ -92,13 +96,13 @@ public class DependencyValidator {
 	 * Check weather given client and supplier would result in a cyclic dependency.
 	 *
 	 * @return null if ok otherwise cyclic-fault message
-	 * @see de.normalisiert.utils.graphs.*
-	 * @see http://stackoverflow.com/questions/546655/finding-all-cycles-in-graph
-	 * @see http://dutta.csc.ncsu.edu/csc791_spring07/wrap/circuits_johnson.pdf
+	 * see de.normalisiert.utils.graphs.*
+	 * see http://stackoverflow.com/questions/546655/finding-all-cycles-in-graph
+	 * see http://dutta.csc.ncsu.edu/csc791_spring07/wrap/circuits_johnson.pdf
 	 */
 	private static String validateCyclicDependency(ModelUtility utility, Service client, TcoObject supplier) {
 		// TcoObject.Id, Node-Count starting at 0
-		Map<Long, Long> clientOrSupplierNodes = new HashMap<Long, Long>();
+		Map<Long, Long> clientOrSupplierNodes = new HashMap<>();
 		Set<Dependency> dependencies = utility.findDependencies((TcoObject) utility.getRoot());
 		Iterator<Dependency> iterator = dependencies.iterator();
 

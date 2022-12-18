@@ -30,9 +30,9 @@ import javax.swing.JScrollPane;
 /**
  * InternalFrame to show graphical reports.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class GraphicReportFrame extends JInternalFrame {
 
     private JPanel pnlContent = null;

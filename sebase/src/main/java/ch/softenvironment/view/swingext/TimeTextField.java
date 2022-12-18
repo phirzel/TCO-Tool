@@ -15,10 +15,9 @@ package ch.softenvironment.view.swingext;
 /**
  * Extended JTextField to show a Time (resp. a java.util.Date).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see DateTextField
  */
-@SuppressWarnings("serial")
 public class TimeTextField extends DateTextField {
 
     /**

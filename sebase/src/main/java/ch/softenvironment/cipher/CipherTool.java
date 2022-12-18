@@ -17,7 +17,6 @@ package ch.softenvironment.cipher;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -25,12 +24,14 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Tool to encrypt any "Message".
  *
  * @author Peter Hirzel <i>soft</i>Environment
  */
+@Slf4j
 public class CipherTool {
 
 	private javax.crypto.Cipher cipher = null;
@@ -44,12 +45,12 @@ public class CipherTool {
 			cipher = javax.crypto.Cipher.getInstance(key.getAlgorithm());
 			cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, key);
 		} catch (NoSuchPaddingException e) {
-			Tracer.getInstance().debug("Padding: " + e.getLocalizedMessage());
-		} catch (NoSuchAlgorithmException e) {
-			Tracer.getInstance().debug("Algorithm: " + e.getLocalizedMessage());
-		} catch (InvalidKeyException e) {
-			Tracer.getInstance().debug("Key: " + e.getLocalizedMessage());
-		}
+            log.debug("Padding: {}", e.getLocalizedMessage());
+        } catch (NoSuchAlgorithmException e) {
+            log.debug("Algorithm: {}", e.getLocalizedMessage());
+        } catch (InvalidKeyException e) {
+            log.debug("Key: {}", e.getLocalizedMessage());
+        }
 	}
 
 	/**
@@ -76,8 +77,8 @@ public class CipherTool {
 			// Send encrypted message and serialized 
 			// SealedObject to intended recipient
 		} catch (IOException e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeError("IO-Encryption Problem", e);
-		}
+            log.error("IO-Encryption Problem", e);
+        }
 	}
 
 	/**
@@ -100,10 +101,10 @@ public class CipherTool {
 			//throw new DeveloperException("replace encoder, perhaps use Jakarta Commons Codec API (http://jakarta.apache.org/commons/codec/)");
 
 		} catch (javax.crypto.BadPaddingException e) {
-			Tracer.getInstance().debug("Padding: " + e.getLocalizedMessage());
-		} catch (IllegalBlockSizeException e) {
-			Tracer.getInstance().debug("BlockSize: " + e.getLocalizedMessage());
-		}
+            log.debug("Padding: {}", e.getLocalizedMessage());
+        } catch (IllegalBlockSizeException e) {
+            log.debug("BlockSize: {}", e.getLocalizedMessage());
+        }
 		return null;
 	}
 }

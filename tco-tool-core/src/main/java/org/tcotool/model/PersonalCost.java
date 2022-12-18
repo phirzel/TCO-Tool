@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.descriptor.DbNumericFieldDescriptor;
 /**
  * Costs created by human employees (de: Personalkosten (PK))
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class PersonalCost extends Cost {
 

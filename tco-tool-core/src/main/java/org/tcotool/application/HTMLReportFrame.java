@@ -39,9 +39,9 @@ import org.tcotool.standard.report.ReportTool;
 /**
  * InternalFrame for HTML-Reports.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class HTMLReportFrame extends JInternalFrame implements javax.swing.event.HyperlinkListener {
 
     private JEditorPane editor = null;
@@ -108,8 +108,6 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
 
     /**
      * ReportFrame constructor comment.
-     *
-     * @param title java.lang.String
      */
     public HTMLReportFrame(ch.softenvironment.view.ViewOptions viewOptions, ReportTool tool) {
         super(tool.getTitle(), true, true, true, true);
@@ -258,7 +256,7 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getTlbToolbar().addToolBarListener(ivjEventHandler);
@@ -337,7 +335,7 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
 
             if (saveDialog.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
                 String filename = saveDialog.getSelectedFile().getAbsolutePath();
-                String contents = null;
+                final String contents;
                 if (filename.toUpperCase().endsWith(".CSV")) {
                     contents = tool.getCsvContents();
                 } else /*if (filename.toUpperCase().endsWith(".HTML"))*/ {

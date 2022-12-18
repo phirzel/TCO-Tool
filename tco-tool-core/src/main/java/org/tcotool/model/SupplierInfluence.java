@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 /**
  * Influence of a Dependency-supplier.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class SupplierInfluence extends DbEnumeration {
 
@@ -22,9 +22,10 @@ public final class SupplierInfluence extends DbEnumeration {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection.addDescriptor()
      *
-     * @see DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbEnumeration> dbCode*/) {
         DbDescriptor descriptor = DbEnumeration.createDefaultDescriptor(SupplierInfluence.class);

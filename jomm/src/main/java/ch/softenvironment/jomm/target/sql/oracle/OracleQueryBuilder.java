@@ -19,7 +19,7 @@ package ch.softenvironment.jomm.target.sql.oracle;
 /**
  * QueryBuilder for ORACLE 9i Specialities.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class OracleQueryBuilder extends ch.softenvironment.jomm.target.sql.SqlQueryBuilder {
 

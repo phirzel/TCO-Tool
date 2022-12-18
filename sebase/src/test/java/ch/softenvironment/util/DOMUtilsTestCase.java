@@ -39,11 +39,6 @@ public class DOMUtilsTestCase extends TestCase {
     @Override
     public void setUp() {
         try {
-            if (Tracer.getInstance() == null) {
-                //TODO use TestSetup()
-                Tracer.start(Tracer.ALL);
-            }
-
             docBuilder = DOMUtils.createDocumentBuilder(false);
         } catch (ParserConfigurationException e) {
             fail(e.getLocalizedMessage());
@@ -52,7 +47,6 @@ public class DOMUtilsTestCase extends TestCase {
 
     @Override
     public void tearDown() {
-        Tracer.getInstance().stop();
     }
 
     /**

@@ -31,9 +31,9 @@ import javax.jdo.metadata.TypeMetadata;
 /**
  * JDO-Implementation of an ORACLE DBMS Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class OracleObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     /**
@@ -50,7 +50,7 @@ public class OracleObjectServerFactory extends ch.softenvironment.jomm.DbDomainN
 
     @Override
     protected javax.jdo.PersistenceManager createPersistenceManager() {
-        DbObjectServer objectServer = null;
+        final DbObjectServer objectServer;
         try {
             objectServer = new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new OracleMapper(), OracleQueryBuilder.class,
                 ch.softenvironment.jomm.target.sql.SqlConnection.class);

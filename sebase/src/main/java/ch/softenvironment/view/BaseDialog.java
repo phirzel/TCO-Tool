@@ -12,12 +12,14 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import ch.softenvironment.util.Tracer;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Template-Dialog defining minimal functionality.
@@ -29,9 +31,10 @@ import java.awt.Point;
  * <p>
  * Windows apps, and almost none do this (since by default dialogs don't have icons).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public abstract class BaseDialog extends javax.swing.JDialog {
 
 	private javax.swing.JPanel ivjJDialogContentPane = null;
@@ -91,7 +94,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 			}
 			comp = comp.getParent();
 		}
-		Tracer.getInstance().developerWarning("Dialog owner (Frame) not determinable");
+		log.warn("Developer warning: Dialog owner (Frame) not determinable");
 		return null;
 	}
 
@@ -109,7 +112,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 			}
 			comp = comp.getParent();
 		}
-		Tracer.getInstance().developerWarning("Dialog owner (Dialog) not determinable");
+		log.warn("Developer warning: Dialog owner (Dialog) not determinable");
 		return null;
 	}
 
@@ -133,7 +136,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	}
 
 	/**
-	 * @see BaseFrame#genericPopupDisplay(..)
+	 * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
 	 */
 	protected void genericPopupDisplay(java.awt.event.MouseEvent event, javax.swing.JPopupMenu popupMenu) {
 		BaseFrame.popupDisplay(this, event, popupMenu);
@@ -344,7 +347,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	 * @param exception java.lang.Throwable
 	 */
 	protected void traceOnly(java.lang.Throwable exception) {
-		Tracer.getInstance().uncaughtException(exception);//$NON-NLS-1$
+		log.error("uncaugt", exception);//$NON-NLS-1$
 	}
 
 	/**
@@ -374,7 +377,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	/**
 	 * Set this Dialog relative to parent Window.
 	 *
-	 * @see BaseFrame#setRelativeLocation()
+	 * @see BaseFrame#setRelativeLocation(Component)
 	 */
 	protected void setRelativeLocation(java.awt.Component parent) {
 		if (parent != null) {
@@ -390,7 +393,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	 * Create and open a Confirmation-Dialog modally. YES or a NO are possible options.
 	 *
 	 * @return true->YES was pressed; false->NO was pressed
-	 * @see #showWarning()
+	 * @see #showWarning(Component, String, Object)
 	 */
 	public static boolean showConfirm(java.awt.Component owner, String title, Object message) {
 		Object[] options = {ResourceManager.getResource(BaseDialog.class, "BtnYes_text"), ResourceManager.getResource(BaseDialog.class, "BtnNo_text")};
@@ -405,7 +408,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	 * Create and open a Confirmation-Dialog modally. YES, NO or CANCEL are possible options.
 	 *
 	 * @return Boolen.TRUE->YES was pressed; Boolean.FALSE->NO was pressed; null->CANCEL was pressed
-	 * @see #showWarning()
+	 * @see #showWarning(Component, String, Object)
 	 */
 	public static Boolean showConfirmCancel(java.awt.Component owner, String title, Object message) {
 		Object[] options = {ResourceManager.getResource(BaseDialog.class, "BtnYes_text"), ResourceManager.getResource(BaseDialog.class, "BtnNo_text"), getCancelString()};
@@ -421,13 +424,13 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 			case 1: {
 				return Boolean.FALSE;
 			}
+			default:
+				return null;
 		}
-
-		return null;
 	}
 
 	/**
-	 * @see #showConfirmDeletion(Component, Object, String)
+	 * @see #showConfirmDeletion(Component, String, Object)
 	 */
 	public static boolean showConfirmDeletion(java.awt.Component owner) {
 		return showConfirmDeletion(owner, ResourceManager.getResource(BaseDialog.class, "CTDeletion"), ResourceManager.getResource(BaseDialog.class, "CIQueryForDeletion"));
@@ -437,7 +440,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	 * Create and open Confirmation for Deletion Dialog modally.
 	 *
 	 * @return true->Deletion may proceed; false->otherwise
-	 * @see #showWarning()
+	 * @see #showWarning(Component, String, Object)
 	 */
 	public static boolean showConfirmDeletion(java.awt.Component owner, String title, Object message) {
 		Object[] options = {ResourceManager.getResource(BaseDialog.class, "BtnYes_text"), ResourceManager.getResource(BaseDialog.class, "BtnNo_text")};
@@ -451,7 +454,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	/**
 	 * Create and open an Confirmation-Dialog for application termination.
 	 *
-	 * @see #showConfirmCancel()
+	 * @see #showConfirmCancel(Component, String, Object)
 	 */
 	public static Boolean showConfirmExit(java.awt.Component owner) {
 		return showConfirmCancel(owner, CommonUserAccess.getTitleSaveChanges(), CommonUserAccess.getQuestionSaveChanges());
@@ -461,7 +464,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	 * Create and open Error-Dialog modally.
 	 *
 	 * @param exception optional Exception which may be showed as Stacktrace
-	 * @see #showWarning()
+	 * @see #showWarning(Component, String, Object)
 	 */
 	public static void showError(java.awt.Component owner, String title, Object message, Throwable exception) {
 		Frame frame = getFrameOwner(owner);
@@ -485,7 +488,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 				ch.ehi.basics.i18n.ResourceBundle.getImageIcon(BaseDialog.class, iconFile),
 				options, options[0]);
 		} catch (Throwable e) {
-			Tracer.getInstance().developerError(e.getLocalizedMessage());
+			log.error("Developer error", e);
 			return -1;
 		}
 	}
@@ -507,7 +510,7 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	}
 
 	/**
-	 * @see WaitDialog#updateProgress()
+	 * @see WaitDialog#updateProgress(int, String)
 	 */
 	protected final void showProgress(final int percentage, final String currentActivity) {
 		WaitDialog.updateProgress(percentage, currentActivity);

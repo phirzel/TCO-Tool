@@ -20,15 +20,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import org.jhotdraw.contrib.DiamondFigure;
 import org.jhotdraw.figures.RectangleFigure;
 import org.jhotdraw.framework.FigureAttributeConstant;
 
 /**
  * A PackageFigure is a graphical representation for TcoPackage in Dependency-Diagram.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 class PackageFigure extends NodeFigure {
 
 	/**
@@ -63,7 +64,7 @@ class PackageFigure extends NodeFigure {
 	/**
 	 * Return default handles on all four edges for this figure.
 	 *
-	 * @see DiamondFigure.polygon()
+	 * @see DiamondFigure #getPolygon()
 	 */
 	private java.awt.Polygon getPolygon() {
 		Rectangle r = displayBox();

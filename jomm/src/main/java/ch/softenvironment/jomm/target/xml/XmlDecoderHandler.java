@@ -29,7 +29,6 @@ import ch.softenvironment.jomm.serialize.InterlisSerializer;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -38,6 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
@@ -48,8 +48,9 @@ import org.xml.sax.SAXParseException;
  * ContentHandler for XmlDecoder.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 
 	// TODO refactor as part of DbObjectMapper soon
@@ -90,7 +91,7 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 	 * Constructor.
 	 *
 	 * @param server
-	 * @param oid
+	 * @param baskets
 	 */
 	protected XmlDecoderHandler(XmlObjectServer server, Collection<IliBasket> baskets) {
 		super();
@@ -108,9 +109,9 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 		}
 
 		// map<String attrName,Method setAddObjectMethod>
-		Map<String, Method> values = new HashMap<String, Method>();
+		Map<String, Method> values = new HashMap<>();
 		// map<String roleName,Method setAddValueMethod>
-		Map<String, Method> objects = new HashMap<String, Method>();
+		Map<String, Method> objects = new HashMap<>();
 
 		Method[] methods = aclass.getMethods();
 		for (int i = 0; i < methods.length; i++) {
@@ -163,14 +164,14 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 					try {
 						type = change.getGetterReturnType();
 					} catch (NoSuchMethodException e) {
-						Tracer.getInstance().runtimeError("no Type: " + e.getLocalizedMessage());
+						log.error("no Type: {}", e.getLocalizedMessage());
 					}
 
 					if (DbObject.isCode(type)) {
 						// try whether an Enum might exist for refTid
 						DbEnumeration enumeration = server.getIliCode(type, refTid);
 						if (enumeration == null) {
-							Tracer.getInstance().developerError("DbEnumeration for type <" + type + "." + refTid + "> not existing");
+							log.error("Developer error: DbEnumeration for type <" + type + "." + refTid + "> not existing");
 							log("Enumeration <IliCode=" + refTid + "> kann nicht referenziert werden (existiert nicht)!", null);
 						} else {
 							change.setValue(enumeration);
@@ -180,7 +181,7 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 						if ((actualObject instanceof DbObject) && (DbObject.PROPERTY_NAME.equals(currentElementTag))) {
 							// IGNORE: value is not a refTid
 						} else {
-							Tracer.getInstance().runtimeWarning("Object <" + refTid + "> not existing");
+							log.warn("Object <{}> not existing", refTid);
 							log("Object <" + refTid + "> kann nicht referenziert werden (existiert nicht)!", null);
 						}
 					}
@@ -250,9 +251,9 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 					BeanReflector reflector = new BeanReflector(actualObject, currentElementTag);
 					reflector.setValue(nlsString);
 				} catch (IllegalAccessException e) {
-					Tracer.getInstance().developerError("IllegalAccess: " + e.getLocalizedMessage());
+					log.error("Developer error: IllegalAccess", e);
 				} catch (InvocationTargetException e) {
-					Tracer.getInstance().developerError("InvocationTarget: " + e.getLocalizedMessage());
+					log.error("Developer error: InvocationTarget", e);
 				}
 				nlsHandler = null; // reset
 			}
@@ -324,18 +325,12 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 						set.invoke(actualObject, valueObject);
 					} else {
 						if (!currentObjValueSets.containsKey(currentElementTag + DbObjectMapper.ROLE_ID_SUFFIX)) {
-							Tracer.getInstance().developerError("IGNORED: unexpected Element <" + currentElementTag + ">");
+							log.error("Developer error: IGNORED: unexpected Element: {}", currentElementTag);
 							log("Unerwartetes Element wird ignoriert <" + currentElementTag + ">", null);
 						}
 					}
-				} catch (IllegalArgumentException ex) {
-					Tracer.getInstance().debug("Parsing Error - Line: " + currentLocation.getLineNumber() + ", Message: " + ex.getMessage());
-					throw new SAXException(ex);
-				} catch (IllegalAccessException ex) {
-					Tracer.getInstance().debug("Parsing Error - Line: " + currentLocation.getLineNumber() + ", Message: " + ex.getMessage());
-					throw new SAXException(ex);
-				} catch (InvocationTargetException ex) {
-					Tracer.getInstance().debug("Parsing Error - Line: " + currentLocation.getLineNumber() + ", Message: " + ex.getMessage());
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ex) {
+					log.debug("Parsing Error - Line: {}, Message: ", currentLocation.getLineNumber(), ex.getMessage());
 					throw new SAXException(ex);
 				}
 			}
@@ -370,15 +365,13 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 	/**
 	 * Use this method to provide an Error/Warning-log to the user. Any Schema violations should be given as Feedback.
 	 *
-	 * @param lineNumber
 	 * @param userMessage
 	 * @param ex
 	 */
 	private void log(String userMessage, Exception ex) {
 		// server.log(..);
 		// eh.error(ex);
-		Tracer.getInstance().runtimeWarning(
-			"Parser-Fehler in Zeile: " + currentLocation.getLineNumber() + "->" + userMessage + (ex == null ? "" : " [" + ex.getMessage() + "]"));
+		log.warn("Parser-Fehler in Zeile: {}", currentLocation.getLineNumber(), ex);
 	}
 
 	@Override
@@ -485,7 +478,7 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 					try {
 						associateObject(refTid);
 					} catch (Exception e) {
-						Tracer.getInstance().developerError(e.getLocalizedMessage());
+						log.error("Developer error", e);
 					}
 				}
 				return;
@@ -543,22 +536,18 @@ class XmlDecoderHandler implements org.xml.sax.ContentHandler {
 				currentObjValueSets = (HashMap) setValues.get(actualObject.getClass());
 				currentObjObjectAdds = (HashMap) setObjects.get(actualObject.getClass());
 				// }
-			} catch (NoSuchMethodException ex) {
-				Tracer.getInstance().runtimeError("tid <" + tid + "> tag <" + localName + "> class <" + qualifiedClassName + ">" + ex.getLocalizedMessage());
-			} catch (InvocationTargetException ex) {
-				Tracer.getInstance().runtimeError("tid <" + tid + "> tag <" + localName + "> class <" + qualifiedClassName + ">" + ex.getLocalizedMessage());
+			} catch (NoSuchMethodException | InvocationTargetException ex) {
+				log.error("tid <{}> tag <{}> class <{}>", tid, localName, qualifiedClassName, ex);
 			} catch (IllegalAccessException ex) {
-				Tracer.getInstance().runtimeError("tid <" + tid + "> tag <" + localName + "> class <" + qualifiedClassName + ">" + ex.getLocalizedMessage());
+				log.error("tid <{}> tag <{}> class <{}>", tid, localName, qualifiedClassName, ex);
 				log("Zugriffsfehler auf eine Methode der Klasse <" + qualifiedClassName + ">", ex);
 				throw new SAXException(ex);
 			} catch (java.lang.InstantiationException ex) {
-				Tracer.getInstance().runtimeError(
-					"tid <" + tid + "> tag <" + localName + "> class <" + qualifiedClassName + "> [" + ex.getLocalizedMessage() + "]");
+				log.error("tid <{}> tag <{}> class <{}>", tid, localName, qualifiedClassName, ex);
 				log("Klasse <" + qualifiedClassName + "> konnte nicht instanziert werden.", ex);
 				throw new SAXException(ex);
 			} catch (ClassNotFoundException ex) {
-				Tracer.getInstance().runtimeError(
-					"tid <" + tid + "> tag <" + localName + "> class not found <" + qualifiedClassName + "> [" + ex.getLocalizedMessage() + "]");
+				log.error("tid <{}> tag <{}> class <{}>", tid, localName, qualifiedClassName, ex);
 				log("Klasse <" + qualifiedClassName + "> existiert nicht im Modell und wurde deshalb beim Einlesen der XML-Datei ignoriert!", ex);
 			}
 

@@ -45,7 +45,7 @@ import org.tcotool.tools.ModelUtility;
  * <p>
  * Calculations as Plugin for TCO-Tool. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportTcoDirect extends ReportTco {
 

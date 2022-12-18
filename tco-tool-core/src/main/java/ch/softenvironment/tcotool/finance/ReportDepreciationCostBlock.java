@@ -24,11 +24,11 @@ import ch.softenvironment.jomm.serialize.AttributeList;
 import ch.softenvironment.tcotool.tco.TCOPlugin;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.BaseDialog;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.ServiceDetailView;
 import org.tcotool.application.SystemParameterDetailView;
@@ -41,8 +41,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report financial depreciation Calculations as Plugin for TCO-Tool in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class ReportDepreciationCostBlock extends ReportTool {
 
 	protected ReportDepreciationCostBlock(ModelUtility utility, final String title) {
@@ -117,8 +118,8 @@ class ReportDepreciationCostBlock extends ReportTool {
 			}
 			encodeCostBlockColumns(root, codeUndefined);
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError(null, e);
-		}
+            log.error("", e);
+        }
 
 		// print totals
 		// List totalPersonal = calculator.getTotalCosts(root,

@@ -23,18 +23,19 @@ import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.target.sql.mysql.AutoIncrementTestCase;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
 import java.util.List;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MySQL. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a MySQL-Server (V4.1.10 or higher) is running in the
  * background.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class MySqlTestSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";
@@ -90,7 +91,6 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 
 			@Override
 			protected void setUp() {
-				Tracer.start(Tracer.ALL);
 				DbLoginDialog dialog = new DbLoginDialog(null,
 					"jdbc:mysql://localhost:3306/" /*
 				 * +
@@ -101,8 +101,7 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 						server = initializeTarget(dialog.getUserId(),
 							dialog.getPassword(), dialog.getUrl());
 					} catch (Throwable e) {
-						Tracer.getInstance().runtimeError("initializeTarget()",
-							e);
+						log.error("initializeTarget()", e);
 						fail("Schema creation failed: "
 							+ e.getLocalizedMessage());
 					}
@@ -127,7 +126,6 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 							+ e.getLocalizedMessage());
 					}
 				}
-				Tracer.getInstance().stop();
 			}
 		};
 

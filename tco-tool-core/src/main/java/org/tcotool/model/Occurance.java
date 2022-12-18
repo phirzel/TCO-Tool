@@ -9,7 +9,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * Define the occurrence of Cost's per Site by a CostDriver.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class Occurance extends DbEntityBean {
 

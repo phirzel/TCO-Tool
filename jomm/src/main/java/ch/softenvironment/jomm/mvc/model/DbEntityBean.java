@@ -22,6 +22,7 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
 import ch.softenvironment.jomm.descriptor.DbIdFieldDescriptor;
 import ch.softenvironment.util.BeanReflector;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <b>EntityBean according to Enterprise Java Bean (EJB) Specification:</b>
@@ -32,12 +33,13 @@ import ch.softenvironment.util.BeanReflector;
  * <p>
  * An EntityBean represents a persistent Object which is mapped 1:1 to a Database Table Entity.
  *
- * @author Peter Hirzel, softEnvironment
+ * @author Peter Hirzel softEnvironment
  */
+@Slf4j
 public abstract class DbEntityBean extends DbChangeableBean /* ,javax.ejb.EJBObject */ {
 
     /**
-     * @see #DbObject(DbObjectServer)
+     * @see DbObject(DbObjectServer)
      */
     protected DbEntityBean(DbObjectServer objectServer) {
         super(objectServer);
@@ -149,7 +151,7 @@ public abstract class DbEntityBean extends DbChangeableBean /* ,javax.ejb.EJBObj
                 descriptor = getObjectServer().getParentDescriptor(descriptor);
             }
         } catch (Exception e) {
-            ch.softenvironment.util.Tracer.getInstance().runtimeError(null, e);
+            log.error("", e);
             throw new CloneNotSupportedException(ResourceManager.getResource(DbEntityBean.class, "CENotCloneable") + "\n[" + e.getLocalizedMessage() + "]");
         }
     

@@ -18,18 +18,19 @@ package ch.softenvironment.jomm.serialize;
 
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Generic Utility to write an XML-Stream.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class XmlSerializer extends SimpleSerializer {
 
 	public static final String XSD_DATE_FORMAT = "yyyy-MM-dd";
@@ -87,7 +88,6 @@ public class XmlSerializer extends SimpleSerializer {
 	 * Write an Element to XML-Stream. For e.g. <MyValue/>
 	 *
 	 * @param tagName
-	 * @param value
 	 * @throws java.io.IOException
 	 */
 	public final void element(String tagName) throws java.io.IOException {
@@ -211,7 +211,7 @@ public class XmlSerializer extends SimpleSerializer {
 	 *
 	 * @param value
 	 * @return
-	 * @see http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes
+	 * @see <a href="http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes">primitive db types</a>
 	 */
 	@Override
 	public String encodeBoolean(Boolean value) {
@@ -229,7 +229,7 @@ public class XmlSerializer extends SimpleSerializer {
 	 *
 	 * @param value
 	 * @return
-	 * @see http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes
+	 * @see <a href="http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes>db primitives</a>
 	 */
 	@Override
 	public String encodeDate(java.util.Date value) {
@@ -245,9 +245,9 @@ public class XmlSerializer extends SimpleSerializer {
 	/**
 	 * Encode given String to XML-text (value of a Text-Node). <b>Special Characters</b> will be prepared according to UTF-8.
 	 *
-	 * @param s
+	 * @param value
 	 * @return String (transformed for XML and UTF-8)
-	 * @see http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes
+	 * @see <a href="http ://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built -in-primitive-datatypes">db primitives</a>
 	 */
 	@Override
 	public String encodeString(String value) {
@@ -295,7 +295,7 @@ public class XmlSerializer extends SimpleSerializer {
 	 * End an started XML-Element in XML-Stream. For e.g. "</tagName>"
 	 *
 	 * @throws throws java.io.IOException
-	 * @see #startElement(..)
+	 * @see #startElement(String)
 	 * @see #endElement(String)
 	 */
 	public final void endElement() throws java.io.IOException {
@@ -308,7 +308,7 @@ public class XmlSerializer extends SimpleSerializer {
 	 * @param expectedElement The expected closing element (for validating reasons only)
 	 * @throws java.io.IOException
 	 * @throws ch.softenvironment.util.DeveloperException (if expectedElement does not match interal suggestion)
-	 * @see #startElement(..)
+	 * @see #startElement(String)
 	 * @see #endElement()
 	 */
 	public final void endElement(String expectedElement)
@@ -404,7 +404,7 @@ public class XmlSerializer extends SimpleSerializer {
 	/**
 	 * Set a default XSLT (*.xsl) transformation to represent an XML-Instance. For e.g. <?xml-stylesheet type="text/xsl" href="MyTransformation.xsl"?>
 	 *
-	 * @param comment
+	 * @param xsl
 	 * @throws java.io.IOException
 	 */
 	public final void stylesheet(String xsl) throws java.io.IOException {
@@ -416,7 +416,7 @@ public class XmlSerializer extends SimpleSerializer {
 	/**
 	 * Set the version of the XML-Standard in XML-Instance. For e.g. <?xml version="1.0" encoding="UTF-8"?>
 	 *
-	 * @param comment
+	 * @param number
 	 * @throws java.io.IOException
 	 */
 	public final void version(String number, String charSet)
@@ -431,8 +431,7 @@ public class XmlSerializer extends SimpleSerializer {
 	 * Write an Element with a single Attribute to XML-Stream. For e.g.
 	 * <Translation language="de">Morgen</Entry>
 	 *
-	 * @param attribute
-	 * @param value
+	 * @param attributes
 	 * @throws java.io.IOException
 	 */
 	protected void writeAttributes(AttributeList attributes)
@@ -514,8 +513,7 @@ public class XmlSerializer extends SimpleSerializer {
 			out = null;
 		} catch (IOException e) {
 			exception = e;
-			Tracer.getInstance().runtimeError(
-				"Writing context of file: " + filename, e);
+			log.error("Writing context of file: {}", filename, e);
 		} finally {
 			if (stream != null) {
 				stream.close();
@@ -525,8 +523,7 @@ public class XmlSerializer extends SimpleSerializer {
 					out.close();
 				}
 			} catch (IOException e) {
-				Tracer.getInstance().runtimeError("closing file: " + filename,
-					e);
+				log.error("closing file: {}", filename, e);
 			}
 		}
 		if (exception != null) {

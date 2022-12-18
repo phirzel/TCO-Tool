@@ -28,7 +28,7 @@ import javax.jdo.Transaction;
 /**
  * Mapper for MySQL V4.1 (or higher) Specialities.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MySqlMapper extends ch.softenvironment.jomm.target.sql.SqlMapper {
 

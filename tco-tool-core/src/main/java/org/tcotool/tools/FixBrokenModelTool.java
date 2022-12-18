@@ -17,8 +17,8 @@ package org.tcotool.tools;
  */
 
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
-import ch.softenvironment.util.Tracer;
 import java.util.Iterator;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.model.Catalogue;
 import org.tcotool.model.Cost;
 import org.tcotool.model.CostCause;
@@ -37,8 +37,9 @@ import org.tcotool.model.TcoPackage;
  * <p>
  * These fixes should not be necessary if a configuration is made with the newest tool.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class FixBrokenModelTool {
 
 	// private TcoModel model = null;
@@ -48,7 +49,7 @@ public class FixBrokenModelTool {
 	 * Fix/Migrate loading of older TCO-Configurations or minor XML-Format inconsistencies or force resetting of values depending on Codes, such as Role.
 	 *
 	 * @param model Start with the root
-	 * @see #fixModel(TcoObject, boolean)
+	 * @see #fixModel(ModelUtility, TcoModel)
 	 */
 	public static void fixModel(ModelUtility utility, TcoModel model) throws Exception {
 		FixBrokenModelTool fixer = new FixBrokenModelTool();
@@ -56,8 +57,7 @@ public class FixBrokenModelTool {
 		fixer.utility = utility;
 
 		if ((model.getClientId().size() > 0) || (model.getSupplierId().size() > 0)) {
-			Tracer.getInstance()
-				.logBackendCommand("Dependency to TcoModel is wrong and must be removed (bug of older TCO-Tool, sorry for this invonvenience)!");
+			log.info("Dependency to TcoModel is wrong and must be removed (bug of older TCO-Tool, sorry for this invonvenience)!");
 			// TODO remove Dependency
 		}
 
@@ -203,11 +203,8 @@ public class FixBrokenModelTool {
 			TcoObject supplier = utility.findSupplier(dependency);
 			if (!((supplier instanceof Service) || (supplier instanceof TcoPackage))) {
 				// <= 1.5.0 because of missing validation
-				Tracer.getInstance()
-					.logBackendCommand(
-						"Dependency at Supplier="
-							+ supplier.getName()
-							+ " is not a <Service> or <Group> and must be removed for proper calculation (bug of older TCO-Tool, sorry for this invonvenience)!");
+				log.info("Dependency at Supplier={} is not a <Service> or <Group> and must be removed for proper calculation (bug of older TCO-Tool, sorry for this invonvenience)!",
+					supplier.getName());
 				// TODO remove Dependency
 			}
 			if (dependency.getVariant() == null) {
@@ -221,9 +218,7 @@ public class FixBrokenModelTool {
 			TcoObject client = utility.findClient(dependency);
 			if (!(client instanceof Service)) {
 				// <= 1.5.0 because of missing validation
-				Tracer.getInstance().logBackendCommand(
-					"Dependency at Client=" + client.getName()
-						+ " is not a <Service> and must be removed for proper calculation (bug of older TCO-Tool, sorry for this invonvenience)!");
+				log.info("Dependency at Client={} is not a <Service> and must be removed for proper calculation (bug of older TCO-Tool, sorry for this invonvenience)!", client.getName());
 				// TODO remove Dependency
 			}
 			if (dependency.getVariant() == null) {

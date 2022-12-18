@@ -10,7 +10,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
  * <p>
  * (Mapped to "tcotool.model.ImportReference")
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see TcoObject
  * @deprecated experimental trial
  */

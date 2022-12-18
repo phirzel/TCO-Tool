@@ -4,12 +4,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DateUtilsTestCase extends junit.framework.TestCase {
 
 	java.util.Date currentDate = null;
-	java.util.GregorianCalendar march15_2004 = null;
+	java.util.GregorianCalendar gregorianCalendar = null;
 
 	/**
 	 * StringUtilsTestCase constructor comment.
@@ -25,7 +25,7 @@ public class DateUtilsTestCase extends junit.framework.TestCase {
 		super.setUp();
 
 		currentDate = new java.util.Date();
-		march15_2004 = new java.util.GregorianCalendar(2004, java.util.Calendar.MARCH, 15);
+		gregorianCalendar = new java.util.GregorianCalendar(2004, java.util.Calendar.MARCH, 15);
 	}
 
 	/**
@@ -45,11 +45,11 @@ public class DateUtilsTestCase extends junit.framework.TestCase {
 	}
 
 	public void testGetYear() {
-		assertTrue("DateUtils#getYear", DateUtils.getYear(march15_2004.getTime()).intValue() == 2004);
+		assertTrue("DateUtils#getYear", DateUtils.getYear(gregorianCalendar.getTime()).intValue() == 2004);
 	}
 
 	public void testGetDayInMonth() {
-		assertTrue("DateUtils#getDayInMonth", DateUtils.getDayInMonth(march15_2004.getTime()).intValue() == 15);
+		assertTrue("DateUtils#getDayInMonth", DateUtils.getDayInMonth(gregorianCalendar.getTime()).intValue() == 15);
 	}
 
 	public void testCalcHours() {

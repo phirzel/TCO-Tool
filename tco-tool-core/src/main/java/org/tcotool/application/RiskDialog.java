@@ -24,7 +24,7 @@ package org.tcotool.application;
  * @version $Revision: 1.3 $ $Date: 2008-05-18 15:44:58 $
  * @deprecated
  */
-@SuppressWarnings("serial")
+
 public class RiskDialog extends ch.softenvironment.view.BaseDialog {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;

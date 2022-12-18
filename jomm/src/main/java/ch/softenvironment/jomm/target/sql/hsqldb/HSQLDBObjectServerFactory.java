@@ -30,10 +30,10 @@ import javax.jdo.metadata.TypeMetadata;
 /**
  * JDO-Implementation of a HSQLDB V1.8.2 Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see javax.jdo.PersistencManagerFactory
+ * @author Peter Hirzel
+ * @see javax.jdo.PersistenceManagerFactory
  */
-@SuppressWarnings("serial")
+
 public class HSQLDBObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     /**
@@ -50,7 +50,7 @@ public class HSQLDBObjectServerFactory extends ch.softenvironment.jomm.DbDomainN
 
     @Override
     protected javax.jdo.PersistenceManager createPersistenceManager() {
-        DbObjectServer objectServer = null;
+        DbObjectServer objectServer;
         try {
             objectServer = new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new HSQLDBMapper(),
                 ch.softenvironment.jomm.target.sql.SqlQueryBuilder.class, HSQLDBConnection.class);

@@ -3,7 +3,7 @@ package ch.softenvironment.persistence.types;
 /**
  * Model classes implementing the <<interface>> "Validity" will have an interval[ValidFrom..ValidTo].
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface Validity {
 

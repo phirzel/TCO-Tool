@@ -21,7 +21,6 @@ import ch.softenvironment.jomm.mvc.model.DbCode;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -31,6 +30,7 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JPanel;
+import lombok.extern.slf4j.Slf4j;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -57,8 +57,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to for using JFreeChart to represent TCO-Tool data in Pie- or Bar-charts.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ChartTool {
 
     private static final String TCO = "TCO "; // NLS
@@ -96,7 +97,7 @@ public class ChartTool {
     private CategoryDataset createTotalCostDataset(List<Double> tco) {
         // CostType (use different Colors)
         String personalCost = ResourceManager.getResource(PersonalCostDetailView.class, "FrmWindow_text");
-        String factCost_ = ResourceManager.getResource(FactCostDetailView.class, "FrmWindow_text");
+        String factCost = ResourceManager.getResource(FactCostDetailView.class, "FrmWindow_text");
         String personalAndFactCost = ResourceManager.getResource(ChartTool.class, "CIPersonalFact");
 
         // grouped values (text per group)
@@ -104,7 +105,7 @@ public class ChartTool {
 
         DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
         defaultcategorydataset.addValue(tco.get(0), personalCost, total);
-        defaultcategorydataset.addValue(tco.get(1), factCost_, total);
+        defaultcategorydataset.addValue(tco.get(1), factCost, total);
         for (int i = 2; i < tco.size(); i++) {
             defaultcategorydataset.addValue(tco.get(i), personalAndFactCost,
                 TCO + (i - 1) + "." + ResourceManager.getResource(ChartTool.class, "CIYear"));
@@ -249,7 +250,7 @@ public class ChartTool {
             currency = utility.getSystemParameter().getDefaultCurrency().getNameString();
         } catch (Exception ex) {
             // ignore: don't show currency
-            Tracer.getInstance().runtimeWarning("SystemParameter fault <DefaultCurrency>: " + ex.getMessage());
+            log.warn("SystemParameter fault <DefaultCurrency>", ex);
         }
         // pieplot.setLabelGenerator(new
         // StandardPieSectionLabelGenerator("{0}"));

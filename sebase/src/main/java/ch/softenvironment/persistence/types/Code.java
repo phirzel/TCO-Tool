@@ -3,7 +3,7 @@ package ch.softenvironment.persistence.types;
 /**
  * Code type (like Branch, Country,..).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface Code {
 

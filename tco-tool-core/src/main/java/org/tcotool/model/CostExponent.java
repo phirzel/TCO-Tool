@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 /**
  * Number representation in 1E, 1E3, 1E6. Useful to enhance readability of big amounts.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class CostExponent extends DbEnumeration {
 
@@ -20,9 +20,10 @@ public final class CostExponent extends DbEnumeration {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection.addDescriptor()
      *
-     * @see DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbEnumeration> dbCode*/) {
         DbDescriptor descriptor = DbEnumeration.createDefaultDescriptor(CostExponent.class);

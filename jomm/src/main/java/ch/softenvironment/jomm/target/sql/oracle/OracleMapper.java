@@ -29,7 +29,7 @@ import java.sql.SQLException;
 /**
  * Mapper for ORACLE 9i Specialities.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class OracleMapper extends ch.softenvironment.jomm.target.sql.SqlMapper {
 

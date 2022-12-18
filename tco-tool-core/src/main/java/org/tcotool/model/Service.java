@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 /**
  * Service (de: Kostenträger).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class Service extends TcoObject {
 
@@ -52,7 +52,7 @@ public class Service extends TcoObject {
         firePropertyChange("costCentre", oldValue, fieldCostCentre);
     }
 
-    public java.util.List<CostDriver> fieldDriver = new java.util.ArrayList<CostDriver>();
+    public java.util.List<CostDriver> fieldDriver = new java.util.ArrayList<>();
 
     public java.util.List<CostDriver> getDriver() {
         refresh(false); // read lazy initialized objects

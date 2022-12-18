@@ -26,21 +26,21 @@ import org.tcotool.model.TcoObject;
 /**
  * Accounting calculator for "linear depreciation with compound interest".
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorDegressiveDepreciation extends Calculator {
 
 	/**
 	 * Initialize calculator for given rootObject and TotalCosts only.
 	 *
-	 * @param object
+	 * @param utility
 	 */
 	public CalculatorDegressiveDepreciation(ModelUtility utility) {
 		this(utility, (TcoObject) utility.getRoot(), 0);
 	}
 
 	/**
-	 * @see #Calculator(ModelUtility, TcoObject, long, ServiceCategory, Responsibility)
+	 * @see Calculator
 	 */
 	public CalculatorDegressiveDepreciation(ModelUtility utility, TcoObject rootObject, long maxDurationMonths) {
 		super(utility, rootObject, maxDurationMonths, null);
@@ -99,7 +99,6 @@ public class CalculatorDegressiveDepreciation extends Calculator {
 	 * Calculate the <b>linear depreciation</b> over the whole FactCost-DepreciationDuration. Algorithm: - Linear Depreciation
 	 *
 	 * @param costCapital
-	 * @param costDuration
 	 * @return year of last Cost-entry
 	 */
 	private int calcDepreciation(Service service, CostDriver driver, FactCost cost, double costCapital, int yearIndex) {

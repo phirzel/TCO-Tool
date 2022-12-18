@@ -27,9 +27,9 @@ import javax.jdo.metadata.JDOMetadata;
 import javax.jdo.metadata.TypeMetadata;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class XmlObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     /**

@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 /**
  * TestCase for LoginValidator.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class LoginValidatorTestCase extends TestCase {
 

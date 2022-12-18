@@ -28,7 +28,7 @@ import org.tcotool.tools.CalculatorLinearDepreciationCompountInterest;
 /**
  * Tests org.tcotool.tools.Calculator
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorLinearDepreciationCompoundInterestTest {
 

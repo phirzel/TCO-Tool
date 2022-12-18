@@ -17,9 +17,9 @@ import ch.softenvironment.client.ResourceManager;
 /**
  * Product Info Dialog.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class AboutDialog extends BaseDialog {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -40,8 +40,7 @@ public class AboutDialog extends BaseDialog {
      * AboutDialog constructor comment.
      *
      * @param owner java.awt.Frame
-     * @param title java.lang.String
-     * @param modal boolean
+     * @param application java.lang.String
      */
     public AboutDialog(java.awt.Frame owner, String application, String version, String copyrightPeriod, String licence) {
         super(owner, true);

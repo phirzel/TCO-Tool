@@ -17,9 +17,8 @@ import ch.softenvironment.client.ResourceManager;
 /**
  * Panel to manage a single URL.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class URLView extends javax.swing.JPanel {
 
 	private javax.swing.JButton ivjBtnBrowser = null;
@@ -93,7 +92,6 @@ public class URLView extends javax.swing.JPanel {
 	 */
 	public void addURLViewListener(ch.softenvironment.view.URLViewListener newListener) {
 		fieldURLViewListenerEventMulticaster = ch.softenvironment.view.URLViewListenerEventMulticaster.add(fieldURLViewListenerEventMulticaster, newListener);
-		return;
 	}
 
 	/**
@@ -239,18 +237,18 @@ public class URLView extends javax.swing.JPanel {
 		BaseFrame.showException(null, exception);
 	}
 
-	/**
-	 * Initializes connections
-	 *
-	 * @throws java.lang.Exception The exception description.
-	 */
-	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
-		// user code begin {1}
-		// user code end
-		getBtnBrowser().addActionListener(ivjEventHandler);
-		getTxtURL().addKeyListener(ivjEventHandler);
-	}
+    /**
+     * Initializes connections
+     *
+     * @throws java.lang.Exception The exception description.
+     */
+    /* WARNING: THIS METHOD WILL BE REGENERATED. */
+    private void initConnections() {
+        // user code begin {1}
+        // user code end
+        getBtnBrowser().addActionListener(ivjEventHandler);
+        getTxtURL().addKeyListener(ivjEventHandler);
+    }
 
 	/**
 	 * Initialize the class.
@@ -295,7 +293,6 @@ public class URLView extends javax.swing.JPanel {
 	public void removeURLViewListener(ch.softenvironment.view.URLViewListener newListener) {
 		fieldURLViewListenerEventMulticaster = ch.softenvironment.view.URLViewListenerEventMulticaster
 			.remove(fieldURLViewListenerEventMulticaster, newListener);
-		return;
 	}
 
 	/**

@@ -16,14 +16,14 @@ package ch.softenvironment.view;
  * Manage a Set of GUI-Options which are valid for all Views in a (Client)-Application. An instance of the ViewOptions should be initialized as Singleton by an Application-Launcher and passed to any
  * View opened from there.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see DetailView(..)
  * @see SearchView(..)
  */
 public class ViewOptions {
 
     private boolean closeOnSave = true;
-    private final java.util.Map<String, Boolean> options = new java.util.HashMap<String, Boolean>();
+    private final java.util.Map<String, Boolean> options = new java.util.HashMap<>();
     private final ch.softenvironment.client.ViewManager viewManager = new ch.softenvironment.client.ViewManager();
 
     /**
@@ -34,7 +34,7 @@ public class ViewOptions {
     }
 
     /**
-     * @see #setCloseOnSave()
+     * @see #setCloseOnSave(boolean)
      */
     public boolean getCloseOnSave() {
         return closeOnSave;

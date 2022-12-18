@@ -36,7 +36,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report financial depreciation (bookings) Calculations as plugin for TCO-Tool. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportDepreciation extends ReportTool {
 

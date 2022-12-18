@@ -15,7 +15,6 @@ package ch.softenvironment.jomm.target.xml;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -32,6 +31,7 @@ import java.sql.Struct;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import javax.jdo.JDOUnsupportedOptionException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is just a dummy implementation to stay compatible with the basic ch.softenvironment.jomm Framework.
@@ -40,6 +40,7 @@ import javax.jdo.JDOUnsupportedOptionException;
  * @version $Revision: 1.5 $ $Date: 2007-06-05 20:40:14 $
  * @deprecated (should be replaced by a real XML - Database driver)
  */
+@Slf4j
 class XmlJdbcConnection implements java.sql.Connection {
 
     private boolean autoCommit = true;
@@ -83,7 +84,7 @@ class XmlJdbcConnection implements java.sql.Connection {
     @Override
     public void commit() {
         //TODO
-        Tracer.getInstance().developerWarning("NO Commit done!");
+        log.warn("Developer warning: NO Commit done!");
     }
 
     /**
@@ -382,7 +383,7 @@ class XmlJdbcConnection implements java.sql.Connection {
     @Override
     public void rollback() {
         //TODO Auto-generated method stub
-        Tracer.getInstance().developerWarning("NO Rollback done!");
+        log.warn("Developer warning: NO Rollback done!");
     }
 
     /* (non-Javadoc)
@@ -472,7 +473,7 @@ class XmlJdbcConnection implements java.sql.Connection {
      *
      * @param level one of the TRANSACTION_* isolation values with the exception of TRANSACTION_NONE; some databases may not support other values
      * @throws SQLException if a database access error occurs
-     * @see DatabaseMetaData#supportsTransactionIsolationLevel
+     * @see java.sql.DatabaseMetaData#supportsTransactionIsolationLevel(int)
      */
     @Override
     public void setTransactionIsolation(int level) {
@@ -487,7 +488,7 @@ class XmlJdbcConnection implements java.sql.Connection {
      * <p>
      * Installs the given type map as the type map for this connection.  The type map will be used for the custom mapping of SQL structured types and distinct types.
      *
-     * @param the <code>java.util.Map</code> object to install as the replacement for this <code>Connection</code> object's default type map
+     * @param map <code>java.util.Map</code> object to install as the replacement for this <code>Connection</code> object's default type map
      */
     @Override
     public void setTypeMap(java.util.Map map) {

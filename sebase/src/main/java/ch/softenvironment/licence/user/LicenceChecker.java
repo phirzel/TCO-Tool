@@ -3,7 +3,6 @@ package ch.softenvironment.licence.user;
 import ch.softenvironment.cipher.CipherTool;
 import ch.softenvironment.cipher.DecipherTool;
 import ch.softenvironment.client.ResourceManager;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import ch.softenvironment.view.BaseDialog;
 import java.io.ByteArrayInputStream;
@@ -13,12 +12,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Tool for an Application to check wether licence is ok.
  *
  * @author Peter Hirzel <i>soft</i>Environment
  */
+@Slf4j
 public class LicenceChecker {
 
     private transient String licenceFileName = null;
@@ -64,7 +65,7 @@ public class LicenceChecker {
 
             // if already licenced go on here
             int index = out.toString().indexOf(';', 20);
-            startDate = new java.util.Date((Long.valueOf(out.toString().substring(20, index)).longValue()));
+            startDate = new java.util.Date((Long.valueOf(out.toString().substring(20, index))));
             checkLicence(key);
         } catch (FileNotFoundException e) {
             // if not licenced yet
@@ -89,7 +90,7 @@ public class LicenceChecker {
             CipherTool tool = new CipherTool(cryptoKey);
             tool.encrypt(in, out);
         } catch (Exception e) {
-            Tracer.getInstance().runtimeWarning(e.getLocalizedMessage());
+            log.warn("", e);
             throw e;
         }
     }

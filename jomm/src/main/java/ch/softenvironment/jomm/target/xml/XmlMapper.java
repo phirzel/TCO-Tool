@@ -15,7 +15,7 @@ import javax.jdo.Transaction;
 /**
  * Java<->XML-Target Adapter.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class XmlMapper implements DbMapper {
 
@@ -74,10 +74,8 @@ public class XmlMapper implements DbMapper {
      * .DbObject, ch.softenvironment.jomm.DbDescriptor, java.lang.Object)
      */
     @Override
-    public void mapFromTarget(DbObject instance, DbDescriptor descriptor,
-        Object collection) throws Exception {
+    public void mapFromTarget(DbObject instance, DbDescriptor descriptor, Object collection) {
         // TODO Auto-generated method stub
-
     }
 
     /*
@@ -88,8 +86,7 @@ public class XmlMapper implements DbMapper {
      * , java.lang.String)
      */
     @Override
-    public BigDecimal mapFromTargetBigDecimal(Object collection,
-        String attribute) {
+    public BigDecimal mapFromTargetBigDecimal(Object collection, String attribute) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.descriptor.DbNumericFieldDescriptor;
 /**
  * Effective calculable Cost-Parameters. Abstraction for fact- or personal costs.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class Cost extends TcoObject {
 
@@ -124,7 +124,7 @@ public abstract class Cost extends TcoObject {
     /**
      * Offset of cost impact from the very beginning of the whole TCO-Configuration in months.
      *
-     * @param fieldBaseOffset
+     * @param baseOffset
      */
     public void setBaseOffset(java.lang.Long baseOffset) {
         java.lang.Long oldValue = fieldBaseOffset;

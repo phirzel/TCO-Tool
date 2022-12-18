@@ -28,7 +28,7 @@ import org.tcotool.tools.FindTool;
 /**
  * Tests org.tcotool.tools.FindTool
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class FindToolTest {
 

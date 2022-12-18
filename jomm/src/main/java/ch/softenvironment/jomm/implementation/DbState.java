@@ -17,14 +17,16 @@ package ch.softenvironment.jomm.implementation;
  */
 
 import ch.softenvironment.client.ResourceManager;
+import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Persistence State-Machine. Manage the internal state of a DbObject during its Life-Cycle.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public final class DbState {
 
     // possible states for a DbObject
@@ -46,7 +48,6 @@ public final class DbState {
      */
     public DbState() {
         super();
-        state = UNDEFINED;
     }
 
     /**
@@ -95,7 +96,7 @@ public final class DbState {
      * State of new still transient only Objects which were forwarded from one DbObjectServer to another. DbObject is NOT visible in Database for others!
      *
      * @return boolean true->NEW; false->otherwise.
-     * @see DbChangeableBean#forward()
+     * @see ch.softenvironment.jomm.mvc.model.DbChangeableBean#forward(DbObjectServer, boolean)
      */
     public boolean isNewForwarded() {
         return state == NEW_FORWARDED;
@@ -202,7 +203,7 @@ public final class DbState {
         if (state == READ_ONLY) {
             if ((nextState == SAVED) || (nextState == REMOVED)) {
                 // TODO DbCode/DbEnumeration-Hack: remove this behavior
-                Tracer.getInstance().developerWarning("critical state-transition");
+                log.warn("Developer warning: critical state-transition");
                 state = nextState;
                 return;
             }

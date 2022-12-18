@@ -22,13 +22,13 @@ import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
 import ch.softenvironment.jomm.target.sql.hsqldb.HSQLDBObjectServerFactory;
-import ch.softenvironment.jomm.target.sql.ms_access.MsAccessObjectServerFactory;
+import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
 import java.util.Date;
 
 /**
  * Test SqlQueryBuilder.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class SqlQueryBuilderTestCase extends junit.framework.TestCase {
 

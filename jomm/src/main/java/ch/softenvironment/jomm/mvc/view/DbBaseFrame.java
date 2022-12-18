@@ -30,7 +30,6 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.BaseDialog;
 import ch.softenvironment.view.BaseFrame;
 import ch.softenvironment.view.ListMenuChoice;
@@ -38,13 +37,15 @@ import ch.softenvironment.view.ViewOptions;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Template parent Frame for Database Oriented GUI's. This class provides many convenience methods for the database & business Framework.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 @Deprecated
+@Slf4j
 public abstract class DbBaseFrame extends BaseFrame {
 
     private static final long serialVersionUID = 1L;
@@ -183,7 +184,7 @@ public abstract class DbBaseFrame extends BaseFrame {
                 // factory.close();
             }
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("Database-disconnect() failed", e);//$NON-NLS-2$//$NON-NLS-1$
+            log.error("Database-disconnect() failed", e);//$NON-NLS-2$//$NON-NLS-1$
             BaseDialog.showWarning(this, ResourceManager.getResource(DbBaseFrame.class, "CTTerminationError"),
                 ResourceManager.getResource(DbBaseFrame.class, "CETerminationError") + "\n[" + e.getLocalizedMessage() + "]");
         }
@@ -206,7 +207,7 @@ public abstract class DbBaseFrame extends BaseFrame {
         Throwable exception = error;
         if (error instanceof javax.jdo.JDOException) {
             if (error.getCause() != null) {
-                Tracer.getInstance().runtimeError("" + error.getClass(), error);
+                log.error("{}", error.getClass(), error);
                 // JDO implements Throwable as cause!
                 exception = new Exception(error.getCause());
             }
@@ -216,7 +217,7 @@ public abstract class DbBaseFrame extends BaseFrame {
         if (error instanceof java.sql.SQLException) {
             sqlException = (SQLException) exception;
         } else if (error.getCause() instanceof SQLException) {
-            Tracer.getInstance().runtimeError(null, error);
+            log.error("", error);
             sqlException = (SQLException) error.getCause();
         }
         if (sqlException != null) {
@@ -257,7 +258,7 @@ public abstract class DbBaseFrame extends BaseFrame {
      * @return List of sessionBeanClass-Instances representing the n:n maps
      */
     protected java.util.List refreshAssociations(DbPropertyChange change, java.lang.Class sessionBeanClass, java.util.List otherElements) throws Exception {
-        java.util.List<DbObject> sbs = new java.util.ArrayList<DbObject>();
+        java.util.List<DbObject> sbs = new java.util.ArrayList<>();
 
         java.util.Set mapC = change.getAssocations();
         java.util.Iterator assocIterator = mapC.iterator();
@@ -279,7 +280,7 @@ public abstract class DbBaseFrame extends BaseFrame {
         }
 
         if (sbs.size() != mapC.size()) {
-            Tracer.getInstance().developerWarning("data problem => AssociationEnds not equal to Associated-Set");
+            log.warn("Developer warning: data problem => AssociationEnds not equal to Associated-Set");
         }
 
         return sbs;
@@ -439,8 +440,6 @@ public abstract class DbBaseFrame extends BaseFrame {
 
     /**
      * Critical Error. Application must be shut down.
-     *
-     * @param title Dialogtitle
      */
     public final void transactionError(javax.swing.JFrame frame, Exception exception) {
         fatalError(frame, ResourceManager.getResource(DbBaseFrame.class, "CTTransactionError"),

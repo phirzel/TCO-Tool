@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 /**
  * TestCase for ListUtils.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ListUtilsTestCase extends TestCase {
 
@@ -38,7 +38,6 @@ public class ListUtilsTestCase extends TestCase {
 
 		/**
 		 * @return
-		 * @see PROPERTY
 		 */
 		public Long getId() {
 			return id;

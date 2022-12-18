@@ -21,10 +21,10 @@ import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.ServiceDetailView;
 import org.tcotool.model.TcoObject;
@@ -36,8 +36,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report financial Investment cost in HTML or CSV.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ReportInvestment extends ReportTool {
 
 	private final ModelUtility utility = null;
@@ -98,7 +99,7 @@ public class ReportInvestment extends ReportTool {
 			}
 			encodeCostBlockColumns(root, codeUndefined);
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError(null, e);
+			log.error("", e);
 		}
 
 		// print totals
@@ -138,7 +139,7 @@ public class ReportInvestment extends ReportTool {
 	/**
 	 * Print Columns for TCO in HTML: [CostType] [PersonTotal] [[FactTotal] [TCO_Y1] [TCO_Y2]...]
 	 *
-	 * @param service print to data of given service (null for all services)
+	 * @param root print to data of given service (null for all services)
 	 */
 	private void encodeCostBlockColumns(TcoObject root, Object code) throws IOException {
 		// ch.softenvironment.jomm.serialize.AttributeList attrs =

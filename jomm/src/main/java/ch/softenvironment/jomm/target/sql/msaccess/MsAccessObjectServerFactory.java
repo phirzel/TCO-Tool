@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_access;
+package ch.softenvironment.jomm.target.sql.msaccess;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -32,10 +32,9 @@ import javax.jdo.metadata.TypeMetadata;
 /**
  * JDO-Implementation of an MS-Access Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see javax.jdo.PersistencManagerFactory
+ * @author Peter Hirzel
+ * @see javax.jdo.PersistenceManagerFactory
  */
-@SuppressWarnings("serial")
 public class MsAccessObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
 	// count number of BEGIN's since last Database-Connection
@@ -55,14 +54,12 @@ public class MsAccessObjectServerFactory extends ch.softenvironment.jomm.DbDomai
 
 	@Override
 	protected javax.jdo.PersistenceManager createPersistenceManager() {
-		DbObjectServer objectServer = null;
 		try {
-			objectServer = new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new MsAccessMapper(), MsAccessQueryBuilder.class,
+			return new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new MsAccessMapper(), MsAccessQueryBuilder.class,
 				ch.softenvironment.jomm.target.sql.SqlConnection.class);
 		} catch (Exception e) {
 			throw new ch.softenvironment.util.DeveloperException("DbObjectServer could not be established", null, e);
 		}
-		return objectServer;
 	}
 
 	/**

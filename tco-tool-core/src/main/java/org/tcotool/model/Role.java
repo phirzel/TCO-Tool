@@ -10,7 +10,7 @@ import ch.softenvironment.jomm.mvc.model.DbCode;
 /**
  * Role of a human Resource (for e.g. function of employee).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class Role extends DbCode {
 
@@ -30,8 +30,7 @@ public final class Role extends DbCode {
     /**
      * Return the database mappings for this persistence object.
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbCode> dbCode*/) {
         DbDescriptor descriptor = DbCode.createDefaultDescriptor(Role.class);

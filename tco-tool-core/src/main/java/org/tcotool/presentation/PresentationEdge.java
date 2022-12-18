@@ -6,38 +6,38 @@ import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 /**
  * The root of line-style presentations.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class PresentationEdge extends PresentationElement {
 
-	public PresentationEdge(ch.softenvironment.jomm.DbObjectServer objectServer) {
-		super(objectServer);
-	}
+    public PresentationEdge(ch.softenvironment.jomm.DbObjectServer objectServer) {
+        super(objectServer);
+    }
 
-	public java.util.List<EdgeEnd> fieldEndPointId = new java.util.ArrayList<EdgeEnd>();
+    public java.util.List<EdgeEnd> fieldEndPointId = new java.util.ArrayList<>();
 
-	public java.util.List<EdgeEnd> getEndPointId() {
-		refresh(false); // read lazy initialized objects
-		return fieldEndPointId;
-	}
+    public java.util.List<EdgeEnd> getEndPointId() {
+        refresh(false); // read lazy initialized objects
+        return fieldEndPointId;
+    }
 
-	public void setEndPointId(java.util.List<EdgeEnd> endPoint) {
-		java.util.List<EdgeEnd> oldValue = fieldEndPointId;
-		fieldEndPointId = endPoint;
-		firePropertyChange("endPointId", oldValue, fieldEndPointId);
-	}
+    public void setEndPointId(java.util.List<EdgeEnd> endPoint) {
+        java.util.List<EdgeEnd> oldValue = fieldEndPointId;
+        fieldEndPointId = endPoint;
+        firePropertyChange("endPointId", oldValue, fieldEndPointId);
+    }
 
-	public java.util.List<WayPoint> fieldWayPoint = new java.util.ArrayList<WayPoint>();
+    public java.util.List<WayPoint> fieldWayPoint = new java.util.ArrayList<>();
 
-	public java.util.List<WayPoint> getWayPoint() {
-		refresh(false); // read lazy initialized objects
-		return fieldWayPoint;
-	}
+    public java.util.List<WayPoint> getWayPoint() {
+        refresh(false); // read lazy initialized objects
+        return fieldWayPoint;
+    }
 
-	public void setWayPoint(java.util.List<WayPoint> wayPoint) {
-		java.util.List<WayPoint> oldValue = fieldWayPoint;
-		fieldWayPoint = wayPoint;
-		firePropertyChange("wayPoint", oldValue, fieldWayPoint);
+    public void setWayPoint(java.util.List<WayPoint> wayPoint) {
+        java.util.List<WayPoint> oldValue = fieldWayPoint;
+        fieldWayPoint = wayPoint;
+        firePropertyChange("wayPoint", oldValue, fieldWayPoint);
 	}
 
 	public static DbDescriptor createDescriptor() {

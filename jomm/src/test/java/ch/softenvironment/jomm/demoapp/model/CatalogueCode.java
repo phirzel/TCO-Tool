@@ -10,15 +10,16 @@ import ch.softenvironment.jomm.mvc.model.DbCode;
 /**
  * Code for any articles to be found in a manufacturers catalogue.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class CatalogueCode extends DbCode {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection.addDescriptor()
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbCode> dbCode*/) {
         DbDescriptor descriptor = DbCode.createDefaultDescriptor(CatalogueCode.class);
@@ -147,7 +148,7 @@ public final class CatalogueCode extends DbCode {
     private Boolean fieldExpendable;
 
     /**
-     * @see FactCost#setExpendable(Boolean)
+     * see FactCost#setExpendable(Boolean)
      */
     @Deprecated // wrong design: makes no sense and is not supported/mapped any more on CatalogueCode
     public void setExpendable(Boolean expendable) {

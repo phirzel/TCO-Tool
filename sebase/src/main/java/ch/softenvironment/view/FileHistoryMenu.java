@@ -23,9 +23,9 @@ import javax.swing.JMenuItem;
 /**
  * Generic FileMenu to provide a list of recently used files.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class FileHistoryMenu extends javax.swing.JMenu {
 
     private FileHistoryListener listener = null;

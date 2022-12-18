@@ -12,7 +12,7 @@
 
     <inceptionYear>2005</inceptionYear>
     <organization>
-        <name>softEnvironment GmbH (liq.), Peter Hirzel</name>
+        <name>softEnvironment GmbH (liq.), Peter Hirzel, Switzerland</name>
     </organization>
     <description>Total Cost of Ownership calculation (Standalone Java UI Application with XML files
         for your Project-Data).
@@ -21,6 +21,11 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <lombok.version>1.18.24</lombok.version>
+
+        <org.slf4j.version>1.7.36</org.slf4j.version>
+        <ch.qos.logback>1.2.10</ch.qos.logback>
 
         <junit.version>4.13.2</junit.version>
         <jfcunit.version>2.08</jfcunit.version>
@@ -33,4 +38,42 @@
         <module>tco-tool-core</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.tcotool</groupId>
+                <artifactId>sebase</artifactId>
+                <version>1.6.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tcotool</groupId>
+                <artifactId>jomm</artifactId>
+                <version>1.6.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <!-- Logging, Impl may be overwritten see https://www.slf4j.org/manual.html -->
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${ch.qos.logback}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

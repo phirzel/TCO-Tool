@@ -17,14 +17,14 @@ import ch.softenvironment.view.ListMenuChoice;
 /**
  * Utility to manage opened GUI's for associated Object's.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ViewManager {
 
 	private final static String ALL_CLASSES = "<ALL>";
 
-	java.util.Map<Class<?>, java.awt.Window> searchViews = new java.util.HashMap<Class<?>, java.awt.Window>();
-	java.util.Map<Object, java.awt.Window> detailViews = new java.util.HashMap<Object, java.awt.Window>();
+	java.util.Map<Class<?>, java.awt.Window> searchViews = new java.util.HashMap<>();
+	java.util.Map<Object, java.awt.Window> detailViews = new java.util.HashMap<>();
 	@SuppressWarnings("rawtypes")
 	java.util.Map/*<String || Class, UserActionRights>*/ userActionRights = new java.util.HashMap();
 

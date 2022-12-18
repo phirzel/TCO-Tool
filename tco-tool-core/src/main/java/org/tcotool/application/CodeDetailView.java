@@ -50,9 +50,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Code changing Dialog.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class CodeDetailView extends ch.softenvironment.view.BaseDialog implements ch.softenvironment.view.SearchView {
 
     private ch.softenvironment.jomm.DbObjectServer server = null;
@@ -1107,7 +1107,7 @@ public class CodeDetailView extends ch.softenvironment.view.BaseDialog implement
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getTlbToolbar().addToolBarListener(ivjEventHandler);

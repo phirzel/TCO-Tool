@@ -33,15 +33,16 @@ import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.Iterator;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Structure for an NLS-String, by means a translatable String according to different Locale-Settings.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public final class DbNlsString extends DbChangeableBean {
 
 	public static final String NO_COUNTRY = "NO_COUNTRY";
@@ -73,7 +74,7 @@ public final class DbNlsString extends DbChangeableBean {
 	}
 
 	/**
-	 * @see #DbObject(DbObjectServer)
+	 * @see DbObject(DbObjectServer)
 	 */
 	protected DbNlsString(DbObjectServer objectServer) {
 		super(objectServer);
@@ -221,7 +222,7 @@ public final class DbNlsString extends DbChangeableBean {
 						try {
 							query.closeAll();
 						} catch (Exception ex) {
-							Tracer.getInstance().runtimeError("ignored (follow-up error)", ex);
+							log.error("ignored (follow-up error)", ex);
 						}
 					}
 				}
@@ -233,13 +234,11 @@ public final class DbNlsString extends DbChangeableBean {
 				return value;
 			} else {
 				if ((cachedLocaleValues.values() == null) || (cachedLocaleValues.values().size() == 0)) {
-					ch.softenvironment.util.Tracer.getInstance().runtimeWarning(
-						"No NLS-Translation for id=" + getId() + " and Language=" + locale.getLanguage());
+					log.warn("No NLS-Translation for id={}, language={}", getId(), locale.getLanguage());
 					return null;
 				} else {
 					// try other language
-					ch.softenvironment.util.Tracer.getInstance().runtimeWarning(
-						"Alternate NLS-Translation for id=" + getId() + " and Language=" + locale.getLanguage());
+					log.warn("Alternate NLS-Translation for id={}, language={}", getId(), locale.getLanguage());
 					return cachedLocaleValues.values().iterator().next().text;
 				}
 			}
@@ -262,7 +261,7 @@ public final class DbNlsString extends DbChangeableBean {
 	/**
 	 * @param locale
 	 * @return
-	 * @see #getAllValuesPerLanguage()
+	 * see #getAllValuesPerLanguage()
 	 */
 	private String createKey(Locale locale) {
 		return locale.getLanguage();
@@ -279,7 +278,7 @@ public final class DbNlsString extends DbChangeableBean {
 	}
 
 	/**
-	 * @see #addChange()
+	 * see #addChange()
 	 */
 	@Override
 	public boolean isModified() {
@@ -288,7 +287,7 @@ public final class DbNlsString extends DbChangeableBean {
 	}
 
 	/**
-	 * @see #setChange()
+	 * @see #setChange(DbPropertyChange)
 	 */
 	@Deprecated
 	protected void removeChange(DbPropertyChange change) {
@@ -412,7 +411,7 @@ public final class DbNlsString extends DbChangeableBean {
 	 * Set the owner of this DbNlsString in case of saving to inform the owner. A DbNlsString may only be owned by a single Owner!
 	 *
 	 * @param change (contains owner and property pointing to this DbNlsString)
-	 * @see #removeChange()
+	 * @see #removeChange(DbPropertyChange)
 	 */
 	public void setChange(DbPropertyChange change) {
 		if (change == null) {
@@ -479,7 +478,7 @@ public final class DbNlsString extends DbChangeableBean {
 				// let Composite know aggregate changed
 				((DbChangeableBean) ownerChange.getSource()).firePropertyChange(ownerChange.getProperty(), null /* cheat */, this);
 			} catch (Exception e) {
-				ch.softenvironment.util.Tracer.getInstance().developerError(e.getLocalizedMessage());
+				log.error("Developer error", e);
 			}
 		}
 	}

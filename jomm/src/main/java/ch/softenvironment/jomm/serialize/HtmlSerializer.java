@@ -17,19 +17,20 @@ package ch.softenvironment.jomm.serialize;
  */
 
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * HTML-Generator.
  *
- * @author Peter Hirzel, softEnvironment GmbHs
+ * @author Peter Hirzels
  */
+@Slf4j
 public class HtmlSerializer extends XmlSerializer {
 
 	// HTML masked characters
@@ -59,7 +60,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 *
 	 * @param uri (for e.g. "http://www.softenvironment.ch")
 	 * @return String (well formated HTML)
-	 * @see http://validator.w3.org/
+	 * @see <a href="http://validator.w3.org/">w3c</a>
 	 */
 	public static String validate(final String uri) throws IOException {
 		StringBuffer buffer = new StringBuffer();
@@ -75,8 +76,7 @@ public class HtmlSerializer extends XmlSerializer {
 				buffer.append(line);
 			}
 		} catch (MalformedURLException mue) {
-			Tracer.getInstance().runtimeWarning(
-				"Invalid URL: " + mue.getLocalizedMessage());
+			log.warn("Invalid URL: {}", mue.getLocalizedMessage());
 		} finally {
 			if (in != null) {
 				in.close();
@@ -98,7 +98,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write a text as BOLD.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void bold(final String text) throws java.io.IOException {
 		element("b", encodeString(text), null, false);
@@ -279,7 +279,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write a text as ITALIC.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void italic(String text) throws java.io.IOException {
 		element("i", encodeString(text), null, false);
@@ -289,7 +289,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write a listItem li-tag in an unordered List.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void listItem(String text) throws java.io.IOException {
 		element("li", encodeString(text), null, false);
@@ -299,7 +299,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write text within a paragraph.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void paragraph(String text) throws java.io.IOException {
 		if (StringUtils.isNullOrEmpty(text)) {
@@ -450,7 +450,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write a tableData-Element.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void tableData(String text, AttributeList attrs)
 		throws java.io.IOException {
@@ -468,7 +468,7 @@ public class HtmlSerializer extends XmlSerializer {
 	 * Write a tableHeader-Element.
 	 *
 	 * @param text
-	 * @see #encodeString()
+	 * @see #encodeString(String)
 	 */
 	public void tableHeader(String text, AttributeList attrs)
 		throws java.io.IOException {

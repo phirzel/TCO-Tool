@@ -23,10 +23,10 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.CostDriverDetailView;
 import org.tcotool.application.PersonalCostDetailView;
 import org.tcotool.application.RoleDetailView;
@@ -44,8 +44,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report Personal-Costs in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ReportStaff extends ReportTool {
 
     private ReportStaff(ModelUtility utility, final String title) {
@@ -183,7 +184,7 @@ public class ReportStaff extends ReportTool {
             }
             encodeCostBlockColumns(root, codeUndefined);
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError(null, e);
+            log.error(null, e);
         }
 
         // print totals
@@ -208,7 +209,7 @@ public class ReportStaff extends ReportTool {
     /**
      * Print Columns for TCO in HTML: [CostType] [PersonTotal] [[FactTotal] [TCO_Y1] [TCO_Y2]...]
      *
-     * @param service print to data of given service (null for all services)
+     * @param root print to data of given service (null for all services)
      */
     private void encodeCostBlockColumns(TcoObject root, Object code) throws IOException {
         // ch.softenvironment.jomm.serialize.AttributeList attrs =

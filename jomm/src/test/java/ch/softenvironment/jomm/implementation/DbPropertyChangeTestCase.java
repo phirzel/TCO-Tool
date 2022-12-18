@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 /**
  * Test DbPropertyChange.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbPropertyChangeTestCase extends TestCase {
 
@@ -27,21 +27,21 @@ public class DbPropertyChangeTestCase extends TestCase {
         }
     }
 
-    public void testSetPrivateField() throws Exception {
+    public void testSetPrivateField() {
         TestBean bean = new TestBean();
         String msg = "TEST";
-        DbPropertyChange<TestBean> chg = new DbPropertyChange<TestBean>(bean, "text");
+        DbPropertyChange<TestBean> chg = new DbPropertyChange<>(bean, "text");
         chg.setProperty(msg);
-        assertTrue("DbPropertyChange->setField", bean.getText().equals(msg));
+        assertEquals("DbPropertyChange->setField", bean.getText(), msg);
     }
 
     public void testPrimitiveTypes() {
         try {
             TestBean bean = new TestBean();
-            DbPropertyChange<TestBean> chg = new DbPropertyChange<TestBean>(bean, "boolf");
+            DbPropertyChange<TestBean> chg = new DbPropertyChange<>(bean, "boolf");
             chg.getPrivateField().setBoolean(bean, true);
 
-            chg = new DbPropertyChange<TestBean>(bean, "intf");
+            chg = new DbPropertyChange<>(bean, "intf");
             chg.getPrivateField().setInt(bean, 45);
         } catch (Exception e) {
             fail(e.getLocalizedMessage());

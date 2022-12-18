@@ -21,7 +21,7 @@ import javax.swing.JTree;
 /**
  * TreeCellEditor for a navigation tree node.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class NavigationTreeCellEditor extends javax.swing.tree.DefaultTreeCellEditor {
 

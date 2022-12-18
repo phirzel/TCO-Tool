@@ -21,7 +21,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class HSQLDBConnection extends SqlConnection {
 

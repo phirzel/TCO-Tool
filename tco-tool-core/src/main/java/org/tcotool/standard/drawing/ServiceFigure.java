@@ -23,9 +23,9 @@ import org.jhotdraw.framework.FigureAttributeConstant;
 /**
  * Graphical representation for a TCO-Service in a Dependency Diagram.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 class ServiceFigure extends NodeFigure /* implements ActionListener */ {
 
     /**

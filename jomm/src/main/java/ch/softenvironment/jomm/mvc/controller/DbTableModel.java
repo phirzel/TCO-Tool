@@ -27,8 +27,8 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
+import ch.softenvironment.util.Evaluator;
 import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.ViewOptions;
 import ch.softenvironment.view.table.NumberTableCellRenderer;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TableModel to represent a List of DbObject's for e.g. in a JTable, where each such DbObject corresponds to the term table-row or data-Object. This Model offers a set of convenience methods to
@@ -45,9 +46,10 @@ import javax.swing.table.TableColumn;
  * <p>
  * Define a single selection JTable: myJTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class DbTableModel extends javax.swing.table.AbstractTableModel implements ch.softenvironment.util.Evaluator {
 
 	private static final String COL_TIME = "*TIME*";
@@ -68,7 +70,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	/**
 	 * Add a property to be formatted as an Amount in a Table-Cell (for e.g."   1'228.85") according to current Locale-Settings. (This is a convenience method.)
 	 *
-	 * @see #addColumn()
+	 * @see #addColumn(String, String, int, TableCellRenderer)
 	 */
 	public void addColumnAmount(final String columnName, final String property, int defaultWidth) {
 		addColumn(columnName, property, defaultWidth, new NumberTableCellRenderer(ch.softenvironment.util.AmountFormat.getAmountInstance()));
@@ -88,7 +90,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	}
 
 	/**
-	 * @see addColumn(String, String, int, TableCellRenderer)
+	 * @see #addColumn(String, String, int, TableCellRenderer)
 	 */
 	public void addColumn(final String columnName, final String property, int defaultWidth) {
 		addColumn(columnName, property, defaultWidth, null);
@@ -97,7 +99,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	/**
 	 * Add a column to TableModel to represent values given by property.
 	 *
-	 * @see #addColumnEvaluated()
+	 * @see #addColumnEvaluated(String, String, int, TableCellRenderer, Evaluator)
 	 */
 	public void addColumn(final String columnName, final String property, int defaultWidth, TableCellRenderer renderer) {
 		addColumnEvaluated(columnName, property, defaultWidth, renderer, null);
@@ -116,7 +118,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	 * @param evaluator determining the current value at render-time
 	 * @defaultWidth initial with for cell
 	 * @renderer Cell-Renderer for type specified by property
-	 * @see #addColumn()
+	 * @see #addColumn(String, String, int, TableCellRenderer)
 	 */
 	public void addColumnEvaluated(final String columnName, final String property, int defaultWidth, TableCellRenderer renderer, ch.softenvironment.util.Evaluator evaluator) {
 		columns.add(new DbTableColumn(columnName, DbObject.convertName(property), defaultWidth, renderer, evaluator));
@@ -142,7 +144,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	/**
 	 * Add a property to be formatted as Time in TableCell (for e.g. "11:55:00").
 	 *
-	 * @see #addColumn()
+	 * @see #addColumn(String, String, int, TableCellRenderer)
 	 * @deprecated (use TableCellRenderer instead)
 	 */
 	public void addColumnTime(final String columnName, final String property, int defaultWidth) {
@@ -247,7 +249,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	 * Return the Object as is.
 	 *
 	 * @param rowIndex
-	 * @see get(int)
+	 * @see #get(int)
 	 */
 	public Object getRaw(final int rowIndex) {
 		checkRowIndex(rowIndex);
@@ -444,7 +446,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 	/**
 	 * Remove selected Objects from Target-System. ReadOnly Objects are spared from removing.
 	 *
-	 * @param int[] typically result of JTable#getSelectedRows()
+	 * @param selectedIndeces typically result of JTable#getSelectedRows()
 	 * @param historize (true->add history entry for every removed object)
 	 * @return List of all effectively removed items
 	 */
@@ -481,7 +483,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 		if (table != null) {
 			table.clearSelection();
 		} else {
-			Tracer.getInstance().developerWarning("DbTableModel should have been adjusted (@see #adjustTable())");
+			log.warn("Developer warning: DbTableModel should have been adjusted (@see #adjustTable())");
 		}
 
 		dataVector = list;
@@ -526,7 +528,7 @@ public class DbTableModel extends javax.swing.table.AbstractTableModel implement
 		if (constants.containsKey(property)) {
 			return constants.get(property);
 		} else {
-			Tracer.getInstance().developerError("addColumnConst() buggy!");
+			log.error("Developer error: addColumnConst() buggy!");
 			return null;
 		}
 	}

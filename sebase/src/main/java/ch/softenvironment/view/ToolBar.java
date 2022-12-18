@@ -21,13 +21,15 @@ import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.controller.DataBrowser;
 import ch.softenvironment.controller.DataBrowserListener;
 import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Standard JToolbar extended by: - default object functions (new, save, remove, etc) - manage a multiple Object-List to browse - Inconsistency-list of current object
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener {
 
     private javax.swing.JButton ivjTbbCopy = null;
@@ -119,7 +121,6 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
      */
     public void addToolBarListener(ch.softenvironment.view.ToolBarListener newListener) {
         fieldToolBarListenerEventMulticaster = ch.softenvironment.view.ToolBarListenerEventMulticaster.add(fieldToolBarListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
@@ -1257,7 +1258,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
      */
     private void handleException(java.lang.Throwable exception) {
         BaseDialog.showError(this, null, exception.toString(), exception);
-        ch.softenvironment.util.Tracer.getInstance().uncaughtException(exception);//$NON-NLS-1$
+        log.error("uncaugt", exception);//$NON-NLS-1$
     }
 
     /**
@@ -1266,7 +1267,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getTbbOpen().addActionListener(ivjEventHandler);
@@ -1326,13 +1327,12 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
     }
 
     /**
-     * @param Listener ch.softenvironment.view.ToolBarListener
+     * @param newListener ch.softenvironment.view.ToolBarListener
      * @deprecated (use DataBrowserListener instead)
      */
     public void removeToolBarListener(ch.softenvironment.view.ToolBarListener newListener) {
         fieldToolBarListenerEventMulticaster = ch.softenvironment.view.ToolBarListenerEventMulticaster
             .remove(fieldToolBarListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
@@ -1358,7 +1358,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
      * Show a list of inconsistencies in a ComboBox, which is suppressed if everything is alright.
      *
      * @param items java.util.Vector
-     * @see ConsistencyController.getInconsistencies();
+     * see ConsistencyController.getInconsistencies();
      */
     public void setItems(java.util.Vector<?> items) {
         getCbxItems().setVisible((items != null) && (items.size() > 0));

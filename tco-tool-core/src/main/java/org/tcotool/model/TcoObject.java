@@ -25,7 +25,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * Generic TCO-object.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class TcoObject extends DbEntityBean {
 

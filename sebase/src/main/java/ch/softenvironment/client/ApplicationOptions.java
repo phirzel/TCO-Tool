@@ -18,7 +18,6 @@ package ch.softenvironment.client;
 
 import ch.softenvironment.util.ParserCSV;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,13 +25,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Manage the Application Settings by Properties file.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class ApplicationOptions extends java.util.Properties implements UserSettings {
 
 	// values for Key-Values
@@ -82,7 +83,7 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 		setShowStatusBar(Boolean.TRUE);
 		setShowToolBar(Boolean.TRUE);
 		setWorkingDirectory(System.getProperty(HOME_DIRECTORY));
-		setLastFiles(new ArrayList<String>());
+		setLastFiles(new ArrayList<>());
 
 		setWindowHeight(Integer.valueOf(600));
 		setWindowWidth(Integer.valueOf(800));
@@ -114,9 +115,9 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 			/* tmp= */
 			super.load(inputStream);
 		} catch (FileNotFoundException fe) {
-			Tracer.getInstance().runtimeWarning("File not found: " + fe.getLocalizedMessage());
+			log.warn("File not found", fe);
 		} catch (IOException ioe) {
-			Tracer.getInstance().runtimeWarning("IO failure: " + ioe.getLocalizedMessage());
+			log.warn("IO failure", ioe);
 		}
 	}
 
@@ -341,7 +342,7 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 			FileOutputStream outputStream = new FileOutputStream(filename);
 			super.store(outputStream, "User Properties <" + filename + ">");
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("IGNORE: Failed for User Properties <" + filename + ">");
+			log.warn("IGNORE: Failed for User Properties <{}>", filename);
 		}
 	}
 
@@ -358,7 +359,7 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	/**
 	 * Sets the Country property (java.lang.String) value.
 	 *
-	 * @param language (for e.g. "CH"; "FR", etc)
+	 * @param country (for e.g. "CH"; "FR", etc)
 	 * @see #getCountry
 	 */
 	public void setCountry(java.lang.String country) {
@@ -369,7 +370,6 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	 * Transform given font into String-Description.
 	 *
 	 * @param font
-	 * @see setFont(String)
 	 */
 	public void setFont(java.awt.Font font) {
 		if (font == null) {
@@ -427,7 +427,7 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	/**
 	 * Sets the lastFiles opened property (java.lang.String) value.
 	 *
-	 * @param 0..n Files separated by semicolon ';'.
+	 * @param lastFiles 0..n Files separated by semicolon ';'.
 	 * @see #getLastFiles
 	 */
 	public void setLastFiles(java.util.List<String> lastFiles) {
@@ -437,7 +437,7 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	/**
 	 * Sets the 'Look & Feel' property (java.lang.String) value. This Font is used for graphical nodes and edges.
 	 *
-	 * @param font The new value for the property.
+	 * @param string The new value for the property.
 	 * @see #getLookAndFeel
 	 */
 	public void setLookAndFeel(String string) {
@@ -520,14 +520,14 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	/**
 	 * Cache OS locale before a reset of default Locale might happen by these settings.
 	 *
-	 * @see UserSettings#setPlattformLocale(Locale)
+	 * see UserSettings#setPlattformLocale(Locale)
 	 */
 	protected final void setPlattformLocale(Locale locale) {
 		if (locale == null) {
 			throw new IllegalArgumentException("locale must not be null!");
 		}
 		plattformLocale = locale;
-		Tracer.getInstance().debug("Platform Locale: " + (locale == null ? "null" : locale.toString()));
+		log.debug("Platform Locale: {}", locale);
 	}
 
 	/**
@@ -535,7 +535,6 @@ public class ApplicationOptions extends java.util.Properties implements UserSett
 	 * <p>
 	 * This field allows temporary keeping the operating systems default region for reuse in any number-formats.
 	 *
-	 * @param locale
 	 * @see ch.softenvironment.util.NlsUtils#changeLocale(Locale)
 	 */
 	public final Locale getPlattformLocale() {

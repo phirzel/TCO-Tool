@@ -7,16 +7,16 @@ import org.tcotool.tools.Calculator;
 /**
  * Testcase for org.tcotool.tools.Calculator
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorTest {
 
     @Test
     public void accumulateLists() {
-        java.util.List<Double> results = new java.util.ArrayList<Double>();
+        java.util.List<Double> results = new java.util.ArrayList<>();
         results.add(3.2);
         results.add(4.5);
-        java.util.List<Double> summand = new java.util.ArrayList<Double>();
+        java.util.List<Double> summand = new java.util.ArrayList<>();
         summand.add(5.7);
         summand.add(6.2);
         Calculator.accumulateLists(results, summand);

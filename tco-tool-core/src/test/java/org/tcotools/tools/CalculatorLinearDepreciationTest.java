@@ -30,7 +30,7 @@ import org.tcotool.tools.CalculatorLinearDepreciation;
 /**
  * Tests org.tcotool.tools.CalculatorLinearDepreciation
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorLinearDepreciationTest {
 

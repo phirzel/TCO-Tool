@@ -27,12 +27,15 @@ import ch.softenvironment.view.ListMenuChoice;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.swingext.JListUtility;
 import java.util.EventObject;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Allow selection of multiple Codes, especially for Code-Cardinalities [0..*].
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implements ListMenuChoice {
 
 	private static final long serialVersionUID = 1L;
@@ -500,7 +503,7 @@ public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implement
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getLstEntries().addMouseListener(ivjEventHandler);
@@ -571,7 +574,7 @@ public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implement
 	 *
 	 * @param list
 	 * @see #getList()
-	 * @see #setListType() which precedes this method
+	 * @see #setListType(List, String)  which precedes this method
 	 */
 	public void setList(java.util.List list) {
 		java.util.List oldValue = fieldList;
@@ -590,7 +593,7 @@ public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implement
 				// case n:n => object to display is "hided" in a DbRelationshipBean
 				JListUtility.initList(getLstEntries(), list, propertyOther, new DbObjectEvaluator());
 			} catch (Throwable e) {
-				ch.softenvironment.util.Tracer.getInstance().developerWarning(e.getLocalizedMessage());
+				log.warn("Developer warning", e);
 			}
 		}
 		//	}
@@ -612,7 +615,7 @@ public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implement
 	/**
 	 * Initialize the Part for n:n Relationships, therefore elements must be instances of DbRelationship. Set the total possible entries to be selected by List.
 	 *
-	 * @see DbBaseFrame#assignAssociations()
+	 * @see DbBaseFrame#assignAssociations(Class, DbEntityBean, String, List, DbObjectListener)
 	 */
 	public void setListType(java.util.List entries, final String property, java.lang.Class ownerType, DbEntityBean owner, final String propertyOther, DbObjectListener listener, DbBaseFrame frame) {
 		setListType(entries, property);

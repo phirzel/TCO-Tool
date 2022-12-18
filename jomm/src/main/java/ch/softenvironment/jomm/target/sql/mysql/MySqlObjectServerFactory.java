@@ -30,9 +30,9 @@ import javax.jdo.metadata.TypeMetadata;
 /**
  * JDO-Implementation of a MySQL V4.1 Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class MySqlObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -54,7 +54,7 @@ public class MySqlObjectServerFactory extends ch.softenvironment.jomm.DbDomainNa
      */
     @Override
     protected javax.jdo.PersistenceManager createPersistenceManager() {
-        DbObjectServer objectServer = null;
+        final DbObjectServer objectServer;
         try {
             /*
              * Don't use autoReconnect=true, it's going away eventually and it's

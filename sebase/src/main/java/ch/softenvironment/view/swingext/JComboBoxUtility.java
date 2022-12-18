@@ -30,9 +30,13 @@ import javax.swing.plaf.basic.BasicComboBoxRenderer;
 /**
  * JComboBox utility to display sorted objects in items by its property determined by evaluator.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class JComboBoxUtility {
+public final class JComboBoxUtility {
+
+    private JComboBoxUtility() {
+        throw new IllegalStateException("utility class");
+    }
 
     public static final int SORT_KEEP_ORDER = 100;
     public static final int SORT_ASCENDING = 101;
@@ -62,7 +66,7 @@ public class JComboBoxUtility {
     /**
      * Display the value of a given public property of the represented object.
      */
-    @SuppressWarnings("serial")
+
     protected static class ObjectComboBoxRenderer extends BasicComboBoxRenderer {
 
         private Evaluator evaluator = null;
@@ -106,7 +110,7 @@ public class JComboBoxUtility {
     /**
      * Extended DefaultComboBoxModel to sort ascending by displayable value of given by an object's property.
      */
-    @SuppressWarnings("serial")
+
     protected static class SortedComboBoxModel extends DefaultComboBoxModel {
 
         /**
@@ -154,8 +158,8 @@ public class JComboBoxUtility {
 
     /**
      * Sort items ascending by default.
-     *
-     * @see #initComboBox(JComboBox, java.util.List, String, boolean, Evaluator, boolean)
+     * <p>
+     * see #initComboBox(JComboBox, java.util.List, String, boolean, Evaluator, boolean)
      */
     public static void initComboBox(JComboBox comboBox, java.util.List<?> items, final String property, boolean addNullElement, Evaluator evaluator) {
         initComboBox(comboBox, items, property, addNullElement, evaluator, SORT_ASCENDING);

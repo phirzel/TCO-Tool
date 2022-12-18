@@ -24,13 +24,13 @@ import javax.swing.tree.TreePath;
 /**
  * Tool for Mouse-Drag within a JTree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class TransferableTreeNode implements Transferable {
 
     protected static final DataFlavor TREE_PATH_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType, "Tree Path");
     private final DataFlavor[] flavors = {TREE_PATH_FLAVOR};
-    private TreePath path = null;
+    private final TreePath path;
 
     public TransferableTreeNode(TreePath path) {
         super();

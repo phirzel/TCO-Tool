@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Translatable String type (i18n).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class StringNls implements Serializable {
 
@@ -39,7 +39,7 @@ public class StringNls implements Serializable {
      * The name of the owning instance property to point on StringNls value.
      *
      * @return
-     * @see getOwner
+     * @see #getOwner()
      */
     public String getPropertyName() {
         return this.propertyName;

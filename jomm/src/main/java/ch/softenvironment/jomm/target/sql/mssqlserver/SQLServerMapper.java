@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_sqlserver;
+package ch.softenvironment.jomm.target.sql.mssqlserver;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -24,14 +24,16 @@ import ch.softenvironment.jomm.DbTransaction;
 import ch.softenvironment.util.UserException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Non-Standard-SQL Mappings for MS SQL Server 2005.
  * <p>
  * Design Pattern: <b>Adapter</b>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class SQLServerMapper extends ch.softenvironment.jomm.target.sql.SqlMapper {
 
 	/**
@@ -60,7 +62,6 @@ public class SQLServerMapper extends ch.softenvironment.jomm.target.sql.SqlMappe
 		String keyTable = DbMapper.ATTRIBUTE_KEY_TABLE + "_Object"; // T_Key_Object
 		String keyAttribute = DbMapper.ATTRIBUTE_KEY_TABLE;
 		String lastId = "T_LastUniqueId";
-		long id = -1;
 
 		// 1) Determine latest ID
 		DbQueryBuilder builder = ((DbObjectServer) objectServer).createQueryBuilder(DbQueryBuilder.SELECT, "SEQUENCE/UNIQUE ID");
@@ -75,20 +76,22 @@ public class SQLServerMapper extends ch.softenvironment.jomm.target.sql.SqlMappe
 		}
 
 		// 2) Create Sequence (new ID)
+		long id;
 		try {
 			id = (queryResult.getLong(1)) + (long) 1;
 			query.closeAll();
 		} catch (SQLException e) {
+			log.warn("Object-id problem", e);
 			throw new UserException("Es kann keine Identitaet fuer ein neues Objekt <" + key + "> geloest werden.", "Allozierungs-Fehler");
 		}
 		builder = ((DbObjectServer) objectServer).createQueryBuilder(DbQueryBuilder.UPDATE, "SEQUENCE/UNIQUE ID");
 		builder.setTableList(keyTable /* + " WITH (ROWLOCK)" */);
-		builder.append(lastId, Long.valueOf(id));
+		builder.append(lastId, id);
 		builder.appendInternal((String) null);
 		builder.addFilter(keyAttribute, key, DbQueryBuilder.STRICT);
 		query = new DbQuery((DbTransaction) transaction, builder);
 		query.execute();
 
-		return Long.valueOf(id);
+		return id;
 	}
 }

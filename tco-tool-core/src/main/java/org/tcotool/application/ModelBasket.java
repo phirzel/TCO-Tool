@@ -23,7 +23,7 @@ import org.tcotool.model.TcoModel;
 /**
  * Encapsulates the org.tcotool.model.* Classes in an INTERLIS Basket.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ModelBasket implements IliBasket {
 
@@ -82,7 +82,8 @@ public class ModelBasket implements IliBasket {
      */
     @Override
     public DbObjectId getObjectId() {
-        return new DbObjectId(TcoModel.class, Long.valueOf(-1 /* Unknown */));
+        /* Unknown */
+        return new DbObjectId(TcoModel.class, (long) -1);
     }
 
     /*

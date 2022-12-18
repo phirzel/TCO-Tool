@@ -37,7 +37,6 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -60,12 +59,14 @@ import javax.jdo.Query;
 import javax.jdo.datastore.JDOConnection;
 import javax.jdo.datastore.Sequence;
 import javax.jdo.listener.InstanceLifecycleListener;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Specific ObjectServer for dealing with SQL Target DBMS.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 
 	/**
@@ -116,7 +117,7 @@ public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 							removables.add(association);
 						}
 					} else {
-						Tracer.getInstance().developerError("DbRelationshipBean expected");
+						log.error("Developer error: DbRelationshipBean expected");
 					}
 				}
 				values.removeAll(removables); // concurrency!
@@ -242,7 +243,7 @@ public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	 * by another <code>PersistenceManager</code>.
 	 *
 	 * @param pc a persistent instance
-	 * @see javax.jdo.PersistentManager
+	 * see javax.jdo.PersistentManager
 	 */
 	@Override
 	public void deletePersistent(java.lang.Object pc) {
@@ -563,11 +564,11 @@ public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	@Override
 	public synchronized void reconnect() throws javax.jdo.JDOException {
 		try {
-			Tracer.getInstance().runtimeInfo("reconnect Target-System");
+			log.info("reconnect Target-System");
 			// TODO disable access to connection in the meantime
 			((SqlConnection) getConnection()).reconnect();
 		} catch (SQLException e) {
-			Tracer.getInstance().runtimeError("cannot reconnect to Target-System by url: " + getPersistenceManagerFactory().getConnectionURL());
+			log.error("cannot reconnect to Target-System by url: {}", getPersistenceManagerFactory().getConnectionURL(), e);
 			throw new javax.jdo.JDOFatalException("SqlConnection.reconnect()", e);
 		}
 	}
@@ -745,7 +746,7 @@ public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 		if (DbObject.isCode(dbObject)) {
 			List objs = retrieveCodes(dbObject);
 			if (objs == null) {
-				Tracer.getInstance().runtimeWarning("DbEnumeration <" + dbObject.getName() + "> with Id=<" + dbId.toString() + "> missing");
+				log.warn("DbEnumeration={} with Id={} missing", dbObject.getName(), dbId);
 			}
 			return codeCache.get(dbObject, dbId);
 		}
@@ -1012,7 +1013,7 @@ public class SqlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 			return value.toString().equals("1"); // (Integer.parseInt(getFirstValue(builder).toString())
 			// == 1);
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError("Target probably down", e);
+			log.error("Target probably down", e);
 			return false;
 		}
 	}

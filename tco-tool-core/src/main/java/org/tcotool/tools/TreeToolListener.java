@@ -25,7 +25,7 @@ import org.tcotool.model.TcoPackage;
 /**
  * Interface for TreeTool when walking a Tree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see TreeTool
  */
 public interface TreeToolListener {

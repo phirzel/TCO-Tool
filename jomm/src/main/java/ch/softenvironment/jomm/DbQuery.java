@@ -20,7 +20,6 @@ import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.Statistic;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,13 +28,15 @@ import java.sql.Statement;
 import java.util.Map;
 import javax.jdo.FetchPlan;
 import javax.jdo.Query;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Maintain and execute a Database Query (by means an SQL-Statement).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class DbQuery implements javax.jdo.Query {
 
     public static final int INCOMPLETE = 0;
@@ -58,7 +59,7 @@ public class DbQuery implements javax.jdo.Query {
     /**
      * Create a new DbQuery to be executed within the given transaction.
      *
-     * @param DbTransaction transaction to commit query
+     * @param transaction to commit query
      * @param builder Containing ONE specific database query
      * @see Statistic
      */
@@ -71,7 +72,7 @@ public class DbQuery implements javax.jdo.Query {
     /**
      * Create a new DbQuery for a SQL DQL (SELECT) according to JDBC2.0 with different Scroll- and Concurrency-Type.
      *
-     * @param DbTransaction transaction to commit query
+     * @param transaction to commit query
      * @param builder containing the SELECT query
      * @param resultSetType a result set type; see ResultSet.TYPE_XXX
      * @param resultSetConcurrency a concurrency type; see ResultSet.CONCUR_XXX
@@ -91,7 +92,7 @@ public class DbQuery implements javax.jdo.Query {
     /**
      * Create a new DbQuery.
      *
-     * @param DbTransaction transaction to commit query
+     * @param transaction to commit query
      * @param useCase Description for Query
      * @see Statistic
      */
@@ -145,7 +146,7 @@ public class DbQuery implements javax.jdo.Query {
             if (closeEx == null) {
                 throw new UserException(getResourceString("CW_CursorError"), getResourceString("CT_CursorError"), e);
             } else {
-                Tracer.getInstance().runtimeError("Follow-up error", e);
+                log.error("Follow-up error", e);
                 throw new UserException(getResourceString("CW_CursorError"), getResourceString("CT_CursorError"), closeEx);
             }
         }
@@ -302,13 +303,13 @@ public class DbQuery implements javax.jdo.Query {
                 dynamicStatement = transaction.getConnection().getJdbcConnection().createStatement(resultSetType, resultSetConcurrency);
             } catch (UnsupportedOperationException e) {
                 // not supported before JDBC2.0
-                Tracer.getInstance().runtimeWarning("ResulSetTyp and -Concurrency not supported by DBMS-Driver!");
+                log.warn("ResulSetTyp and -Concurrency not supported by DBMS-Driver!");
                 dynamicStatement = transaction.getConnection().getJdbcConnection().createStatement();
             }
         } else {
             dynamicStatement = transaction.getConnection().getJdbcConnection().createStatement();
         }
-        Tracer.getInstance().logBackendCommand(query);
+        log.info(query);
     }
 
     /**
@@ -388,14 +389,14 @@ public class DbQuery implements javax.jdo.Query {
      * @return the filtered <code>Collection</code>.
      * @see #executeWithArray(Object[] parameters)
      * @see javax.jdo.Query
-     * @see org.odmg.OQLQuery
+     * see org.odmg.OQLQuery
      */
     @Override
     public Object execute() {
         try {
             String targetQuery = builder.getQuery();
             if (StringUtils.isNullOrEmpty(targetQuery)) {
-                Tracer.getInstance().logBackendCommand("WARNING: Query suppressed because not supported by DBMS");
+                log.info("WARNING: Query suppressed because not supported by DBMS");
                 return null;
             } else {
                 if (batch && (!transaction.getConnection().getJdbcConnection().getAutoCommit())) {
@@ -419,7 +420,7 @@ public class DbQuery implements javax.jdo.Query {
                 }
             }
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("SQLState=" + e.getSQLState(), e);
+            log.error("SQLState={}", e.getSQLState(), e);
             throw new UserException(getResourceString("CW_QueryError"), getResourceString("CT_QueryError"), e);
         }
 
@@ -553,14 +554,14 @@ public class DbQuery implements javax.jdo.Query {
         if (dynamicStatement != null) {
             SQLWarning warning = dynamicStatement.getWarnings();
             if (warning != null) {
-                Tracer.getInstance().logBackendCommand("Backend-Warning: " + warning.getLocalizedMessage());
+                log.info("Backend-Warning: {}", warning.getLocalizedMessage());
                 return warning.getErrorCode();
             }
         }
         if (result != null) {
             SQLWarning warning = result.getWarnings();
             if (warning != null) {
-                Tracer.getInstance().logBackendCommand("Backend-Warning: " + warning.getLocalizedMessage());
+                log.info("Backend-Warning: {}", warning.getLocalizedMessage());
                 return warning.getErrorCode();
             }
         }

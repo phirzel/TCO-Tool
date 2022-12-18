@@ -1,14 +1,17 @@
 package org.tcotool.pluginsupport;
 
 import ch.softenvironment.tcotool.tco.TCOPlugin;
-import ch.softenvironment.util.Tracer;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tcotool.application.LauncherView;
 
 public interface Plugin {
+
+    Logger log = LoggerFactory.getLogger(Plugin.class);
 
     String SELECTION_SPECIFIC = "selectionSpecific";
     String CLIENT_PROPERTY = "extension";
@@ -32,7 +35,7 @@ public interface Plugin {
             selectionSpecific = Boolean.FALSE;
         }
         if (entryMenu == null) {
-            Tracer.getInstance().developerWarning("Menu not found in Launcher for: " + menu);
+            log.warn("Developer warning: Menu not found in Launcher for: {}", menu);
             return;
         }
 
@@ -49,7 +52,7 @@ public interface Plugin {
             entryMenu.add(item);
 
         } catch (Throwable e) {
-            Tracer.getInstance().runtimeError("Could not load Plugin for menu <" + extension + ">", e);
+            log.error("Could not load Plugin for menu <{}>", extension, e);
         }
     }
 

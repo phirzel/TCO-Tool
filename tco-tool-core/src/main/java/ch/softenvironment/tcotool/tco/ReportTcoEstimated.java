@@ -41,7 +41,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report estimated TCO costs based Cost#estimated . Calculations as Plugin for TCO-Tool. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportTcoEstimated extends ReportTco {
 

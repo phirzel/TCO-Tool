@@ -7,7 +7,7 @@ import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
 /**
  * The ROOT-Element of a TCO-Configuration.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class TcoModel extends TcoPackage {
 

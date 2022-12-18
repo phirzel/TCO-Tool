@@ -22,10 +22,10 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.NavigationView;
 import org.tcotool.application.ServiceDetailView;
@@ -38,8 +38,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report TCO-Costs in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ReportTco extends ReportTool {
 
 	protected ReportTco(ModelUtility utility, final String title) {
@@ -98,7 +99,7 @@ public class ReportTco extends ReportTool {
 			}
 			encodeCostBlockColumns(root, codeUndefined);
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError(null, e);
+			log.error("", e);
 		}
 
 		// print total bottom lines
@@ -176,7 +177,7 @@ public class ReportTco extends ReportTool {
 	 *
 	 * @param root
 	 * @param code
-	 * @see Calculater#getCosts()
+	 * @see Calculator#getCosts(TcoObject, String, Object)
 	 */
 	protected void encodeCostBlockColumns(TcoObject root, Object code) throws IOException {
 		List<Double> factCosts = calculator.getCosts(root, Calculator.KIND_FC, code);

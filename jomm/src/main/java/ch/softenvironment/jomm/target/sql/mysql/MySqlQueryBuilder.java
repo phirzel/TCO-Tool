@@ -22,7 +22,7 @@ import ch.softenvironment.jomm.target.sql.SqlQueryBuilder;
 /**
  * MySQL specific Query builder.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MySqlQueryBuilder extends SqlQueryBuilder {
 

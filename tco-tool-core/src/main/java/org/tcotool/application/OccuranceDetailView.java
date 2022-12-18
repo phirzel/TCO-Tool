@@ -29,9 +29,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of an Occurance.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
     java.beans.PropertyChangeListener {
 
@@ -815,7 +815,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);

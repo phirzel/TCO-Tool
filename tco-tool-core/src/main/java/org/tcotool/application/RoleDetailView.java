@@ -32,9 +32,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of a Personal Role.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView {
 
     private ch.softenvironment.view.DetailView caller = null;
@@ -1529,7 +1529,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);

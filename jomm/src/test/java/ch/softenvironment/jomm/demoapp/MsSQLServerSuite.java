@@ -22,16 +22,17 @@ import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS SQL Server. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a the following services are running in the
  * background: - SQL Server 2003 (SQLExpress or Enterprise server) - SQL Server Browser - default login id: "sa"
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class MsSQLServerSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";
@@ -83,7 +84,6 @@ public class MsSQLServerSuite extends junit.framework.TestSuite {
 
 			@Override
 			protected void setUp() {
-				Tracer.start(Tracer.ALL);
 				DbLoginDialog dialog = new DbLoginDialog(null,
 					"jdbc:sqlserver://SANDFLYER\\SQLEXPRESS" /*
 				 * +
@@ -94,8 +94,7 @@ public class MsSQLServerSuite extends junit.framework.TestSuite {
 						server = initializeTarget(dialog.getUserId(),
 							dialog.getPassword(), dialog.getUrl());
 					} catch (Throwable e) {
-						Tracer.getInstance().runtimeError("initializeTarget()",
-							e);
+						log.error("initializeTarget()", e);
 						fail("Schema creation failed: "
 							+ e.getLocalizedMessage());
 					}
@@ -118,7 +117,6 @@ public class MsSQLServerSuite extends junit.framework.TestSuite {
 							+ e.getLocalizedMessage());
 					}
 				}
-				Tracer.getInstance().stop();
 			}
 		};
 

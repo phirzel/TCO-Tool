@@ -9,7 +9,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * A presentation element is a textual or graphical presentation of a model element. (To be found in UML-core 1.4 model.)
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class PresentationElement extends DbEntityBean {
 
@@ -69,7 +69,7 @@ public abstract class PresentationElement extends DbEntityBean {
 		firePropertyChange("subjectId", oldValue, fieldSubject);
 	}
 
-	public java.util.List<EdgeEnd> fieldEdgeId = new java.util.ArrayList<EdgeEnd>();
+	public java.util.List<EdgeEnd> fieldEdgeId = new java.util.ArrayList<>();
 
 	public java.util.List<EdgeEnd> getEdgeId() {
 		refresh(false); // read lazy initialized objects

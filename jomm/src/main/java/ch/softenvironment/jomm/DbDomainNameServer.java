@@ -17,29 +17,30 @@ package ch.softenvironment.jomm;
  */
 
 import ch.softenvironment.jomm.target.sql.hsqldb.HSQLDBObjectServerFactory;
-import ch.softenvironment.jomm.target.sql.ms_access.MsAccessObjectServerFactory;
-import ch.softenvironment.jomm.target.sql.ms_sqlserver.SQLServerObjectServerFactory;
+import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
+import ch.softenvironment.jomm.target.sql.mssqlserver.SQLServerObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.mysql.MySqlObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.oracle.OracleObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.postgresql.PostgreSqlObjectServerFactory;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.Statistic;
-import ch.softenvironment.util.Tracer;
 import javax.jdo.JDOUnsupportedOptionException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Distributed Name Service. Several DbObjectServer's may be managed by DbDomainNameServer.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see javax.jdo.PersistenceManagerFactory
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public abstract class DbDomainNameServer implements javax.jdo.PersistenceManagerFactory {
 
     private static final String VERSION = "V1.3.0";
-    private static final java.util.Map<String, javax.jdo.PersistenceManager> locations = new java.util.HashMap<String, javax.jdo.PersistenceManager>();
+    private static final java.util.Map<String, javax.jdo.PersistenceManager> locations = new java.util.HashMap<>();
 
     private PersistenceManager manager = null;
     private String connectionDriverName = null;
@@ -72,7 +73,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
         if (url == null) {
             throw new IllegalArgumentException("url must not be null");
         }
-        PersistenceManagerFactory factory = null;
+        PersistenceManagerFactory factory;
         // TODO Nasty to use Class-Refs of sub-packages here
         if (url.startsWith("jdbc:hsqldb:")) {
             factory = new HSQLDBObjectServerFactory();
@@ -100,7 +101,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
      * @return
      */
     public static java.util.List<String> createSampleConnections() {
-        java.util.List<String> urls = new java.util.ArrayList<String>();
+        java.util.List<String> urls = new java.util.ArrayList<>();
         urls.add("jdbc:mysql://localhost:3306/<optional Database>");
         urls.add("jdbc:postgresql://localhost:5432/<Database>");
         urls.add("jdbc:hsqldb:mem:<Database>");
@@ -133,9 +134,9 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
             java.io.PrintWriter writer = new java.io.PrintWriter(stringWriter);
             Statistic.dump(writer);
             Statistic.clearAll();
-            Tracer.getInstance().runtimeInfo("DBMS-Statistics\n" + stringWriter.toString());
+            log.info("DBMS-Statistics\n{}", stringWriter);
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("Statistic-dump failed", e);
+            log.error("Statistic-dump failed", e);
         }
 
         unregister(manager);
@@ -388,7 +389,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
             throw new DeveloperException("PersistenceManager for URL-alias=" + alias + " already registered!");
         } else {
             locations.put(alias, objectServer);
-            Tracer.getInstance().logBackendCommand("PersistenceManager[DbObjectServer@" + alias + "] created");
+            log.info("PersistenceManager[DbObjectServer@" + alias + "] created");
         }
     }
 
@@ -466,13 +467,13 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
     /**
      * Set the URL for the data store connection.
      *
-     * @param URL the URL for the data store connection.
+     * @param url the URL for the data store connection.
      */
     @Override
-    public void setConnectionURL(final String uRL) {
+    public void setConnectionURL(final String url) {
         if (this.connectionURL == null) {
-            this.connectionURL = uRL;
-        } else if (!this.connectionURL.equals(uRL)) {
+            this.connectionURL = url;
+        } else if (!this.connectionURL.equals(url)) {
             throw new DeveloperException("ConnectionURL must not be reset!");
         }
     }
@@ -643,7 +644,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
             String alias = iterator.next();
             if (locations.get(alias).equals(manager)) {
                 iterator.remove();
-                Tracer.getInstance().logBackendCommand("PersistencManager[DbObjectServer@" + alias + "] removed");
+                log.info("PersistencManager[DbObjectServer@{}] removed", alias);
                 return;
             }
         }

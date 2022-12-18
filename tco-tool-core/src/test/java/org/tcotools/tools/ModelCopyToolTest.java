@@ -33,7 +33,7 @@ import org.tcotool.tools.ModelCopyTool;
 /**
  * Tests org.tcotool.tools.ModelCopyTool
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ModelCopyToolTest {
 

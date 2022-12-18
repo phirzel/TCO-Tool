@@ -13,13 +13,14 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.util.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Define a Date-Range especially for SearchView's.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+@Slf4j
 public class DateRangePanel extends javax.swing.JPanel {
 
     private javax.swing.JLabel ivjLblBilled32 = null;
@@ -88,6 +89,8 @@ public class DateRangePanel extends javax.swing.JPanel {
                 setToDate(DateUtils.getEndOfYear());
                 break;
             }
+            default:
+                log.warn("developer fault: no case for index={}", index);
         }
     }
 
@@ -250,7 +253,7 @@ public class DateRangePanel extends javax.swing.JPanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getCbxPeriod().addItemListener(ivjEventHandler);
@@ -263,7 +266,7 @@ public class DateRangePanel extends javax.swing.JPanel {
     private void initialize() {
         try {
             // user code begin {1}
-            java.util.Vector<String> items = new java.util.Vector<String>(5);
+            java.util.Vector<String> items = new java.util.Vector<>(5);
             items.add("");
             items.add("Heute");
             items.add("Woche");

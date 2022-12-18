@@ -21,7 +21,6 @@ import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
 import java.util.List;
 import junit.extensions.TestSetup;
@@ -86,7 +85,6 @@ public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 
 			@Override
 			protected void setUp() {
-				Tracer.start(Tracer.ALL);
 				DbLoginDialog dialog = new DbLoginDialog(null, "jdbc:postgresql://localhost:5432/" + DATABSE);
 				if (dialog.isSaved()) {
 					try {
@@ -110,7 +108,6 @@ public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 						fail("drop schema/logout failed: " + e.getLocalizedMessage());
 					}
 				}
-				Tracer.getInstance().stop();
 			}
 		};
 

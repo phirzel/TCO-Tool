@@ -23,17 +23,18 @@ import ch.softenvironment.jomm.demoapp.model.RoleType;
 import ch.softenvironment.jomm.demoapp.testsuite.XmlDemoAppModel;
 import ch.softenvironment.jomm.demoapp.testsuite.XmlDemoAppTestCase;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
-import ch.softenvironment.util.Tracer;
 import java.util.Locale;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS SQL Server. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a MySQL-Server (V4.1.10 or higher) is running
  * in the background.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class XmlMapperSuite extends junit.framework.TestSuite {
 
     public static final String SCHEMA = "DemoApp"; // "_DemoApp_";
@@ -85,7 +86,6 @@ public class XmlMapperSuite extends junit.framework.TestSuite {
 
             @Override
             protected void setUp() {
-                Tracer.start(Tracer.ALL);
                 // DbLoginDialog dialog = new DbLoginDialog(null,
                 // "jdbc:sqlserver://SANDFLYER\\SQLEXPRESS" /*+
                 // ";databasename=unknown defaultSchema" */);
@@ -94,7 +94,7 @@ public class XmlMapperSuite extends junit.framework.TestSuite {
                     server = initializeTarget(System.getProperty("user.name"), null, "testsuite." + SCHEMA);
                     server.register(XmlDemoAppModel.class, "XmlDemoAppModel");
                 } catch (Throwable e) {
-                    Tracer.getInstance().runtimeError("initializeTarget()", e);
+                    log.error("initializeTarget()", e);
                     fail("Schema creation failed: " + e.getLocalizedMessage());
                 }
                 // } else { fail("login aborted by user"); }
@@ -110,7 +110,6 @@ public class XmlMapperSuite extends junit.framework.TestSuite {
                         fail("logout failed: " + e.getLocalizedMessage());
                     }
                 }
-                Tracer.getInstance().stop();
             }
         };
 

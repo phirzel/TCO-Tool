@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 /**
  * Define a set/suite of TestCases to testsuite JOMM independent of a specific Target-System.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class IndependentTestSuite extends TestSuite {
 

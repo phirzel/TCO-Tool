@@ -45,7 +45,7 @@ import org.tcotool.tools.ModelUtility;
  * <p>
  * Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ReportComplete extends ReportTool {
 
@@ -67,7 +67,6 @@ public class ReportComplete extends ReportTool {
      * Visitor.
      *
      * @param level recursion deepness of packages
-     * @param packageMultitude Multitude of owning package
      */
     private void walkPackageComplete(org.tcotool.model.TcoPackage object, String prefix, int level) throws java.io.IOException {
         encodeCompleteAbstract(object, prefix, level);
@@ -94,8 +93,7 @@ public class ReportComplete extends ReportTool {
     /**
      * Visitor.
      *
-     * @param level recursion deepness of packages
-     * @param packageMultitude Multitude of owning package
+     * @param object recursion deepness of packages
      */
     private void walkServiceComplete(org.tcotool.model.Service object) throws java.io.IOException {
         java.util.Iterator<CostDriver> iterator = object.getDriver().iterator();
@@ -215,7 +213,7 @@ public class ReportComplete extends ReportTool {
                 tableDataLinked(cost, false); // tableData(cost.getName());
                 tableData(getCodeName(cost.getCause()));
                 tableData("" + (long) ModelUtility.getMultitudeFactor(cost), getAttributeAlignRight());
-                tableDataAmount(cost.getAmount() == null ? 0.0 : cost.getAmount().doubleValue(), false);
+                tableDataAmount(cost.getAmount() == null ? 0.0 : cost.getAmount(), false);
                 tableData(getCostUnit(cost.getCurrency()));
                 if (costClass.equals(PersonalCost.class)) {
                     tableData(ch.softenvironment.util.StringUtils.getBooleanString(((PersonalCost) cost).getInternal()));

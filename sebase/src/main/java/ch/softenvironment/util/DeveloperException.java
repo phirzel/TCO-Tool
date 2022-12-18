@@ -13,46 +13,41 @@ package ch.softenvironment.util;
  */
 
 import ch.softenvironment.client.ResourceManager;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Signal Developer failures.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+@Slf4j
 public class DeveloperException extends RuntimeException {
 
-    private String title = null;
-    private String origin = null;
+    private final String title;
+    private final String origin = null;
 
     /**
      * @see #DeveloperException(String, String, Throwable)
      */
     public DeveloperException(String message) {
-        this(message, null, null, 1);
+        this(message, null, null);
     }
 
     /**
      * @see #DeveloperException(String, String, Throwable)
      */
     public DeveloperException(String message, String title) {
-        this(message, title, null, 1);
+        this(message, title, null);
     }
 
     /**
      * Construct a DeveloperException.
      *
-     * @param type Class where error happened
-     * @param method producing the error
      * @param title Title for ErrorDialog
      * @param message Message for ErrorDialog
      * @param cause Original Exception happened
      */
     public DeveloperException(String message, String title, Throwable cause) {
-        this(message, title, cause, 1);
-    }
-
-    protected DeveloperException(String message, String title, Throwable cause, int stackTraceOffset) {
         super(message, cause);
 
         String msg = "";
@@ -60,11 +55,7 @@ public class DeveloperException extends RuntimeException {
             msg = "[" + ResourceManager.getResource(DeveloperException.class, "CIOriginalException") + ": " + cause.getMessage() + "]";
         }
 
-        origin = Tracer.formatOrigin(Tracer.getOrigin(0 + 1 /*
-         * 1=this
-         * constructor
-         */));
-        Tracer.getInstance().developerError("[origin: " + origin + "] " + message + " " + msg);
+        log.error(/*"[origin: " + origin + "] " +*/ "message {}", msg);
 
         if (title == null) {
             this.title = ResourceManager.getResource(DeveloperException.class, "CTDevelopmentError");

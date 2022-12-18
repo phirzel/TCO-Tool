@@ -27,13 +27,14 @@ import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
 import ch.softenvironment.jomm.descriptor.DbFieldType;
+import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
+import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Map <b>Entities from SQL-Target-DBMS</b> to <b>Java Objects</b> and vice versa. The <b>different types are mapped from one world to the other</b>. Also the technical Fields like T_* are considered
@@ -53,8 +55,9 @@ import java.util.Set;
  * <p>
  * Design Pattern: <b>Adapter</b>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class SqlMapper implements DbMapper {
 
 	protected static final String DATE_SQL_FORMAT = "yyyy-MM-dd";
@@ -158,8 +161,7 @@ public class SqlMapper implements DbMapper {
 
 				// check Warnings after next()
 				if (((ResultSet) collection).getWarnings() != null) {
-					Tracer.getInstance().runtimeWarning(
-						((ResultSet) collection).getWarnings().toString());
+					log.warn("{}", ((ResultSet) collection).getWarnings());
 				}
 			} catch (SQLException e) {
 				throw new DeveloperException("ResultSet problem", null, e);
@@ -174,7 +176,7 @@ public class SqlMapper implements DbMapper {
 	 * <p>
 	 * Only Properties of the given Descriptor are considered, therefore the correct Object hierarchy must be managed by the caller.
 	 *
-	 * @param object
+	 * @param instance
 	 * @param descriptor
 	 * @param collection (Query Results -> only plain attributes, such as fields and foreign key ID's)
 	 */
@@ -238,7 +240,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public java.math.BigDecimal mapFromTargetBigDecimal(Object collection,
@@ -260,7 +262,7 @@ public class SqlMapper implements DbMapper {
 	/**
 	 * Map <i>Type</i>: <b>Target-System => Java</b>. Assumes Textdb-Field with 'T' for true and 'F' for false.
 	 *
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public Boolean mapFromTargetBoolean(Object collection,
@@ -274,7 +276,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public java.util.Date mapFromTargetDate(Object collection,
@@ -320,7 +322,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public Double mapFromTargetDouble(Object collection, final String attribute) {
@@ -460,7 +462,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public Integer mapFromTargetInteger(Object collection,
@@ -479,7 +481,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetString(..)
+	 * @see #mapFromTargetString(Object, String)
 	 */
 	@Override
 	public Long mapFromTargetLong(Object collection, final String attribute) {
@@ -497,7 +499,7 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetBoolean()
+	 * @see #mapFromTargetBoolean(Object, String)
 	 * @deprecated
 	 */
 	@Override
@@ -505,10 +507,7 @@ public class SqlMapper implements DbMapper {
 		final String attribute) {
 		Boolean value = mapFromTargetBoolean(collection, attribute);
 		if (value == null) {
-			ch.softenvironment.util.Tracer.getInstance()
-				.developerWarning(
-					"attribute [" + attribute
-						+ "] was not properly initalized");
+			log.warn("Developer warning: attribute [{}] was not properly initalized", attribute);
 			return false;
 		} else {
 			return value.booleanValue();
@@ -516,17 +515,14 @@ public class SqlMapper implements DbMapper {
 	}
 
 	/**
-	 * @see #mapFromTargetInteger()
+	 * @see #mapFromTargetInteger(Object, String)
 	 * @deprecated
 	 */
 	@Override
 	public int mapFromTargetNativeInt(Object collection, final String attribute) {
 		Integer value = mapFromTargetInteger(collection, attribute);
 		if (value == null) {
-			ch.softenvironment.util.Tracer.getInstance()
-				.developerWarning(
-					"attribute [" + attribute
-						+ "] was not properly initalized");
+			log.warn("Developer warning: attribute={} was not properly initalized", attribute);
 			return -1;
 		} else {
 			return value.intValue();
@@ -558,8 +554,6 @@ public class SqlMapper implements DbMapper {
 	 * Map: <b>Target-System => Java</b>.
 	 * <p>
 	 * Map Database Aggregations (case 1:[0..1]) of type DbObject to a Property. The ForeignKey is on this side of the given Relationship.
-	 *
-	 * @param iterator List of aggregated Property names
 	 */
 	private final void mapLocalAggregates(DbObject instance,
 		DbDescriptor descriptor, Map<String, Long> foreignKeys)
@@ -599,8 +593,8 @@ public class SqlMapper implements DbMapper {
 	 * Set the list of B-Id's for case A:B=n:n.
 	 *
 	 * @param itPropertiesNN List of n:n Property names
-	 * @see DbDescriptor#addAssociationAttributed(..)
-	 * @see DbObjectServer#allocate(DbObject)
+	 * @see DbDescriptor#addAssociationAttributed(int, String, DbMultiplicityRange, DbMultiplicityRange, Class, String)
+	 * @see DbObjectServer#allocate(DbTransaction, DbChangeableBean) 
 	 */
 	private final void mapManyToMany(DbObject instance,
 		DbDescriptor descriptor, Iterator<String> itPropertiesNN)
@@ -664,8 +658,6 @@ public class SqlMapper implements DbMapper {
 	 * Map: <b>Target-System => Java</b>.
 	 * <p>
 	 * Map Database Aggregations of type DbNlsString to a Property.
-	 *
-	 * @param iterator List of NLS Property names
 	 */
 	private final void mapNlsStrings(DbObject instance,
 		Map<String, Long> foreignKeys) throws Exception {
@@ -690,10 +682,9 @@ public class SqlMapper implements DbMapper {
 						foreignKeyId);
 				}
 				if (nlsString == null) {
-					Tracer.getInstance().developerError(
-						"no NLS-Entry found in DBMS for " + instance + "."
-							+ property + " and T_Id_Nls="
-							+ foreignKeyId);
+					log.error("Developer error: no NLS-Entry found in DBMS for " + instance + "."
+						+ property + " and T_Id_Nls="
+						+ foreignKeyId);
 				} else {
 					nlsString.setChange(change);
 				}
@@ -711,7 +702,7 @@ public class SqlMapper implements DbMapper {
 	 * Set the list of B's for case A:B=1:n.
 	 *
 	 * @param itProperties1N List of 1:n Property names
-	 * @see DbDescriptor#addOneToMany(..)
+	 * @see DbDescriptor#addOneToMany(int, String, String, DbMultiplicityRange, Class, boolean)
 	 */
 	private final void mapOneToMany(DbObject instance, DbDescriptor descriptor,
 		Iterator<String> itProperties1N) throws Exception {
@@ -797,8 +788,6 @@ public class SqlMapper implements DbMapper {
 	 * Map: <b>Target-System => Java</b>.
 	 * <p>
 	 * Map Database Aggregations (case 1:[0..1]) of type DbObject to a Property. The ForeignKey is on the other side of the given Relationship.
-	 *
-	 * @param iterator List of aggregate Property names
 	 */
 	private final void mapRemoteAggregates(DbObject instance,
 		DbDescriptor descriptor, Set<String> aggregates) throws Exception {
@@ -1022,8 +1011,9 @@ public class SqlMapper implements DbMapper {
 					String ts = "'" + sf.format(value) + "'";
 					return ts;
 				}
+				default:
+					throw new DeveloperException("Unknown type");
 			}
-			throw new DeveloperException("Unknown type");
 		}
 	}
 

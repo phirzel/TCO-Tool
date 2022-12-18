@@ -10,7 +10,7 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 /**
  * Dependency between 2 Service's or TcoPackage's. Useful to distribute costs from a supplier among different client's.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class Dependency extends DbRelationshipBean {
 

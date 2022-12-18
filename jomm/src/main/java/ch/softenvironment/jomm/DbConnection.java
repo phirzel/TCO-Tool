@@ -23,28 +23,29 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Database Connection (encapsulates a java.sql.Connection).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public abstract class DbConnection {
 
     private transient java.sql.Connection connection = null;
-    private transient DbObjectServer objectServer = null;
-    private final transient Map<Class<? extends DbObject>, String> tables = new HashMap<Class<? extends DbObject>, String>();
+    private final transient DbObjectServer objectServer;
+    private final transient Map<Class<? extends DbObject>, String> tables = new HashMap<>();
     private final transient Map/* <? extends DbObject, DbDescriptor> */descriptors = new HashMap();
-    private final transient Map<Class<? extends DbObject>, Class<? extends DbObject>> hierarchy = new HashMap<Class<? extends DbObject>, Class<? extends DbObject>>();
+    private final transient Map<Class<? extends DbObject>, Class<? extends DbObject>> hierarchy = new HashMap<>();
 
     // Pool of DbConnection for synchronization reasons (though 1 DbObjectServer
     // has 0..1 DbConnection only)
-    private final Map<String, Stack<DbConnection>> sessionPool = new HashMap<String, Stack<DbConnection>>();
+    private final Map<String, Stack<DbConnection>> sessionPool = new HashMap<>();
 
     /**
      * Register persistence objects handled by a given objectServer.
@@ -80,7 +81,7 @@ public abstract class DbConnection {
                 descriptors.put(dbObject, (method).invoke(dbObject, parameters));
             }
         } catch (Exception e) {
-            Tracer.getInstance().developerError("failed for Class <" + dbObject + "> " + e.getLocalizedMessage());
+            log.error("Developer error: failed for Class <{}>", dbObject, e);
         }
     }
 
@@ -99,7 +100,7 @@ public abstract class DbConnection {
             // throw new
             // DeveloperException("Duplicate entry for (make sure Base classes are mapped before their Children!): "
             // + dbObject);
-            Tracer.getInstance().developerWarning("Duplicate entry for: " + dbObject + " => make sure Base classes are mapped before their Children!");
+            log.warn("Developer warning: Duplicate entry for: " + dbObject + " => make sure Base classes are mapped before their Children!");
         }
 
         // determine inherited Class's and keep them in a hierarchy-map
@@ -121,7 +122,7 @@ public abstract class DbConnection {
             while (!temp.getSuperclass().equals(DbEntityBean.class)) {
                 temp = (Class<? extends DbObject>) temp.getSuperclass();
                 if (hierarchy.containsKey(temp)) {
-                    Tracer.getInstance().developerWarning("Root-class <" + temp + "> for concrete object <" + dbObject + "> already bound");
+                    log.warn("Developer warning: Root-class <" + temp + "> for concrete object <" + dbObject + "> already bound");
                 }
                 // 2) map other leaves in chain (might be abstract)
                 hierarchy.put(temp, rootClass);
@@ -170,15 +171,12 @@ public abstract class DbConnection {
             return (DbDescriptor) descriptors.get(dbObject);
         } else {
             if (!dbObject.getSuperclass().equals(DbChangeableBean.class)) {
-                Tracer.getInstance().developerWarning("No DbDescriptor registered for: " + dbObject.getName());
+                log.warn("Developer warning: No DbDescriptor registered for: " + dbObject.getName());
             }
             return null;
         }
     }
 
-    /**
-     * @see #setJdbcConnection()
-     */
     public final java.sql.Connection getJdbcConnection() {
         return connection;
     }
@@ -237,7 +235,7 @@ public abstract class DbConnection {
                 try {
                     stack.wait();
                 } catch (InterruptedException e) {
-                    Tracer.getInstance().runtimeWarning("pop(String): " + e.getLocalizedMessage());
+                    log.warn("pop(String)", e);
                 }
             }
             // Tracer.getInstance().debug("DbConnection->going to pop: size=" +

@@ -23,7 +23,7 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 /**
  * Content of one Descriptor mapping entry.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbDescriptorEntry implements Cloneable {
 
@@ -43,7 +43,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#addNlsString(..)
+     * @see DbDescriptor#addNlsString(String, String, DbMultiplicityRange)
      */
     protected DbDescriptorEntry(final String attributeName, DbMultiplicityRange range) {
         super();
@@ -55,7 +55,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor for n:n relationship.
      *
-     * @see DbDescriptor#addAssociationAttributed(..)
+     * @see DbDescriptor#addAssociationAttributed(int, String, DbMultiplicityRange, DbMultiplicityRange, Class, String)
      */
     protected DbDescriptorEntry(final String referenceProperty, DbMultiplicityRange rangeA, final int associationType, Class<? extends DbRelationshipBean> dbRelationshipBean,
         DbMultiplicityRange rangeB) {
@@ -74,7 +74,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#addOneToMany(..)
+     * @see DbDescriptor#addOneToMany(int, String, String, DbMultiplicityRange, Class, boolean)
      */
     protected DbDescriptorEntry(final String attributeRoleName, DbMultiplicityRange range, final int associationType, Class<? extends DbObject> aggregationBaseClass, boolean ordered) {
         super();
@@ -92,7 +92,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#addOneToOne(..)
+     * @see DbDescriptor#addOneToOne(int, String, String, DbMultiplicityRange, boolean)
      */
     protected DbDescriptorEntry(final String otherPropertyName, DbMultiplicityRange range, final int associationType, boolean cached) {
         super();
@@ -109,7 +109,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#add(..)
+     * @see DbDescriptor#add(String, String, DbFieldTypeDescriptor, DbMultiplicityRange, String)
      */
     protected DbDescriptorEntry(final String attributeName, DbMultiplicityRange range, DbFieldTypeDescriptor fieldType) {
         super();
@@ -122,7 +122,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#addOneToOneReference(..)
+     * @see DbDescriptor#addOneToOneReference(int, String, String, DbMultiplicityRange, boolean)
      */
     protected DbDescriptorEntry(final String attributeRoleName, DbMultiplicityRange range, DbFieldTypeDescriptor fieldType, final int associationType, boolean cached) {
         super();
@@ -137,7 +137,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#add("many")
+     * @see DbDescriptor#add(String, String, DbFieldTypeDescriptor, DbMultiplicityRange)
      */
     protected DbDescriptorEntry(final String attributeName, DbMultiplicityRange range, DbFieldTypeDescriptor fieldType, final String mapName) {
         super();
@@ -154,7 +154,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * DbDescriptorEntry constructor.
      *
-     * @see DbDescriptor#addCode("many")
+     * @see DbDescriptor#addCode(String, String, DbMultiplicityRange)
      */
     protected DbDescriptorEntry(final String attributeName, DbMultiplicityRange range, java.lang.Class<? extends DbCode> dbCode, final String mapName) {
         super();
@@ -215,7 +215,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * Return the original class where this Descriptor was cloned from.
      *
-     * @see DbDescriptor#isCloned()
+     * @see DbDescriptor#isCloned(String)
      */
     public java.lang.Class<? extends DbObject> getCloned() {
         return dbObjectOriginal;
@@ -240,7 +240,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * Return the Property on other side of Association pointing to this side.
      *
-     * @see DbDescriptor#addOneToOne(..)
+     * @see DbDescriptor#addOneToOne(int, String, String, DbMultiplicityRange, boolean, boolean)
      */
     public String getOtherPropertyName() {
         if (isLocal()) {
@@ -252,7 +252,7 @@ public class DbDescriptorEntry implements Cloneable {
     /**
      * Return property mapping id of T_MAP_myTable.T_Id_OwnerFor for Cloned entries.
      *
-     * @see #setCloned(..)
+     * @see #setCloned(Class, String)
      */
     public String getOwnerIdPropertyName() {
         return propertyOwnerId;

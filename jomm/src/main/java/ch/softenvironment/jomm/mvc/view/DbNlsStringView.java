@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
  * Represent a DbNlsString to manage all its Translations.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 
@@ -213,7 +213,7 @@ public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getBtnTranslation().addActionListener(ivjEventHandler);
@@ -263,7 +263,7 @@ public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 	/**
 	 * Method generated to support the promotion of the dbNlsString attribute.
 	 *
-	 * @param arg1 ch.softenvironment.jomm.DbNlsString
+	 * @param nlsString ch.softenvironment.jomm.DbNlsString
 	 */
 	public void setDbNlsString(ch.softenvironment.jomm.datatypes.DbNlsString nlsString) {
 		setnlsString(nlsString);

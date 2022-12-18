@@ -17,7 +17,6 @@ package ch.softenvironment.jomm.tools;
 
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,12 +24,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Generator utility to create Random literals.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbDataGenerator {
 
     private final java.util.Random generator = new java.util.Random((new Date()).getTime());
@@ -96,7 +97,7 @@ public class DbDataGenerator {
      * @param sqlFileName
      */
     public static void executeSqlCode(DbObjectServer server, String sqlFileName) throws Exception {
-        Tracer.getInstance().runtimeInfo("Generating file: " + sqlFileName + " on server: " + server.getPersistenceManagerFactory().getConnectionURL());
+        log.info("Generating file: {}  on server: {}", sqlFileName, server.getPersistenceManagerFactory().getConnectionURL());
         FileReader reader = null;
         Exception ex = null;
         try {
@@ -140,7 +141,7 @@ public class DbDataGenerator {
                     try {
                         server.execute("..from InputFile", ListUtils.createList(line));
                     } catch (Throwable e) {
-                        Tracer.getInstance().runtimeError("line generation failed: " + line, e);
+                        log.error("line generation failed: {}", line, e);
                     }
                     line = "";
                 }
@@ -164,10 +165,10 @@ public class DbDataGenerator {
             inputStream.close();
             reader.close();
         } catch (FileNotFoundException e) {
-            Tracer.getInstance().runtimeError("could not open File <" + sqlFileName + ">", e);
+            log.error("could not open File <{}>", sqlFileName, e);
             ex = e;
         } catch (IOException e) {
-            Tracer.getInstance().runtimeError("IO-failure <" + sqlFileName + ">", e);
+            log.error("IO-failure <{}>", sqlFileName, e);
             ex = e;
         } finally {
             //reader.close();
@@ -175,6 +176,6 @@ public class DbDataGenerator {
         if (ex != null) {
             throw ex;
         }
-        Tracer.getInstance().runtimeInfo("Generating file: DONE!");
+        log.info("Generating file: DONE!");
     }
 }

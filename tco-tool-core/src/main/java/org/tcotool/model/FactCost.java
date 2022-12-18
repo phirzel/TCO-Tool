@@ -9,7 +9,7 @@ import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
 /**
  * Any costs created by machines, material or production which cannot be expressed as human costs.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see PersonalCost
  */
 public class FactCost extends Cost {

@@ -38,9 +38,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of a TcoPackage.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements DbObjectValidator, ch.softenvironment.view.DetailView,
     ch.softenvironment.view.SearchView {
 
@@ -1229,7 +1229,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -1378,7 +1378,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject
+     * @param object
      */
     @Override
     public void setCurrentObject(java.lang.Object object) {

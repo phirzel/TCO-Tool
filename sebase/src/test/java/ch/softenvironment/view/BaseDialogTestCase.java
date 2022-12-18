@@ -14,8 +14,10 @@ import junit.extensions.jfcunit.finder.NamedComponentFinder;
 
 /**
  * Test the BaseDialog class by JFCUnit.
+ * <p>
+ * Semi-automated test - Dialog opened must be clicked by Tester actively!
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class BaseDialogTestCase extends JFCTestCase {
 

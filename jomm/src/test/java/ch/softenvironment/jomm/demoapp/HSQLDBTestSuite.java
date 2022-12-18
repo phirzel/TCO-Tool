@@ -22,7 +22,6 @@ import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 
@@ -32,7 +31,7 @@ import junit.framework.TestSuite;
  * <p>
  * Default login: "sa" (without password)
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
@@ -84,8 +83,6 @@ public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
             @Override
             protected void setUp() {
-                Tracer.start(Tracer.ALL);
-
                 // Var. I) non persistent db ("mem") for testsuite-reasons only in
                 // same JVM as this TestSuite
                 DbLoginDialog dialog = new DbLoginDialog(null,
@@ -122,7 +119,6 @@ public class HSQLDBTestSuite extends junit.framework.TestSuite {
                             + e.getLocalizedMessage());
                     }
                 }
-                Tracer.getInstance().stop();
             }
         };
 

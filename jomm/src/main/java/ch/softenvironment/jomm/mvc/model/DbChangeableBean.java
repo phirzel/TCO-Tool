@@ -27,18 +27,20 @@ import ch.softenvironment.jomm.implementation.DbPropertyChange;
 import ch.softenvironment.jomm.implementation.DbState;
 import ch.softenvironment.jomm.mvc.controller.DbObjectListener;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Persistent Object type with Writable Character. In an ejb Architecture these Objects are also called EntityBean's.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public abstract class DbChangeableBean extends DbObject implements Cloneable {
 
 	// keep reference to DbObjectListener registered
@@ -51,7 +53,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	private boolean removeObjectHistoryPending = false;
 
 	/**
-	 * @see #DbObject(DbObjectServer)
+	 * @see DbObject(DbObjectServer)
 	 */
 	protected DbChangeableBean(DbObjectServer objectServer) {
 		super(objectServer);
@@ -105,7 +107,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	 * The addPropertyChangeListener method was generated to support the propertyChange field. Add an "outer" listener listening to this persistent Object.
 	 *
 	 * @see java.beans Specification
-	 * @see #removePropertyChangeListener()
+	 * @see #removePropertyChangeListener(PropertyChangeListener)
 	 */
 	public final synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
 		getPropertyChange().addPropertyChangeListener(listener);
@@ -114,7 +116,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 		if (listener instanceof DbObjectListener) {
 			if (objectListener == null) {
 				// unfortunately propertyChange#listener is not visible here
-				objectListener = new HashSet<DbObjectListener>();
+				objectListener = new HashSet<>();
 			}
 			if (!objectListener.contains(listener)) {
 				// be aware of aggregation ping-pong
@@ -129,7 +131,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	 * Consistency Check of this EntityBean. This method is called via Setter-Method resp. #firePropertyChange(..). Keeps related testId in mind for update if testId is a property of this object
 	 *
 	 * @param testId Identification of the consistencyTest (usually the name of the property to be changed)
-	 * @see #firePropertyChange(..)
+	 * @see #firePropertyChange(String, Object, Object)
 	 */
 	protected void check(String testId) {
 		jdoMakeDirty(testId);
@@ -292,7 +294,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 			while (it.hasNext()) {
 				// @see DbBaseFrame#removeAssociations()
 				if (it.next().getPersistencyState().isRemovedPending()) {
-					Tracer.getInstance().developerWarning("Cheating changed-event for List<" + propertyName + "> because REMOVED_PENDING");
+					log.warn("Developer warning: Cheating changed-event for List<{}> because REMOVED_PENDING", propertyName);
 					getPropertyChange().firePropertyChange(propertyName, null /*
 					 * CHEAT
 					 * propertyChange
@@ -353,7 +355,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	/**
 	 * Support JavaBeans Specification. Changes will be signaled to any Listener.
 	 *
-	 * @see #firePropertyChange(..)
+	 * @see #firePropertyChange(String, Object, Object)
 	 */
 	private final java.beans.PropertyChangeSupport getPropertyChange() {
 		if (propertyChange == null) {
@@ -420,7 +422,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 
 	/**
 	 * @param fieldName Property changed
-	 * @see #check(..)
+	 * @see #check(String)
 	 */
 	@Override
 	public final void jdoMakeDirty(java.lang.String fieldName) {
@@ -435,7 +437,6 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	/**
 	 * Utility method to add the Listener to given object.
 	 *
-	 * @param change (property of caller of this function)
 	 * @listener
 	 */
 	protected static void promoteChangeListener(Object object, DbObjectListener listener, boolean register) {
@@ -460,7 +461,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 				}
 			}
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeError("Could not promote Listener to aggregate: " + e.getLocalizedMessage());
+			log.error("Could not promote Listener to aggregate", e);
 		}
 	}
 
@@ -468,7 +469,6 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	 * Delete this Object persistently.
 	 *
 	 * @param immediately true->remove immediately; false->delay removal until next #save()
-	 * @see save()
 	 */
 	public synchronized void remove(boolean immediately) throws Exception {
 		remove(immediately, false);
@@ -522,7 +522,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	 * The removePropertyChangeListener method was generated to support the propertyChange field. Remove an "outer" listener listening from this persistent Object.
 	 *
 	 * @see java.beans Specification
-	 * @see #addPropertyChangeListener()
+	 * @see #addPropertyChangeListener(PropertyChangeListener)
 	 */
 	public final synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
 		getPropertyChange().removePropertyChangeListener(listener);
@@ -555,7 +555,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	/**
 	 * Save this Object persistently.
 	 *
-	 * @see javax.ejb.EntityBean#ejbStore()
+	 * see javax.ejb.EntityBean#ejbStore()
 	 */
 	public synchronized void save() throws Exception {
 		getObjectServer().makePersistent(this);
@@ -576,7 +576,7 @@ public abstract class DbChangeableBean extends DbObject implements Cloneable {
 	/**
 	 * Try to undo the Removal in state REMOVE_PENDING.
 	 *
-	 * @see #remove(false)
+	 * @see #remove(boolean)
 	 */
 	public void undoRemove() {
 		if (getPersistencyState().isRemovedPending()) {

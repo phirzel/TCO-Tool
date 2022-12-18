@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 /**
  * Specifies an end of an edge.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class EdgeEnd extends DbRelationshipBean {
 

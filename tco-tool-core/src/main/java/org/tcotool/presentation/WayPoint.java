@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * A WayPoint is a constraint on the geometry of the actual presentation of this Edge (the "zick-zack position of a line").
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class WayPoint extends DbEntityBean {
 

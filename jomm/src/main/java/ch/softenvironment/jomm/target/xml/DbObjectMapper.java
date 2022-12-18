@@ -27,7 +27,6 @@ import ch.softenvironment.jomm.serialize.Visitor;
 import ch.softenvironment.jomm.serialize.VisitorCallback;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -36,12 +35,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Mapping-Utility to encode and decode a DbObject to/from an XML-Instance.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class DbObjectMapper implements ObjectWriter, Visitor {
 
 	protected static final String ROLE_ID_SUFFIX = "Id";
@@ -97,7 +98,7 @@ class DbObjectMapper implements ObjectWriter, Visitor {
 				try {
 					value = method.invoke(obj, null);
 				} catch (Exception e) {
-					Tracer.getInstance().developerError(obj.getClass() + "." + method.toString() + "=>" + e.getLocalizedMessage());
+					log.error("Developer error: " + obj.getClass() + "." + method.toString() + "=>" + e.getLocalizedMessage());
 				}
 				if (value != null) {
 					// encode value
@@ -124,7 +125,7 @@ class DbObjectMapper implements ObjectWriter, Visitor {
 							if (((DbEnumeration) value).getIliCode() != null) {
 								ser.element(element, ((DbEnumeration) value).getIliCode());
 							} else {
-								Tracer.getInstance().developerError("DbEnumeration has no IliCode: " + value);
+								log.error("Developer error: DbEnumeration has no IliCode: {}", value);
 							}
 						} else if (value instanceof DbNlsString) {
 							ser.startElement(element);
@@ -133,7 +134,7 @@ class DbObjectMapper implements ObjectWriter, Visitor {
 						} else {
 							// 1:[0..1]
 							if (((DbObject) value).getId() == null) {
-								Tracer.getInstance().developerError("Suppress reference to <" + value + "]> no TID");
+								log.error("Developer error: Suppress reference to <{}]> no TID", value);
 							} else {
 								ser.element(element, null, ser.getIliObjectRefAttributes(((DbObject) value).getId(), null, null, null));
 							}
@@ -187,12 +188,12 @@ class DbObjectMapper implements ObjectWriter, Visitor {
 					BeanReflector.isInherited(method.getReturnType(), DbChangeableBean.class)) {
 					DbState state = ((DbObject) object).getPersistencyState();
 					if (!(state.isNew() || state.isPersistent())) {
-						Tracer.getInstance().developerWarning("DbObject <" + object + "> not in persistent state to be saved");
+						log.warn("Developer warning: DbObject <" + object + "> not in persistent state to be saved");
 						return;
 					}
 					Object value = method.invoke(object, null);
 					if ((value != null) && !((DbObject) object).getObjectServer().equals(((DbObject) value).getObjectServer())) {
-						Tracer.getInstance().developerWarning("NOT SAVED: obj maintained by other Server");
+						log.warn("Developer warning: NOT SAVED: obj maintained by other Server");
 						return;
 					}
 					callback.addPendingObject(value);
@@ -212,10 +213,8 @@ class DbObjectMapper implements ObjectWriter, Visitor {
 					}
 				}
 			}
-		} catch (IllegalAccessException e) {
-			Tracer.getInstance().developerWarning(e.getLocalizedMessage());
-		} catch (InvocationTargetException e) {
-			Tracer.getInstance().developerWarning(e.getLocalizedMessage());
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			log.warn("Developer warning", e);
 		}
 	}
 

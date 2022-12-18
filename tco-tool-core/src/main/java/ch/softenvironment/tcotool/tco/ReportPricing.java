@@ -33,7 +33,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report Cost per Service as Plugin for TCO-Tool in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportPricing extends ReportDependency {
 

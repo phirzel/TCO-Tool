@@ -31,7 +31,7 @@ import org.tcotools.tools.ModelUtilityTest;
 /**
  * Define a set/suite of TestCases to test TCO-Tool.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({CalculatorDegressiveDepreciationTest.class,

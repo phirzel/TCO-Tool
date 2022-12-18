@@ -28,11 +28,11 @@ import org.tcotool.model.TcoPackage;
 /**
  * Utility to walk a (Sub)-Tree within a TcoModel-configuration.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class TreeTool {
 
-	private TreeToolListener listener = null;
+	private final TreeToolListener listener;
 
 	/**
 	 * Register Listener for treating walked nodes and leaves.

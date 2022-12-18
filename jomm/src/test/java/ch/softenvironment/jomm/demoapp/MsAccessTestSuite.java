@@ -19,18 +19,19 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
-import ch.softenvironment.jomm.target.sql.ms_access.MsAccessQueryBuilderTestCase;
+import ch.softenvironment.jomm.target.sql.msaccess.MsAccessQueryBuilderTestCase;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
-import ch.softenvironment.util.Tracer;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS Access. No JDBC-Driver is necessary because connection will be established by ODBC-JDBC-Bridge. Make sure an empty DemoApp.mdb application is
  * available in demo_app/sql directory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class MsAccessTestSuite extends junit.framework.TestSuite {
 
 	public MsAccessTestSuite() {
@@ -57,7 +58,6 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 
 			@Override
 			protected void setUp() {
-				Tracer.start(Tracer.ALL);
 				DbLoginDialog dialog = new DbLoginDialog(
 					null,
 					"jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=demo_app/sql/DemoApp.mdb");
@@ -66,7 +66,7 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 						server = initializeTarget(dialog.getUserId(),
 							dialog.getPassword(), dialog.getUrl());
 					} catch (Throwable e) {
-						Tracer.getInstance().runtimeError("initializeTarget()",
+						log.error("initializeTarget()",
 							e);
 						fail("Schema creation failed: "
 							+ e.getLocalizedMessage());
@@ -105,7 +105,6 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 							+ e.getLocalizedMessage());
 					}
 				}
-				Tracer.getInstance().stop();
 			}
 		};
 

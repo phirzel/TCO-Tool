@@ -35,8 +35,10 @@ import ch.softenvironment.view.StatusBar;
 import ch.softenvironment.view.ToolBar;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.table.NumberTableCellRenderer;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import org.tcotool.model.Cost;
 import org.tcotool.model.CostDriver;
@@ -54,9 +56,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of a CostDriver.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements DetailView, ListMenuChoice, java.beans.PropertyChangeListener {
 
     private ch.softenvironment.view.DetailView caller = null;
@@ -368,7 +370,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * Do anything at DoubleClick-Event for e.g. open selected Object(s) in a JTable.
      *
-     * @see BaseFrame#genericPopupDisplay(..)
+     * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -2611,7 +2613,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -2769,7 +2771,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -2793,8 +2795,8 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
 
     /**
      * Update List of FactCost & PersonalCost.
-     *
-     * @see Fact/PersonalCostDetailView#propertyChange()
+     * <p>
+     * see Fact/PersonalCostDetailView#propertyChange()
      */
     protected void refreshCost() throws Exception {
         Currency currency = LauncherView.getInstance().getUtility().getSystemParameter().getDefaultCurrency();
@@ -2936,7 +2938,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) {
+     * @param object Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) {
      *     getObject().removeChangeListener(getConsistencyController()); } ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable
      *     e) { handleException(e); }
      */
