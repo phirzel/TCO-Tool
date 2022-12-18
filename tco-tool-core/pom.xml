@@ -40,19 +40,15 @@
             <version>1.0.15</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-install-plugin</artifactId>
-            <version>2.4</version>
-            <type>maven-plugin</type>
-        </dependency>
+        <!-- add TCO-Tool\lib\jhotdraw60b1\jhotdraw.jar to classpath, not provided by MAVEN central yet
         <dependency>
             <groupId>org.jhotdraw</groupId>
             <artifactId>jhotdraw</artifactId>
             <version>6.0.b1</version>
         </dependency>
+        -->
         <!-- https://mvnrepository.com/artifact/org.jhotdraw/jhotdraw -->
-        <!--TODO upgrade v6.0.1Beta dependency: NOT EASY!!!, see https://www.randelshofer.ch/oop/jhotdraw/>
+        <!--TODO upgrade used v6.0.1Beta dependency: NOT EASY!!!, see https://www.randelshofer.ch/oop/jhotdraw/>
             <groupId>org.jhotdraw</groupId>
             <artifactId>jhotdraw</artifactId>
             <version>7.4.1</version>
@@ -76,6 +72,13 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <version>2.4</version>
+            <type>maven-plugin</type>
         </dependency>
     </dependencies>
 

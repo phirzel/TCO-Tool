@@ -1,23 +1,19 @@
-JOMM - Persistence-Framework (**DEPRECATED, use JPA** nowadays instead)
------------------------------------------------------------------------
+# JOMM - Persistence-Framework (**DEPRECATED, use JPA** nowadays instead)
 
 This library contains persistence Mapping classes:
-- ch.softenvironment.jomm.* (basic structures & mechanisms)
-- ch.softenvironment.jomm.mvc.* (GUI building support according to MVC-pattern)
-- ch.softenvironment.target.* (concrete adaptions for Target-System according to JDO-Standard)
-- ch.softenvironment.jomm.tools.* (graphical tools for Target-System administration)
-- ch.softenvironment.jomm.serialize.* (Serializing tools for XML, HTML, etc)
+* ch.softenvironment.jomm.* (basic structures & mechanisms)
+* ch.softenvironment.jomm.mvc.* (GUI building support according to MVC-pattern)
+* ch.softenvironment.target.* (concrete adaptions for Target-System according to JDO-Standard)
+* ch.softenvironment.jomm.tools.* (graphical tools for Target-System administration)
+* ch.softenvironment.jomm.serialize.* (Serializing tools for XML, HTML, etc)
 
 
 This project is an updated version of the original [SourceForge **JOMM**](https://sourceforge.net/projects/jomm/) which is not maintained any more and slightly modernized because of its XML persistency used by **TCO-TOOL**.
 
-JOMM depends on:
-- ehibasics.jar -> @see http://sourceforge.net/projects/umleditor/ (use CVS files instead of precompiled module!)
-- sebase.jar 	-> @see http://sourceforge.net/projects/umleditor/ (use CVS files instead of precompiled module!)
-- jdo.jar	-> @see http://www.sun.com/software/communitysource/jdo/download.xml
-- (jta.jar	-> @see http://java.sun.com/products/jta/)
-- (xerces.jar	-> @see http://xml.apache.org/)
-- (various Database drivers, such as H2, MySql, PostgreSQL, ..)
-
-
-For further informations/questions, please contact:	 https://github.com/phirzel/TCO-Tool
+JOMM used to depend on:
+* ehibasics.jar -> @see http://sourceforge.net/projects/umleditor/
+* sebase.jar 	-> @see http://sourceforge.net/projects/umleditor/
+* jdo.jar	-> @see http://www.sun.com/software/communitysource/jdo/download.xml
+* (jta.jar	-> @see http://java.sun.com/products/jta/)
+* (xerces.jar	-> @see http://xml.apache.org/)
+* (various Database drivers, such as H2, MySql, PostgreSQL, ..)

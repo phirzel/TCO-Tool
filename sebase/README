@@ -1,13 +1,11 @@
-softEnvironment Framework - sebase
----------------------------------------
+# softEnvironment Framework **sebase**
 
 This library contains a number of reusable base Classes such as:
 - Utilities (ch.softenvironment.util.*)
 - GUI-Building (ch.softenvironment.view.*; ch.softenvironment.client.*)
 
 
-This project depends on:
-- ehibasics.jar -> @see http://sourceforge.net/projects/umleditor/
+by Peter Hirzel, also used/provided by UML-Editor in a previous version on [JOMM](https://sourceforge.net/projects/jomm/)
 
-
-For further informations/questions, please contact:	 https://github.com/phirzel/TCO-Tool
+Be aware:
+* contains legacy code, that can be found nowadays by apache, spring or the like
