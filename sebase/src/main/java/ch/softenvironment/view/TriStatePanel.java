@@ -17,9 +17,8 @@ import ch.softenvironment.client.ResourceManager;
 /**
  * Panel allowing entry of 3 different States: - true - false - undefined
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class TriStatePanel extends BasePanel {
 
     private static final String ACTION_ALL = "ALL";
@@ -167,7 +166,7 @@ public class TriStatePanel extends BasePanel {
      */
     public java.lang.Boolean getNotValue() {
         if (fieldValue != null) {
-            return Boolean.valueOf(!fieldValue.booleanValue());
+            return !fieldValue.booleanValue();
         } else {
             return null;
         }
@@ -287,7 +286,7 @@ public class TriStatePanel extends BasePanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getRbtAll().addItemListener(ivjEventHandler);
@@ -349,7 +348,7 @@ public class TriStatePanel extends BasePanel {
             fieldValue = value;
             firePropertyChange("value", oldValue, value);
 
-            if (value.booleanValue()) {
+            if (value) {
                 getRbtTrue().setSelected(true);
             } else {
                 getRbtFalse().setSelected(true);

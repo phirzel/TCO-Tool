@@ -27,7 +27,6 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -47,18 +46,20 @@ import javax.jdo.Query;
 import javax.jdo.datastore.JDOConnection;
 import javax.jdo.datastore.Sequence;
 import javax.jdo.listener.InstanceLifecycleListener;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Concrete ObjectServer for XML-Target-System.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 
 	private static final Long MODEL_ROOT_ID = Long.valueOf(1000000);
 	private volatile long idCounter = MODEL_ROOT_ID.longValue();
 
-	private java.util.Set<Class<? extends DbCodeType>> codeTypes = new HashSet<Class<? extends DbCodeType>>();
+	private java.util.Set<Class<? extends DbCodeType>> codeTypes = new HashSet<>();
 
 	/**
 	 * XmlObjectServer constructor comment.
@@ -80,7 +81,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 			super.cacheCode(code);
 		} catch (ch.softenvironment.util.DeveloperException e) {
 			// TODO @deprecated (only for XML-Files with DbNlsString-Ref's)
-			Tracer.getInstance().developerWarning("IGNORE: Nls-name of DbCode is not yet aggregated -> will be cached later");
+			log.warn("Developer warning: IGNORE: Nls-name of DbCode is not yet aggregated -> will be cached later");
 		}
 		if (code instanceof DbCode) {
 			codeTypes.add(code.getClass());
@@ -255,10 +256,9 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 			return ((DbObject) po).getId();
 		} else {
 			if (po != null) {
-				Tracer.getInstance().developerError("non DbObject");
+				log.error("Developer error: non DbObject");
 			}
-			Long id = Long.valueOf(idCounter++);
-			return id;
+			return Long.valueOf(idCounter++);
 		}
 	}
 
@@ -590,7 +590,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	public List<? extends DbCodeType> retrieveCodes(Class<? extends DbCodeType> dbCodeType, Locale locale) {
 		Collection codes = codeCache.getAll(dbCodeType);
 		if (codes == null) {
-			Tracer.getInstance().runtimeWarning("expected code <" + dbCodeType + "> not available");
+			log.warn("expected code <{}> N/A", dbCodeType);
 			return new ArrayList(); // PATCH
 		} else {
 			return new ArrayList(codes); // keep sort order
@@ -608,7 +608,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 				return enumeration;
 			}
 		}
-		Tracer.getInstance().developerWarning("Code not found with iliCode: " + iliCode);
+		log.warn("Developer warning: Code not found with iliCode: {}", iliCode);
 		return null;
 	}
 

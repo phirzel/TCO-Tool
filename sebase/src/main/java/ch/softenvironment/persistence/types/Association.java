@@ -3,7 +3,7 @@ package ch.softenvironment.persistence.types;
 /**
  * Implement for any [n:n] Class.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface Association {
 

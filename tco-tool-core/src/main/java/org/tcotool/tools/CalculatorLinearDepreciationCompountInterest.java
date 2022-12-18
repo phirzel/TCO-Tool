@@ -21,9 +21,7 @@ import ch.softenvironment.math.FinancialUtils;
 import org.tcotool.model.Cost;
 import org.tcotool.model.CostDriver;
 import org.tcotool.model.FactCost;
-import org.tcotool.model.Responsibility;
 import org.tcotool.model.Service;
-import org.tcotool.model.ServiceCategory;
 import org.tcotool.model.TcoObject;
 
 /**
@@ -31,12 +29,12 @@ import org.tcotool.model.TcoObject;
  * <p>
  * Calculates: Depreciation PLUS Interest => compound interest (de: Zinseszins)
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorLinearDepreciationCompountInterest extends Calculator {
 
     /**
-     * @see #Calculator(ModelUtility, TcoObject, long, ServiceCategory, Responsibility)
+     * @see Calculator
      */
     public CalculatorLinearDepreciationCompountInterest(ModelUtility utility, TcoObject rootObject, long maxDurationMonths) {
         super(utility, rootObject, maxDurationMonths);
@@ -49,7 +47,7 @@ public class CalculatorLinearDepreciationCompountInterest extends Calculator {
     protected void calculate(Service service, CostDriver driver, Cost cost, double capital) {
         if (cost instanceof FactCost) {
             FactCost fCost = (FactCost) cost;
-            long depreciationDuration = fCost.getDepreciationDuration() == null ? 0 : fCost.getDepreciationDuration().longValue();
+            long depreciationDuration = fCost.getDepreciationDuration() == null ? 0 : fCost.getDepreciationDuration();
 
             if (depreciationDuration > 12) {
                 // [0] total FactCost independent of depreciation & interest
@@ -61,7 +59,7 @@ public class CalculatorLinearDepreciationCompountInterest extends Calculator {
 
                 // [1..fCost.depreciationYears] of first period of FactCost's
                 // depreciationDuration
-                boolean repeatable = (fCost.getRepeatable() != null) && fCost.getRepeatable().booleanValue();
+                boolean repeatable = (fCost.getRepeatable() != null) && fCost.getRepeatable();
                 int year = calcDepreciationPeriod(service, driver, fCost, capital, repeatable, fCost.getDepreciationDuration(), INDEX_TOTAL);
                 // TODO consider baseOffset
                 // [after fCost.depreciationYears years] repeatable periods
@@ -83,7 +81,7 @@ public class CalculatorLinearDepreciationCompountInterest extends Calculator {
      * @return year of last Cost-entry
      */
     private int calcDepreciationPeriod(Service service, CostDriver driver, Cost cost, double costCapital, boolean repeatable, Long costDuration, int yearIndex) {
-        long completeYears = costDuration.longValue() / 12;
+        long completeYears = costDuration / 12;
         double duration = costDuration.doubleValue();
         int year = 0;
 
@@ -131,7 +129,7 @@ public class CalculatorLinearDepreciationCompountInterest extends Calculator {
             // yearlyCapital);
             capitalYearBefore = yearlyCapital;
         }
-        long partialMonthInYear = costDuration.longValue() % 12;
+        long partialMonthInYear = costDuration % 12;
         if (partialMonthInYear > 0) {
             // depreciation over fraction part of year should be 0
             double yearlyCapital = costCapital / duration * (duration - ((year + 1.0) * 12.0) + (double) partialMonthInYear); // capitalYearBefore

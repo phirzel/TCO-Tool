@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 /**
  * TestCase for XmlSerializer.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class XmlSerializerTestCase extends TestCase {
 

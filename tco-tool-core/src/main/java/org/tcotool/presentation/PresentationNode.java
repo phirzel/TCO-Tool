@@ -7,7 +7,7 @@ import ch.softenvironment.jomm.descriptor.DbNumericFieldDescriptor;
 /**
  * Represents a visual node in a Diagram (symbol-style presentation).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class PresentationNode extends PresentationElement {
 

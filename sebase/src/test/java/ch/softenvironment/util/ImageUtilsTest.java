@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test ImageUtils.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ImageUtilsTest {
 

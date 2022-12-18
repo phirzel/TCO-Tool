@@ -20,9 +20,9 @@ import ch.softenvironment.client.ResourceManager;
  * <b>propertyChange</b>-Event (for e.g. "keyReleased") from this Component
  * towards the Model.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class NumberTextField extends javax.swing.JTextField implements java.awt.event.InputMethodListener {
     // private java.text.DecimalFormat decFormat = null;
 
@@ -56,7 +56,7 @@ public class NumberTextField extends javax.swing.JTextField implements java.awt.
                 // legal input but still no value
                 return null;
             }
-            return new Double(Double.parseDouble(getText()));
+            return Double.parseDouble(getText());
         }
     }
 
@@ -69,7 +69,7 @@ public class NumberTextField extends javax.swing.JTextField implements java.awt.
         if (ch.softenvironment.util.StringUtils.isNullOrEmpty(getText())) {
             return null;
         } else {
-            return Integer.valueOf(Integer.parseInt(getText()));
+            return Integer.parseInt(getText());
         }
     }
 
@@ -82,7 +82,7 @@ public class NumberTextField extends javax.swing.JTextField implements java.awt.
         if (ch.softenvironment.util.StringUtils.isNullOrEmpty(getText())) {
             return null;
         } else {
-            return Long.valueOf(Long.parseLong(getText()));
+            return Long.parseLong(getText());
         }
     }
 

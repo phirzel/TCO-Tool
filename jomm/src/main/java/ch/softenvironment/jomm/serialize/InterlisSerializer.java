@@ -17,9 +17,9 @@ import ch.softenvironment.util.DeveloperException;
 /**
  * XML-Serializer for specific INTERLIS 2.2 data-structures.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see http://www.interlis.ch/INTERLIS2.2
- * @see http://www.w3.org/2001/XMLSchema-instance
+ * @author Peter Hirzel
+ * @see <a href="http://www.interlis.ch/INTERLIS2.2>INTERLIS 2.2</a>
+ * @see <a href="http://www.w3.org/2001/XMLSchema-instance">XML Schema</a>
  */
 public class InterlisSerializer extends XmlSerializer {
 
@@ -121,7 +121,6 @@ public class InterlisSerializer extends XmlSerializer {
     /**
      * Generate a Reference to another Object. Keep the Relationship in mind.
      *
-     * @param element Attributename pointing to owner
      * @param tid TID of Owner
      * @param extRef EXTREF
      * @param bid BID Basket-ID

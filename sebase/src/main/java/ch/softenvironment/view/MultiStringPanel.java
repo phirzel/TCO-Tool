@@ -15,9 +15,9 @@ package ch.softenvironment.view;
 /**
  * Display a String with Cardinality's upper-Range > 1.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class MultiStringPanel extends javax.swing.JPanel {
 
     private javax.swing.JComboBox ivjCbxCount = null;
@@ -133,7 +133,7 @@ public class MultiStringPanel extends javax.swing.JPanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlEditor().addSimpleEditorPanelListener(ivjEventHandler);
@@ -195,7 +195,7 @@ public class MultiStringPanel extends javax.swing.JPanel {
         //	firePropertyChange("list", oldValue, list);
 
         java.util.Vector<Integer> elements = new java.util.Vector<Integer>(1);
-        elements.add(Integer.valueOf(1));
+        elements.add(1);
         getCbxCount().setModel(new javax.swing.DefaultComboBoxModel(elements));
         //TODO only ONE element is implemented yet
         if (list.size() >= 1) {

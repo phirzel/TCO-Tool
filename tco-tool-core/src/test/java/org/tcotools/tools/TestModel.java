@@ -34,7 +34,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Create a simple Test TcoModel.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class TestModel {
 

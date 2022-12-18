@@ -13,14 +13,14 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Browser to walk through a List of Objects.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+@Slf4j
 public class DataSelectorPanel extends BasePanel {
 
     private DataSelectorPanelListener listener = null;
@@ -82,7 +82,7 @@ public class DataSelectorPanel extends BasePanel {
             currentIndex = objects.size() - 1;
             setCurrentObject(objects.get(currentIndex));
         } else {
-            Tracer.getInstance().developerError("make sure to have a listener");//$NON-NLS-2$//$NON-NLS-1$
+            log.error("Developer error: make sure to have a listener");//$NON-NLS-2$//$NON-NLS-1$
         }
     }
 
@@ -539,7 +539,7 @@ public class DataSelectorPanel extends BasePanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getTbbFirst().addActionListener(ivjEventHandler);
@@ -611,7 +611,7 @@ public class DataSelectorPanel extends BasePanel {
                 }
             }
         } else {
-            Tracer.getInstance().developerError("make sure to have a listener");//$NON-NLS-2$//$NON-NLS-1$
+            log.error("Developer error: make sure to have a listener");//$NON-NLS-2$//$NON-NLS-1$
         }
     }
 

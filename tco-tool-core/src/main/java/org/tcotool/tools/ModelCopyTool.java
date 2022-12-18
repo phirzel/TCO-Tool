@@ -16,6 +16,7 @@ package org.tcotool.tools;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
 import ch.softenvironment.util.DeveloperException;
 import java.util.Iterator;
 import org.tcotool.model.Cost;
@@ -28,13 +29,13 @@ import org.tcotool.model.TcoPackage;
 /**
  * Utility to copy a Model-Tree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ModelCopyTool {
 
 	// make sure continuous copying creates continuous numbers
 	private static int copyCounter = 0;
-	private ModelUtility utility = null;
+	private final ModelUtility utility;
 
 	private ModelCopyTool(ModelUtility utility) {
 		this.utility = utility;
@@ -51,7 +52,7 @@ public class ModelCopyTool {
 	 * @return
 	 * @throws CloneNotSupportedException
 	 * @throws Exception
-	 * @see DbChangeableBean.clone()
+	 * @see DbChangeableBean#clone()
 	 */
 	private TcoPackage copy(TcoPackage original) throws CloneNotSupportedException, Exception {
 		// shallow clone

@@ -23,7 +23,6 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.net.URL;
 import java.util.HashMap;
@@ -35,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.CatalogueDetailView;
 import org.tcotool.application.CostDriverDetailView;
 import org.tcotool.application.FactCostDetailView;
@@ -79,8 +79,9 @@ import org.tcotool.standard.report.ReportTool;
 /**
  * Utility Class that knows how to <b>deal with Model (and TreeNode's)</b>.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ModelUtility implements
 	// TODO TreeNodeUtility should be implemented by NavigationView
 	ch.softenvironment.view.tree.TreeNodeUtility {
@@ -126,7 +127,7 @@ public class ModelUtility implements
 	/**
 	 * Add element to owner.
 	 *
-	 * @param parent ch.softenvironment.tree.core.Namespace
+	 * @param owner ch.softenvironment.tree.core.Namespace
 	 * @param element
 	 * @return the newly instantiated element
 	 * @deprecated
@@ -286,7 +287,7 @@ public class ModelUtility implements
 	 * @param supplier TcoPackage or Service
 	 * @return @see DependencyValidator#validate(ModelUtility, Service, TcoObject)
 	 * @throws Exception
-	 * @see {@link DependencyValidator#validate(Service, TcoObject, ModelUtility)}
+	 * @see {@link DependencyValidator#validate(ModelUtility, Service, TcoObject)}
 	 */
 	public String addDependencyEnds(Dependency dependency, Service client, TcoObject supplier) throws Exception {
 		String fault = DependencyValidator.validate(this, client, supplier);
@@ -328,7 +329,6 @@ public class ModelUtility implements
 	 *
 	 * @param server
 	 * @return
-	 * @see #createBaseConfiguration()
 	 */
 	public static ModelUtility createDefaultConfiguration(ch.softenvironment.jomm.DbObjectServer server) throws Exception {
 		ModelUtility utility = new ModelUtility(server);
@@ -486,7 +486,7 @@ public class ModelUtility implements
 		Object parent = findParent((TcoObject) node, model);
 		if (parent == null) {
 			// possible, for e.g. if drop to empty space in NavTree
-			ch.softenvironment.util.Tracer.getInstance().developerWarning("parent not found!");
+			log.warn("Developer warning: parent not found!");
 		}
 		// ch.softenvironment.util.Tracer.getInstance().debug("findParent(" +
 		// node + ") => " + parent);
@@ -667,7 +667,7 @@ public class ModelUtility implements
 			try {
 				return new ImageIcon(url);
 			} catch (Exception e) {
-				ch.softenvironment.util.Tracer.getInstance().developerError("image not found for =>" + type);
+				log.error("Developer error: image not found for: {}", type);
 			}
 		}
 		return null;
@@ -701,7 +701,7 @@ public class ModelUtility implements
 				}
 			}
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().developerError("image not found for =>" + key);
+			log.error("Developer error: image not found for:", key);
 			return null;
 		}
 	}
@@ -745,7 +745,7 @@ public class ModelUtility implements
 			try {
 				tmp.setDefaultCurrency((Currency) getServer().getIliCode(Currency.class, Currency.CHF));
 			} catch (Exception e) {
-				Tracer.getInstance().runtimeWarning("SystemParameter fault <Currency>=CHF (default): " + e.getLocalizedMessage());
+				log.warn("SystemParameter fault <Currency>=CHF (default)", e);
 			}
 			tmp.save();
 
@@ -819,7 +819,7 @@ public class ModelUtility implements
 		} else if (type.equals(Activity.class)) {
 			return ResourceManager.getResourceAsNonLabeled(PersonalCostDetailView.class, "LblActivity_text");
 		}
-		Tracer.getInstance().developerWarning("String for type: " + type);
+		log.warn("Developer warning: String for type: {}", type);
 		return "NYI"; // not yet implemented
 	}
 
@@ -1093,7 +1093,7 @@ public class ModelUtility implements
 	 *
 	 * @param object to be moved
 	 * @param target new owner
-	 * @see AutoScrollingTree, TreeDragSource, TreeDragTarget
+	 * @see ch.softenvironment.view.tree.AutoScrollingTree, TreeDragSource, TreeDragTarget
 	 */
 	@Override
 	public void relocateElement(java.lang.Object object, java.lang.Object target) throws Exception {
@@ -1333,7 +1333,7 @@ public class ModelUtility implements
 			}
 			interest = getSystemParameter().getDepreciationInterestRate();
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("SystemParameter fault <DepreciationInterestRate>=4.0: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <DepreciationInterestRate>=4.0", e);
 			interest = new Double(4.0);
 		}
 		return interest.doubleValue();
@@ -1350,7 +1350,7 @@ public class ModelUtility implements
 			}
 			hours = getSystemParameter().getManYearHoursInternal();
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("SystemParameter fault <ManYearHoursInternal>=1700: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <ManYearHoursInternal>=1700", e);
 			hours = Long.valueOf(1700);
 		}
 		return hours.longValue();
@@ -1408,14 +1408,14 @@ public class ModelUtility implements
 				duration = getSystemParameter().getReportDepreciationDuration();
 			}
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("SystemParameter fault <ReportDepreciationDuration>=default: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <ReportDepreciationDuration>=default", e);
 		}
 		return duration.longValue();
 	}
 
 	/**
 	 * @return duration in month
-	 * @see SystemParameter.getReportUsageDuration()
+	 * @see SystemParameter#getReportUsageDuration()
 	 */
 	public long getUsageDuration() {
 		Long duration = Long.valueOf(ReportTool.DEFAULT_DURATION);
@@ -1426,7 +1426,7 @@ public class ModelUtility implements
 				duration = getSystemParameter().getReportUsageDuration();
 			}
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeWarning("SystemParameter fault <ReportUsageDuration>=default: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <ReportUsageDuration>=default", e);
 		}
 		return duration.longValue();
 	}

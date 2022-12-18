@@ -18,9 +18,8 @@ import java.util.Locale;
 /**
  * Format a number to look like a financial value but without the currency itself.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class AmountFormat extends java.text.DecimalFormat {
 
     private static final int FRACTION_DIGITS = 2;
@@ -53,7 +52,7 @@ public class AmountFormat extends java.text.DecimalFormat {
      * @see #toString(Number)
      */
     public static String toString(double amount) {
-        return toString(new Double(amount));
+        return toString(amount);
     }
 
     /**

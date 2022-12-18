@@ -21,12 +21,10 @@
         <dependency>
             <groupId>org.tcotool</groupId>
             <artifactId>sebase</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.tcotool</groupId>
             <artifactId>jomm</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
@@ -59,6 +57,19 @@
             <artifactId>jhotdraw</artifactId>
             <version>7.4.1</version>
         </dependency-->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Logging, Impl may be overwritten see https://www.slf4j.org/manual.html -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>

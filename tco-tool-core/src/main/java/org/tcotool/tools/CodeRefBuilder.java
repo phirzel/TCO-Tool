@@ -31,7 +31,7 @@ import org.tcotool.model.TcoPackage;
 /**
  * Utility to walk a (Sub)-tree within a TcoModel configuration to search for Code-References.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CodeRefBuilder implements TreeToolListener {
 

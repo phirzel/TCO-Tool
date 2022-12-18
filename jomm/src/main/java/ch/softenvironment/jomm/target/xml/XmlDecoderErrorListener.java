@@ -15,7 +15,7 @@ package ch.softenvironment.jomm.target.xml;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -26,22 +26,23 @@ import org.xml.sax.SAXParseException;
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.2 $ $Date: 2006-07-05 16:32:25 $
  */
+@Slf4j
 class XmlDecoderErrorListener implements org.xml.sax.ErrorHandler {
 
     @Override
-    public void error(SAXParseException err) throws SAXException {
-        Tracer.getInstance().runtimeWarning("Parsing Error - Line: " + err.getLineNumber() + ", URI: " + err.getSystemId() + ", Message: " + err.getMessage());
+    public void error(SAXParseException ex) throws SAXException {
+        log.warn("Parsing Error", ex);
         //	throw err;
     }
 
     @Override
-    public void fatalError(SAXParseException fatalErr) throws SAXException {
-        Tracer.getInstance().runtimeWarning("Parsing FatalError - Line: " + fatalErr.getLineNumber() + ", URI: " + fatalErr.getSystemId() + ", Message: " + fatalErr.getMessage());
-        throw fatalErr;
+    public void fatalError(SAXParseException ex) throws SAXException {
+        log.warn("Parsing Error", ex);
+        throw ex;
     }
 
     @Override
-    public void warning(SAXParseException warning) /*throws SAXException*/ {
-        Tracer.getInstance().runtimeWarning("Parsing Warning - Line: " + warning.getLineNumber() + ", URI: " + warning.getSystemId() + ", Message: " + warning.getMessage());
+    public void warning(SAXParseException ex) /*throws SAXException*/ {
+        log.warn("Parsing Error", ex);
     }
 }

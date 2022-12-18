@@ -15,9 +15,8 @@ package ch.softenvironment.view;
 /**
  * Panel with a Percentage-Slider and Percentage-Number.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class PercentageSliderPanel extends BasePanel {
 
     private javax.swing.JLabel ivjJLabel231 = null;
@@ -272,7 +271,7 @@ public class PercentageSliderPanel extends BasePanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getJSlider11().addMouseListener(ivjEventHandler);

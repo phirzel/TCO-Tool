@@ -7,9 +7,8 @@ import javax.swing.JFrame;
 /**
  * Panel to show some important Info about Operating System and Java. Use {@link #createDialog(JFrame) } to open Panel within a Dialog.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class PlatformInfoPanel extends BasePanel {
 
     private javax.swing.JLabel ivjLblJavaVersion = null;

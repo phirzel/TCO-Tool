@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_sqlserver;
+package ch.softenvironment.jomm.target.sql.mssqlserver;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -17,7 +17,6 @@ package ch.softenvironment.jomm.target.sql.ms_sqlserver;
  */
 
 import ch.softenvironment.jomm.DbDomainNameServer;
-import ch.softenvironment.jomm.DbObjectServer;
 import java.util.Collection;
 import java.util.Set;
 import javax.jdo.FetchGroup;
@@ -26,14 +25,15 @@ import javax.jdo.datastore.DataStoreCache;
 import javax.jdo.listener.InstanceLifecycleListener;
 import javax.jdo.metadata.JDOMetadata;
 import javax.jdo.metadata.TypeMetadata;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * JDO-Implementation of a Microsoft SQL Server 2005 Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see javax.jdo.PersistencManagerFactory
+ * @author Peter Hirzel
+ * @see javax.jdo.PersistenceManagerFactory
  */
-@SuppressWarnings("serial")
+@Slf4j
 public class SQLServerObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     /**
@@ -54,17 +54,16 @@ public class SQLServerObjectServerFactory extends ch.softenvironment.jomm.DbDoma
 
     @Override
     protected javax.jdo.PersistenceManager createPersistenceManager() {
-        DbObjectServer objectServer = null;
         try {
-            objectServer = new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new SQLServerMapper(),
+            return new ch.softenvironment.jomm.target.sql.SqlObjectServer(this, connectionPassword, new SQLServerMapper(),
                 ch.softenvironment.jomm.target.sql.SqlQueryBuilder.class, ch.softenvironment.jomm.target.sql.SqlConnection.class);
             // Date/Time => ISO 8601 Standard
             // objectServer.execute("Set session Date-Format <'YYYY-MM-DD'>",
             // ListUtils.createList("SET datestyle TO ISO"));
         } catch (Exception e) {
+            log.error("Developer fault", e);
             throw new ch.softenvironment.util.DeveloperException(e.getLocalizedMessage());
         }
-        return objectServer;
     }
 
     @Override

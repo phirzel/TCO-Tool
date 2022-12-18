@@ -19,9 +19,8 @@ package org.tcotool.application;
 /**
  * Product Info Dialog.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class AboutDialog extends ch.softenvironment.view.BaseDialog {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -38,8 +37,6 @@ public class AboutDialog extends ch.softenvironment.view.BaseDialog {
      * AboutDialog constructor comment.
      *
      * @param owner java.awt.Frame
-     * @param title java.lang.String
-     * @param modal boolean
      */
     public AboutDialog(java.awt.Frame owner, final String application, final String version, final String copyrightPeriod) {
         super(owner, true);

@@ -12,17 +12,18 @@ package ch.softenvironment.controller;
  * Lesser General Public License for more details.
  */
 
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.util.HashSet;
 import java.util.Iterator;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Browser to walk through a List of Objects by '<<' '<' '>' '>>'. Step of walksize might be configured.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see ch.softenvironment.view.DataSelectorPanel for NLS-properties
  */
+@Slf4j
 public class DataBrowser<T> {
 
 	private java.util.List<T> objects = null;
@@ -35,8 +36,8 @@ public class DataBrowser<T> {
 	 */
 	public DataBrowser() {
 		super();
-		objects = new java.util.ArrayList<T>();
-		listeners = new HashSet<DataBrowserListener<T>>();
+		objects = new java.util.ArrayList<>();
+		listeners = new HashSet<>();
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class DataBrowser<T> {
 		if (this.listeners.contains(listener)) {
 			this.listeners.remove(listener);
 		} else {
-			Tracer.getInstance().developerWarning("trying to remove a non-existant listener: " + listener);
+			log.warn("Developer warning: trying to remove a non-existant listener: {}", listener);
 		}
 	}
 
@@ -266,7 +267,7 @@ public class DataBrowser<T> {
 			}
 		} catch (Throwable e) {
 			// should not happen
-			Tracer.getInstance().developerWarning(e.getLocalizedMessage());
+			log.warn("Developer warning", e);
 			return " ";
 		}
 	}
@@ -303,7 +304,7 @@ public class DataBrowser<T> {
 	 */
 	public synchronized void setStep(int step) {
 		if (step < 1) {
-			Tracer.getInstance().runtimeWarning("Auto-correction: step must be >= 1!");
+			log.warn("Auto-correction: step must be >= 1!");
 			this.step = 1;
 		}
 		this.step = step;

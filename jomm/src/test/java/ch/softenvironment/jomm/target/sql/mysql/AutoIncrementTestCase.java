@@ -8,8 +8,9 @@ import java.util.Date;
 import junit.framework.TestCase;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ch.softenvironment.demoapp.MySqlTestSuite to run this TestCase.
+ * see ch.softenvironment.demoapp.MySqlTestSuite to run this TestCase.
+ *
+ * @author Peter Hirzel
  */
 public class AutoIncrementTestCase extends TestCase {
 
@@ -31,10 +32,10 @@ public class AutoIncrementTestCase extends TestCase {
             server.execute("auto key", ListUtils.createList("INSERT INTO X (T_Id, val) VALUES (null, 'p')"));
             DbQueryBuilder builder = server.createQueryBuilder(DbQueryBuilder.RAW, "Last-id");
             builder.setRaw("SELECT LAST_INSERT_ID()");
-            assertTrue("last insert id", Long.valueOf(18).equals(server.getFirstValue(builder)));
+            assertEquals("last insert id", Long.valueOf(18), server.getFirstValue(builder));
             server.execute("auto key", ListUtils.createList("INSERT INTO X (T_Id, val) VALUES (null, 'p')"));
             server.execute("auto key", ListUtils.createList("INSERT INTO X (T_Id, val) VALUES (null, 'p')"));
-            assertTrue("last insert id", Long.valueOf(20).equals(server.getFirstValue(builder)));
+            assertEquals("last insert id", Long.valueOf(20), server.getFirstValue(builder));
         } catch (Throwable e) {
             fail(e.getLocalizedMessage());
         }
@@ -48,7 +49,7 @@ public class AutoIncrementTestCase extends TestCase {
             DbQueryBuilder builder = server.createQueryBuilder(DbQueryBuilder.RAW, "T_LastChange");
             builder.setRaw("SELECT T_LastChange FROM Y");
             Object ts = server.getFirstValue(builder);
-            assertTrue("T_LastChange value", ts != null);
+            assertNotNull("T_LastChange value", ts);
             assertTrue("T_LastChange type", ts instanceof Date);
             //TODO T_User.SYSTEM_USER() & T_CreateDate (TIME.NOW()
         } catch (Throwable e) {

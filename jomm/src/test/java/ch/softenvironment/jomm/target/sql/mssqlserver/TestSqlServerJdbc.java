@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_sqlserver;
+package ch.softenvironment.jomm.target.sql.mssqlserver;
 
 /*
  * This library is free software; you can redistribute it and/or

@@ -22,18 +22,19 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.target.xml.IliBasket;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * JUnit Testcase to testsuite JOMM with DemoApp-Model. This Testcase will: - create some Test-Data - manipulate the Test-Data
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see @see ch.softenvironment.demoapp.*TestSuite to run this TestCase
  */
+@Slf4j
 public class XmlDemoAppTestCase extends TestCase {
 
 	private final String filename = "C:\\Temp\\" + XmlMapperSuite.SCHEMA + ".xml";
@@ -90,7 +91,7 @@ public class XmlDemoAppTestCase extends TestCase {
 			assertTrue("Project->removed", prj.getPersistencyState()
 				.isRemoved());
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError(null, e);
+			log.error("testModelMapping", e);
 			fail("testModelMapping()");
 		}
 	}

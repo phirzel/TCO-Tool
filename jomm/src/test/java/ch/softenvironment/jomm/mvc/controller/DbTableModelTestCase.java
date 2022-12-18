@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 /**
  * Testcase for DbTableModel.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbTableModelTestCase extends TestCase {
 
@@ -45,7 +45,7 @@ public class DbTableModelTestCase extends TestCase {
         assertTrue("no neg. index", illegalArgExThrown);
     }
 
-    public void testGetRaw() throws Exception {
+    public void testGetRaw() {
         DbTableModel model = new DbTableModel();
         boolean illegalArgExThrown = false;
         try {

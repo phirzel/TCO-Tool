@@ -32,7 +32,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Tests org.tcotool.tools.CalculatorTco
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorTcoTest {
 

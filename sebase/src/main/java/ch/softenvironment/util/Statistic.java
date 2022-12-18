@@ -20,7 +20,7 @@ import java.util.TreeMap;
 /**
  * Statistical utility to evaluate performance for named Use-Cases within an application (for e.g. DBMS Transaction times).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class Statistic {
 
@@ -29,7 +29,7 @@ public final class Statistic {
     private volatile transient long min;
     private volatile transient long total;
 
-    private static final TreeMap<String, Statistic> statisticMap = new TreeMap<String, Statistic>();
+    private static final TreeMap<String, Statistic> statisticMap = new TreeMap<>();
 
     /**
      * Create a new Statistic for given UseCase if not already existing.
@@ -39,11 +39,11 @@ public final class Statistic {
      * Statistic.dump(..);
      * </code>
      *
-     * @param name of UseCase to measure in time.
+     * @param useCase of UseCase to measure in time.
      */
     public static Statistic createEntry(final String useCase) {
         synchronized (statisticMap) {
-            Statistic statistic = null;
+            final Statistic statistic;
             if (statisticMap.containsKey(useCase)) {
                 statistic = statisticMap.get(useCase);
             } else {
@@ -114,7 +114,7 @@ public final class Statistic {
     /**
      * Reset all values for all Statistic-instances, where given UseCases remain in List.
      */
-    public final static void clearAll() {
+    public static void clearAll() {
         Iterator<Statistic> iterator = statisticMap.values().iterator();
         while (iterator.hasNext()) {
             (iterator.next()).clear();
@@ -124,7 +124,7 @@ public final class Statistic {
     /**
      * Print measured statistics to given Writer.
      */
-    public final static void dump(PrintWriter out) {
+    public static void dump(PrintWriter out) {
         Iterator<Map.Entry<String, Statistic>> iterator = statisticMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Statistic> e = iterator.next();

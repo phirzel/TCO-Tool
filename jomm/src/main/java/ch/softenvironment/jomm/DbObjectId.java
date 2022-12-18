@@ -1,6 +1,7 @@
 package ch.softenvironment.jomm;
 
 import ch.softenvironment.jomm.mvc.model.DbObject;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -21,14 +22,15 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 /**
  * Simple Unique Object-Id Specification for DbObject's within this framework context. Identity-type => "application"
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public final class DbObjectId implements DbIdentity {
 
     private static final long serialVersionUID = 1L;
 
-    private transient java.lang.Long id = null;
-    private transient java.lang.Class<? extends DbObject> dbObject = null;
+    private final transient java.lang.Long id;
+    private final transient java.lang.Class<? extends DbObject> dbObject;
 
     /**
      * Create a DbIdentity for a specific Instance of given type dbObject by its id.
@@ -88,8 +90,7 @@ public final class DbObjectId implements DbIdentity {
 
     @Override
     public final int hashCode() {
-        ch.softenvironment.util.Tracer.getInstance().developerWarning(
-            "might be different for EQUAL DbObjectId's with same ID and Classname if instantiated severally");
+        log.warn("Developer warning: might be different for EQUAL DbObjectId's with same ID and Classname if instantiated severally");
 
         return super.hashCode();
     }

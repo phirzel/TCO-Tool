@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * TextField representing a File-Name and Chooser-Button.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class FileNamePanel extends javax.swing.JPanel {
 
     private List<GenericFileFilter> filters = null;
@@ -101,7 +101,6 @@ public class FileNamePanel extends javax.swing.JPanel {
     public void addFileNamePanelListener(ch.softenvironment.view.FileNamePanelListener newListener) {
         fieldFileNamePanelListenerEventMulticaster = ch.softenvironment.view.FileNamePanelListenerEventMulticaster.add(
             fieldFileNamePanelListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
@@ -265,7 +264,7 @@ public class FileNamePanel extends javax.swing.JPanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnChooseFile().addActionListener(ivjEventHandler);
@@ -315,7 +314,6 @@ public class FileNamePanel extends javax.swing.JPanel {
     public void removeFileNamePanelListener(ch.softenvironment.view.FileNamePanelListener newListener) {
         fieldFileNamePanelListenerEventMulticaster = ch.softenvironment.view.FileNamePanelListenerEventMulticaster.remove(
             fieldFileNamePanelListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
@@ -334,7 +332,7 @@ public class FileNamePanel extends javax.swing.JPanel {
      */
     public void add(GenericFileFilter filter) {
         if (filters == null) {
-            filters = new ArrayList<GenericFileFilter>();
+            filters = new ArrayList<>();
         }
         filters.add(filter);
     }

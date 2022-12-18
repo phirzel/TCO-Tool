@@ -16,7 +16,7 @@ package ch.softenvironment.jomm.mvc.view;
  */
 
 import ch.ehi.basics.view.FileChooser;
-import ch.softenvironment.jomm.target.sql.ms_access.MsAccessObjectServerFactory;
+import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
 import ch.softenvironment.view.BaseDialog;
 import ch.softenvironment.view.CommonUserAccess;
 
@@ -657,7 +657,7 @@ public class DbLoginDialog extends BaseDialog {
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getBtnCancel().addActionListener(ivjEventHandler);

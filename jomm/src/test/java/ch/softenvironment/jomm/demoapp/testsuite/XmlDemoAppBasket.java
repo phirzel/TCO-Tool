@@ -18,7 +18,7 @@ import ch.softenvironment.jomm.target.xml.IliBasket;
 import java.util.Set;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class XmlDemoAppBasket implements IliBasket {
 
@@ -47,7 +47,8 @@ class XmlDemoAppBasket implements IliBasket {
 
     @Override
     public DbObjectId getObjectId() {
-        return new DbObjectId(XmlDemoAppModel.class, Long.valueOf(-1 /*Unknown*/));
+        /*Unknown*/
+        return new DbObjectId(XmlDemoAppModel.class, (long) -1);
     }
 
     @Override

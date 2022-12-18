@@ -13,16 +13,18 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.swingext.SwingWorker;
+import java.awt.Frame;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Wait-Dialog for busy actions. Design Pattern: Singleton
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see BaseFrame#showBusy()
+ * @author Peter Hirzel
+ * @see BaseFrame#showBusy(Runnable)
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class WaitDialog extends BaseDialog {
 
     public static final int UNKNOWN_PROGRESS = -1;
@@ -43,7 +45,7 @@ public class WaitDialog extends BaseDialog {
      * WaitDialog constructor comment.
      *
      * @param owner java.awt.Frame
-     * @param modal boolean
+     * @param title
      */
     private WaitDialog(java.awt.Frame owner, String title) {
         super(owner,
@@ -208,11 +210,11 @@ public class WaitDialog extends BaseDialog {
      * }); }
      *
      * @param block executable Block that might take a while
-     * @see #updateProgress(..)
+     * @see #updateProgress(int, String)
      */
     public static void showBusy(final java.awt.Frame owner, final Runnable block) {
         if (owner == null) {
-            Tracer.getInstance().developerWarning("WaitDialog suppressed because owner unknown!");
+            log.warn("Developer warning: WaitDialog suppressed because owner unknown!");
         }
         if (++waitCounter == 1) {
             // show ONE WaitDialog only
@@ -224,7 +226,7 @@ public class WaitDialog extends BaseDialog {
                 // make sure refresh is forced NOW
                 waitDialog.paint(waitDialog.getGraphics());
             } catch (Throwable e) {
-                Tracer.getInstance().runtimeWarning("fork WaitDialog failed: " + e.toString());
+                log.warn("fork WaitDialog failed", e);
                 waitDialog = null;
                 owner.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
                 waitCounter = 0;
@@ -237,7 +239,7 @@ public class WaitDialog extends BaseDialog {
         } catch (Throwable e) {
             // handler is necessary, otherwise #finished() won't be called
             // in case of a failure in block
-            Tracer.getInstance().runtimeError("Block failed", e);
+            log.error("Block failed", e);
             BaseFrame.showException(owner, e);
         }
 
@@ -248,7 +250,7 @@ public class WaitDialog extends BaseDialog {
                 // @see Exeption-Handler at opening WaitDialog
                 waitDialog.dispose();
             } catch (Throwable e) {
-                Tracer.getInstance().runtimeWarning("#finished() could not dispose() WaitDialog correctly!");
+                log.warn("#finished() could not dispose() WaitDialog correctly!");
             }
             waitDialog = null;
             owner.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -265,7 +267,7 @@ public class WaitDialog extends BaseDialog {
      * ... } }); }
      *
      * @param block executable Block to fork that might take a while
-     * @see #updateProgressThread(..)
+     * @see #updateProgressThread(int, String)
      */
     public static void showBusyThread(final java.awt.Frame owner, final Runnable block) {
         if (++waitCounterThread == 1) {
@@ -277,7 +279,7 @@ public class WaitDialog extends BaseDialog {
                 waitDialogThread.setVisible(true);
                 updateProgressThread(UNKNOWN_PROGRESS, ResourceManager.getResource(WaitDialog.class, "LblText_text"));
             } catch (Throwable e) {
-                Tracer.getInstance().runtimeWarning("show WaitDialog failed: " + e.getLocalizedMessage());
+                log.warn("show WaitDialog failed", e);
                 waitDialogThread = null;
                 //		    owner.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
                 waitCounterThread = 0;
@@ -293,7 +295,7 @@ public class WaitDialog extends BaseDialog {
                 } catch (Throwable e) {
                     // handler is necessary, otherwise #finished() won't be called
                     // in case of a failure in block
-                    Tracer.getInstance().runtimeError("showBusyThread(Runnable)->Block failed", e);
+                    log.error("showBusyThread(Runnable)->Block failed", e);
                     BaseFrame.showException(owner, e);
                 }
                 return null;
@@ -312,7 +314,7 @@ public class WaitDialog extends BaseDialog {
                         // @see Exeption-Handler at opening WaitDialog
                         waitDialogThread.dispose();
                     } catch (Throwable e) {
-                        Tracer.getInstance().runtimeWarning("showBusyThread()#finished() could not dispose() WaitDialog correctly!");
+                        log.warn("showBusyThread()#finished() could not dispose() WaitDialog correctly!");
                     }
                     waitDialogThread = null;
                     //		    	owner.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -329,7 +331,7 @@ public class WaitDialog extends BaseDialog {
      *
      * @param percentage Progress of current activity [0..100] or WaitDialog.UNKNOWN_PROGRESS
      * @param currentActivity User friendly description of current activity
-     * @see showBusy(Runnable)
+     * @see #showBusy(Frame, Runnable)
      */
     public static void updateProgress(final int percentage, final String currentActivity) {
         //TODO Tune!!!
@@ -350,10 +352,10 @@ public class WaitDialog extends BaseDialog {
             //waitDialog.toFront();
         } catch (NullPointerException ex) {
             // no waitDialog probably
-            Tracer.getInstance().developerWarning("IGNORE: use #showBusy() first: %=" + percentage + " activity: " + currentActivity);
+            log.warn("Developer warning: IGNORE: use #showBusy() first: %=" + percentage + " activity: " + currentActivity);
         } catch (Throwable e) {
             // waitDialog could be closed before Update is made
-            Tracer.getInstance().developerWarning("IGNORE: " + e.getLocalizedMessage());
+            log.warn("Developer warning: IGNORE", e);
         }
         //		}
         //	});
@@ -364,7 +366,7 @@ public class WaitDialog extends BaseDialog {
      *
      * @param percentage Progress of current activity [0..100] or WaitDialog.UNKNOWN_PROGRESS
      * @param currentActivity User friendly description of current activity
-     * @see showBusyThread(Runnable)
+     * @see #showBusyThread(Frame, Runnable)
      */
     public static void updateProgressThread(final int percentage, final String currentActivity) {
         //TODO Tune!!!
@@ -386,7 +388,7 @@ public class WaitDialog extends BaseDialog {
                     //waitDialogThread.toFront();
                 } catch (Throwable e) {
                     // waitDialogThread could be closed before Update is made
-                    Tracer.getInstance().developerWarning("updateProgressThread(..)->Ignoring: " + e.getLocalizedMessage());
+                    log.warn("Developer warning: updateProgressThread(..)->Ignoring", e);
                 }
             }
         });

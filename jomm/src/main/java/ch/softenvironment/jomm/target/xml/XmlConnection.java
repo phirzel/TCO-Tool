@@ -16,9 +16,12 @@ package ch.softenvironment.jomm.target.xml;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class XmlConnection extends ch.softenvironment.jomm.DbConnection {
 
     /**
@@ -43,8 +46,7 @@ public class XmlConnection extends ch.softenvironment.jomm.DbConnection {
                 throw new javax.jdo.JDOException("XmlConnection#close() failed", e);
             }
         }
-        ch.softenvironment.util.Tracer.getInstance().logBackendCommand(
-            "Database Connection closed for URL: " + getObjectServer().getPersistenceManagerFactory().getConnectionURL());
+        log.info("Database Connection closed for URL: {}", getObjectServer().getPersistenceManagerFactory().getConnectionURL());
     }
 
     /**
@@ -56,8 +58,7 @@ public class XmlConnection extends ch.softenvironment.jomm.DbConnection {
     @Override
     public void open(String userId, String password) throws javax.jdo.JDOException {
         setJdbcConnection(new XmlJdbcConnection());
-        ch.softenvironment.util.Tracer.getInstance().logBackendCommand(
-            "Backend Connection opened for URL: " + getObjectServer().getPersistenceManagerFactory().getConnectionURL());
+        log.info("Backend Connection opened for URL: {}", getObjectServer().getPersistenceManagerFactory().getConnectionURL());
 
         push(this);
     }

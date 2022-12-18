@@ -26,21 +26,21 @@ import org.tcotool.model.TcoObject;
 /**
  * Accounting calculator for "linear depreciation".
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorLinearDepreciation extends Calculator {
 
 	/**
 	 * Initialize calculator for given rootObject and TotalCosts only.
 	 *
-	 * @param object
+	 * @param utility
 	 */
 	public CalculatorLinearDepreciation(ModelUtility utility) {
 		this(utility, (TcoObject) utility.getRoot(), 0);
 	}
 
 	/**
-	 * @see Calculator(ModelUtility, TcoObject, long, ServiceCategory, Responsibility)
+	 * @see Calculator
 	 */
 	public CalculatorLinearDepreciation(ModelUtility utility, TcoObject rootObject, long maxDurationMonths) {
 		super(utility, rootObject, maxDurationMonths, null);

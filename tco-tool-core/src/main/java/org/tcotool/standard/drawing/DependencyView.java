@@ -38,7 +38,6 @@ import org.jhotdraw.framework.ViewChangeListener;
 import org.jhotdraw.standard.StandardDrawing;
 import org.jhotdraw.util.UndoManager;
 import org.tcotool.application.LauncherView;
-import org.tcotool.application.NavigationView;
 import org.tcotool.model.Dependency;
 import org.tcotool.model.Service;
 import org.tcotool.model.TcoObject;
@@ -53,10 +52,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Drawing View for Dependency-Diagram's (related to UML-Classdiagram's with Package-Dependencies).
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see CustomSelectionTool#handleMousePopupMenu(..)
+ * @author Peter Hirzel see CustomSelectionTool#handleMousePopupMenu(..)
  */
-@SuppressWarnings("serial")
+
 public class DependencyView extends org.jhotdraw.contrib.zoom.ZoomDrawingView implements DrawingEditor, PropertyChangeListener {
 
 	// private ToolButton defaultToolButton = null;
@@ -111,7 +109,7 @@ public class DependencyView extends org.jhotdraw.contrib.zoom.ZoomDrawingView im
 	 * Adds a new figure to the drawing.
 	 *
 	 * @return the added figure.
-	 * @see EdgeFigure#handleConnection(Figure, Figure)
+	 * see EdgeFigure#handleConnect(Figure, Figure)
 	 */
 	@Override
 	public Figure add(Figure figure) {
@@ -147,7 +145,7 @@ public class DependencyView extends org.jhotdraw.contrib.zoom.ZoomDrawingView im
 	 * Adds a given (Model)-Element to Diagram.
 	 *
 	 * @return the added figure.
-	 * @see NavigationView#mniAddToDiagram()
+	 * see NavigationView#mniAddToDiagram()
 	 */
 	private Figure add(TcoObject element) throws Exception {
 		Figure figure = findFigure(element);
@@ -232,7 +230,7 @@ public class DependencyView extends org.jhotdraw.contrib.zoom.ZoomDrawingView im
 	/**
 	 * Finds an existing ConnectionFigure (say Edge) at given Coordinates.
 	 *
-	 * @see ConnectionTool#findConnection(..) => copied Code
+	 * @see org.jhotdraw.standard.ConnectionTool #findConnection(int, int, Drawing)  => copied Code
 	 */
 	protected ConnectionFigure findConnection(int x, int y) {
 		// copied Method from JHotDraw's ConnectionTool#findConnection(..)

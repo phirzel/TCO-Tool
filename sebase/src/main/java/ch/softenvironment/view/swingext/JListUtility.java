@@ -23,10 +23,14 @@ import javax.swing.JList;
 /**
  * Utility for JList.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see JComboBoxUtility
  */
-public class JListUtility {
+public final class JListUtility {
+
+    private JListUtility() {
+        throw new IllegalStateException("utility class");
+    }
 
     /**
      * @see #initList(JList, java.util.List, String, Evaluator, int)

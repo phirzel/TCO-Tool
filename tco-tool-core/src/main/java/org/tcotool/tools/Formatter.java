@@ -18,6 +18,7 @@ package org.tcotool.tools;
 
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.math.MathUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.FactCostDetailView;
 import org.tcotool.model.Cost;
 import org.tcotool.model.CostDriver;
@@ -28,8 +29,9 @@ import org.tcotool.model.TcoObject;
 /**
  * Format-Tool for Table's in *DetailView.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class Formatter implements ch.softenvironment.util.Evaluator {
 
 	public static final String COSTDRIVER_FACT_COST = "_factCost";
@@ -45,7 +47,7 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 	public static final String SUPPLIER_COST = "_supplierCost";
 	public static final String SUPPLIER_CLIENT_COST = "_supplierClientCost";
 
-	private ModelUtility utility = null;
+	private final ModelUtility utility;
 	private double totalCostDriver = 0.0;
 	private Double costDriverMultitude = null;
 	private double totalCost = 0.0;
@@ -89,7 +91,7 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 				try {
 					return utility.getSystemParameter().getDefaultCurrency().getNameString(ModelUtility.getCodeTypeLocale());
 				} catch (Exception e) {
-					ch.softenvironment.util.Tracer.getInstance().runtimeWarning("IGNORE: SystemParameters.defaultCurrency reference");
+					log.warn("IGNORE: SystemParameters.defaultCurrency reference");
 					return "<" + ResourceManager.getResource(FactCostDetailView.class, "LblCurrency_text") + ">";
 				}
 			} else if (property.equals(COSTDRIVER_PERCENTAGE)) {
@@ -150,7 +152,7 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 	}
 
 	/**
-	 * @see #evaluate()
+	 * @see #evaluate(Object, String)
 	 */
 	public void setTotalCost(double total, Double costDriverMultitude) {
 		this.totalCost = total;
@@ -158,7 +160,7 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 	}
 
 	/**
-	 * @see #evaluate()
+	 * @see #evaluate(Object, String)
 	 */
 	public void setTotalCostDriver(double total) {
 		this.totalCostDriver = total;

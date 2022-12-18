@@ -22,9 +22,9 @@ import org.jhotdraw.figures.LineFigure;
 /**
  * A SeparatorFigure is similar to a LineFigure but draws only a horizontal line and separates from other figures beneath in addition.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 class SeparatorFigure extends LineFigure {
 
     private boolean lineVisible = true;

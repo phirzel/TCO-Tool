@@ -28,12 +28,14 @@ import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.util.DeveloperException;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Field;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Specifies the change done by DbObject of a Property. T can be anything like "? extends DbObject"
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbPropertyChange<T> extends ch.softenvironment.util.BeanReflector<T> {
 
 	private PropertyChangeEvent event = null;
@@ -108,7 +110,7 @@ public class DbPropertyChange<T> extends ch.softenvironment.util.BeanReflector<T
 			current = current.getSuperclass();
 		}
 		if (entry == null) {
-			ch.softenvironment.util.Tracer.getInstance().developerError("entry should be mapped for property <" + getProperty() + "> in DbDescriptor");
+			log.error("Developer error: entry should be mapped for property <{}}> in DbDescriptor", getProperty());
 			return null;
 		} else {
 			Object value = getValue();
@@ -186,7 +188,7 @@ public class DbPropertyChange<T> extends ch.softenvironment.util.BeanReflector<T
 	 * Return a <b>Set of associated B.T_Id's by a Relationship which are in non-removable persistence State</b>.
 	 *
 	 * @return java.util.Set T-Id's of associated Elements on opposite side of Association
-	 * @see #getAssociations()
+	 * see #getAssociations()
 	 */
 	public java.util.Set<Long> getAssocationsId() throws IllegalAccessException, java.lang.reflect.InvocationTargetException {
 		java.util.Set<Long> fkB = new java.util.HashSet<Long>();

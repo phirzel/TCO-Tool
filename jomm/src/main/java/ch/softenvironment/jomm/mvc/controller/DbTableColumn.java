@@ -22,21 +22,20 @@ import javax.swing.table.TableCellRenderer;
 /**
  * Overwrites TableColumn of a JTable.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 class DbTableColumn extends javax.swing.table.TableColumn {
 
-    private Evaluator evaluator = null;
-    private String property = null;
+    private final Evaluator evaluator;
+    private final String property;
     private String codeProperty = null;
 
     /**
      * Define a column where its value will be determined at rendering by a generic Lookup.
      *
      * @param evaluator
-     * @see DbTableModel#addColumnGeneric()
-     * @see GenericColumn
+     * @see DbTableModel#addColumn(String, String, int)
      */
     protected DbTableColumn(final String columnName, final String property,
         int defaultWidth, TableCellRenderer renderer, Evaluator evaluator) {
@@ -51,7 +50,7 @@ class DbTableColumn extends javax.swing.table.TableColumn {
     /**
      * Map a DbCodeType. If (codeProperty!=null) make sure the DbCodeType has such a property, otherwise the DbObject.PROPERTY_NAME property will be displayed by default.
      *
-     * @see DbTableModel#addColumnCodeType()
+     * @see DbTableModel#addColumnCodeType(String, String, int, String)
      */
     protected DbTableColumn(final String columnName, final String property,
         int defaultWidth, final String codeProperty) {

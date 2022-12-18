@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 /**
  * A cost driver (de: Kostentreiber) is something that generates costs. However in this TCO model a CostDriver accumulates a set of Cost's.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CostDriver extends TcoObject {
 

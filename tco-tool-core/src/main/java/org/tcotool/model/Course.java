@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * Map a course factor between source- and target-Currency where: target = source * factor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class Course extends DbEntityBean {
 

@@ -19,7 +19,6 @@ package org.tcotool.standard.drawing;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.ColorChooserDialog;
 import ch.softenvironment.view.CommonUserAccess;
 import java.awt.Color;
@@ -29,6 +28,7 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
+import lombok.extern.slf4j.Slf4j;
 import org.jhotdraw.figures.AbstractLineDecoration;
 import org.jhotdraw.figures.LineConnection;
 import org.jhotdraw.figures.PolyLineFigure;
@@ -43,10 +43,11 @@ import org.tcotool.presentation.WayPoint;
 /**
  * Figure Specification for all Elements treated as edges in Diagram.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see NodeFigure
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 abstract class EdgeFigure extends LineConnection {
 
 	// keep reference to real model's presentation
@@ -115,8 +116,8 @@ abstract class EdgeFigure extends LineConnection {
 
 	/**
 	 * Connect Handles of the two Nodes connected to this Edge.
-	 *
-	 * @see #setEdge(..)
+	 * <p>
+	 * see #setEdge(..)
 	 */
 	protected final void connectNodes() {
 		try {
@@ -127,18 +128,16 @@ abstract class EdgeFigure extends LineConnection {
 			Connector start = null;
 			start = getDiagram().findNodeConnector(getStartElement(), x, y);
 			if (start == null) {
-				Tracer.getInstance()
-					.developerWarning(
-						"AUTO-CORRECT: Missing StartNode->there must have been an improper deletion of nodes/edges before=>" + getSourceName(getStartElement()));//$NON-NLS-2$//$NON-NLS-1$
+				log.warn("Developer warning: AUTO-CORRECT: Missing StartNode->there must have been an improper deletion of nodes/edges before=>" + getSourceName(
+					getStartElement()));//$NON-NLS-2$//$NON-NLS-1$
 				//			shouldWarn(NlsUtils.formatMessage(resEdgeFigure.getString("CWMissingStartNode"), getSourceName(getStartElement()))); //$NON-NLS-1$
 				// removeVisually();
 			} else {
 				wayPoints.add(createWayPoint(((DbObject) getStartElement()).getObjectServer(), startPoint()));
 				Connector end = getDiagram().findNodeConnector(getEndElement(), x, y);
 				if (end == null) {
-					Tracer.getInstance()
-						.developerWarning(
-							"AUTO-CORRECT: Missing EndNode->there must have been an improper deletion of nodes/edges before=>" + getSourceName(getEndElement()));//$NON-NLS-2$//$NON-NLS-1$
+					log.warn("Developer warning: AUTO-CORRECT: Missing EndNode->there must have been an improper deletion of nodes/edges before=>" + getSourceName(
+						getEndElement()));//$NON-NLS-2$//$NON-NLS-1$
 					//shouldWarn(NlsUtils.formatMessage(resEdgeFigure.getString("CWMissingEndNode"), getSourceName(getEndElement()))); //$NON-NLS-1$
 					// removeVisually();
 				} else {
@@ -158,7 +157,7 @@ abstract class EdgeFigure extends LineConnection {
 				}
 			}
 		} catch (Exception e) {
-			Tracer.getInstance().developerWarning(e.toString());
+			log.warn("Developer warning", e);
 		}
 	}
 
@@ -175,9 +174,6 @@ abstract class EdgeFigure extends LineConnection {
 		return wayPoint;
 	}
 
-	/**
-	 * @see setAttribute(..)
-	 */
 	@Override
 	public Object getAttribute(FigureAttributeConstant constant) {
 		if (constant.equals(FigureAttributeConstant.POPUP_MENU)) {
@@ -263,7 +259,7 @@ abstract class EdgeFigure extends LineConnection {
 	/**
 	 * Return index of WayPoint if there is one close to the given arguments.
 	 *
-	 * @see PolyLineFigure#joinSegments() for Algorithm.
+	 * @see PolyLineFigure#joinSegments(int, int)  for Algorithm.
 	 */
 	protected int getWayPointIndex(int x, int y) {
 		for (int i = 1; i < (fPoints.size() - 1); i++) {
@@ -281,7 +277,7 @@ abstract class EdgeFigure extends LineConnection {
 	/**
 	 * LineColor Action.
 	 *
-	 * @see addEditMenu(..)
+	 * see #addEditMenu(..)
 	 */
 	private void mniLineColor() {
 		ColorChooserDialog dialog = new ColorChooserDialog(LauncherView.getInstance(), true);
@@ -314,7 +310,7 @@ abstract class EdgeFigure extends LineConnection {
 	 *
 	 * @param font (like "family-style-size")
 	 * @see EdgeFigure
-	 * @see setAttribute(..)
+	 * @see #setAttribute(FigureAttributeConstant, Object)
 	 */
 	protected void setFont(String font) {
 		setAttribute(FigureAttributeConstant.FONT_NAME, font);
@@ -324,7 +320,7 @@ abstract class EdgeFigure extends LineConnection {
 	 * Set the Line/Frame Color.
 	 *
 	 * @see NodeFigure
-	 * @see setAttribute(..)
+	 * @see #setAttribute(FigureAttributeConstant, Object)
 	 */
 	protected void setLineColor(java.awt.Color color) {
 		setAttribute(FigureAttributeConstant.FRAME_COLOR, color);
@@ -365,7 +361,7 @@ abstract class EdgeFigure extends LineConnection {
 	/**
 	 * ModelElement changed from outside. Therefore a refresh of the View is needed.
 	 *
-	 * @see #setClassDiagram(ClassDiagramView)
+	 * see #setClassDiagram(ClassDiagramView)
 	 */
 	public void updateView() {
 		// don't remove while establishing connection

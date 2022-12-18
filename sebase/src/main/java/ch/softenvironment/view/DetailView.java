@@ -15,7 +15,7 @@ package ch.softenvironment.view;
 /**
  * Method-Set for a DetailView
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see BaseFrame (as a Parent-Class)
  */
 public interface DetailView {

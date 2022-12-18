@@ -32,7 +32,6 @@ import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.BaseDialog;
 import ch.softenvironment.view.BaseFrame;
 import ch.softenvironment.view.CommonUserAccess;
@@ -68,6 +67,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.model.Activity;
 import org.tcotool.model.CostCause;
 import org.tcotool.model.CostCentre;
@@ -102,8 +102,9 @@ import org.tcotool.tools.ModelUtility;
  * -Xdock:icon=./src/org/tcotool/application/resources/TCO_Icon.png (iMac only)
  * </pre>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements FileHistoryListener, java.beans.PropertyChangeListener {
 
     @Deprecated
@@ -488,7 +489,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         try {
             internalFrame.setSelected(true);
         } catch (java.beans.PropertyVetoException e) {
-            Tracer.getInstance().runtimeWarning("PropertyVetoEception ignored");
+            log.warn("PropertyVetoEception ignored");
         }
 
         internalFrame.setVisible(true);
@@ -2684,7 +2685,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getMniAbout().addActionListener(ivjEventHandler);
@@ -2856,8 +2857,6 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      */
     public static void main(java.lang.String[] args) {
         try {
-            Tracer.start(args);
-
             ApplicationOptions options = new ApplicationOptions(System.getProperty("user.home") + java.io.File.separator + ".TCO_Tool");
             NlsUtils.changeLocale(new Locale(options.getLanguage()));
             /*
@@ -2885,7 +2884,6 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         } catch (Exception exception) {
             exception.printStackTrace(System.out);
             showException(instance, exception);
-            Tracer.getInstance().stop();
             System.exit(-1);
         }
     }
@@ -3260,7 +3258,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -3483,7 +3481,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 // manual reset
             }
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError(null, e);
+            log.error("", e);
         }
     }
 

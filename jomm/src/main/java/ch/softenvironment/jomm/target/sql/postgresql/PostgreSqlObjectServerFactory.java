@@ -31,10 +31,10 @@ import javax.jdo.metadata.TypeMetadata;
 /**
  * JDO-Implementation of a PostgreSQL V8.0 Factory.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see javax.jdo.PersistencManagerFactory
+ * @author Peter Hirzel
+ * @see javax.jdo.PersistenceManagerFactory
  */
-@SuppressWarnings("serial")
+
 public class PostgreSqlObjectServerFactory extends ch.softenvironment.jomm.DbDomainNameServer {
 
     /**

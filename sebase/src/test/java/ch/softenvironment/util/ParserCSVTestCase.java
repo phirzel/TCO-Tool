@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ParserCSVTestCase extends junit.framework.TestCase {
 
@@ -28,16 +28,16 @@ public class ParserCSVTestCase extends junit.framework.TestCase {
 	}
 
 	public void testArrayToString() {
-		assertTrue("empty[]", "".equals(ParserCSV.arrayToString(null, sep)));
+        assertTrue("empty[]", "".equals(ParserCSV.arrayToString(null, sep)));
 
-		List<String> list = new ArrayList<String>();
-		list.add("abc");
-		assertTrue("[abc]", ("abc" + sep).equals(ParserCSV.arrayToString(list, sep)));
-		list.add("xxx");
-		assertTrue("[abc, xxx]", ("abc" + sep + "xxx" + sep).equals(ParserCSV.arrayToString(list, sep)));
-		list.add("4" /*Integer.valueOf(4)*/);
-		assertTrue("[abc, xxx]", ("abc" + sep + "xxx" + sep + "4" + sep).equals(ParserCSV.arrayToString(list, sep)));
-	}
+        List<String> list = new ArrayList<>();
+        list.add("abc");
+        assertTrue("[abc]", ("abc" + sep).equals(ParserCSV.arrayToString(list, sep)));
+        list.add("xxx");
+        assertTrue("[abc, xxx]", ("abc" + sep + "xxx" + sep).equals(ParserCSV.arrayToString(list, sep)));
+        list.add("4" /*Integer.valueOf(4)*/);
+        assertTrue("[abc, xxx]", ("abc" + sep + "xxx" + sep + "4" + sep).equals(ParserCSV.arrayToString(list, sep)));
+    }
 
 	public void testStringToArray() {
 		assertTrue("null", 0 == ParserCSV.stringToArray(null, sep).size());
@@ -67,35 +67,35 @@ public class ParserCSVTestCase extends junit.framework.TestCase {
 	}
 
 	public void testNextInteger() {
-		ParserCSV parser = new ParserCSV("", sep);
-		assertTrue("empty String", null == parser.getNextInteger());
-		parser = new ParserCSV("13", sep);
-		assertTrue(13 == parser.getNextInteger().intValue());
-		parser = new ParserCSV("14;", sep);
-		assertTrue(14 == parser.getNextInteger().intValue());
-		parser = new ParserCSV("11;12", sep);
-		assertTrue(11 == parser.getNextInteger().intValue());
-		assertTrue(12 == parser.getNextInteger().intValue());
-		assertTrue("empty String", null == parser.getNextInteger());
-		parser = new ParserCSV("11;12;", sep);
-		assertTrue(11 == parser.getNextInteger().intValue());
-		assertTrue(12 == parser.getNextInteger().intValue());
-		assertTrue("empty String", null == parser.getNextInteger());
-	}
+        ParserCSV parser = new ParserCSV("", sep);
+        assertTrue("empty String", null == parser.getNextInteger());
+        parser = new ParserCSV("13", sep);
+        assertTrue(13 == parser.getNextInteger());
+        parser = new ParserCSV("14;", sep);
+        assertTrue(14 == parser.getNextInteger());
+        parser = new ParserCSV("11;12", sep);
+        assertTrue(11 == parser.getNextInteger());
+        assertTrue(12 == parser.getNextInteger());
+        assertTrue("empty String", null == parser.getNextInteger());
+        parser = new ParserCSV("11;12;", sep);
+        assertTrue(11 == parser.getNextInteger());
+        assertTrue(12 == parser.getNextInteger());
+        assertTrue("empty String", null == parser.getNextInteger());
+    }
 
 	public void testNextStringAndInteger() {
-		ParserCSV parser = new ParserCSV("Hello;12;World;13", sep);
-		assertTrue("Hello".equals(parser.getNextString()));
-		assertTrue(12 == parser.getNextInteger().intValue());
-		assertTrue("World".equals(parser.getNextString()));
-		assertTrue(13 == parser.getNextInteger().intValue());
+        ParserCSV parser = new ParserCSV("Hello;12;World;13", sep);
+        assertTrue("Hello".equals(parser.getNextString()));
+        assertTrue(12 == parser.getNextInteger());
+        assertTrue("World".equals(parser.getNextString()));
+        assertTrue(13 == parser.getNextInteger());
 
-		parser = new ParserCSV("Hello;12;World;13;", sep);
-		assertTrue("Hello".equals(parser.getNextString()));
-		assertTrue(12 == parser.getNextInteger().intValue());
-		assertTrue("World".equals(parser.getNextString()));
-		assertTrue(13 == parser.getNextInteger().intValue());
-	}
+        parser = new ParserCSV("Hello;12;World;13;", sep);
+        assertTrue("Hello".equals(parser.getNextString()));
+        assertTrue(12 == parser.getNextInteger());
+        assertTrue("World".equals(parser.getNextString()));
+        assertTrue(13 == parser.getNextInteger());
+    }
 
 	public void testNextBoolean() {
 		ParserCSV parser = new ParserCSV("", sep);

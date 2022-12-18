@@ -16,17 +16,20 @@ package ch.softenvironment.jomm;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * User TransactionBlock. This is a Convenience Class for standard Transaction behavior in Applications.
  * <p>
  * Each UserTransactionBlock will be started in an own Target-Thread (be aware whether a Target supports multi-threading or not).
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see DbObjectServer#createUserTransactionBlock()
+ * @author Peter Hirzel
+ * @see DbObjectServer#createUserTransactionBlock(boolean)
  */
+@Slf4j
 public class DbUserTransactionBlock {
 
-    private DbObjectServer server = null;
+    private final DbObjectServer server;
     private DbTransaction transaction = null;
     private Exception exception = null;
     private Object returnValue = null;
@@ -47,11 +50,11 @@ public class DbUserTransactionBlock {
      *
      * @param message any explanation about the abortion
      * @param exception original exception happened
-     * @see #execute()
+     * @see #execute(Runnable)
      */
     public void abort(String message, Exception exception) {
         this.exception = exception;
-        ch.softenvironment.util.Tracer.getInstance().runtimeError(message, exception, 1);
+        log.error("{}", message, exception);
     }
 
     /**
@@ -60,9 +63,9 @@ public class DbUserTransactionBlock {
      * <p>
      * Call #abort() in an Exception-Handler of Runnable#run() in case of any failures.
      *
-     * @throws UserException
-     * @see #abort()
-     * @see #setReturnValue()
+     * @throws ch.softenvironment.util.UserException
+     * @see #abort(String, Exception)
+     * @see #setReturnValue(Object)
      */
     public void execute(Runnable block) throws Exception {
         try {
@@ -75,7 +78,7 @@ public class DbUserTransactionBlock {
 
         if (exception != null) {
             // forward exception
-            ch.softenvironment.util.Tracer.getInstance().runtimeError("Block failed", exception);
+            log.error("Block failed", exception);
             throw exception;
         }
     }
@@ -88,7 +91,7 @@ public class DbUserTransactionBlock {
     }
 
     /**
-     * @see #setReturnValue()
+     * @see #setReturnValue(Object)
      */
     public Object getReturnValue() {
         return returnValue;

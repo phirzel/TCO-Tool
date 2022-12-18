@@ -7,9 +7,13 @@ import javax.swing.JInternalFrame;
 /**
  * The public methods support tiling all frames in the JDesktopPane or only those in a particular layer.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class JInternalFrameUtils {
+public final class JInternalFrameUtils {
+
+	private JInternalFrameUtils() {
+		throw new IllegalStateException("utility class");
+	}
 
 	public static void tile(JDesktopPane desktopPane, int layer) {
 		JInternalFrame[] frames = desktopPane.getAllFramesInLayer(layer);
@@ -33,7 +37,8 @@ public class JInternalFrameUtils {
 		int cols = (int) Math.sqrt(frames.length);
 		int rows = (int) (Math.ceil(((double) frames.length) / cols));
 		int lastRow = frames.length - cols * (rows - 1);
-		int width, height;
+		int width;
+		int height;
 
 		if (lastRow == 0) {
 			rows--;

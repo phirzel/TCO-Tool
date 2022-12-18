@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_access;
+package ch.softenvironment.jomm.target.sql.msaccess;
 /*
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,7 +18,7 @@ package ch.softenvironment.jomm.target.sql.ms_access;
 /**
  * QueryBuilder for MS Access Specialities.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MsAccessQueryBuilder extends ch.softenvironment.jomm.target.sql.SqlQueryBuilder {
 

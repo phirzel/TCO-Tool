@@ -15,7 +15,6 @@ package ch.softenvironment.view.swingext;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,6 +28,7 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.View;
 import javax.swing.text.html.HTMLDocument;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Print JEditorPane context easily.
@@ -47,6 +47,7 @@ import javax.swing.text.html.HTMLDocument;
  * @author Peter Hirzel by <i>soft</i>Environment (slightly refactored)
  * @version $Revision: 1.1 $ $Date: 2007-05-31 13:58:17 $
  */
+@Slf4j
 public class JEditorPanePrintUtility implements Printable {
 
     private int currentPage = -1;               //Used to keep track of when the page to print changes.
@@ -197,7 +198,7 @@ public class JEditorPanePrintUtility implements Printable {
                 pageStartY = 0;
                 pageEndY = 0;
                 currentPage = -1;
-                Tracer.getInstance().runtimeError("Error Printing Document", ex);
+                log.error("Error Printing Document", ex);
             }
         }
     }

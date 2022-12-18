@@ -6,7 +6,7 @@ import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 /**
  * Container-Element which may contain either Service's or other Sub-Packages. A Sub-Package may also point to an imported TCO-Configuration.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class TcoPackage extends TcoObject {
 
@@ -14,7 +14,7 @@ public class TcoPackage extends TcoObject {
         super(objectServer);
     }
 
-    private java.util.List<Service> fieldService = new java.util.ArrayList<Service>();
+    private java.util.List<Service> fieldService = new java.util.ArrayList<>();
 
     /**
      * List of contained Services of this package.
@@ -32,7 +32,7 @@ public class TcoPackage extends TcoObject {
         firePropertyChange("service", oldValue, fieldService);
     }
 
-    private java.util.List<TcoPackage> fieldOwnedElement = new java.util.ArrayList<TcoPackage>();
+    private java.util.List<TcoPackage> fieldOwnedElement = new java.util.ArrayList<>();
 
     /**
      * List of contained TcoPackage's of this package.

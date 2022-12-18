@@ -19,9 +19,13 @@ package ch.softenvironment.math;
 /**
  * Utility to calculate financial matters
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-public class FinancialUtils {
+public final class FinancialUtils {
+
+    private FinancialUtils() {
+        throw new IllegalStateException("utility class");
+    }
 
     /**
      * Calc interest for given Capital according to the following formula: Interest-Amount = (Capital * InterestRate * Time) / 100 [where: Time=1 Year]

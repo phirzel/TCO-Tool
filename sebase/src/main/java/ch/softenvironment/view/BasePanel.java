@@ -15,13 +15,14 @@ package ch.softenvironment.view;
 import ch.softenvironment.client.ResourceManager;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
 
 /**
  * Basic javax.swing.JPanel.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class BasePanel extends javax.swing.JPanel {
 
 	private Image image = null;
@@ -62,7 +63,7 @@ public class BasePanel extends javax.swing.JPanel {
 	}
 
 	/**
-	 * @see BaseFrame#genericPopupDisplay(..)
+	 * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
 	 */
 	protected void genericPopupDisplay(java.awt.event.MouseEvent event, javax.swing.JPopupMenu popupMenu) {
 		BaseFrame.popupDisplay(this, event, popupMenu);
@@ -87,8 +88,8 @@ public class BasePanel extends javax.swing.JPanel {
 	/**
 	 * Display given image as Background-Image on Panel.
 	 *
-	 * @param path
-	 * @see #paintComponent()
+	 * @param image
+	 * @see #paintComponent(Graphics) 
 	 */
 	public void setImage(Image image) {
 		// image = Toolkit.getDefaultToolkit().createImage(path);

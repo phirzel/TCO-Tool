@@ -29,10 +29,8 @@ import ch.softenvironment.util.DeveloperException;
  * When implementing a concrete DbCode subclass: 1) Declare the next extending Class as final (no subclasses allowed) 2) implement this method: Return the database mappings for this persistence
  * object.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see DbObjectServer.register()
- * @see ch.softenvironment.jomm.DbConnection.addDescriptor() public static DbDescriptor createDescriptor() { DbDescriptor descriptor = DbCode.createDefaultDescriptor(MyCode.class); // add your
- *     extensions return descriptor; }
+ * @author Peter Hirzel
+ * @see DbObjectServer#register(Class, String)
  */
 public abstract class DbCode extends DbChangeableBean implements DbCodeType {
 
@@ -44,7 +42,7 @@ public abstract class DbCode extends DbChangeableBean implements DbCodeType {
     // private String fieldIliCode;
 
     /**
-     * @see #DbObject(DbObjectServer)
+     * @see DbObject(DbObjectServer)
      */
     protected DbCode(DbObjectServer objectServer) {
         super(objectServer);

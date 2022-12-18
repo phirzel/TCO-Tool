@@ -19,12 +19,12 @@ import junit.framework.TestCase;
 /**
  * TestCase for DataBrowser.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DataBrowserTestCase extends TestCase {
 
     public void testEmptyBrowsing() {
-        DataBrowser<Object> browser = new DataBrowser<Object>();
+        DataBrowser<Object> browser = new DataBrowser<>();
         assertFalse(browser.isScrollNextAllowed());
         assertFalse(browser.isScrollPreviousAllowed());
         assertFalse(browser.isScrollLastAllowed());
@@ -37,7 +37,7 @@ public class DataBrowserTestCase extends TestCase {
         assertTrue(browser.getFirst() == null);
         assertTrue(browser.getLast() == null);
 
-        browser.setObjects(new ArrayList<Object>());
+        browser.setObjects(new ArrayList<>());
         assertFalse(browser.isScrollNextAllowed());
         assertFalse(browser.isScrollPreviousAllowed());
         assertFalse(browser.isScrollLastAllowed());
@@ -52,8 +52,8 @@ public class DataBrowserTestCase extends TestCase {
     }
 
     public void testSingleBrowsing() {
-        DataBrowser<String> browser = new DataBrowser<String>();
-        List<String> list = new ArrayList<String>();
+        DataBrowser<String> browser = new DataBrowser<>();
+        List<String> list = new ArrayList<>();
         list.add("Hello");
         browser.setObjects(list);
         assertFalse(browser.isScrollNextAllowed());
@@ -73,8 +73,8 @@ public class DataBrowserTestCase extends TestCase {
     }
 
     public void testMultiBrowsing() {
-        DataBrowser<String> browser = new DataBrowser<String>();
-        List<String> list = new ArrayList<String>();
+        DataBrowser<String> browser = new DataBrowser<>();
+        List<String> list = new ArrayList<>();
         list.add("Hello");
         list.add("World");
         list.add("today");
@@ -134,12 +134,12 @@ public class DataBrowserTestCase extends TestCase {
     }
 
     public void testStepEven() {
-        DataBrowser<Integer> browser = new DataBrowser<Integer>();
+        DataBrowser<Integer> browser = new DataBrowser<>();
         browser.setStep(10);
         assertTrue(browser.getCurrentIndex() == -1);
         assertTrue(browser.getCurrentObject() == null);
 
-        List<Integer> objects = new java.util.ArrayList<Integer>(20);
+        List<Integer> objects = new java.util.ArrayList<>(20);
         for (int i = 0; i < 20; i++) {
             objects.add(Integer.valueOf(i));
         }
@@ -156,7 +156,7 @@ public class DataBrowserTestCase extends TestCase {
 
         for (int i = 20; i < 40; i++) {
             // add another 20 objects
-            objects.add(Integer.valueOf(i));
+            objects.add(i);
         }
         browser.getFirst();
         assertTrue(browser.getCurrentIndex() == 0);
@@ -171,9 +171,9 @@ public class DataBrowserTestCase extends TestCase {
         browser.getLast();
         assertTrue("step is one behind last => correction", browser.getCurrentIndex() == 39);
 
-        objects = new java.util.ArrayList<Integer>();
+        objects = new java.util.ArrayList<>();
         for (int i = 1; i < 106; i++) {
-            objects.add(Integer.valueOf(i));
+            objects.add(i);
         }
         browser.setObjects(objects);
         assertTrue(browser.isScrollNextAllowed());
@@ -181,27 +181,27 @@ public class DataBrowserTestCase extends TestCase {
         assertTrue(browser.isScrollLastAllowed());
         assertFalse(browser.isScrollFirstAllowed());
         assertTrue(browser.getCurrentIndex() == 0);
-        assertTrue(browser.getCurrentObject().equals(Integer.valueOf(1)));
+        assertTrue(browser.getCurrentObject().equals(1));
 
-        assertTrue(browser.getNext().equals(Integer.valueOf(11)));
+        assertTrue(browser.getNext().equals(11));
         assertTrue(browser.isScrollNextAllowed());
         assertTrue(browser.isScrollPreviousAllowed());
         assertTrue(browser.isScrollLastAllowed());
         assertTrue(browser.isScrollFirstAllowed());
         assertTrue(browser.getCurrentIndex() == 10);
-        assertTrue(browser.getCurrentObject().equals(Integer.valueOf(11)));
+        assertTrue(browser.getCurrentObject().equals(11));
 
-        assertTrue(browser.getPrevious().equals(Integer.valueOf(1)));
+        assertTrue(browser.getPrevious().equals(1));
         assertTrue(browser.isScrollNextAllowed());
         assertFalse(browser.isScrollPreviousAllowed());
         assertTrue(browser.isScrollLastAllowed());
         assertFalse(browser.isScrollFirstAllowed());
         assertTrue(browser.getCurrentIndex() == 0);
-        assertTrue(browser.getCurrentObject().equals(Integer.valueOf(1)));
+        assertTrue(browser.getCurrentObject().equals(1));
 
-        assertTrue(browser.getNext().equals(Integer.valueOf(11)));
+        assertTrue(browser.getNext().equals(11));
         assertTrue(browser.getCurrentIndex() == 10);
-        assertTrue(browser.getNext().equals(Integer.valueOf(21)));
+        assertTrue(browser.getNext().equals(21));
         assertTrue(browser.getCurrentIndex() == 20);
         assertTrue(browser.getNext().equals(Integer.valueOf(31)));
         assertTrue(browser.getCurrentIndex() == 30);

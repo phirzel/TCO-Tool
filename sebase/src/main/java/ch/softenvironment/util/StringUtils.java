@@ -18,7 +18,7 @@ import java.io.File;
 /**
  * Set of reusable String Utilities.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class StringUtils {
 

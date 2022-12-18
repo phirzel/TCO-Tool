@@ -13,9 +13,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView for SystemParameters.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView, java.beans.PropertyChangeListener {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -1880,7 +1880,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -1947,7 +1947,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -2008,9 +2008,8 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) {
-     *     getObject().removeChangeListener(getConsistencyController()); } ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable
-     *     e) { handleException(e); }
+     * @param object Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) { getObject().removeChangeListener(getConsistencyController()); }
+     *     ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable e) { handleException(e); }
      */
     @Override
     public void setCurrentObject(java.lang.Object object) {

@@ -22,9 +22,9 @@ import java.awt.dnd.DnDConstants;
  * Extension to JTree to enable auto-scrolling and Drag and Drop.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class AutoScrollingTree extends javax.swing.JTree implements java.awt.dnd.Autoscroll {
 
 	private final int margin = 12;

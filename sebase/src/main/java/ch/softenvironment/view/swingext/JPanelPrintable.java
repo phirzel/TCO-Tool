@@ -15,17 +15,18 @@ package ch.softenvironment.view.swingext;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Utility to print JPanel contents.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class JPanelPrintable implements java.awt.print.Printable {
 
     private JPanel panel = null;
@@ -54,14 +55,14 @@ public class JPanelPrintable implements java.awt.print.Printable {
      * <code>graphics</code>.  The format of the page to be drawn is
      * specified by <code>pageFormat</code>.  The zero based index of the requested page is specified by <code>pageIndex</code>. If the requested page does not exist then this method returns
      * NO_SUCH_PAGE; otherwise PAGE_EXISTS is returned. The <code>Graphics</code> class or subclass implements the {@link PrinterGraphics} interface to provide additional information.  If the
-     * <code>Printable</code> object aborts the print job then it throws a {@link PrinterException}.
+     * <code>Printable</code> object aborts the print job then it throws a {@link java.awt.print.PrinterException}.
      *
      * @param graphics the context into which the page is drawn
      * @param pageFormat the size and orientation of the page being drawn
      * @param pageIndex the zero based index of the page to be drawn
      * @return PAGE_EXISTS if the page is rendered successfully or NO_SUCH_PAGE if <code>pageIndex</code> specifies a non-existent page.
      * @throws java.awt.print.PrinterException thrown when the print job is terminated.
-     * @see Printable
+     * @see java.awt.print.Printable
      */
     @Override
     public int print(java.awt.Graphics graphics, java.awt.print.PageFormat pageFormat, int pageIndex) throws java.awt.print.PrinterException {
@@ -71,7 +72,7 @@ public class JPanelPrintable implements java.awt.print.Printable {
         }
 
         java.awt.print.PrinterGraphics gp = (java.awt.print.PrinterGraphics) graphics;
-        Tracer.getInstance().logBackendCommand("<" + gp.getPrinterJob().getJobName() + "> is being printed");
+        log.info("<" + gp.getPrinterJob().getJobName() + "> is being printed");
 
         // set outer drawing limits
         double x0 = pageFormat.getImageableX() + 1.0;
@@ -90,13 +91,13 @@ public class JPanelPrintable implements java.awt.print.Printable {
         Dimension dim = new Dimension(panel.getWidth(), panel.getHeight());
         double scaleX = 1.0;
         double scaleY = 1.0;
-        double diag_w = dim.getWidth();
-        double diag_h = dim.getHeight();
-        if (diag_w > w0) {
-            scaleX = w0 / diag_w;
+        double diagW = dim.getWidth();
+        double diagH = dim.getHeight();
+        if (diagW > w0) {
+            scaleX = w0 / diagW;
         }
-        if (diag_h > h0) {
-            scaleY = h0 / diag_h;
+        if (diagH > h0) {
+            scaleY = h0 / diagH;
         }
 
         if (scaleX < 1.0) {
@@ -110,7 +111,7 @@ public class JPanelPrintable implements java.awt.print.Printable {
             g2.scale(scaleY, scaleY);
         }
 
-        g2.clipRect(0, 0, (int) diag_w, (int) diag_h);
+        g2.clipRect(0, 0, (int) diagW, (int) diagH);
 
         panel.printAll(g2);
         //Rectangle2D printArea = new Rectangle2D.Double(0.0, 0.0,

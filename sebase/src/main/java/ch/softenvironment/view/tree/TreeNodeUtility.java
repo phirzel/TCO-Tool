@@ -18,7 +18,7 @@ package ch.softenvironment.view.tree;
 /**
  * Interface for a utility using an AutoScrollingJTree implementing the relevant generic functions dealing with Tree-Objects.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface TreeNodeUtility {
 

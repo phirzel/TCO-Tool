@@ -12,7 +12,7 @@
 //import junit.framework.TestCase;
 //
 ///**
-// * @author Peter Hirzel, softEnvironment GmbH
+// * @author Peter Hirzel
 // *
 // */
 //public class DbObjectServerTestCase extends TestCase {

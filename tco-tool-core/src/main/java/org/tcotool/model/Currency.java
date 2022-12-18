@@ -6,8 +6,8 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 /**
  * Currency Enumeration according to ISO 4217 (3 letter alphanumeric code).
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html
+ * @author Peter Hirzel
+ * @see <a href="http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html">currency codes</a>
  */
 public final class Currency extends DbEnumeration {
 
@@ -37,9 +37,10 @@ public final class Currency extends DbEnumeration {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection#addDescriptor(Class)
      *
-     * @see DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor() {
         return DbEnumeration.createDefaultDescriptor(Currency.class);

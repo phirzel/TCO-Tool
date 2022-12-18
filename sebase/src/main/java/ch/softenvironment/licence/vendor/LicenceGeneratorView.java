@@ -22,12 +22,12 @@ import ch.softenvironment.view.BaseDialog;
 /**
  * GUI for a Producer to licence a Product.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class LicenceGeneratorView extends javax.swing.JFrame {
 
-    private java.util.List<String> products = null;
+    private final java.util.List<String> products;
     private javax.swing.JPanel ivjBaseFrameContentPane = null;
     IvjEventHandler ivjEventHandler = new IvjEventHandler();
     private javax.swing.JTextField ivjTxtKey = null;
@@ -88,7 +88,7 @@ public class LicenceGeneratorView extends javax.swing.JFrame {
         Integer nrUser = null;
         try {
             nrUser = Integer.valueOf(getTxtNumberOfUsers().getText());
-            if ((nrUser.intValue() <= 0) || (nrUser.intValue() > 999)) {
+            if ((nrUser <= 0) || (nrUser > 999)) {
                 throw new RuntimeException();
             }
         } catch (Throwable e) {
@@ -385,7 +385,7 @@ public class LicenceGeneratorView extends javax.swing.JFrame {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnGenerate().addActionListener(ivjEventHandler);
@@ -420,7 +420,7 @@ public class LicenceGeneratorView extends javax.swing.JFrame {
      * @see #initialize() // user code begin {1}..user code end
      */
     protected void initializeView() throws Exception {
-        java.util.Vector<String> months = new java.util.Vector<String>(7);
+        java.util.Vector<String> months = new java.util.Vector<>(7);
         months.add("1");
         months.add("2");
         months.add("3");
@@ -441,7 +441,7 @@ public class LicenceGeneratorView extends javax.swing.JFrame {
     public static void main(java.lang.String[] args) {
         try {
             // @see #generateLicence()
-            java.util.List<String> products = new java.util.ArrayList<String>(3);
+            java.util.List<String> products = new java.util.ArrayList<>(3);
             products.add("TCO-Tool-Plugin (softEnvironment) V01.04.00");
             products.add("Fahrschultheorie (Regional)-V01.00.00");
             products.add("Fahrschultheorie (National)-V01.00.00");

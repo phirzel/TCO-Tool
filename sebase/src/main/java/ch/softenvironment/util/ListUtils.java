@@ -17,12 +17,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Provides some often used features in using java.util.List.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public abstract class ListUtils {
 
 	/**
@@ -30,9 +32,9 @@ public abstract class ListUtils {
 	 */
 	private static class ObjectPropertyComparator<T> implements java.util.Comparator<T> {
 
-		private Evaluator evaluator = null;
-		private String property = null;
-		private java.text.Collator collator = null;
+		private final Evaluator evaluator;
+		private final String property;
+		private final java.text.Collator collator;
 
 		/**
 		 * @param property Attribute of Objects in list to sort by.
@@ -102,7 +104,7 @@ public abstract class ListUtils {
 					}
 				}
 			} catch (Throwable e) {
-				ch.softenvironment.util.Tracer.getInstance().runtimeWarning("sort failed: " + e.getLocalizedMessage());
+				log.warn("sort failed", e);
 				return 0; // as is
 			}
 		}
@@ -114,7 +116,7 @@ public abstract class ListUtils {
 	 * @return java.util.ArrayList
 	 */
 	public static <T> java.util.List<T> createList(T item) {
-		java.util.List<T> list = new java.util.ArrayList<T>(1);
+		java.util.List<T> list = new java.util.ArrayList<>(1);
 		list.add(item);
 		return list;
 	}
@@ -136,7 +138,7 @@ public abstract class ListUtils {
 		}
 
 		// clone the list -> do not influence original items-list
-		java.util.List<T> list = new ArrayList<T>(items.size());
+		java.util.List<T> list = new ArrayList<>(items.size());
 		Iterator<T> it = items.iterator();
 		while (it.hasNext()) {
 			list.add(it.next());
@@ -190,11 +192,11 @@ public abstract class ListUtils {
 			 * if (method == null) { contents.append(element.toString()); } else
 			 * {
 			 */
-			BeanReflector<T> reflector = new BeanReflector<T>(element, method);
+			BeanReflector<T> reflector = new BeanReflector<>(element, method);
 			try {
 				contents.append(reflector.getValue());
 			} catch (Throwable e) {
-				Tracer.getInstance().developerWarning("method buggy: " + element + "#" + method + "=>" + e.getLocalizedMessage());
+				log.warn("Developer warning: method buggy: " + element + "#" + method + "=>" + e.getLocalizedMessage());
 				contents.append(element.toString());
 			}
 			// }
@@ -214,7 +216,7 @@ public abstract class ListUtils {
 		if ((set0 == null) || (set1 == null)) {
 			throw new IllegalArgumentException("given sets must not be null");
 		}
-		java.util.Set<T> intersection = new java.util.HashSet<T>();
+		java.util.Set<T> intersection = new java.util.HashSet<>();
 		Iterator<T> it = set0.iterator();
 		while (it.hasNext()) {
 			T element = it.next();

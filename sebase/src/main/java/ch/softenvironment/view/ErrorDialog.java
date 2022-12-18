@@ -17,10 +17,9 @@ import ch.softenvironment.util.UserException;
 /**
  * Output Dialog for application failures.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @deprecated (replace by JOptionPane)
  */
-@SuppressWarnings("serial")
 @Deprecated
 class ErrorDialog extends BaseDialog {
 
@@ -441,7 +440,7 @@ class ErrorDialog extends BaseDialog {
 	 * @throws java.lang.Exception The exception description.
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
-	private void initConnections() throws java.lang.Exception {
+	private void initConnections() {
 		// user code begin {1}
 		// user code end
 		getBtnCancel().addActionListener(ivjEventHandler);

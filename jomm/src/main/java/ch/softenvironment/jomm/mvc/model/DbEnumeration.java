@@ -23,7 +23,7 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Enumeration type, which is <b>strictly ReadOnly</b> since it is defined by a proper Model. An Attribute <b>IliCode</b> guarantees for Unique and correct assignment. These Objects are meant to be
@@ -32,11 +32,10 @@ import ch.softenvironment.util.Tracer;
  * When implementing a concrete DbEnumeration subclass: 1) Declare the next extending Class as final (no subclasses allowed) 2) implement this method: Return the database mappings for this persistence
  * object.
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see DbObjectServer.register()
- * @see ch.softenvironment.jomm.DbConnection.addDescriptor() public static DbDescriptor createDescriptor() { DbDescriptor descriptor = DbEnumeration.createDefaultDescriptor(Phase.class); // add your
- *     extensions, for e.g. descriptor.setOrdered(true); return descriptor; }
+ * @author Peter Hirzel
+ * @see DbObjectServer#register(Class, String)
  */
+@Slf4j
 public abstract class DbEnumeration extends DbObject implements DbCodeType {
 
     // read only fields written by DbObjectServer when mapped from Target
@@ -55,14 +54,14 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
             throw new IllegalArgumentException("enumeration and iliCode must not be null");
         }
         if (enumeration.getIliCode() == null) {
-            Tracer.getInstance().developerWarning("DbEnumeration <" + enumeration + "->[" + enumeration.getNameString() + "]> without IliCode");
+            log.warn("Developer warning: DbEnumeration <" + enumeration + "->[" + enumeration.getNameString() + "]> without IliCode");
             return false;
         }
         return enumeration.getIliCode().equals(iliCode);
     }
 
     /**
-     * @see #DbObject(DbObjectServer)
+     * @see DbObject(DbObjectServer)
      */
     protected DbEnumeration(DbObjectServer objectServer) {
         super(objectServer);
@@ -82,7 +81,7 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
     }
 
     /**
-     * Return the UNIQUE ILI-Code constant. Use {@link #isIliCode(DbEnumeration, String)} for comparisons.
+     * Return the UNIQUE ILI-Code constant. Use {@link #isIliCode(DbCodeType, String)} for comparisons.
      */
     @Override
     public final String getIliCode() {
@@ -102,13 +101,13 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
 
             Object id = objectServer.getFirstValue(builder);
             if (id == null) {
-                Tracer.getInstance().runtimeWarning("IliCode-Id not found for: " + dbCode.getName() + "->" + iliCode);
+                log.warn("IliCode-Id not found for: {} -> {}", dbCode.getName(), iliCode);
                 return null;
             } else {
                 return Long.valueOf(id.toString());
             }
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError(dbCode.getName() + "->" + iliCode + ")", e);
+            log.error("{}->{}", dbCode.getName(), iliCode, e);
             throw new DeveloperException("Fehler beim Lesen des Codes: " + dbCode.getName() + "->" + iliCode, "Code-Fehler", e);
         }
     }
@@ -117,7 +116,6 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
      * Gets the name property (ch.softenvironment.jomm.DbNlsString) value.
      *
      * @return The name property value.
-     * @see #setName
      */
     @Override
     public DbNlsString getName() {

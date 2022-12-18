@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Evaluator for JOMM specific class properties
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbObjectEvaluator implements Evaluator {
 

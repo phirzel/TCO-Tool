@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.model.CostCause;
 import org.tcotool.model.CostCentre;
@@ -50,8 +51,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Reporting Utility to generate different Outputs by TCO-Tool in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlSerializer {
 
 	public static final int PERCENTAGE_FRACTION_DIGITS = 1;
@@ -80,8 +82,8 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	/**
 	 * ReportTool constructor comment.
 	 *
+	 * @param utility
 	 * @param title of the Report
-	 * @param maxDuration either tcoUsage or depreciation
 	 */
 	protected ReportTool(ModelUtility utility, final String title) {
 		super(new java.io.StringWriter());
@@ -111,7 +113,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 				exponent = 2;
 			}
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeWarning("INGORED: SystemParameter's FAILURE");
+			log.warn("INGORED: SystemParameter's FAILURE");
 		}
 		switch (exponent) {
 			case 1: {
@@ -190,7 +192,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 			// in csv costs are always as is (without unit!)
 			getCsvWriter().cell(tmp + utility.getSystemParameter().getDefaultCurrency().getNameString() + "]" + suffix);
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeWarning("INGORED: SystemParameters FAILURE: " + e.getLocalizedMessage());
+			log.warn("INGORED: SystemParameters FAILURE: " + e.getLocalizedMessage());
 			getCsvWriter().cell(tmp + UNKNOWN + "]" + suffix);
 		}
 	}
@@ -282,7 +284,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	/**
 	 * (irrelevant for CSV)
 	 *
-	 * @see startTreeHeader
+	 * @see #startTreeHeader(int)
 	 */
 	protected void endTreeHeader(int level) throws IOException {
 		if (level > 1) {
@@ -313,7 +315,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	/**
 	 * Return a th/td-tag width HTML attribute.
 	 *
-	 * @see YEAR_COLUMN_WITH_STYLE
+	 * @see #YEAR_COLUMN_WITH_STYLE
 	 */
 	protected ch.softenvironment.jomm.serialize.AttributeList getAttributeWidth(Integer width) {
 		return new ch.softenvironment.jomm.serialize.AttributeList("style", ATTRIBUTE_WIDTH + ": " + width.toString() + "px;");
@@ -333,19 +335,19 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	}
 
 	/**
-	 * @see #amount()
+	 * @see #amount(double)
 	 */
 	protected String getCostUnit() {
 		try {
 			return getCostUnit(utility.getSystemParameter().getDefaultCurrency());
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeWarning("INGORED: SystemParameters FAILURE: " + e.getLocalizedMessage());
+			log.warn("INGORED: SystemParameters FAILURE: " + e.getLocalizedMessage());
 			return UNKNOWN;
 		}
 	}
 
 	/**
-	 * @see #amount()
+	 * @see #amount(double)
 	 */
 	protected String getCostUnit(org.tcotool.model.Currency currency) {
 		String unit = "";
@@ -358,7 +360,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 			}
 			return unit + (currency == null ? UNKNOWN : currency.getNameString());
 		} catch (Exception e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeWarning("SystemParameter fault <CostUnit>: " + e.getLocalizedMessage());
+			log.warn("SystemParameter fault <CostUnit>: " + e.getLocalizedMessage());
 			return "";
 		}
 	}
@@ -387,7 +389,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	/**
 	 * Return the TcoObject typical Icon as HTML image-Tag.
 	 *
-	 * @see ModelUtility#getImageURL()
+	 * @see ModelUtility#getImageURL(Class)
 	 */
 	public static String getTcoObjectImage(ModelUtility utility, Class<? extends TcoObject> tcoObject) {
 		URL url = utility.getImageURL(tcoObject);
@@ -414,17 +416,13 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 		getCsvWriter().newline();
 	}
 
-	/**
-	 * @param level Chapter level
-	 * @param text well formatted text
-	 */
-	protected void header(String prefix, int level, TcoObject object) throws IOException {
+	protected void header(String prefix, int chapterLevel, TcoObject object) throws IOException {
 		// super.header(level, text);
-		if (level == -1) {
+		if (chapterLevel == -1) {
 			// suppress chapter
 			nativeContent("<h4>" + linkObject(object, true) + "</h4>");
-		} else if (level < 4) {
-			nativeContent("<h" + level + ">" + prefix + " " + linkObject(object, true) + "</h" + level + ">");
+		} else if (chapterLevel < 4) {
+			nativeContent("<h" + chapterLevel + ">" + prefix + " " + linkObject(object, true) + "</h" + chapterLevel + ">");
 		} else {
 			nativeContent("<h4>" + prefix + " " + linkObject(object, true) + "</h4>");
 		}
@@ -515,7 +513,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	/**
 	 * This table only has indentation character -> prints vertical indentation Bars on the left. (Irrelevant for CSV)
 	 *
-	 * @see endTreeHeader
+	 * @see #endTreeHeader(int)
 	 */
 	protected void startTreeHeader(int level) throws IOException {
 		if (level > 1) {
@@ -653,7 +651,6 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	 * Visitor.
 	 *
 	 * @param level recursion deepness of packages
-	 * @param packageMultitude Multitude of owning package
 	 */
 	private void walkPackage(org.tcotool.model.TcoPackage root, String prefix, int level) throws Exception {
 		if (printDetails) {

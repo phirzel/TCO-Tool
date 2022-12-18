@@ -18,10 +18,8 @@ import ch.softenvironment.client.UserActionRights;
 /**
  * StatusBar (bottom-Line of a Window).
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ApplicationFrame Subclasses
+ * @author Peter Hirzel see ApplicationFrame Subclasses
  */
-@SuppressWarnings("serial")
 public class StatusBar extends BasePanel {
 
     private javax.swing.JLabel ivjLblAction = null;

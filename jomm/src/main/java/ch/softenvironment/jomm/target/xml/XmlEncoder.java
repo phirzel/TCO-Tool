@@ -22,7 +22,6 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.serialize.InterlisSerializer;
 import ch.softenvironment.jomm.serialize.VisitorCallback;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
@@ -31,19 +30,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Encodes a Java-Object to an XML-Stream.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class XmlEncoder implements VisitorCallback {
 
     protected static final String ELEMENT_CODE = "CODE";
     protected static final String ATTRIBUTE_TYPE = "TYPE";
 
-    private XmlObjectServer server = null;
+    private final XmlObjectServer server;
     private InterlisSerializer ser = null;
 
     private final Map objectMap = new HashMap(); // key=aDbObject;
@@ -57,9 +58,6 @@ class XmlEncoder implements VisitorCallback {
 
     /**
      * Keep objects to write to XML-instance in mind. Pending objects are later visited, written and removed from pending list.
-     *
-     * @see #visitObject();
-     * @see #writeObject(next);
      */
     @Override
     public void addPendingObject(Object obj) {
@@ -67,7 +65,7 @@ class XmlEncoder implements VisitorCallback {
             DbObject object = (DbObject) obj;
 
             if (!object.getObjectServer().equals(server)) {
-                Tracer.getInstance().developerWarning("object maintained by other ObjectServer is out of responsibility");
+                log.warn("Developer warning: object maintained by other ObjectServer is out of responsibility");
                 return;
             }
 
@@ -109,7 +107,7 @@ class XmlEncoder implements VisitorCallback {
         } catch (IOException e) {
             throw e;
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("serious error", e);
+            log.error("serious error", e);
         }
     }
 
@@ -149,14 +147,13 @@ class XmlEncoder implements VisitorCallback {
                                 pendingObjects.remove(next);
                             }
                         } else {
-                            Tracer.getInstance().developerWarning(
-                                "Code <" + code + " [" + ch.softenvironment.jomm.serialize.InterlisSerializer.TECHNICAL_ID + "=" + code.getId()
-                                    + "]> not saved because in state: " + code.getPersistencyState());
+                            log.warn("Developer warning: Code <" + code + " [" + ch.softenvironment.jomm.serialize.InterlisSerializer.TECHNICAL_ID + "=" + code.getId()
+                                + "]> not saved because in state: " + code.getPersistencyState());
                         }
                     }
                     ser.endElement(ELEMENT_CODE);
                 } else {
-                    Tracer.getInstance().developerWarning("Code <" + type + "> has no entries");
+                    log.warn("Developer warning: Code <{}> has no entries", type);
                 }
             }
         }

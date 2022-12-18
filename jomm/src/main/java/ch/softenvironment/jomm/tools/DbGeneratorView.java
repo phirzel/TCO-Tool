@@ -18,7 +18,6 @@ package ch.softenvironment.jomm.tools;
 
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.AboutDialog;
 import ch.softenvironment.view.FileNamePanel;
 import ch.softenvironment.view.SimpleEditorPanel;
@@ -32,12 +31,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Tool to execute any-SQL-Code.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame {
 
     // Launcher as Singleton
@@ -231,7 +232,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
     /**
      * Execute a SQL-Syntax file, where each statement is assumed to be terminated by a semikolon.
      *
-     * @see DbDataGenerator#executeFile()
+     * @see DbDataGenerator #executeFile()
      */
     public void executeFile() {
         String fileName = getPnlFile().getText();
@@ -239,7 +240,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
             try {
                 DbDataGenerator.executeSqlCode(server, fileName);
             } catch (Throwable e) {
-                Tracer.getInstance().runtimeError("Generating failure <" + fileName + ">", e);
+                log.error("Generating failure <{}>", fileName, e);
                 getPnlLog().setText("read error: " + e.getLocalizedMessage());
             }
         }
@@ -783,7 +784,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getMncStatusbar().addActionListener(ivjEventHandler);
@@ -823,7 +824,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
     private static DbObjectServer initializeDatabase(String userId, String password, String url) throws Exception {
         // ch.softenvironment.business.persistency.Registry.registerAll();
 
-        javax.jdo.PersistenceManagerFactory pmFactory = new ch.softenvironment.jomm.target.sql.ms_access.MsAccessObjectServerFactory();
+        javax.jdo.PersistenceManagerFactory pmFactory = new ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory();
         pmFactory.setConnectionURL(url);
         pmFactory.setNontransactionalRead(false); // NO autoCommit while reading
         pmFactory.setNontransactionalWrite(false); // NO autoCommit while
@@ -852,13 +853,10 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
     public static void main(java.lang.String[] args) {
         DbGeneratorView instance = null;
         try {
-            Tracer.start(args);
-
             setSystemLookAndFeel();
 
             ch.softenvironment.jomm.mvc.view.DbLoginDialog dialog = new ch.softenvironment.jomm.mvc.view.DbLoginDialog(null, "jdbc:odbc:MyOdbcDSN");
             if (!dialog.isSaved()) {
-                Tracer.getInstance().stop();
                 System.exit(0);
             }
 
@@ -882,7 +880,6 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
              * resLauncherView.getString("CTLoginFailure"
              * ), "...",
              */exception); //$NON-NLS-1$
-            Tracer.getInstance().stop();
             System.exit(-1);
         }
     }

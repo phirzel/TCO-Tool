@@ -26,8 +26,8 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A Relational-DBMS Target-System provides its own language (SQL) to interact with. This Utility provides a Target Language independent API to formulate any requests to be communicated to the
@@ -35,8 +35,9 @@ import java.util.Locale;
  * <p>
  * SQL knows three different language-types: - Data Definition Language (DDL) => CREATE/ALTER/DROP - Data Manipulation Language (DML) => INSERT/UPDATE/DELETE - Data Query Language (DQL) => SELECT
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class SqlQueryBuilder extends DbQueryBuilder {
 
 	// SQL Constants
@@ -163,7 +164,7 @@ public class SqlQueryBuilder extends DbQueryBuilder {
 			addFilterRaw(tagTargetExpression(attribute) + " IN (" + sublist + ")");
 			// }
 		} else {
-			Tracer.getInstance().developerWarning("Filter suppressed because of empty Set!");
+			log.warn("Developer warning: Filter suppressed because of empty Set!");
 			// TODO evtl. better use: addFilterNull(attribute, Boolean.False);
 			// addFilterRaw(tagTargetExpression(attribute) + " IN (" + SQL_NULL
 			// + ")"); // IN compared to null-ID to prevent a ResultSet over all
@@ -270,7 +271,7 @@ public class SqlQueryBuilder extends DbQueryBuilder {
 	 * Return a generic SQL-SELECT Query for owners aggregated DbObject(s).
 	 *
 	 * @param owner The owner of the aggregation
-	 * @param entry
+	 * @param ownerEntry
 	 * @baseClass Type of Aggregate
 	 */
 	protected static final DbQueryBuilder createQueryGetForeignInstances(DbObject owner, DbDescriptorEntry ownerEntry,
@@ -429,7 +430,7 @@ public class SqlQueryBuilder extends DbQueryBuilder {
 	public void setAttributeList(final String attributeList, boolean distinct) {
 		if (attributeList != null) {
 			if ((this.attributeList != null) && (this.attributeList.length() > 0)) {
-				Tracer.getInstance().developerWarning("Overwriting given attributeList!");
+				log.warn("Developer warning: Overwriting given attributeList!");
 			}
 			this.attributeList = new StringBuffer(checkAlias(attributeList));
 			suppressQuery = false;
@@ -523,10 +524,10 @@ public class SqlQueryBuilder extends DbQueryBuilder {
 					return (Long.valueOf(builder.getObjectServer().getFirstValue(builder).toString())).intValue();
 				}
 			} else {
-				Tracer.getInstance().developerError("SELECT-Queries only!");
+				log.error("Developer error: SELECT-Queries only!");
 			}
 		} catch (Exception e) {
-			Tracer.getInstance().runtimeError("Count could not be determined", e);
+			log.error("Count could not be determined", e);
 		}
 		return -1;
 	}

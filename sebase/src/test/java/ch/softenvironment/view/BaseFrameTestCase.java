@@ -1,16 +1,16 @@
 package ch.softenvironment.view;
 
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Test class BaseFrame.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+@Slf4j
 public class BaseFrameTestCase extends BaseFrame {
 
     private javax.swing.JPanel jContentPane = null;
@@ -118,8 +118,6 @@ public class BaseFrameTestCase extends BaseFrame {
     }
 
     public static void main(String[] args) {
-        Tracer.start(Tracer.ALL);
-
         BaseFrame view = new BaseFrameTestCase();
         view.pack();
         view.setVisible(true);
@@ -168,7 +166,7 @@ public class BaseFrameTestCase extends BaseFrame {
      * @see ch.softenvironment.view.BaseFrame#initializeView()
      */
     @Override
-    protected void initializeView() throws Exception {
+    protected void initializeView() {
     }
 
     private void doLongAction(int recursionLevel) {
@@ -176,15 +174,15 @@ public class BaseFrameTestCase extends BaseFrame {
             if (--recursionLevel > 0) {
                 doLongAction(recursionLevel);
             }
-            Tracer.getInstance().debug("level=" + recursionLevel + " going to sleep 1s");
+            log.debug("level={} going to sleep 1s", recursionLevel);
             WaitDialog.updateProgress(20, "level=" + recursionLevel + " going to sleep 1s");
             Thread.sleep(1000);
-            Tracer.getInstance().debug("level=" + recursionLevel + " going to sleep 3s");
+            log.debug("level={} going to sleep 3s", recursionLevel);
             WaitDialog.updateProgress(50, "level=" + recursionLevel + " going to sleep 3s");
             Thread.sleep(3000);
             WaitDialog.updateProgress(95, "level=" + recursionLevel + " done");
         } catch (Throwable e) {
-            Tracer.getInstance().runtimeError("sleep failed", e);
+            log.error("sleep failed", e);
         }
     }
 }

@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 /**
  * Suite of SQL-Target TestCases to testsuite JOMM against a real SQL Target-System.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class SqlSuite extends TestSuite {
 

@@ -37,11 +37,15 @@ import java.util.List;
 /**
  * Helper Utility for Data Migrations.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MigrationTool {
 
-	private DbObjectServer server = null;
+	private DbObjectServer server;
+
+	{
+		server = null;
+	}
 
 	public MigrationTool(DbObjectServer server) {
 		super();
@@ -56,7 +60,6 @@ public class MigrationTool {
 	 * @param idNls
 	 * @param iliCode
 	 * @param nls (new DbNlsString())
-	 * @param language
 	 * @return
 	 */
 	public DbEnumeration createEnumeration(Class dbEnumeration, long idEnum, long idNls, String iliCode, DbNlsString nls) throws Exception {
@@ -231,7 +234,7 @@ public class MigrationTool {
 	/**
 	 * T_NLS & T_Translation.
 	 *
-	 * @param out
+	 * @param inserts
 	 * @param id
 	 */
 	private void createInsertStatementNLS(java.util.List<String> inserts, Long id) throws Exception {
@@ -239,10 +242,10 @@ public class MigrationTool {
 		DbTransaction trans = null;
 		try {
 			String tableNLS = server.getMapper().getTargetNlsName();
-			String t_id = server.getMapper().getTargetIdName();
+			String targetId = server.getMapper().getTargetIdName();
 			DbQueryBuilder builder = server.createQueryBuilder(DbQueryBuilder.SELECT, tableNLS);
 			builder.setTableList(tableNLS);
-			builder.addFilter(t_id, id);
+			builder.addFilter(targetId, id);
 
 			trans = server.openTransactionThread(false);
 			DbQuery query = new DbQuery(trans, builder);
@@ -255,7 +258,7 @@ public class MigrationTool {
 				// 0..1 T_NLS
 				StringBuffer nls = new StringBuffer();
 				nls.append("INSERT INTO " + tableNLS + " (T_Id, Symbol, T_CreateDate, T_LastChange, T_User) VALUES (");
-				nls.append(queryResult.getString(t_id) + ", ");
+				nls.append(queryResult.getString(targetId) + ", ");
 				nls.append(server.getMapper().mapToTarget(queryResult.getString("Symbol")) + ", ");
 				// TODO missing DateTime transformation
 				nls.append(server.getMapper().mapToTarget(queryResult.getString("T_CreateDate")) + ", ");
@@ -305,7 +308,7 @@ public class MigrationTool {
 	/**
 	 * INSERT INTO T_MAP_<code>...
 	 *
-	 * @param id
+	 * @param ownerId
 	 * @param tableMap "T_MAP_<code>" name
 	 * @return
 	 */

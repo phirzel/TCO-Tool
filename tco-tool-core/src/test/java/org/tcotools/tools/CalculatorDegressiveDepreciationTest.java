@@ -14,7 +14,7 @@ import org.tcotool.tools.CalculatorDegressiveDepreciation;
 /**
  * Tests org.tcotool.tools.CalculatorDegressiveDepreciation
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorDegressiveDepreciationTest {
 

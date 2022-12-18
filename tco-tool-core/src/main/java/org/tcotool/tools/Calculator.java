@@ -22,13 +22,13 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.model.Cost;
 import org.tcotool.model.CostCause;
 import org.tcotool.model.CostDriver;
@@ -53,8 +53,9 @@ import org.tcotool.model.TcoPackage;
  * Map-Key | Values ------------------------------------------- Service#getId() | [PersonalCost_Total; FactCost_Total; Year1_Total; ..YearN_Total]
  * </code>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public abstract class Calculator {
 
     // kind of cost-relevance
@@ -64,7 +65,7 @@ public abstract class Calculator {
     /**
      * Accumulate TCO-costs per Service.
      */
-    protected Map<Long, Map<String, List<Double>>> costs = new HashMap<Long, Map<String, List<Double>>>();
+    protected Map<Long, Map<String, List<Double>>> costs = new HashMap<>();
 
     // undefined Codes
     public static final String COST_CAUSE_UNDEFINED = "COST_CAUSE_UNDEFINED";
@@ -101,12 +102,12 @@ public abstract class Calculator {
      * overall cost (independent of TCO-usage or Depreciation-duration years)
      */
     public static final int INDEX_TOTAL = 0;
-    protected ModelUtility utility = null;
-    protected TcoObject rootObject = null;
+    protected ModelUtility utility;
+    protected TcoObject rootObject;
     private long maxDuration = 12; // in month
     private boolean baseOffsetInvolved = false;
 
-    private DbCodeType maskCode = null;
+    private final DbCodeType maskCode;
 
     /**
      * Calculate total of Cost including its multitude.
@@ -149,7 +150,7 @@ public abstract class Calculator {
         while (iterator.hasNext()) {
             Occurance occurance = iterator.next();
             if (occurance.getMultitude() != null) {
-                sum = sum + occurance.getMultitude().doubleValue();
+                sum = sum + occurance.getMultitude();
             }
         }
         return sum;
@@ -163,12 +164,12 @@ public abstract class Calculator {
      */
     public static double calculateHours(PersonalCost cost) {
         if (cost.getHours() != null) {
-            return cost.getHours().doubleValue();
+            return cost.getHours();
         }
 
         if (cost.getRole() == null) {
-            if ((cost.getAmount() != null) && ((cost.getHourlyRate() != null) && (cost.getHourlyRate().doubleValue() != 0.0))) {
-                return cost.getAmount().doubleValue() / cost.getHourlyRate().doubleValue();
+            if ((cost.getAmount() != null) && ((cost.getHourlyRate() != null) && (cost.getHourlyRate() != 0.0))) {
+                return cost.getAmount().doubleValue() / cost.getHourlyRate();
             }
         } else {
             if (cost.getRole().getYearlyHours() != null) {
@@ -198,7 +199,7 @@ public abstract class Calculator {
      * @return
      */
     public static double calculateHourlyRate(Role role) {
-        return AmountFormat.round(role.getFullTimeEquivalent().doubleValue() / role.getYearlyHours().doubleValue());
+        return AmountFormat.round(role.getFullTimeEquivalent() / role.getYearlyHours().doubleValue());
     }
 
     /**
@@ -349,14 +350,14 @@ public abstract class Calculator {
      * <p>
      * No duration estimations must be calculated with this constructor!
      *
-     * @param object
+     * @param utility
      */
     public Calculator(ModelUtility utility) {
         this(utility, (TcoObject) utility.getRoot(), 0);
     }
 
     /**
-     * @see #Calculator(ModelUtility, TcoObject, long, ServiceCategory, Responsibility)
+     * @see Calculator(ModelUtility, TcoObject, long, ServiceCategory, Responsibility)
      */
     public Calculator(ModelUtility utility, TcoObject rootObject, long maxDurationMonths) {
         this(utility, rootObject, maxDurationMonths, null);
@@ -370,9 +371,8 @@ public abstract class Calculator {
      *
      * @param utility
      * @param rootObject (where to start calculation hierarchically
-     * @param maxDuration in months to calculate costs for (either Usage- or Depreciation-Duration)
+     * @param maxDurationMonths in months to calculate costs for (either Usage- or Depreciation-Duration)
      * @param maskCode (only calculate TcoObject's where given maskCode is contained in hierarchy (for e.g. service.getCategory()==maskCode)
-     * @param responsibility (optionally calculate only services of this Responsibility; null for all)
      * @see #calc(Service, double)
      */
     public Calculator(ModelUtility utility, TcoObject rootObject, long maxDurationMonths, DbCodeType maskCode) {
@@ -434,7 +434,7 @@ public abstract class Calculator {
             while (costs.hasNext()) {
                 Cost cost = costs.next();
                 if (cost.getBaseOffset() == null) {
-                    Tracer.getInstance().developerWarning("Auto-correction: cost#baseOffset set to 0");
+                    log.warn("Developer warning: Auto-correction: cost#baseOffset set to 0");
                     cost.setBaseOffset(Long.valueOf(0));
                 } else if (cost.getBaseOffset().longValue() > 0) {
                     baseOffsetInvolved = true;
@@ -449,7 +449,7 @@ public abstract class Calculator {
                     continue;
                 } else {
                     if (cost.getAmount() == null) {
-                        Tracer.getInstance().developerWarning("Auto-correction: cost#amount set to 0.0");
+                        log.warn("Developer warning: Auto-correction: cost#amount set to 0.0");
                         cost.setAmount(new Double(0.0));
                     }
                     double costFactor = groupFactor * serviceFactor * driverFactor * ModelUtility.getMultitudeFactor(cost);
@@ -528,7 +528,7 @@ public abstract class Calculator {
                     storeIntoCodeList(serviceMap, kind, occurance.getSite(), year, amount / maxOccurance * occurance.getMultitude().doubleValue());
                 } else {
                     // should not happen
-                    Tracer.getInstance().developerWarning("Occurrence without Site[1] or Multitude[1]");
+                    log.warn("Developer warning: Occurrence without Site[1] or Multitude[1]");
                 }
             }
         } else {
@@ -618,13 +618,13 @@ public abstract class Calculator {
      * Store the amount for year and code.
      *
      * @param serviceMap
-     * @param key
+     * @param kind
      * @param year
      * @param amount
      */
     protected final void storeIntoCodeList(Map<String, List<Double>> serviceMap, final String kind, Object code, int year, double amount) {
         if (year < INDEX_TOTAL) {
-            Tracer.getInstance().runtimeWarning("some Cost#baseOffset must be unexpectedly negative!");
+            log.warn("some Cost#baseOffset must be unexpectedly negative!");
             return;
         }
         // keep the costs for service, year and code
@@ -776,7 +776,7 @@ public abstract class Calculator {
     }
 
     /**
-     * @see #Calculator(.., maxDurationMonths)
+     * @see Calculator (.., maxDurationMonths)
      */
     public long getMaxDurationMonths() {
         return maxDuration;

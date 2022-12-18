@@ -27,7 +27,6 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -38,20 +37,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DbObjectServer treating all persistent Objects of a specific URL. A DbObjectServer serves as middleware between application and a Target-System (for e.g. DBMS).
+ * <p>
+ * see org.odmg.Database
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see javax.jdo.PersistenceManager
- * @see org.odmg.Database
  */
+@Slf4j
 public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 
-	private transient javax.jdo.PersistenceManagerFactory factory = null;
-	private transient DbConnection connection = null;
-	private transient Class queryBuilder = null;
-	private transient DbMapper mapper = null;
+	private transient javax.jdo.PersistenceManagerFactory factory;
+	private transient DbConnection connection;
+	private final transient Class queryBuilder;
+	private final transient DbMapper mapper;
 	protected transient long temporaryId = -1;
 
 	// cache
@@ -125,7 +127,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 			codes.add(code);
 			// cacheNlsString(code.getName());
 			codeCache.addAll(code.getClass(), codes);
-			Tracer.getInstance().runtimeInfo("cache #" + codes.size() + " of code <" + code + ">");
+			log.info("cache #" + codes.size() + " of code <" + code + ">");
 		}
 	}
 
@@ -175,10 +177,10 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	public synchronized final void close() {
 		try {
 			if (!isClosed()) {
-				Tracer.getInstance().runtimeInfo("closing Target-Server...");
+				log.info("closing Target-Server...");
 
 				if (getPersistenceManagerFactory() == null) {
-					Tracer.getInstance().developerWarning("factory is null!");
+					log.warn("Developer warning: factory is null!");
 				} else {
 					DbTransaction.tryReset(this /*
 					 * getPersistenceManagerFactory()
@@ -186,7 +188,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 					 */);
 				}
 				if (getConnection() == null) {
-					Tracer.getInstance().developerWarning("connection is null!");
+					log.warn("Developer warning: connection is null!");
 				} else {
 					getConnection().close();
 				}
@@ -211,7 +213,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * @param exception Eventually happened Exception to treat
 	 * @param transaction Critical TransactionBlock
 	 * @see #openTransactionThread(boolean)
-	 * @see DbUserTransactionBlock#execute()
+	 * @see DbUserTransactionBlock#execute(Runnable)
 	 */
 	public final synchronized void closeTransactionThread(Exception exception, DbTransaction transaction) {
 		// TODO make protected; use DbUserTransactionBlock
@@ -228,7 +230,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 				 * getPersistenceManagerFactory().
 				 * getConnectionURL()
 				 */);
-				Tracer.getInstance().runtimeWarning("Transaction aborted: " + exception.getClass().getName() + "->" + exception.getLocalizedMessage());
+				log.warn("Transaction aborted: {}", exception.getClass().getName(), exception);
 			}
 
 			if (!transaction.isActive()) {
@@ -259,7 +261,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 
 		// 2) forward the exception happened
 		if (exception != null) {
-			Tracer.getInstance().runtimeWarning(exception.getLocalizedMessage());
+			log.warn("", exception);
 			if (exception instanceof UserException) {
 				// do not nest further
 				throw (UserException) exception;
@@ -395,7 +397,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * to explicitly provide a hint to the <code>PersistenceManager</code> that the instance is no longer needed in the cache.
 	 *
 	 * @param pc the instance to evict from the cache.
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public synchronized void evict(java.lang.Object pc) {
@@ -403,7 +405,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 
 		// if (!object.jdoIsTransactional()) {
 		if (pc instanceof DbEnumeration) {
-			Tracer.getInstance().developerWarning("Cannot uncache DbEnumeration=>needs a restart to change");
+			log.warn("Developer warning: Cannot uncache DbEnumeration=>needs a restart to change");
 			return;
 		} else if (pc instanceof DbCode /* Type */) {
 			// uncache all codes of this type
@@ -421,7 +423,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * eviction based on the RetainValues setting.
 	 *
 	 * @see #evict(Object pc)
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public synchronized void evictAll() {
@@ -439,7 +441,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 *
 	 * @param pcs the array of instances to evict from the cache.
 	 * @see #evict(Object pc)
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public void evictAll(java.lang.Object[] pcs) {
@@ -453,7 +455,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 *
 	 * @param pcs the <code>Collection</code> of instances to evict from the cache.
 	 * @see #evict(Object pc)
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public void evictAll(java.util.Collection pcs) {
@@ -488,7 +490,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 		query.execute();
 
 		if (builder.isSelection()) {
-			Tracer.getInstance().developerWarning("Cursor closing not guaranteed by Db-Framework!");
+			log.warn("Developer warning: Cursor closing not guaranteed by Db-Framework!");
 		}
 	}
 
@@ -554,7 +556,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 			query.closeAll();
 		} catch (Exception e) {
 			// resultSet will be closed by GarbageCollector
-			Tracer.getInstance().runtimeError("Returned Values might be incorrect!", e);
+			log.error("Returned Values might be incorrect!", e);
 		} finally {
 			if (trans != null) {
 				trans.commit(); // nothing to Rollback here
@@ -595,7 +597,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	}
 
 	/**
-	 * @see DbConnection#getDbObject()
+	 * @see DbConnection#getDbObject(String)
 	 */
 	public final Class getDbObject(String targetName) throws ClassNotFoundException {
 		try {
@@ -625,7 +627,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * @param persistenceCapableClass <code>Class</code> of instances
 	 * @param subclasses whether to include instances of subclasses
 	 * @return an <code>Extent</code> of the specified <code>Class</code>
-	 * @see Query
+	 * @see javax.jdo.Query
 	 */
 	@Override
 	public javax.jdo.Extent getExtent(java.lang.Class persistenceCapableClass, boolean subclasses) {
@@ -676,9 +678,9 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 					query.closeAll();
 				}
 			} catch (Exception qe) {
-				Tracer.getInstance().runtimeError("Query not closable!", qe);
+				log.error("Query not closable!", qe);
 			}
-			Tracer.getInstance().runtimeError("Returned Values might be incorrect!", e);
+			log.error("Returned Values might be incorrect!", e);
 		} finally {
 			trans.commit(); // nothing to Rollback here
 			DbTransaction.leave(this /*
@@ -699,7 +701,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * ignored for queries.
 	 *
 	 * @return the ignoreCache setting.
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public boolean getIgnoreCache() {
@@ -709,7 +711,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	/**
 	 * Return a DbEnumeration with specific IliCode.
 	 *
-	 * @see DbEnumeration#isIliCode(DbEnumeration, String)
+	 * @see DbEnumeration#isIliCode(DbCodeType, String)
 	 */
 	public final DbEnumeration getIliCode(Class<? extends DbEnumeration> dbEnumertion, final String ilicode) {
 		Iterator<? extends DbCodeType> iterator = retrieveCodes(dbEnumertion).iterator();
@@ -719,14 +721,14 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 				return (DbEnumeration) enumeration;
 			}
 		}
-		Tracer.getInstance().runtimeWarning("DbEnumeration: " + dbEnumertion.getName() + " with IliCode=" + ilicode + " not found");
+		log.warn("DbEnumeration: {} with IliCode={} not found", dbEnumertion.getName(), ilicode);
 		return null;
 	}
 
 	/**
 	 * Return the next free incremental value for a key.
 	 *
-	 * @see #getNewId(..)
+	 * @see #getTemporaryNewId()
 	 */
 	public synchronized Long getIncrementalId(String key) throws Exception {
 		Long id = null;
@@ -929,7 +931,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	}
 
 	/**
-	 * @see DbConnection#getTargetNameFor()
+	 * @see DbConnection#getTargetNameFor(Class)
 	 */
 	public final java.lang.String getTargetName(Class dbObject) {
 		return getConnection().getTargetNameFor(dbObject);
@@ -939,7 +941,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * Even DbObject's in persistencyState==NEW (transient) should uniquely be identified, therefore set a transient temporary-ID until saved persistently. Temporary-Id's are given by a certain
 	 * DbObjectServer and are by default within a negative range here, on the contrary to really persistent Id's which are in positive range.
 	 *
-	 * @see DbObjectServer#setUniqueId()
+	 * @see DbObjectServer#setUniqueId(Object, Long)
 	 * @deprecated
 	 */
 	protected final Long getTemporaryNewId() {
@@ -975,7 +977,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 		if (getPersistenceManagerFactory() != null) {
 			return getPersistenceManagerFactory().getConnectionUserName();
 		} else {
-			Tracer.getInstance().developerWarning("PersistenceManager lost!");
+			log.warn("Developer warning: PersistenceManager lost!");
 			return "<UNKNOWN>";
 		}
 	}
@@ -1000,7 +1002,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * @return <code>true</code> if this <code>PersistenceManager</code> has
 	 *     been closed.
 	 * @see #close()
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public boolean isClosed() {
@@ -1072,8 +1074,8 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 *
 	 * @param pc a transient instance of a <code>Class</code> that implements
 	 *     <code>PersistenceCapable</code>
-	 * @see javax.jdo.PersistenManager#makePersistent(Object)
-	 * @see org.odmg.Database#makePersistent(Object)
+	 * @see javax.jdo.PersistenceManager#makePersistent(Object)
+	 * see org.odmg.Database#makePersistent(Object)
 	 */
 	@Override
 	public final Object makePersistent(Object pc) throws UserException {
@@ -1366,7 +1368,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 
 	/**
 	 * @param ownThread open a new parallel Thread for a Transaction
-	 * @see DbUserTransactionBlock#execute()
+	 * @see DbUserTransactionBlock#execute(Runnable)
 	 */
 	public final synchronized DbTransaction openTransactionThread(boolean ownThread) {
 		// TODO use DbUserTransactionBlock
@@ -1499,7 +1501,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 *
 	 * @param dbObjectClass
 	 * @param schemaName
-	 * @see DbConnection#bind()
+	 * @see DbConnection#bind(Class, String)
 	 */
 	public final void register(java.lang.Class dbObjectClass, String schemaName) {
 		getConnection().bind(dbObjectClass, schemaName);
@@ -1554,7 +1556,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * The <code>PersistenceManager</code> might use policy information about the class to retrieve associated instances.
 	 *
 	 * @param pcs the instances
-	 * @param DFGOnly whether to retrieve only the default fetch group fields
+	 * @param dFGOnly whether to retrieve only the default fetch group fields
 	 * @since 1.0.1
 	 */
 	@Override
@@ -1609,7 +1611,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * The <code>PersistenceManager</code> might use policy information about the class to retrieve associated instances.
 	 *
 	 * @param pcs the instances
-	 * @param DFGOnly whether to retrieve only the default fetch group fields
+	 * @param dFGOnly whether to retrieve only the default fetch group fields
 	 * @since 1.0.1
 	 */
 	@Override
@@ -1654,7 +1656,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * ignored for queries.
 	 *
 	 * @param flag the ignoreCache setting.
-	 * @see javax.jdo.PersistencManager
+	 * @see javax.jdo.PersistenceManager
 	 */
 	@Override
 	public void setIgnoreCache(boolean flag) {

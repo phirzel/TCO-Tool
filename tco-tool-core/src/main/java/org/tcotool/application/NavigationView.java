@@ -34,12 +34,14 @@ import ch.softenvironment.view.tree.NavigationTreeModel;
 import ch.softenvironment.view.tree.TreeSelectionDialog;
 import java.awt.Component;
 import java.awt.dnd.DnDConstants;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -60,9 +62,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Panel to represent a Model as a Tree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class NavigationView extends ch.softenvironment.view.BasePanel implements ch.softenvironment.view.ListMenuChoice {
 
     private JMenuItem mniReportInvestment = null;
@@ -332,7 +334,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
     /**
      * Do anything at DoubleClick-Event for e.g. open selected Object(s) in a JTable.
      *
-     * @see BaseFrame#genericPopupDisplay(..)
+     * @see ch.softenvironment.view.BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -1495,7 +1497,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getMniEditChangeWindow().addActionListener(ivjEventHandler);
@@ -1541,8 +1543,8 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
 
     /**
      * Initialize the JTree.
-     *
-     * @see EditorTreeCellRenderer
+     * <p>
+     * see EditorTreeCellRenderer
      */
     private void initializeTree(ModelUtility utility) {
         // set Listener's
@@ -1840,7 +1842,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
     /**
      * Switch selected Node into editing Mode.
      *
-     * @see EditorTreeModel#valueForPathChanged(TreePath, Object)
+     * see EditorTreeModel#valueForPathChanged(TreePath, Object)
      */
     private void renameObject() {
         getTreNavigation().startEditingAtPath(getTreNavigation().getSelectionPath());

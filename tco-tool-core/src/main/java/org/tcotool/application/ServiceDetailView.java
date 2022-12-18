@@ -28,8 +28,11 @@ import ch.softenvironment.view.BaseFrame;
 import ch.softenvironment.view.CommonUserAccess;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.table.NumberTableCellRenderer;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
+import java.util.List;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import org.tcotool.model.CostCentre;
 import org.tcotool.model.CostDriver;
@@ -48,9 +51,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of a Service.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
     ch.softenvironment.view.ListMenuChoice, java.beans.PropertyChangeListener {
 
@@ -370,7 +373,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     /**
      * Do anything at DoubleClick-Event for e.g. open selected Object(s) in a JTable.
      *
-     * @see BaseFrame#genericPopupDisplay(..)
+     * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -1192,7 +1195,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     }
 
     /**
-     * @see #openCostDriver()
+     * @see #openCostDriver(List)
      */
     @Override
     public void dispose() {
@@ -2666,7 +2669,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -2807,7 +2810,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     * @param event A PropertyChangeEvent object describing the event source and the property that has changed.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -2983,9 +2986,8 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) {
-     *     getObject().removeChangeListener(getConsistencyController()); } ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable
-     *     e) { handleException(e); }
+     * @param object Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) { getObject().removeChangeListener(getConsistencyController()); }
+     *     ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable e) { handleException(e); }
      */
     @Override
     public void setCurrentObject(java.lang.Object object) {

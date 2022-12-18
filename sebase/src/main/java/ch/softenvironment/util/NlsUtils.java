@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Set of reusable String Utilities.
@@ -24,6 +25,7 @@ import java.util.Locale;
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.9 $ $Date: 2007-02-20 12:50:52 $
  */
+@Slf4j
 public abstract class NlsUtils {
 
     public final static String TIME_24HOURS_PATTERN = "HH:mm:ss";    // 24 hours
@@ -42,7 +44,7 @@ public abstract class NlsUtils {
      * @param arg0 integer value to be replaced in pattern
      */
     public static String formatMessage(String pattern, int arg0) {
-        Object[] tokens = {Integer.valueOf(arg0)};
+        Object[] tokens = {arg0};
         return formatMessage(pattern, tokens);
     }
 
@@ -77,7 +79,7 @@ public abstract class NlsUtils {
 		}
 */
             Locale.setDefault(locale);
-            Tracer.getInstance().runtimeInfo("Locale changed to: " + Locale.getDefault());
+            log.info("Locale changed to: {}", Locale.getDefault());
             return true;
         }
 

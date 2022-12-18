@@ -15,12 +15,15 @@ package ch.softenvironment.jomm.descriptor;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Define a Cardinality for an Association defined by DbDescriptor.
  *
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.2 $ $Date: 2006-07-05 15:59:53 $
  */
+@Slf4j
 public class DbMultiplicityRange {
 
     private long lower = 0;
@@ -68,7 +71,7 @@ public class DbMultiplicityRange {
         }
 
         if (lower > upper) {
-            ch.softenvironment.util.Tracer.getInstance().developerWarning("Range: (upper < lower)");
+            log.warn("Developer warning: Range: (upper < lower)");
             this.lower = upper;
             this.upper = lower;
         } else {

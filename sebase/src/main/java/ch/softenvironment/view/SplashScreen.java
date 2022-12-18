@@ -17,13 +17,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Splash screen for Application startup.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class SplashScreen extends JWindow {
 
     IvjEventHandler ivjEventHandler = new IvjEventHandler();
@@ -159,7 +161,7 @@ public class SplashScreen extends JWindow {
      * @param exception java.lang.Throwable
      */
     private void handleException(java.lang.Throwable exception) {
-        ch.softenvironment.util.Tracer.getInstance().uncaughtException(exception);
+        log.error("uncaugt", exception);//$NON-NLS-1$
     }
 
     /**
@@ -168,7 +170,7 @@ public class SplashScreen extends JWindow {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         this.addWindowListener(ivjEventHandler);
@@ -210,7 +212,7 @@ public class SplashScreen extends JWindow {
      */
     public void setImage(ImageIcon icon) {
         if (icon == null) {
-            ch.softenvironment.util.Tracer.getInstance().runtimeWarning("given icon is null!");
+            log.warn("given icon is null!");
         }
         getLblImage().setIcon(icon);
     }

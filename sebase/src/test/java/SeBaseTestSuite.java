@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
 /**
  * Run this class for all <b>seBase</b> TestCases.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class SeBaseTestSuite extends junit.framework.TestSuite {
 
@@ -31,15 +31,6 @@ public class SeBaseTestSuite extends junit.framework.TestSuite {
     public SeBaseTestSuite() {
         super();
     }
-
-    /**
-     * DemoTestSuite constructor comment.
-     *
-     * @param arg1
-     *            java.lang.Class
-     *
-     *            public SeBaseTestSuite(Class arg1) { super(arg1); }
-     */
 
     /**
      * DemoTestSuite constructor comment.

@@ -21,7 +21,7 @@ import org.tcotool.application.LauncherView;
 /**
  * The main Application/Core-Plugin to define an extension-point for other Plugins, extending TCO-Tool. Plugin-in ID = "org.tcotool.core.runtime"
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class ApplicationPlugin {
 

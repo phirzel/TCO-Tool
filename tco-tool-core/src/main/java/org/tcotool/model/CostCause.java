@@ -28,7 +28,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Cause/kind of costs. According to Gartner costs are defined by 2 categories relevant in TCO: - direct costs - indirect costs
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class CostCause extends DbCode {
 
@@ -51,8 +51,7 @@ public final class CostCause extends DbCode {
     /**
      * Return the database mappings for this persistence object.
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbCode> dbCode*/) {
         DbDescriptor descriptor = DbCode.createDefaultDescriptor(CostCause.class);

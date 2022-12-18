@@ -17,16 +17,17 @@ package ch.softenvironment.cipher;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Peter Hirzel <i>soft</i>Environment
  */
+@Slf4j
 public class DecipherTool {
 
 	private javax.crypto.Cipher cipher = null;
@@ -40,12 +41,12 @@ public class DecipherTool {
 			cipher = javax.crypto.Cipher.getInstance(key.getAlgorithm());
 			cipher.init(javax.crypto.Cipher.DECRYPT_MODE, key);
 		} catch (NoSuchPaddingException e) {
-			Tracer.getInstance().debug("Padding: " + e.getLocalizedMessage());
-		} catch (NoSuchAlgorithmException e) {
-			Tracer.getInstance().debug("Algorithm: " + e.getLocalizedMessage());
-		} catch (InvalidKeyException e) {
-			Tracer.getInstance().debug("Key: " + e.getLocalizedMessage());
-		}
+            log.debug("Padding: {}", e.getLocalizedMessage());
+        } catch (NoSuchAlgorithmException e) {
+            log.debug("Algorithm: {}", e.getLocalizedMessage());
+        } catch (InvalidKeyException e) {
+            log.debug("Key: {}", e.getLocalizedMessage());
+        }
 	}
 
 	/**
@@ -76,8 +77,8 @@ public class DecipherTool {
 			plainStream.close();
 			out.close();
 		} catch (IOException e) {
-			ch.softenvironment.util.Tracer.getInstance().runtimeWarning("Decryption Problem: " + e.getLocalizedMessage());
-		}
+            log.warn("Decryption Problem", e);
+        }
 	}
 
 	/**
@@ -103,8 +104,8 @@ public class DecipherTool {
 			return EncodingUtils.decodeBase64(str);
 
 		} catch (Exception e) {
-			Tracer.getInstance().debug("IO: " + e.getLocalizedMessage());
-		}
+            log.debug("IO: {}", e.getLocalizedMessage());
+        }
 
 		return null;
 	}

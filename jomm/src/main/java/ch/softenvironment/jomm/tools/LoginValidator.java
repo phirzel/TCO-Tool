@@ -20,16 +20,17 @@ import ch.softenvironment.jomm.serialize.HtmlSerializer;
 import ch.softenvironment.math.MathUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.util.UserException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Keep statistic about logged in users of a "application" context for e.g. a multi-User Web-Application.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class LoginValidator {
 
     public static int MAX_LOGIN_INFINITE = -1;
@@ -41,8 +42,8 @@ public class LoginValidator {
     private volatile int concurrentMax = 0;
     private volatile int concurrentNow = 0;
     private volatile int exceededLogins = 0;
-    private final java.util.Map<String, Integer> concurrentUsers = new java.util.HashMap<String, Integer>();
-    private final java.util.List<HistoryEntry> log = new java.util.ArrayList<HistoryEntry>();
+    private final java.util.Map<String, Integer> concurrentUsers = new java.util.HashMap<>();
+    private final java.util.List<HistoryEntry> logHistory = new java.util.ArrayList<>();
 
     /**
      * Login or Logout record data.
@@ -75,7 +76,7 @@ public class LoginValidator {
      */
     public synchronized static LoginValidator getInstance() {
         if (validator == null) {
-            Tracer.getInstance().runtimeInfo("LoginValidator Singleton created");
+            log.info("LoginValidator Singleton created");
             validator = new LoginValidator();
             //validator.start = new java.util.Date();
         }
@@ -99,15 +100,15 @@ public class LoginValidator {
 
                 return true;
             } else {
-                concurrentUsers.put(userId, Integer.valueOf(++currentLogins));
+                concurrentUsers.put(userId, ++currentLogins);
             }
         } else {
             // logout
             if (--currentLogins < 0) {
-                Tracer.getInstance().developerError("User already logged out: " + userId + " (evtl. bad Browser navigation)");
+                log.error("Developer error: User already logged out: {} (evtl. bad Browser navigation)", userId);
                 currentLogins = 0;
             }
-            concurrentUsers.put(userId, Integer.valueOf(currentLogins));
+            concurrentUsers.put(userId, currentLogins);
         }
         return false;
     }
@@ -132,7 +133,7 @@ public class LoginValidator {
             if (maxLogin(userId, true, maxLogins)) {
                 exceededLogins++;
                 exceeded = true;
-                Tracer.getInstance().runtimeInfo("MaxLogin exceeded for: " + userId + " (max.=" + maxLogins + ")");
+                log.info("MaxLogin exceeded for: {}  (max.={})", userId, maxLogins);
 
                 // reset -1 after session-timeout will reduce login
                 //TODO
@@ -149,19 +150,20 @@ public class LoginValidator {
             }
 
             // OK to allow secured context
-            log.add(new HistoryEntry(date, (exceeded ? HistoryEntry.LOGIN_EXCEEDED : HistoryEntry.LOGIN), userId, sessionId));
+            logHistory.add(new HistoryEntry(date, (exceeded ? HistoryEntry.LOGIN_EXCEEDED : HistoryEntry.LOGIN), userId, sessionId));
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("login failed for User-Id: " + userId, e);
+            log.error("login failed for User-Id: {}", userId, e);
         }
     }
 
     /**
      * Will be called, when user logs out from Tomcat-Server.
+     * <p>
+     * see logout.jsp
      *
      * @param userId
      * @param sessionId
      * @param regular true->triggered by user; false->forced by Session-Timout (or browser abortion)
-     * @see logout.jsp
      */
     public void logout(final String userId, final String sessionId, boolean regular) {
         logout(new java.util.Date(), userId, sessionId, regular);
@@ -176,9 +178,9 @@ public class LoginValidator {
             }
             concurrentNow--;
             maxLogin(userId, false, -1 /*irrelevant*/);
-            log.add(new HistoryEntry(date, (regular ? HistoryEntry.LOGOUT_BY_USER : HistoryEntry.LOGOUT_BY_TIMEOUT), userId, sessionId));
+            logHistory.add(new HistoryEntry(date, (regular ? HistoryEntry.LOGOUT_BY_USER : HistoryEntry.LOGOUT_BY_TIMEOUT), userId, sessionId));
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("logout problem for user: " + userId, e);
+            log.error("logout problem for user: {}", userId, e);
         }
     }
 
@@ -194,7 +196,7 @@ public class LoginValidator {
             } else {
                 java.util.Date firstLogin = null;
                 java.util.Date currentDate = null;
-                Iterator<HistoryEntry> it = log.iterator(); // sorted by time (Ascending) here!
+                Iterator<HistoryEntry> it = logHistory.iterator(); // sorted by time (Ascending) here!
                 StringBuffer dailyJournal = new StringBuffer(); // log per day and users (for all days in day sequence)
                 while (it.hasNext()) {
                     // calc statistics
@@ -230,7 +232,7 @@ public class LoginValidator {
                 return buffer.toString() + dailyJournal.toString();
             }
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("Login-Statistic problem", e);
+            log.error("Login-Statistic problem", e);
             return "Problem happened:\n" + e.getLocalizedMessage();
         }
     }
@@ -245,7 +247,7 @@ public class LoginValidator {
         java.util.Map<String, java.util.List<HistoryEntry>> usersCurrentDate = new java.util.HashMap<String, java.util.List<HistoryEntry>>();
 
         // filter all logs per user and currentDate        
-        Iterator<HistoryEntry> it = log.iterator();
+        Iterator<HistoryEntry> it = logHistory.iterator();
         while (it.hasNext()) {
             // sort the log => map of logins/logouts per user for the given day
             HistoryEntry entry = it.next();
@@ -314,7 +316,7 @@ public class LoginValidator {
                         userLogoutByTimeout++;
                         break;
                     default:
-                        Tracer.getInstance().developerError("entry.kind unknown: " + kind);
+                        log.error("Developer fault: entry.kind unknown: {}", kind);
                 }
                 userLog.append(/*"<td>" + "<b>" + entry.userId + "</b></td>" */
                     "<td>" + kind + "</td><td>" + NlsUtils.formatDateTime(entry.timestamp) + "</td><td>" + " (Session-Id: " + entry.sessionId + ")</td>");
@@ -349,7 +351,7 @@ public class LoginValidator {
         buffer.append("</table></p>");
         return buffer;
     }
-    /**
+    /*
      * Testcase for #getStatistics()
      * @return public static LoginValidator testStatistics() {
     LoginValidator validator = new LoginValidator();

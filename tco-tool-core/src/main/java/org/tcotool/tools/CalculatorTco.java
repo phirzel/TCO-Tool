@@ -27,7 +27,7 @@ import org.tcotool.model.TcoObject;
 /**
  * Calculator for specific TCO-Calculations.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class CalculatorTco extends Calculator {
 

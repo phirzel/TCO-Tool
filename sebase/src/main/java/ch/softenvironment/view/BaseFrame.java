@@ -19,10 +19,10 @@ import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
-import ch.softenvironment.util.Tracer;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -41,13 +41,15 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TemplateFrame defining minimal functionality.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public abstract class BaseFrame extends javax.swing.JFrame {
 
 	// Relative Offset to Child Window
@@ -77,7 +79,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 * Typical DetailView Constructor.
 	 *
 	 * @param viewOptions Special options valid for all GUI's in an application
-	 * @param object Model-instances to be represented by this GUI
+	 * @param objects Model-instances to be represented by this GUI
 	 */
 	public BaseFrame(ViewOptions viewOptions, java.util.List<?> objects) {
 		super();
@@ -150,10 +152,9 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 * Overwrite the #dispose() method for <b>Launcher's containing a #main()</b> of any Application extending this BaseFrame. This call will shutdown Application and Java virtual machine by a
 	 * System#exit(). // Overwrites public void dispose() { // super.dispose(); => WILL BE CALLED BY #disposeApplication() disposeApplication(); }
 	 *
-	 * @see LauncherView#dispose()
+	 * see LauncherView#dispose()
 	 */
 	protected void disposeApplication() {
-		Tracer.getInstance().stop();
 		super.dispose();
 		System.exit(0);
 	}
@@ -174,7 +175,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 *
 	 * @param table
 	 * @return Path of file saved
-	 * @see ParserCSV#writeFile()
+	 * @see ParserCSV#writeFile(PrintStream, JTable, char)
 	 */
 	protected final String exportTableData(final JTable table, final char separator) {
 		final FileChooser saveDialog = new FileChooser(/*
@@ -208,7 +209,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 				try {
 					BrowserControl.displayURL(saveDialog.getSelectedFile().getAbsolutePath());
 				} catch (Throwable ex) {
-					Tracer.getInstance().runtimeWarning("could not open CSV by platform spreadshet application: " + ex.getLocalizedMessage());
+					log.warn("could not open CSV by platform spreadshet application", ex);
 				}
 				return saveDialog.getSelectedFile().getAbsolutePath();
 			}
@@ -220,7 +221,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 * Extremely critical Error.
 	 *
 	 * @param title Dialogtitle
-	 * @see #stopWaitDialog()
+	 * see #stopWaitDialog()
 	 */
 	public final void fatalError(JFrame frame, String title, String message, Exception exception) {
 		ch.softenvironment.view.BaseDialog.showError(frame, title, message + "\n" + ResourceManager.getResource(BaseFrame.class, "CEFatalError"), exception);
@@ -236,7 +237,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 		popupDisplay(this, event, popupMenu);
 	}
 
-	protected final static void popupDisplay(Component owner, java.awt.event.MouseEvent event, javax.swing.JPopupMenu popupMenu) {
+	protected static void popupDisplay(Component owner, java.awt.event.MouseEvent event, javax.swing.JPopupMenu popupMenu) {
 		try {
 			if (owner instanceof ListMenuChoice) {
 				// might be necessary in following cases:
@@ -285,7 +286,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 *
 	 * @return Dimension
 	 */
-	protected final static Dimension getScreenSize() {
+	protected static Dimension getScreenSize() {
 		return (Toolkit.getDefaultToolkit().getScreenSize());
 	}
 
@@ -310,7 +311,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	/**
 	 * Initialize View. Call this method in a View's standard initialize method to setup your stuff.
 	 *
-	 * @see #initialize() // user code begin {1}..user code end
+	 * see #initialize() // user code begin {1}..user code end
 	 */
 	protected abstract void initializeView() throws Exception;
 
@@ -343,7 +344,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	/**
 	 * Set the given Window at center of screen.
 	 */
-	public final static void setCenterLocation(Window window) {
+	public static void setCenterLocation(Window window) {
 		Dimension screenSize = getScreenSize();
 		Dimension frameSize = window.getSize();
 
@@ -402,7 +403,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 *
 	 * @see #setLookAndFeel(String)
 	 */
-	public final static void setSystemLookAndFeel() throws Exception {
+	public static void setSystemLookAndFeel() throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		// Make sure we have nice window decorations.
 		// JFrame.setDefaultLookAndFeelDecorated(true);
@@ -443,7 +444,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * @see WaitDialog#showBusy()
+	 * @see WaitDialog#showBusy(Frame, Runnable)
 	 */
 	public final void showBusy(final Runnable block) {
 		WaitDialog.showBusy(this, block);
@@ -454,10 +455,10 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 *
 	 * @param exception java.lang.Throwable
 	 */
-	public final static void showException(Component owner, java.lang.Throwable exception) {
+	public static void showException(Component owner, java.lang.Throwable exception) {
 		try {
 			// update log
-			Tracer.getInstance().runtimeWarning("In: " + owner + " -> stackTrace follows..." + exception.getLocalizedMessage());//$NON-NLS-1$
+			log.warn("In: {}", owner, exception);//$NON-NLS-1$
 			exception.printStackTrace(System.out);
 
 			// inform user
@@ -465,8 +466,8 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 			String message = ResourceManager.getResource(BaseFrame.class, "CWTopLevelHandler"); //$NON-NLS-1$
 			if (exception instanceof NumberFormatException) {
 				if ((exception.getMessage().length() == 0) || exception.getMessage().equals("empty String") || (exception.getMessage().equals("-"))) {//$NON-NLS-2$//$NON-NLS-1$
-					Tracer.getInstance().developerWarning("exception message might change -> use another recognition");//$NON-NLS-2$//$NON-NLS-1$
-					Tracer.getInstance().runtimeWarning("NumberFormatException ignored: " + exception.toString());
+					log.warn("Developer warning: exception message might change -> use another recognition");//$NON-NLS-2$//$NON-NLS-1$
+					log.warn("NumberFormatException ignored", exception);
 					return;
 				}
 
@@ -476,7 +477,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 				title = ((DeveloperException) exception).getTitle();
 				message = exception.getMessage();
 			} else if (exception instanceof MissingResourceException) {
-				Tracer.getInstance().developerError("MissingResourceException ignored: " + exception.getLocalizedMessage());
+				log.error("Developer error: ignored", exception);
 				return;
 			} /*
 			 * else if (exception instanceof java.sql.SQLException) {
@@ -486,7 +487,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 
 			BaseDialog.showError(owner, title, message, exception);
 		} catch (Throwable e) {
-			Tracer.getInstance().developerError("should not have been reached => " + e.getLocalizedMessage());
+			log.error("Developer error: should not have been reached", e);
 		} finally {
 			// this method must not throw an Exception under any circumstances
 		}
@@ -497,7 +498,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 *
 	 * @deprecated
 	 */
-	protected final static void showSplashScreen(Dimension preferredWindowSize, String image) {
+	protected static void showSplashScreen(Dimension preferredWindowSize, String image) {
 		try {
 			Window window = new SplashScreen(preferredWindowSize, image);
 
@@ -512,21 +513,21 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 
 			window.dispose();
 		} catch (Throwable e) {
-			Tracer.getInstance().runtimeWarning("<image=" + image + "> " + e.getLocalizedMessage());//$NON-NLS-2$//$NON-NLS-1$
+			log.warn("<image={}", image, e);//$NON-NLS-2$//$NON-NLS-1$
 		}
 	}
 
 	/**
 	 * @see #showSplashScreen(Dimension, ImageIcon, long)
 	 */
-	protected final static void showSplashScreen(Dimension preferredWindowSize, ImageIcon image) {
+	protected static void showSplashScreen(Dimension preferredWindowSize, ImageIcon image) {
 		showSplashScreen(preferredWindowSize, image, 5000);
 	}
 
 	/**
 	 * Show a SplashScreen. Typically used at Application startup.
 	 */
-	protected final static void showSplashScreen(Dimension preferredWindowSize, ImageIcon image, long timeOut) {
+	protected static void showSplashScreen(Dimension preferredWindowSize, ImageIcon image, long timeOut) {
 		try {
 			Window window = new SplashScreen(preferredWindowSize, image);
 
@@ -541,7 +542,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 
 			window.dispose();
 		} catch (Throwable e) {
-			Tracer.getInstance().runtimeWarning("<image=" + image + ">)" + e.getLocalizedMessage());
+			log.warn("image={}", image, e);
 		}
 	}
 
@@ -607,14 +608,10 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 							String nls = ResourceManager.getResource(CommonUserAccess.class, component.getName() + "_" + property);
 							bean.setValue(nls);
 						} catch (Throwable cua) {
-							// Tracer.getInstance().debug(this,
-							// "updateStringProperty()", "Resource missing: " +
-							// e.getLocalizedMessage());
+							log.warn("updateStringProperty(), Resource missing", e);
 						}
 					} else {
-						// Tracer.getInstance().debug(this,
-						// "updateStringProperty()", "Resource missing: " +
-						// e.getLocalizedMessage());
+						log.warn("updateStringProperty(), Resource missing", e);
 					}
 				}
 			}

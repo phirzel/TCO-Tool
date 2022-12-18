@@ -23,7 +23,7 @@ import ch.softenvironment.jomm.target.sql.SqlMapper;
 /**
  * Specific Target-Mapper for HSQLDB V1.8.2.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class HSQLDBMapper extends SqlMapper {
 
@@ -41,6 +41,6 @@ public class HSQLDBMapper extends SqlMapper {
         String patchTable = "DUAL" /*like ORACLE's implementation*/; // correct should be  SYSTEM_SEQUENCES here!
         builder.setRaw("SELECT NEXT VALUE FOR " + /* public. */ DbMapper.ATTRIBUTE_KEY_TABLE + "_" + key + " FROM " + patchTable);
         Number tmp = (Number) ((DbObjectServer) objectServer).getFirstValue(builder);
-        return Long.valueOf(tmp.longValue());
+        return tmp.longValue();
     }
 }

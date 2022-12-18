@@ -26,13 +26,15 @@ import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.BeanReflector;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Each DbObject should have a Description of its persistence behaviour. That is why each DbObject type (and therefore all Instances of it) will be added such a Descriptor. The Descriptor will be used
  * by DbMapper for mapping between the Database Schema and the Object-Model and vice versa.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbDescriptor {
 
 	public static final int IRRELEVANT = 0; // in DbSessionBeans for e.g.
@@ -46,7 +48,7 @@ public class DbDescriptor {
 	private transient boolean ordered = false;
 
 	// there is always an ID
-	private final transient Map<String, DbDescriptorEntry> flatPropertyMap = new HashMap<String, DbDescriptorEntry>();
+	private final transient Map<String, DbDescriptorEntry> flatPropertyMap = new HashMap<>();
 	// DbNlsString aggregations
 	private transient Map<String, DbDescriptorEntry> nlsStringMap = null;
 	// 1:1 aggregates
@@ -129,12 +131,11 @@ public class DbDescriptor {
 	 */
 	public void add(final String propertyName, final String attributeName, DbFieldTypeDescriptor fieldType, DbMultiplicityRange range, final String mapName) {
 		if (range.getUpper() <= 1) {
-			ch.softenvironment.util.Tracer.getInstance().developerWarning(
-				getMappedClass() + "#add(<" + propertyName + ">.., range,..) ->check if additional map is really necessary");
+			log.warn("Developer warning: {} #add(<{}>.., range,..) ->check if additional map is really necessary", getMappedClass(), propertyName);
 		}
 
 		if (oneToManyMap == null) {
-			oneToManyMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			oneToManyMap = new java.util.HashMap<>();
 		}
 
 		oneToManyMap.put(DbObject.convertName(propertyName), new DbDescriptorEntry(attributeName, range, fieldType, mapName));
@@ -154,14 +155,14 @@ public class DbDescriptor {
 	 * @param dbRelationshipBean n:n Map C between A and B (where A:C=1:n and B:C=1:n)
 	 * @param referenceProperty Name of Property this end A (or B) is referenced within DbRelationshipBean
 	 * @see #checkType(int)
-	 * @see #addAssociationEnd(..) for C
+	 * @see #addAssociationEnd(Class, String, String)  for C
 	 */
 	public void addAssociationAttributed(final int associationType, final String propertyName, DbMultiplicityRange rangeA, DbMultiplicityRange rangeB,
 		Class<? extends DbRelationshipBean> dbRelationshipBean, final String referenceProperty) {
 		checkType(associationType);
 
 		if (attributedMap == null) {
-			attributedMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			attributedMap = new java.util.HashMap<>();
 		}
 		if (!BeanReflector.isInherited(dbRelationshipBean, DbRelationshipBean.class)) {
 			throw new ch.softenvironment.util.DeveloperException("Bad type for dbRelationshipBean");
@@ -178,7 +179,7 @@ public class DbDescriptor {
 	 * @param dbEntityBean Represents the AssociationEnd A (or B)
 	 * @param propertyRoleName RoleName of A (or B) in C
 	 * @param attributeRoleName RoleName of A (or B) in C
-	 * @see #addAssociationAttributed(..)
+	 * @see #addAssociationAttributed(int, String, DbMultiplicityRange, DbMultiplicityRange, Class, String)
 	 */
 	public void addAssociationEnd(Class<? extends DbEntityBean> dbEntityBean, final String propertyRoleName, final String attributeRoleName) {
 		if (!BeanReflector.isInherited(dbEntityBean, DbEntityBean.class)) {
@@ -218,7 +219,7 @@ public class DbDescriptor {
 	 */
 	public void addCode(final String propertyName, final String attributeName, DbMultiplicityRange range, Class<? extends DbCode> dbCode, final String mapName) {
 		if (oneToManyMap == null) {
-			oneToManyMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			oneToManyMap = new java.util.HashMap<>();
 		}
 
 		oneToManyMap.put(DbObject.convertName(propertyName), new DbDescriptorEntry(attributeName, range, dbCode, mapName));
@@ -315,7 +316,7 @@ public class DbDescriptor {
 	 */
 	public void addNlsString(final String propertyName, final String attributeRoleName, DbMultiplicityRange range) {
 		if (nlsStringMap == null) {
-			nlsStringMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			nlsStringMap = new java.util.HashMap<>();
 		}
 
 		nlsStringMap.put(checkNames(propertyName, attributeRoleName), new DbDescriptorEntry(attributeRoleName, range));
@@ -339,11 +340,10 @@ public class DbDescriptor {
 		checkType(associationType);
 
 		if (oneToManyMap == null) {
-			oneToManyMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			oneToManyMap = new java.util.HashMap<>();
 		}
 		if (range.getUpper() == 1) {
-			ch.softenvironment.util.Tracer.getInstance().developerWarning(
-				getMappedClass() + "#addOneToMany(<" + propertyName + ">)->use #addOneToOne(..) eventually");
+			log.warn("Developer warning: {} #addOneToMany({})->use #addOneToOne(..) eventually", getMappedClass(), propertyName);
 		}
 		oneToManyMap.put(DbObject.convertName(propertyName), new DbDescriptorEntry(DbObject.convertName(otherPropertyName), range, associationType,
 			aggregationBaseClass, ordered));
@@ -378,14 +378,14 @@ public class DbDescriptor {
 	 * @param keepReferenceToOtherEnd in case one AssociationEnd should point to other end only (for e.g. in INTERLIS XML Schema)
 	 * @param cached
 	 * @see #checkType(int)
-	 * @see #addOneToOneReference[Id](..) for the view of B
+	 * @see #addOneToOneReference(int, String, String, DbMultiplicityRange, boolean)  for the view of B
 	 */
 	public void addOneToOne(final int associationType, final String propertyName, final String otherPropertyName, DbMultiplicityRange range,
 		boolean keepReferenceToOtherEnd, boolean cached) {
 		checkType(associationType);
 
 		if (aggregateMap == null) {
-			aggregateMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			aggregateMap = new java.util.HashMap<>();
 		}
 		if (range.getUpper() > 1) {
 			throw new ch.softenvironment.util.DeveloperException(getMappedClass() + "#addOneToOne(<" + propertyName + ">) => use #addOneToMany(..) instead");
@@ -410,7 +410,7 @@ public class DbDescriptor {
 	 * @param keepReferenceToOtherEnd in case one AssociationEnd should point to other end only (for e.g. in INTERLIS XML Schema)
 	 * @param cached
 	 * @see #checkType(int)
-	 * @see #addOneToOneReference(..) for the view of A
+	 * @see #addOneToOneReference(int, String, String, DbMultiplicityRange, boolean)  for the view of A
 	 */
 	public void addOneToOneId(final int associationType, final String propertyName, Class<? extends DbObject> otherBaseClass, final String otherPropertyName, DbMultiplicityRange range,
 		boolean keepReferenceToOtherEnd, boolean cached) {
@@ -438,15 +438,15 @@ public class DbDescriptor {
 	 * @param keepReferenceToOtherEnd in case one AssociationEnd should point to other end only (for e.g. in INTERLIS XML Schema)
 	 * @param cached (DbObjectServer will cache such Objects for performance reasons)
 	 * @see #checkType(int)
-	 * @see #addOneToOne(..) for the view of A
-	 * @see #addOneToOneReferenceId(..) to map Id of A only
+	 * @see #addOneToOne(int, String, String, DbMultiplicityRange, boolean, boolean)  for the view of A
+	 * @see #addOneToOneReferenceId(int, String, String, DbMultiplicityRange, boolean)  to map Id of A only
 	 */
 	public void addOneToOneReference(final int associationType, final String propertyName, final String attributeRoleName, DbMultiplicityRange range,
 		boolean keepReferenceToOtherEnd, boolean cached) {
 		checkType(associationType);
 
 		if (aggregateMap == null) {
-			aggregateMap = new java.util.HashMap<String, DbDescriptorEntry>();
+			aggregateMap = new java.util.HashMap<>();
 		}
 		if (range.getUpper() > 1) {
 			throw new ch.softenvironment.util.DeveloperException(getMappedClass() + "#addOneToOneReference(<" + propertyName
@@ -473,14 +473,14 @@ public class DbDescriptor {
 	 * <p>
 	 * Only the Id of A (type java.lang.Long) is aggregated (instead of the whole instance of type A) for more efficiency (may enhance performance).
 	 *
-	 * @param associationType
+	 * @param type
 	 * @param propertyName Name of B pointing to A
 	 * @param attributeRoleName Foreign Key of B pointing to A's Primary Key (B.<b>T_Id_RoleOfA</b>(FK)==A.T_Id (PK))
 	 * @param range of role A
 	 * @param keepReferenceToOtherEnd in case one AssociationEnd should point to other end only (for e.g. in INTERLIS XML Schema)
 	 * @see #checkType(int)
-	 * @see #addOneToOne(..) for the view of A
-	 * @see #addOneToOneReference(..) to map whole instance of A
+	 * @see #addOneToOne  for the view of A
+	 * @see #addOneToOneReference(int, String, String, DbMultiplicityRange, boolean, boolean) ce(..) to map whole instance of A
 	 */
 	public void addOneToOneReferenceId(final int type, final String propertyName, final String attributeRoleName, DbMultiplicityRange range, boolean keepReferenceToOtherEnd) {
 		add(propertyName, attributeRoleName, new DbIdFieldDescriptor(), range);
@@ -496,7 +496,7 @@ public class DbDescriptor {
 	 */
 	public void addUniqueProperty(final String keyProperty) {
 		if (uniqueSet == null) {
-			uniqueSet = new java.util.HashSet<String>();
+			uniqueSet = new java.util.HashSet<>();
 		}
 		uniqueSet.add(checkNames(keyProperty, null));
 	}
@@ -521,7 +521,7 @@ public class DbDescriptor {
 				|| (attributeName.equalsIgnoreCase("TIMESTAMP")) || (attributeName.equalsIgnoreCase("LEVEL")) || (attributeName.equalsIgnoreCase("FROM"))
 				|| (attributeName.equalsIgnoreCase("ORDER")) || (attributeName.equalsIgnoreCase("BY")) || (attributeName.equalsIgnoreCase("TO"))
 				|| (attributeName.equalsIgnoreCase("XMIN" /* PostgreSQL */)) || (attributeName.equalsIgnoreCase("XMAX" /* PostgreSQL */))) {
-				ch.softenvironment.util.Tracer.getInstance().developerWarning("BAD Attribute name <" + attributeName + "> may confuse SQL-API of your DBMS");
+				log.warn("Developer warning: BAD Attribute name <{}> may confuse SQL-API of your DBMS", attributeName);
 			}
 		}
 
@@ -532,7 +532,6 @@ public class DbDescriptor {
 	 * Verify correct Association-Type.
 	 *
 	 * @param associationType ASSOCIATION, AGGREGATION or COMPOSITION
-	 * @throws DeveloperException
 	 */
 	private static void checkType(final int associationType) {
 		if ((associationType == IRRELEVANT) || (associationType == ASSOCIATION) || (associationType == AGGREGATION) || (associationType == COMPOSITION)) {
@@ -780,7 +779,7 @@ public class DbDescriptor {
 	 * Return an Iterator over ALL persistent Properties.
 	 */
 	public java.util.Iterator<String> iteratorProperties() {
-		java.util.Set<String> properties = new java.util.HashSet<String>();
+		java.util.Set<String> properties = new java.util.HashSet<>();
 
 		properties.addAll(flatPropertyMap.keySet());
 		if (nlsStringMap != null) {
@@ -800,7 +799,7 @@ public class DbDescriptor {
 	 */
 	public java.util.Iterator<String> iteratorUniqueProperties() {
 		if (uniqueSet == null) {
-			uniqueSet = new java.util.HashSet<String>(1);
+			uniqueSet = new java.util.HashSet<>(1);
 			uniqueSet.add(DbObject.PROPERTY_ID);
 		}
 		return uniqueSet.iterator();

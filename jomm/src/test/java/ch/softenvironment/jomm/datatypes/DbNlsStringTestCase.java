@@ -29,9 +29,10 @@ import junit.framework.TestCase;
 
 /**
  * Test DbNlsString.
+ * <p>
+ * see ch.softenvironment.demoapp.*TestSuite to run this TestCase
  *
- * @author Peter Hirzel, softEnvironment GmbH
- * @see ch.softenvironment.demoapp.*TestSuite to run this TestCase
+ * @author Peter Hirzel
  */
 public class DbNlsStringTestCase extends TestCase {
 

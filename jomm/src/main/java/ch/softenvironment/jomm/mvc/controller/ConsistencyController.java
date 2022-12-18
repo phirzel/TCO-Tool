@@ -26,12 +26,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Controller enabling Consistency Management. Interface between a View (DetailView) and its Model (DbChangeableBean) according to MVC-Pattern.
  *
  * @author Peter Hirzel softEnvironment GmbH
  */
+@Slf4j
 public class ConsistencyController implements ch.softenvironment.jomm.mvc.controller.DbObjectListener {
 
 	// Singleton -> @see #setCascaded()
@@ -41,13 +43,13 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * Key=object to be monitored for changes
 	 * Entry=Map (Key=property of object; Entry=TestEntry)
 	 */
-	private final transient Map<Object, Map<String, TestEntry>> objectTests = new HashMap<Object, Map<String, TestEntry>>();
+	private final transient Map<Object, Map<String, TestEntry>> objectTests = new HashMap<>();
 	/*
 	 * The attached View (DetailView) to this Controller.
 	 */
 	private transient javax.swing.JFrame view = null;
 
-	private transient java.util.Vector<String> fieldInconsistencies = new Vector<String>();
+	private transient java.util.Vector<String> fieldInconsistencies = new Vector<>();
 	private transient boolean fieldIsSaveable = false;
 	private transient boolean fieldIsUndoable = false;
 
@@ -58,7 +60,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 */
 	static class TestEntry {
 
-		private String propertyUiName = null;
+		private String propertyUiName;
 		private String inconsistencyMessage = null;
 
 		// Constructor.
@@ -111,8 +113,8 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	/**
 	 * Add a Property which must tested for Consistency at each change of it.
 	 *
-	 * @see #removeTest()
-	 * @see #propertyChange()
+	 * @see #removeTest(DbPropertyChange)
+	 * @see #propertyChange(PropertyChangeEvent)
 	 */
 	@Override
 	public void addTest(DbPropertyChange change, DbDescriptorEntry ownerEntry) {
@@ -150,7 +152,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 		if (objectTests.containsKey(change.getSource())) {
 			properties = objectTests.get(change.getSource());
 		} else {
-			properties = new HashMap<String, TestEntry>();
+			properties = new HashMap<>();
 			objectTests.put(change.getSource(), properties);
 		}
 		properties.put(change.getProperty(), entry);
@@ -159,8 +161,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 			// do the initial check though value not changed yet
 			propertyChange(new PropertyChangeEvent(change.getSource(), change.getProperty(), change.getValue(), change.getValue()));
 		} catch (Throwable e) {
-			ch.softenvironment.util.Tracer.getInstance()
-				.developerError(change.getSource() + "#get" + change.getProperty() + "() => " + e.getLocalizedMessage());
+			log.error("Developer error: {}#get{}()", change.getSource(), change.getProperty(), e);
 		}
 	}
 
@@ -168,14 +169,13 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * Register an additional validator to check special consistency conditions for given change which are not to be assumed by generic DbDescriptor settings.
 	 *
 	 * @param validator (for e.g. a GUI representing the change)
-	 * @param change DbChangeableBean to be validated
-	 * @see #addTest()
-	 * @see #removeValidator()
+	 * @see #addTest(DbPropertyChange, DbDescriptorEntry)
+	 * @see #removeValidator(DbObjectValidator) 
 	 */
 	@Override
 	public void addValidator(DbObjectValidator validator) {
 		if (validators == null) {
-			validators = new HashSet<DbObjectValidator>();
+			validators = new HashSet<>();
 		}
 		validators.add(validator);
 	}
@@ -201,7 +201,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	/**
 	 * The firePropertyChange method was generated to support the propertyChange field.
 	 *
-	 * @see #inconsistencies
+	 * @see #getInconsistencies() 
 	 */
 	public void firePropertyChange(final String propertyName, java.lang.Object oldValue, java.lang.Object newValue) {
 		getPropertyChange().firePropertyChange(propertyName, oldValue, newValue);
@@ -210,7 +210,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	/**
 	 * The firePropertyChange method was generated to support the propertyChange field.
 	 *
-	 * @see #setis*()
+	 * see #setis*()
 	 */
 	public void firePropertyChange(final String propertyName, boolean oldValue, boolean newValue) {
 		getPropertyChange().firePropertyChange(propertyName, oldValue, newValue);
@@ -297,8 +297,8 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * This method gets called when a bound property is changed.
 	 *
 	 * @param evt event source and the property that has changed.
-	 * @see #addTest()
-	 * @see DbObjectValidator#checkConsistency()
+	 * @see #addTest(DbPropertyChange, DbDescriptorEntry)
+	 * @see DbObjectValidator#checkConsistency(DbPropertyChange) 
 	 */
 	@Override
 	public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -329,7 +329,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 
 					updateInconsistencies();
 				} catch (Throwable e) {
-					ch.softenvironment.util.Tracer.getInstance().developerError("get" + change.getProperty() + "() => " + e.getLocalizedMessage());
+					log.error("Developer error: get" + change.getProperty() + "() => " + e.getLocalizedMessage());
 				}
 			}
 		} // else { not registered for checking }
@@ -351,7 +351,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	/**
 	 * Unregister all Property-Test for given source in change from testing.
 	 *
-	 * @see #addTest()
+	 * @see #addTest(DbPropertyChange, DbDescriptorEntry) 
 	 */
 	@Override
 	public void removeTest(DbPropertyChange change) {
@@ -367,7 +367,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * Unregister a validator for any changes.
 	 *
 	 * @param validator (for e.g. a GUI representing the change)
-	 * @see #addValidator()
+	 * @see #addValidator(DbObjectValidator) 
 	 */
 	@Override
 	public void removeValidator(ch.softenvironment.jomm.mvc.controller.DbObjectValidator validator) {
@@ -391,8 +391,8 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * <p>
 	 * Usually it makes no sense to use cascaded behavior in DBMS-Clients because each Model-Instance may be saved separately.
 	 *
-	 * @see #addTest() activates cascading
-	 * @see #removeTest() deactivates cascading
+	 * @see #addTest(DbPropertyChange, DbDescriptorEntry)  activates cascading
+	 * @see #removeTest(DbPropertyChange)  deactivates cascading
 	 */
 	public static void setCascaded(boolean cascade) {
 		if (cascade) {
@@ -442,7 +442,7 @@ public class ConsistencyController implements ch.softenvironment.jomm.mvc.contro
 	 * Force an Update of #inconsistencies.
 	 */
 	private void updateInconsistencies() {
-		Vector<String> errors = new Vector<String>();
+		Vector<String> errors = new Vector<>();
 
 		// update inconsistency-List
 		Iterator<Object> objects = objectTests.keySet().iterator();

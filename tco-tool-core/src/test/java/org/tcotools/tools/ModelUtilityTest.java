@@ -31,7 +31,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * TestCase for org.tcotool.tools.ModelUtility.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ModelUtilityTest {
 

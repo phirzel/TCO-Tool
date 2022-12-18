@@ -24,7 +24,7 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
  * Map <b>Entities from Target-System</b> to <b>Java</b> and vice versa in an encoding/decoding manner. The <b>different types are mapped from one world to the other</b>. Also the technical Fields
  * like T_* are considered while mapping. by this utility, for e.g. an SQL CHAR to java.lang.String. Design Pattern: <b>Adapter</b>
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface DbMapper {
 
@@ -74,26 +74,26 @@ public interface DbMapper {
      * <b>Only Properties of the given Descriptor are considered</b>, therefore
      * the correct Object hierarchy must be managed by the caller.
      *
-     * @param object
+     * @param instance
      * @param descriptor
      * @param collection (Query Results -> only plain attributes, such as fields and foreign key ID's)
      */
     void mapFromTarget(DbObject instance, DbDescriptor descriptor, Object collection) throws Exception;
 
     /**
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     java.math.BigDecimal mapFromTargetBigDecimal(Object collection, String attribute);
 
     /**
      * Map <i>Type</i>: <b>Target-System => Java</b>. Assumes Textdb-Field with 'T' for true and 'F' for false.
      *
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     Boolean mapFromTargetBoolean(Object collection, String attribute);
 
     /**
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     java.util.Date mapFromTargetDate(Object collection, String attribute, final int type);
 
@@ -103,28 +103,29 @@ public interface DbMapper {
     DbFieldType mapFromTargetDbFieldType(Object collection, String attribute);
 
     /**
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     Double mapFromTargetDouble(Object collection, String attribute);
 
     /**
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     Integer mapFromTargetInteger(Object collection, String attribute);
 
     /**
-     * @see #mapFromTargetString(..)
+     * @see #mapFromTargetString(Object, String)
      */
     Long mapFromTargetLong(Object collection, String attribute);
 
     /**
-     * @see mapFromTargetBoolean()
+     * see mapFromTargetBoolean()
+     *
      * @deprecated
      */
     boolean mapFromTargetNativeBoolean(Object collection, String attribute);
 
     /**
-     * @see mapFromTargetInteger()
+     * see mapFromTargetInteger()
      * @deprecated
      */
     int mapFromTargetNativeInt(Object collection, String attribute);

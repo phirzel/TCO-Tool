@@ -16,8 +16,8 @@ package org.tcotool.standard.drawing;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.awt.Graphics;
+import lombok.extern.slf4j.Slf4j;
 import org.jhotdraw.figures.ArrowTip;
 import org.jhotdraw.framework.Figure;
 import org.tcotool.model.Dependency;
@@ -26,9 +26,10 @@ import org.tcotool.model.Dependency;
  * Draw a dependency line between two Figures representing dependable TcoObject's. A dependency relation is a uses-a relation with a direction where the connection points to the class used by another
  * one. The start class (Client) depends on the end class (Supplier). A DependencyLineConnection has an arrow at the end point and is dotted (analog UML).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 class DependencyLineConnection extends EdgeFigure {
 
 	/**
@@ -59,7 +60,7 @@ class DependencyLineConnection extends EdgeFigure {
 			/* supplier = (TcoObject) */
 			((NodeFigure) end).getModelElement();
 		} catch (ClassCastException e) {
-			Tracer.getInstance().developerWarning("Wrong dependency");
+			log.warn("Developer warning: Wrong dependency");
 			return false;
 		}
 

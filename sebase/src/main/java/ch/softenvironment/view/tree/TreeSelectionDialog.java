@@ -23,9 +23,9 @@ import javax.swing.tree.TreeSelectionModel;
 /**
  * User Interface to choose a Package within Model-Tree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class TreeSelectionDialog extends ch.softenvironment.view.BaseDialog {
 
     private Object selectedPackage = null;
@@ -286,7 +286,7 @@ public class TreeSelectionDialog extends ch.softenvironment.view.BaseDialog {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnOk().addActionListener(ivjEventHandler);
@@ -316,8 +316,8 @@ public class TreeSelectionDialog extends ch.softenvironment.view.BaseDialog {
 
     /**
      * Initialize the JTree.
-     *
-     * @see EditorTreeCellRenderer
+     * <p>
+     * see EditorTreeCellRenderer
      */
     private void initializeTree(TreeNodeUtility utility, boolean packagesOnly) {
         // set Listener's

@@ -40,7 +40,7 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Utility to report Dependency-Calculations as Plugin for TCO-Tool in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportDependency extends ReportTool {
 

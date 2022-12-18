@@ -21,7 +21,7 @@ import javax.swing.JComponent;
 /**
  * Application Interface any Plugin to extend TCO-Tool may implement.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface Menu {
 

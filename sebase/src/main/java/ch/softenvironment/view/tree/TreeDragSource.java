@@ -23,18 +23,19 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
+import java.awt.dnd.DropTargetDropEvent;
 import javax.swing.tree.TreePath;
 
 /**
  * Tool for Mouse-Drag within a JTree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class TreeDragSource implements DragSourceListener, DragGestureListener {
 
-    private DragSource source = null;
+    private final DragSource source;
     // private DragGestureRecognizer recognizer = null;
-    private AutoScrollingTree sourceTree = null;
+    private final AutoScrollingTree sourceTree;
     private TransferableTreeNode transferable = null;
 
     public TreeDragSource(AutoScrollingTree tree, final int actions) {
@@ -86,7 +87,7 @@ class TreeDragSource implements DragSourceListener, DragGestureListener {
     }
 
     /**
-     * @see TreeDropTarget#drop()
+     * @see TreeDropTarget#drop(DropTargetDropEvent)
      */
     @Override
     public void dragDropEnd(DragSourceDropEvent dsde) {
@@ -94,7 +95,7 @@ class TreeDragSource implements DragSourceListener, DragGestureListener {
         transferable = null;
     }
 
-    /**
+    /*
      * Verify whether current dropZone is ok for current transferable.
      *
      * @param dtde
@@ -121,7 +122,8 @@ class TreeDragSource implements DragSourceListener, DragGestureListener {
     }
     }
      */
-    /**
+
+    /*
      * Show appropriate cursor depending on drop-zone.
      *
      * @param dsde

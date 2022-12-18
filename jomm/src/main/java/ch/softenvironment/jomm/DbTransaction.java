@@ -16,23 +16,24 @@ package ch.softenvironment.jomm;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Database Transaction Handler This class is adapting JDO (and ODMG) Specification.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbTransaction implements javax.jdo.Transaction {
 
     // enabling Nested Transactions
-    private static final HashMap<DbObjectServer, List<?>> openTransactions = new HashMap<DbObjectServer, List<?>>();
+    private static final HashMap<DbObjectServer, List<?>> openTransactions = new HashMap<>();
 
-    private transient DbConnection connection = null;
+    private final transient DbConnection connection;
     private volatile int transactionCounter = 0;
     private volatile int openCursors = 0;
     private transient boolean optimistic = true;
@@ -46,7 +47,7 @@ public class DbTransaction implements javax.jdo.Transaction {
     /**
      * Start a new transaction with the given database. There might be several connections (sessions) with the given database -> next available.
      *
-     * @param url Database
+     * @param server Database
      */
     private DbTransaction(DbObjectServer server /* String dbURL */) {
         super();
@@ -70,7 +71,7 @@ public class DbTransaction implements javax.jdo.Transaction {
         try {
             begin(getConnection().getJdbcConnection().getTransactionIsolation());
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("could not BEGIN Transaction", e);
+            log.error("could not BEGIN Transaction", e);
             throw new javax.jdo.JDOUserException(getResourceString("CE_begin"), e);
         }
     }
@@ -79,7 +80,7 @@ public class DbTransaction implements javax.jdo.Transaction {
      * Start a Transaction with a desired Isolation-Level. The Isolation-Level must not be set within a current Transaction.
      *
      * @param isolationLevel Not every DBMS supports Isolation-Levels
-     * @see java.sql.Connection.TRANSACTION_*
+     * see java.sql.Connection.TRANSACTION_*
      */
     protected synchronized void begin(final int isolationLevel) {
         if (!isActive()) {
@@ -113,7 +114,7 @@ public class DbTransaction implements javax.jdo.Transaction {
                  * "Isolation-Level: <undefined>"); } }
                  */
             } catch (SQLException e) {
-                Tracer.getInstance().developerWarning("#setTransactionIsolation(" + isolationLevel + ") failed or not supported: " + e.getLocalizedMessage());
+                log.warn("Developer warning: #setTransactionIsolation(" + isolationLevel + ") failed or not supported: " + e.getLocalizedMessage());
             }
         }
     }
@@ -146,7 +147,7 @@ public class DbTransaction implements javax.jdo.Transaction {
             // Tracer.getInstance().debug("[Transaction-level = " + level +
             // " (nested -> " + action + " supressed)]");
         } else {
-            Tracer.getInstance().logBackendCommand("[Transaction-level = " + level + " (" + action + ")]");
+            log.info("[Transaction-level = {} ({})]", level, action);
         }
         return nested;
     }
@@ -168,11 +169,11 @@ public class DbTransaction implements javax.jdo.Transaction {
                     getConnection().getJdbcConnection().commit();
                 }
                 if (openCursors > 0) {
-                    Tracer.getInstance().developerError("Open Cursors were not closed correctly!");
+                    log.error("Developer error: Open Cursors were not closed correctly!");
                 }
             }
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("could not COMMIT Transaction", e);
+            log.error("could not COMMIT Transaction", e);
             throw new javax.jdo.JDOUserException(getResourceString("CE_commit"), e);
         }
     }
@@ -318,7 +319,7 @@ public class DbTransaction implements javax.jdo.Transaction {
             if (openCursors > 0) {
                 openCursors--;
             } else {
-                Tracer.getInstance().developerWarning("openCursors == 0! (possible for failed DbQuery#closeAll() within exception-handler)");
+                log.warn("Developer warning: openCursors == 0! (possible for failed DbQuery#closeAll() within exception-handler)");
             }
             // Tracer.getInstance().debug("#openCursor-1 => " + openCursors);
         }
@@ -350,7 +351,7 @@ public class DbTransaction implements javax.jdo.Transaction {
     /**
      * Register current thread to transaction. (ODMG-Specification). Synchronization of #join() and #leave() is to be done by caller.
      *
-     * @see #leave()
+     * @see #leave(DbObjectServer)
      * @deprecated should be done by PersistenceManager
      */
     protected static DbTransaction join(DbObjectServer server /* String dbURL */) {
@@ -406,16 +407,16 @@ public class DbTransaction implements javax.jdo.Transaction {
         try {
             if (!checkNestedTransaction(-1, "ROLLBACK")) {
                 if (getConnection().getJdbcConnection().getAutoCommit()) {
-                    Tracer.getInstance().developerWarning("NO ROLLBACK because AutoCommit=true");
+                    log.warn("Developer warning: NO ROLLBACK because AutoCommit=true");
                 } else {
                     getConnection().getJdbcConnection().rollback();
                 }
                 if (openCursors > 0) {
-                    Tracer.getInstance().developerError("Open Cursors were not closed correctly!");
+                    log.warn("Developer error: Open Cursors were not closed correctly!");
                 }
             }
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("could not ROLLBACK Transaction", e);
+            log.error("could not ROLLBACK Transaction", e);
             throw new javax.jdo.JDOUserException(getResourceString("CE_rollback"), e);
         }
     }

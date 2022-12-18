@@ -6,15 +6,16 @@ import ch.softenvironment.jomm.mvc.model.DbCode;
 /**
  * Attach a Process of a certain process-model to a CostDriver.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class Process extends DbCode {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection#addDescriptor(Class)
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbCode> dbCode*/) {
         return DbCode.createDefaultDescriptor(Process.class);

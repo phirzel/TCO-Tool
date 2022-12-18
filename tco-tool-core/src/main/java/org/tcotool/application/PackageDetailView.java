@@ -23,7 +23,6 @@ import org.tcotool.tools.ModelUtility;
  *
  * @author Peter Hirzel, softEnvironment GmbH
  */
-@SuppressWarnings("serial")
 public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -938,7 +937,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);
@@ -1035,9 +1034,8 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     /**
      * Make the View represent the given Object.
      *
-     * @param currentObject Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) {
-     *     getObject().removeChangeListener(getConsistencyController()); } ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable
-     *     e) { handleException(e); }
+     * @param object Example Code: try { if ((object != null) && object.equals(getObject())) { return; } if (getObject() != null) { getObject().removeChangeListener(getConsistencyController()); }
+     *     ((DbObject)object).refresh(true); setObject(object); object.addChangeListener(getconsistencyController()); } catch(Throwable e) { handleException(e); }
      */
     @Override
     public void setCurrentObject(java.lang.Object object) {

@@ -4,7 +4,7 @@ import ch.softenvironment.client.ResourceManager;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class StringUtilsTestCase extends junit.framework.TestCase {
 
@@ -25,8 +25,8 @@ public class StringUtilsTestCase extends junit.framework.TestCase {
 
 		// getString(Object)
 		assertTrue("StringUtils.getString(null)", "".equals(ch.softenvironment.util.StringUtils.getString(null)));
-		assertTrue("StringUtils.getString(17)", "17".equals(ch.softenvironment.util.StringUtils.getString(Integer.valueOf(17))));
-		assertTrue("StringUtils.getString(-23.45)", "-23.45".equals(ch.softenvironment.util.StringUtils.getString(new Double(-23.45))));
+		assertTrue("StringUtils.getString(17)", "17".equals(ch.softenvironment.util.StringUtils.getString(17)));
+		assertTrue("StringUtils.getString(-23.45)", "-23.45".equals(ch.softenvironment.util.StringUtils.getString(-23.45)));
 		assertTrue("StringUtils.getString(Boolean.TRUE)",
 			ResourceManager.getResource(StringUtils.class, "CI_Yes_text").equals(ch.softenvironment.util.StringUtils.getString(Boolean.TRUE)));
 		assertTrue("StringUtils.getString(Boolean.FALSE)",

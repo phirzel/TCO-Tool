@@ -8,7 +8,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * The Root package manages the system Parameters for the whole Configuration.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class SystemParameter extends DbEntityBean {
 
@@ -22,7 +22,7 @@ public class SystemParameter extends DbEntityBean {
     private java.lang.Long fieldReportUsageDuration;
     private java.lang.Long fieldReportDepreciationDuration;
     private java.lang.Long fieldModelId;
-    private java.util.List<Course> fieldCourse = new java.util.ArrayList<Course>();
+    private java.util.List<Course> fieldCourse = new java.util.ArrayList<>();
 
     public SystemParameter(ch.softenvironment.jomm.DbObjectServer objectServer) {
         super(objectServer);

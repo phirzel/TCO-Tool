@@ -16,11 +16,14 @@ package ch.softenvironment.jomm.descriptor;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Describes any Numeric types.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class DbNumericFieldDescriptor extends DbFieldTypeDescriptor {
 
     public static final int YEAR = 0;
@@ -93,7 +96,7 @@ public class DbNumericFieldDescriptor extends DbFieldTypeDescriptor {
             max = Long.MAX_VALUE;
             accuracy = 0;
         } else if (!baseType.equals(Double.class)) {
-            ch.softenvironment.util.Tracer.getInstance().developerError("Non-mapped type <" + baseType.getName() + ">");
+            log.error("Developer error: Non-mapped type <{}>", baseType.getName());
         }
         min = Double.NEGATIVE_INFINITY;
         max = Double.POSITIVE_INFINITY;

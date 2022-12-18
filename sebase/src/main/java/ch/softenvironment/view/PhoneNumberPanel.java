@@ -17,9 +17,8 @@ import ch.softenvironment.client.ResourceManager;
 /**
  * Panel for structured Phone Number representation.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
 public class PhoneNumberPanel extends javax.swing.JPanel {
 
     private final String separator = "/";//$NON-NLS-1$
@@ -345,7 +344,7 @@ public class PhoneNumberPanel extends javax.swing.JPanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getTxtSitePrefix().addKeyListener(ivjEventHandler);
@@ -406,8 +405,8 @@ public class PhoneNumberPanel extends javax.swing.JPanel {
         fieldList = list;
         firePropertyChange("list", oldValue, list);
 
-        java.util.Vector<Integer> elements = new java.util.Vector<Integer>(1);
-        elements.add(Integer.valueOf(1));
+        java.util.Vector<Integer> elements = new java.util.Vector<>(1);
+        elements.add(1);
         getCbxCount().setModel(new javax.swing.DefaultComboBoxModel(elements));
         if ((list != null) && (list.size() >= 1)) {
             setText(list.get(0));

@@ -13,16 +13,17 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import ch.softenvironment.util.Tracer;
 import java.util.EventObject;
 import javax.swing.JTextArea;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Provide a simple editor Area with minimal functionality.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class SimpleEditorPanel extends javax.swing.JPanel {
 
     private boolean hasContentsChanged = false;
@@ -156,7 +157,6 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     public void addSimpleEditorPanelListener(ch.softenvironment.view.SimpleEditorPanelListener newListener) {
         fieldSimpleEditorPanelListenerEventMulticaster = ch.softenvironment.view.SimpleEditorPanelListenerEventMulticaster.add(
             fieldSimpleEditorPanelListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
@@ -751,7 +751,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
      * @param exception java.lang.Throwable
      */
     private void handleException(java.lang.Throwable exception) {
-        Tracer.getInstance().uncaughtException(exception);//$NON-NLS-1$
+        log.error("uncaugt", exception);//$NON-NLS-1$
     }
 
     /**
@@ -769,7 +769,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getMniUndo().addActionListener(ivjEventHandler);
@@ -858,13 +858,12 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     public void removeSimpleEditorPanelListener(ch.softenvironment.view.SimpleEditorPanelListener newListener) {
         fieldSimpleEditorPanelListenerEventMulticaster = ch.softenvironment.view.SimpleEditorPanelListenerEventMulticaster.remove(
             fieldSimpleEditorPanelListenerEventMulticaster, newListener);
-        return;
     }
 
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     @Override
     public void setBackground(java.awt.Color color) {
@@ -879,7 +878,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     public void setEditable(boolean isEditable) {
         getTxaEditor().setEditable(isEditable);
@@ -893,7 +892,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     @Override
     public void setEnabled(boolean isEnabled) {
@@ -903,7 +902,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     public void setLineWrap(boolean isLineWrap) {
         getTxaEditor().setLineWrap(isLineWrap);
@@ -912,7 +911,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     public void setText(String text) {
         getTxaEditor().setText(text);
@@ -921,7 +920,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Adapter-Method.
      *
-     * @see JTextArea.
+     * @see JTextArea
      */
     @Override
     public void setToolTipText(String toolTip) {

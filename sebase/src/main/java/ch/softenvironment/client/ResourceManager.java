@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Manage a Map of Resources, respectively *.properties for different Classes dealing with UI. Resources are usually desired by an Application for a specific Locale (for e.g. de_CH), therefore the
  * performance may be enhanced if the mapped *.properties files are cached during runtime.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class ResourceManager {
 
@@ -33,7 +33,7 @@ public class ResourceManager {
 	// singleton
 	private static ResourceManager manager = null;
 	// translation cache per language and MyClass.properties content
-	private final Map<String, Map<Class<?>, java.util.ResourceBundle>> resources = new HashMap<String, Map<Class<?>, java.util.ResourceBundle>>();
+	private final Map<String, Map<Class<?>, java.util.ResourceBundle>> resources = new HashMap<>();
 
 	/**
 	 * Return an application wide ResourceManager. Design Pattern: Singleton.
@@ -138,7 +138,7 @@ public class ResourceManager {
 	/**
 	 * Return an NLS-resource for a class. Labels end according to GUI-Standards with ":", therefore this method makes sure, the colon is set, though the resource might be defined otherwise.
 	 *
-	 * @see #getResource(java.lang.Class, Locale, String)
+	 * @see #getResource(Class, String, ClassLoader)
 	 */
 	public static String getResourceAsLabel(java.lang.Class<?> owner, String propertyName) {
 		return getResource(owner, propertyName, true);
@@ -177,7 +177,7 @@ public class ResourceManager {
 	 * @param asLabel
 	 * @return
 	 * @throws MissingResourceException
-	 * @see http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html
+	 * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">Pattern</a>
 	 */
 	public static String getResourceMatch(java.lang.Class<?> owner, String pattern, boolean asLabel) throws MissingResourceException {
 		java.util.ResourceBundle bundle = getInstance().getBundle(owner, Locale.getDefault(), null);

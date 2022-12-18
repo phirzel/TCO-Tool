@@ -19,7 +19,7 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * General Target-System Attribute-Type Descriptor.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class DbFieldTypeDescriptor {
 

@@ -15,7 +15,7 @@ package ch.softenvironment.controller;
 /**
  * Listener for DataBrowser.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public interface DataBrowserListener<T> {
 
@@ -30,7 +30,7 @@ public interface DataBrowserListener<T> {
     /**
      * Called before currentObject will be changed to make sure any changes on still current Object can be done.
      *
-     * @param param java.lang.Object Object to be invalidated
+     * @param object java.lang.Object Object to be invalidated
      * @return the saved object
      */
     T saveChanges(T object);

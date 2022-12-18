@@ -9,7 +9,7 @@ import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 /**
  * Manage a reference of an imported TCO file.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 @Deprecated
 public class ImportReference extends DbEntityBean {

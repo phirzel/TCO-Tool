@@ -16,16 +16,17 @@ import ch.softenvironment.controller.DataBrowser;
 import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.jomm.mvc.model.DbSessionBean;
-import ch.softenvironment.util.Tracer;
 import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Browsing tool to scroll through a ResultSet defined by a DbQuerybuilder. This Browser extends DataBrowser by limited size of objects to search by using a fetch-block. This part is therefore meant
  * for long result-sets as for e.g. in database search.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see ch.softenvironment.view.DataSelectorPanel for NLS-properties
  */
+@Slf4j
 public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
 
     private DbQueryBuilder builder = null;
@@ -47,7 +48,6 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
      * @param builder
      * @param dbObject
      * @param cached Suppress query if it is the same as in last query
-     * @see #getModel()
      */
     public void setQuery(Class<T> dbObject, DbQueryBuilder builder, boolean cached) throws Exception {
         this.builder = builder;
@@ -64,7 +64,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
     private synchronized void doQuery() throws Exception {
         if (builder == null) {
             // should not happen
-            setObjects(new ArrayList<T>());
+            setObjects(new ArrayList<>());
         } else {
             try {
                 // 1) query the wanted result
@@ -76,7 +76,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
                         }
                     }
                 } catch (ClassCastException cce) {
-                    Tracer.getInstance().developerWarning("Only DbSessionBeans expected: " + cce.getLocalizedMessage());
+                    log.warn("Developer warning: Only DbSessionBeans expected", cce);
                 }
 
                 if (builder.getFetchBlockSize() != DbQueryBuilder.FETCHBLOCK_UNLIMITED) {
@@ -91,7 +91,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
                 }
                 setObjects(objects);
             } catch (Exception e) {
-                Tracer.getInstance().runtimeError("Query error", e);
+                log.error("Query error", e);
                 throw e;
             }
         }
@@ -105,7 +105,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
     @Override
     public void setStep(int step) {
         if (step > maxStep) {
-            Tracer.getInstance().runtimeWarning("row max reduced to " + maxStep + "!");
+            log.warn("row max reduced to {}!", maxStep);
             super.setStep(maxStep);
         } else {
             super.setStep(step);
@@ -119,7 +119,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
      */
     public void setMaxStep(int maxStep) {
         if (maxStep < 1) {
-            Tracer.getInstance().developerWarning("maxStep must be > 0");
+            log.warn("Developer warning: maxStep must be > 0");
             this.maxStep = 50;
         }
         this.maxStep = maxStep;
@@ -140,7 +140,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
             }
         } catch (Exception e) {
             // should not happen
-            Tracer.getInstance().developerWarning(e.getLocalizedMessage());
+            log.warn("Developer warning", e);
             return " ";
         }
     }
@@ -157,7 +157,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
             }
             return super.getLast();
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("query with FETCHBLOCK_UNLIMITED failed", e);
+            log.error("query with FETCHBLOCK_UNLIMITED failed", e);
             return null;
         }
     }
@@ -185,7 +185,7 @@ public class FetchBlockDataBrowser<T extends DbObject> extends DataBrowser<T> {
                 return super.getNext();
             }
         } catch (Exception e) {
-            Tracer.getInstance().runtimeError("query with fetchblock+step limit failed", e);
+            log.error("query with fetchblock+step limit failed", e);
             return null;
         }
     }

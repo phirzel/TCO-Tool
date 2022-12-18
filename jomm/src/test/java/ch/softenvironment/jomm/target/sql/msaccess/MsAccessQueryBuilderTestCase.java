@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.target.sql.ms_access;
+package ch.softenvironment.jomm.target.sql.msaccess;
 /*
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 /**
  * Test MsAccessQueryBuilder.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class MsAccessQueryBuilderTestCase extends TestCase {
 
@@ -36,11 +36,11 @@ public class MsAccessQueryBuilderTestCase extends TestCase {
     }
 
     public void testSELECT() {
-        DbQueryBuilder builder = new MsAccessQueryBuilder(server, Integer.valueOf(DbQueryBuilder.SELECT), "Test SELECT");
+        DbQueryBuilder builder = new MsAccessQueryBuilder(server, DbQueryBuilder.SELECT, "Test SELECT");
         builder.setAttributeList("*");
         builder.setTableList("MYTABLE");
-        builder.addFilter("MYATTR", Long.valueOf(3));
+        builder.addFilter("MYATTR", 3L);
 
-        assertTrue("DbQueryBuilder", "SELECT * FROM MYTABLE WHERE (MYATTR=3)".equals(builder.getQuery()));
+        assertEquals("DbQueryBuilder", "SELECT * FROM MYTABLE WHERE (MYATTR=3)", builder.getQuery());
     }
 }

@@ -23,6 +23,7 @@ import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetContext;
 import java.awt.dnd.DropTargetDragEvent;
@@ -35,7 +36,7 @@ import javax.swing.tree.TreePath;
 /**
  * Listener for Mouse-Drop within a JTree.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class TreeDropTarget implements DropTargetListener {
 
@@ -61,7 +62,7 @@ class TreeDropTarget implements DropTargetListener {
     }
 
     /**
-     * @see #dragEnter()
+     * @see #dragEnter(DropTargetDragEvent)
      */
     @Override
     public void dragOver(DropTargetDragEvent dtde) {
@@ -83,7 +84,7 @@ class TreeDropTarget implements DropTargetListener {
     /**
      * Only MOVE supported.
      *
-     * @see TreeDragSource#dragGestureRecognized()
+     * @see TreeDragSource#dragGestureRecognized(DragGestureEvent)
      */
     @Override
     public void drop(DropTargetDropEvent dtde) {

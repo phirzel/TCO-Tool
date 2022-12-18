@@ -17,11 +17,11 @@ package ch.softenvironment.jomm.target.xml;
  */
 
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -32,8 +32,9 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * Decodes an XML-Stream to an Object using an XMLReader. Make sure there is a XMLReader-Implementation in your build.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 class XmlDecoder {
 
 	private XMLReader parser = null;
@@ -72,8 +73,7 @@ class XmlDecoder {
 				parser = XMLReaderFactory.createXMLReader(xmlReaderImpl);
 			}
 			// parser.setFeature("http://xml.org/sax/features/validation",true);
-			Tracer.getInstance().logBackendCommand(
-				"XMLReader instantiated: " + parser.getClass().getName());
+			log.info("XMLReader instantiated: {}", parser.getClass().getName());
 		} catch (SAXException exSax) {
 			throw new IOException("Unable to create the desired XML-Parser: "
 				+ xmlReaderImpl);
@@ -123,26 +123,11 @@ class XmlDecoder {
 			if (exSax.getException() != null) {
 				ex = exSax.getException();
 			}
-			Tracer.getInstance().runtimeError(
-				"Err@line: " + exSax.getLineNumber() + " System ID: "
-					+ exSax.getSystemId() + " Msg: "
-					+ ex.getLocalizedMessage());
+			log.error("Err@line: {} System ID: {}  Msg: {}", exSax.getLineNumber(), exSax.getSystemId(), ex);
 			throw new IOException(ex.getMessage());
-		} catch (SAXException exSax) {
-			Exception ex = exSax;
-			if (exSax.getException() != null) {
-				ex = exSax.getException();
-				Tracer.getInstance().runtimeError(
-					"SAXException: " + ex.getLocalizedMessage());
-			}
-			if (ex instanceof java.lang.reflect.InvocationTargetException) {
-				ex = ex;
-				Tracer.getInstance().runtimeError(
-					"InvocationTargetException: "
-						+ ex.getLocalizedMessage());
-			}
+		} catch (SAXException ex) {
+			log.error("Parsing fault", ex);
 
-			// ex.printStackTrace();
 			throw ex;
 		}
 		// return object;

@@ -28,16 +28,18 @@ import ch.softenvironment.view.DetailView;
 import ch.softenvironment.view.ViewOptions;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import java.util.List;
+import javax.swing.JPopupMenu;
 
 /**
  * Show a DbCode in a ComboBox and provide New/Change/Remove-Buttons to manipulate the given code-items. Simple codes (having a DbNlsString name property only) can be managed with this view. Extended
  * codes (other properties than #name) can be viewed with a registered DetailView.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class DbCodeManageView extends ch.softenvironment.view.BasePanel implements ch.softenvironment.view.SearchView, DetailView {
 
     private java.util.List<? extends DbCodeType> codes = null;
@@ -133,7 +135,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
      * Assign the selected Objects in a SearchTable to the caller.
      *
      * @throws Throwable Handled by this GUI-Method.
-     * @see DbTableModel
+     * @see ch.softenvironment.jomm.mvc.controller.DbTableModel
      */
     @Override
     public void assignObjects() {
@@ -142,7 +144,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
     /**
      * Change the currently selected code in ComboBox.
      *
-     * @see BaseFrame#genericPopupDisplay(..)
+     * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -370,7 +372,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnChange().addActionListener(ivjEventHandler);
@@ -511,7 +513,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
      * Search for Objects.
      *
      * @throws Throwable Handled by this GUI-Method.
-     * @see DbTableModel#setQuery(..)
+     * @see ch.softenvironment.jomm.mvc.controller.DbTableModel #setQuery(..)
      */
     @Override
     public void searchObjects() {

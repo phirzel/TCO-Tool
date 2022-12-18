@@ -37,13 +37,13 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Find-dialog to search for name-String's in Configuration.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class FindDialog extends ch.softenvironment.view.BaseDialog implements ch.softenvironment.view.SearchView, javax.swing.event.HyperlinkListener {
 
     private JEditorPane editor = null;
-    private List<String> searchList = new ArrayList<String>();  //  @jve:decl-index=0:
+    private List<String> searchList = new ArrayList<>();  //  @jve:decl-index=0:
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
     private javax.swing.JButton ivjBtnCancel = null;
     private javax.swing.JButton ivjBtnSearch = null;
@@ -112,7 +112,7 @@ public class FindDialog extends ch.softenvironment.view.BaseDialog implements ch
      * @param viewOptions
      * @param undefinedCode "*_UNDEFINED" code
      * @see HTMLReportFrame#hyperlinkUpdate(HyperlinkEvent)
-     * @see Calculator#*_UNDEFINED
+     * @see org.tcotool.tools.Calculator #*_UNDEFINED
      */
     public FindDialog(java.awt.Frame owner, ViewOptions viewOptions, final String undefinedCode) {
         super(owner, false, viewOptions);
@@ -753,7 +753,7 @@ public class FindDialog extends ch.softenvironment.view.BaseDialog implements ch
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getBtnCancel().addActionListener(ivjEventHandler);

@@ -16,7 +16,7 @@ package ch.softenvironment.util;
  * Reflection-Utility for JavaBeans. Encapsulates an Object's property according to Java Beans Specification, by means a Property is defined usually as follows, if MyObject has a Property
  * "myProperty": -> MyObject#fieldMyProperty // field/property itself -> MyObject#setMyProperty(Object any) // the setter-Method -> MyObject#getMyProperty() // the getter-Method
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class BeanReflector<T> {
 
@@ -31,7 +31,7 @@ public class BeanReflector<T> {
 	/**
 	 * Determine whether given son inherits from predecessor somewhere in inheritance chain.
 	 */
-	public static final boolean isInherited(java.lang.Class<?> son, Class<?> predecessor) {
+	public static boolean isInherited(java.lang.Class<?> son, Class<?> predecessor) {
 		java.lang.Class<?> current = son;
 		while ((current != Object.class) && (current != null /*
 		 * simple types such

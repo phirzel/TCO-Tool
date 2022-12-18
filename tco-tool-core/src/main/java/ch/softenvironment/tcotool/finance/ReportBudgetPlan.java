@@ -42,7 +42,7 @@ import org.tcotool.tools.TreeToolListener;
 /**
  * Utility to report a financial Budget-Plan as Plugin for TCO-Tool in HTML or CSV. Design Pattern: Visitor
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 class ReportBudgetPlan extends ReportTool implements TreeToolListener {
 

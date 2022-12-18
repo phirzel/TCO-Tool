@@ -33,9 +33,9 @@ import org.tcotool.tools.ModelUtility;
 /**
  * DetailView of Fact-Costs.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView, java.beans.PropertyChangeListener {
 
     private ch.softenvironment.view.DetailView caller = null;
@@ -2603,7 +2603,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         getPnlStandardToolbar().addPropertyChangeListener(ivjEventHandler);

@@ -20,7 +20,7 @@ import ch.softenvironment.jomm.DbObjectServer;
 /**
  * Registry of all persistent Classes for JOMM.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public abstract class TcotoolUtility {
 

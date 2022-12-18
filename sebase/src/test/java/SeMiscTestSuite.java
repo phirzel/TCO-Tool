@@ -5,7 +5,7 @@ import junit.framework.TestSuite;
 /**
  * Run this class for all these TestCases.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class SeMiscTestSuite extends junit.framework.TestSuite {
 

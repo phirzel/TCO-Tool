@@ -5,7 +5,7 @@ import ch.softenvironment.licence.vendor.LicenceGenerator;
 /**
  * TestCase for LicenceChecker.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class LicenceCheckerTestCase extends junit.framework.TestCase {
 

@@ -29,7 +29,7 @@ import org.tcotool.pluginsupport.MenuExtension;
 /**
  * Free <i>soft</i>Environment Plugins (might serve as sample). PLUGIN_ID = "ch.softenvironment.tcotool.finance";
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class FinancePlugin implements org.tcotool.pluginsupport.Plugin, org.tcotool.pluginsupport.Menu {
 

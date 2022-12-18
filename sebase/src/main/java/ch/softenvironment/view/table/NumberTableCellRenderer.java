@@ -17,13 +17,15 @@ package ch.softenvironment.view.table;
  */
 
 import ch.softenvironment.math.MathUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Format a Number value as formatted String in a JTable-Cell.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 public class NumberTableCellRenderer extends javax.swing.table.DefaultTableCellRenderer {
 
 	java.text.NumberFormat numberFormat = null;
@@ -58,7 +60,7 @@ public class NumberTableCellRenderer extends javax.swing.table.DefaultTableCellR
 				setText((value == null) ? "" : numberFormat.format(value));
 			}
 		} catch (ClassCastException e) {
-			ch.softenvironment.util.Tracer.getInstance().developerError("Number value expected for: " + value);
+			log.error("Developer error: Number value expected for: {}", value);
 		}
 	}
 }

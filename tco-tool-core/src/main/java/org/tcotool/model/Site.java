@@ -9,7 +9,7 @@ import ch.softenvironment.jomm.mvc.model.DbCode;
 /**
  * Production site.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public final class Site extends DbCode {
 
@@ -23,9 +23,10 @@ public final class Site extends DbCode {
 
     /**
      * Return the database mappings for this persistence object.
+     * <p>
+     * see ch.softenvironment.jomm.DbConnection.addDescriptor()
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<DbCode> dbCode*/) {
         DbDescriptor descriptor = DbCode.createDefaultDescriptor(Site.class);

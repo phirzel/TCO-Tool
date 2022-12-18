@@ -23,7 +23,7 @@ import ch.softenvironment.jomm.target.sql.SqlMapper;
 /**
  * Specific Target-Mapper for PostgreSQL.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
 public class PostgreSqlMapper extends SqlMapper {
 
@@ -39,6 +39,6 @@ public class PostgreSqlMapper extends SqlMapper {
         DbQueryBuilder builder = ((DbObjectServer) objectServer).createQueryBuilder(DbQueryBuilder.RAW, "Create UNIQUE ID (PostgreSQL SEQUENCE)");
         builder.setRaw("SELECT nextval('" /*+<SCHEMA>.*/ + DbMapper.ATTRIBUTE_KEY_TABLE + "_" + key + "')");
         Number tmp = (Number) ((DbObjectServer) objectServer).getFirstValue(builder);
-        return Long.valueOf(tmp.longValue());
+        return tmp.longValue();
     }
 }

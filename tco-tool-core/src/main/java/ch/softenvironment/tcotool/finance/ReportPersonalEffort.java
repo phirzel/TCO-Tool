@@ -22,11 +22,11 @@ import ch.softenvironment.jomm.serialize.AttributeList;
 import ch.softenvironment.tcotool.tco.TCOPlugin;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.Tracer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.PersonalCostDetailView;
 import org.tcotool.application.RoleDetailView;
@@ -48,8 +48,9 @@ import org.tcotool.tools.TreeToolListener;
 /**
  * Utility to report Personal-Efforts as Plugin for TCO-Tool in HTML or CSV.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class ReportPersonalEffort extends ReportTool implements TreeToolListener {
 
     private static final String KEY_INTERN_HOURS = "INTERN_H";
@@ -218,7 +219,7 @@ public class ReportPersonalEffort extends ReportTool implements TreeToolListener
             endTableRow();
             endTable();
         } catch (Exception e) {
-            Tracer.getInstance().runtimeWarning(e.getLocalizedMessage());
+            log.warn("", e);
         }
         endParagraph();
 

@@ -15,9 +15,9 @@ package ch.softenvironment.view.swingext;
  * Extended JTextField to show a java.util.Date. Allows visual connection of Attribute-to-Attribute connection from e.g. a Date-Property of a Model to this Components value-Property. Make sure to
  * trigger <b>propertyChange</b>-Event "date" from this Component towards the Model. The Model will be updated at focusLost-Event. The expected format is shown as ToolTip.
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
-@SuppressWarnings("serial")
+
 public class DateTextField extends javax.swing.JTextField {
 
     IvjEventHandler ivjEventHandler = new IvjEventHandler();
@@ -44,8 +44,8 @@ public class DateTextField extends javax.swing.JTextField {
 
     /**
      * DateTextField constructor comment for date with pattern "dd.MM.yyyy".
-     *
-     * @see ch.softenvironment.util.NlsUtils.DATE_EUROPE_PATTERN (default Date-pattern)
+     * <p>
+     * see ch.softenvironment.util.NlsUtils#DATE_EUROPE_PATTERN (default Date-pattern)
      */
     public DateTextField() {
         this("dd.MM.yyyy");
@@ -129,7 +129,7 @@ public class DateTextField extends javax.swing.JTextField {
      * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
-    private void initConnections() throws java.lang.Exception {
+    private void initConnections() {
         // user code begin {1}
         // user code end
         this.addKeyListener(ivjEventHandler);

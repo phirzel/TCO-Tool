@@ -1,6 +1,6 @@
 package org.tcotool.standard.drawing;
 
-import ch.softenvironment.util.Tracer;
+import lombok.extern.slf4j.Slf4j;
 import org.jhotdraw.framework.Figure;
 import org.jhotdraw.framework.FigureEnumeration;
 
@@ -8,8 +8,9 @@ import org.jhotdraw.framework.FigureEnumeration;
  * Layout algorithm to auto-layout several nodes in 2D space.
  *
  * @author ce
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class Layout {
 
     // TODO make this class reusable for other similar graphic-tasks
@@ -19,24 +20,24 @@ public class Layout {
     private static final double delta4 = 100.0;// edge crossing
     private static final double delta10 = 0.75;// cooling 0.6..0.95
     private static final double delta11 = 0.75;// cooling 0.6..0.95
-    private double min_x;
-    private double max_x;
-    private double min_y;
-    private double max_y;
+    private double minX;
+    private double maxX;
+    private double minY;
+    private double maxY;
     private double maxdist;
     private java.util.List<NodeFigure> nodev;
     private java.util.List<EdgeFigure> edgev;
-    private int oldpos_i;
-    private double oldpos_x;
-    private double oldpos_y;
+    private int oldposI;
+    private double oldposX;
+    private double oldposY;
 
     private double borderline() {
         double sum = 0.0;
         for (int i = 0; i < nodev.size(); i++) {
-            double dx1 = getNode(i).getEast() - min_x;
-            double dy1 = getNode(i).getSouth() - min_y;
-            double dx2 = max_x - getNode(i).getEast();
-            double dy2 = max_y - getNode(i).getSouth();
+            double dx1 = getNode(i).getEast() - minX;
+            double dy1 = getNode(i).getSouth() - minY;
+            double dx2 = maxX - getNode(i).getEast();
+            double dy2 = maxY - getNode(i).getSouth();
             double f = 0.0;
             if (dx1 != 0.0) {
                 f = f + 1.0 / dx1 / dx1;
@@ -96,23 +97,23 @@ public class Layout {
 
         // ch.softenvironment.util.Tracer.getInstance().debug(dumpNodes());
 
-        maxdist = getdist(min_x, min_y, max_x, max_y);
+        maxdist = getdist(minX, minY, maxX, maxY);
         double radius = maxdist / 2.0;
         double e = cost();
         double ep;
-        int max_stages = 10;
-        int nodev_size = nodev.size();
-        int max_trials = 30 * nodev_size;
-        if (nodev_size > 30) {
-            max_stages = (int) Math.sqrt(10000.0 / (double) nodev_size / 2.0);
+        int maxStages = 10;
+        int nodevSize = nodev.size();
+        int maxTrials = 30 * nodevSize;
+        if (nodevSize > 30) {
+            maxStages = (int) Math.sqrt(10000.0 / (double) nodevSize / 2.0);
             // ch.softenvironment.util.Tracer.getInstance().debug("max_stages "+Integer.toString(max_stages));
-            max_trials = nodev_size;
+            maxTrials = nodevSize;
             // TODO should throw an exception
-            Tracer.getInstance().runtimeWarning("stop layout; would run too long");
+            log.warn("stop layout; would run too long");
             return;
         }
-        for (int stages = 0; stages < max_stages; stages++) {
-            for (int trials = 0; trials < max_trials; trials++) {
+        for (int stages = 0; stages < maxStages; stages++) {
+            for (int trials = 0; trials < maxTrials; trials++) {
                 neighborhood(radius);
                 ep = cost();
                 // ch.softenvironment.util.Tracer.getInstance().debug("ep "+Double.toString(ep)+"; e "+Double.toString(e));
@@ -136,7 +137,7 @@ public class Layout {
     /**
      * Layout the Figures within the given view.
      *
-     * @param diagView
+     * @param view
      */
     public static void doLayout(DependencyView view) {
         java.util.Vector<EdgeFigure> edgev = new java.util.Vector<EdgeFigure>(30);
@@ -274,10 +275,10 @@ public class Layout {
         Layout utility = new Layout();
         utility.nodev = nodev;
         utility.edgev = edgev;
-        utility.min_x = min_x1;
-        utility.min_y = min_y1;
-        utility.max_x = max_x1;
-        utility.max_y = max_y1;
+        utility.minX = min_x1;
+        utility.minY = min_y1;
+        utility.maxX = max_x1;
+        utility.maxY = max_y1;
         // double cx=(max_x-min_x)/2.0;
         // double cy=(max_y-min_y)/2.0;
         // center all nodes
@@ -289,43 +290,43 @@ public class Layout {
     }
 
     private void moveback() {
-        int i = oldpos_i;
-        getNode(i).setEast((int) (oldpos_x));
-        getNode(i).setSouth((int) (oldpos_y));
+        int i = oldposI;
+        getNode(i).setEast((int) (oldposX));
+        getNode(i).setSouth((int) (oldposY));
     }
 
     private void neighborhood(double radius) {
-        int new_x;
-        int new_y;
-        NodeFigure node = null;
+        int newX;
+        int newY;
+        NodeFigure node;
         do {
             int i;
             double alpha;
             do {
                 i = random(0, nodev.size() - 1);
                 alpha = random(0, 7) * 50.0 / 400.0 * 2.0 * Math.PI;
-                oldpos_i = i;
+                oldposI = i;
                 node = getNode(i);
             } while (!node.isMoveable());
-            oldpos_x = node.getEast();
-            oldpos_y = node.getSouth();
-            new_x = ((int) (node.getEast() + radius * Math.cos(alpha)));
-            new_y = ((int) (node.getSouth() + radius * Math.sin(alpha)));
-            if (new_x < min_x) {
-                new_x = ((int) (min_x));
+            oldposX = node.getEast();
+            oldposY = node.getSouth();
+            newX = ((int) (node.getEast() + radius * Math.cos(alpha)));
+            newY = ((int) (node.getSouth() + radius * Math.sin(alpha)));
+            if (newX < minX) {
+                newX = ((int) (minX));
             }
-            if (new_y < min_y) {
-                new_y = ((int) (min_y));
+            if (newY < minY) {
+                newY = ((int) (minY));
             }
-            if (new_x > max_x) {
-                new_x = ((int) (max_x));
+            if (newX > maxX) {
+                newX = ((int) (maxX));
             }
-            if (new_y > max_y) {
-                new_y = ((int) (max_y));
+            if (newY > maxY) {
+                newY = ((int) (maxY));
             }
-        } while (new_x == oldpos_x && new_y == oldpos_y);
-        node.setEast(new_x);
-        node.setSouth(new_y);
+        } while (newX == oldposX && newY == oldposY);
+        node.setEast(newX);
+        node.setSouth(newY);
     }
 
     private double nodeDistribution() {

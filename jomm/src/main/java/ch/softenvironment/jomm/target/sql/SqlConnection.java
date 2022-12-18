@@ -15,13 +15,14 @@ package ch.softenvironment.jomm.target.sql;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.util.Tracer;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  */
+@Slf4j
 public class SqlConnection extends ch.softenvironment.jomm.DbConnection {
 
     private String password = null;
@@ -45,9 +46,9 @@ public class SqlConnection extends ch.softenvironment.jomm.DbConnection {
                 pop(getObjectServer().getPersistenceManagerFactory().getConnectionURL());
                 getJdbcConnection().close();
             }
-            Tracer.getInstance().logBackendCommand("Database Connection closed for URL: " + getObjectServer().getPersistenceManagerFactory().getConnectionURL());
+            log.info("Database Connection closed for URL: {}", getObjectServer().getPersistenceManagerFactory().getConnectionURL());
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("closing", e);
+            log.error("closing", e);
             throw new javax.jdo.JDOFatalException("SqlConnection.close()", e);
         }
     }
@@ -71,7 +72,7 @@ public class SqlConnection extends ch.softenvironment.jomm.DbConnection {
             this.password = password; /* NASTY: needed for reconnect */
 
             setConnection(userId, password);
-            Tracer.getInstance().logBackendCommand("Database Connection opened for URL: " + getObjectServer().getPersistenceManagerFactory().getConnectionURL());
+            log.info("Database Connection opened for URL: {}", getObjectServer().getPersistenceManagerFactory().getConnectionURL());
 /*		
 		if (getJdbcConnection() instanceof sun.jdbc.odbc.JdbcOdbcConnection) {
 			Tracer.getInstance().logBackendCommand("ODBC-Version = " + ((sun.jdbc.odbc.JdbcOdbcConnection)getJdbcConnection()).getODBCVer());
@@ -79,7 +80,7 @@ public class SqlConnection extends ch.softenvironment.jomm.DbConnection {
 */
             push(this);
         } catch (SQLException e) {
-            Tracer.getInstance().runtimeError("cannot connect to Target-System by url: " + getObjectServer().getPersistenceManagerFactory().getConnectionURL(), e);
+            log.error("cannot connect to Target-System by url: {}", getObjectServer().getPersistenceManagerFactory().getConnectionURL(), e);
             throw new javax.jdo.JDOFatalException("SqlConnection.open()", e);
         }
     }
@@ -92,7 +93,7 @@ public class SqlConnection extends ch.softenvironment.jomm.DbConnection {
             getJdbcConnection().close();
         } catch (Exception e) {
             //ignore connection might be dead anyway
-            Tracer.getInstance().runtimeWarning("could not close JDBC-connection at reconnecting: " + e.getLocalizedMessage());
+            log.warn("could not close JDBC-connection at reconnecting", e);
         }
         setConnection(getObjectServer().getUserId(), password /*NASTY*/);
     }

@@ -19,7 +19,6 @@ package org.tcotool.standard.drawing;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.Tracer;
 import ch.softenvironment.view.ColorChooserDialog;
 import ch.softenvironment.view.CommonUserAccess;
 import java.awt.Color;
@@ -32,6 +31,7 @@ import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
+import lombok.extern.slf4j.Slf4j;
 import org.jhotdraw.contrib.GraphicalCompositeFigure;
 import org.jhotdraw.figures.AttributeFigure;
 import org.jhotdraw.figures.TextFigure;
@@ -54,10 +54,11 @@ import org.tcotool.tools.ModelUtility;
 /**
  * Figure Specification for all Elements treated as Nodes (analog a Class Symbol in an UML-Class-Diagram).
  *
- * @author Peter Hirzel, softEnvironment GmbH
+ * @author Peter Hirzel
  * @see EdgeFigure
  */
-@SuppressWarnings("serial")
+
+@Slf4j
 abstract class NodeFigure extends GraphicalCompositeFigure {
 
 	private DependencyView view = null;
@@ -334,7 +335,7 @@ abstract class NodeFigure extends GraphicalCompositeFigure {
 	 */
 	protected void handleException(Exception exception) {
 		try {
-			Tracer.getInstance().developerWarning(exception.getLocalizedMessage());
+			log.warn("Developer warning", exception);
 			LauncherView.getInstance().handleException(exception);
 		} finally {
 			// just make sure this won't fail any further
@@ -396,8 +397,8 @@ abstract class NodeFigure extends GraphicalCompositeFigure {
 
 	/**
 	 * Line-Color Action.
-	 *
-	 * @see addEditMenu(..)
+	 * <p>
+	 * see #addEditMenu(..)
 	 */
 	@Deprecated
 	private void mniLineColor() {
@@ -450,7 +451,7 @@ abstract class NodeFigure extends GraphicalCompositeFigure {
 	 * Set the Fill Color.
 	 *
 	 * @see EdgeFigure
-	 * @see #setAttribute(..)
+	 * @see #setAttribute(FigureAttributeConstant, Object)
 	 */
 	protected void setFillColor(java.awt.Color color) {
 		setAttribute(FigureAttributeConstant.FILL_COLOR, color);
@@ -464,7 +465,7 @@ abstract class NodeFigure extends GraphicalCompositeFigure {
 	 * Set the Line/Frame Color.
 	 *
 	 * @see EdgeFigure
-	 * @see setAttribute(..)
+	 * @see #setAttribute(FigureAttributeConstant, Object)
 	 */
 	protected void setLineColor(java.awt.Color color) {
 		setAttribute(FigureAttributeConstant.FRAME_COLOR, color);
