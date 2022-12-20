@@ -29,8 +29,6 @@
         <javac destdir="${build}/classes" includes="**/*.java" excludes="**/test/*.java" source="8"
                target="1.8">
             <classpath>
-                <!--pathelement location="../sebase/lib/ehibasics.jar"/-->
-                <pathelement location="lib/ehibasics.jar"/>
                 <!--pathelement location="../sebase/build/jar/sebase.jar"/-->
                 <pathelement location="lib/sebase.jar"/>
                 <pathelement location="lib/jta.jar"/>

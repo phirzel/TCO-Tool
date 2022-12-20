@@ -16,18 +16,19 @@ package ch.softenvironment.jomm.target.sql.msaccess;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.view.GenericFileFilter;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.StringUtils;
-import java.util.Collection;
-import java.util.Set;
+import ch.softenvironment.view.GenericFileFilter;
+
 import javax.jdo.FetchGroup;
 import javax.jdo.PersistenceManager;
 import javax.jdo.datastore.DataStoreCache;
 import javax.jdo.listener.InstanceLifecycleListener;
 import javax.jdo.metadata.JDOMetadata;
 import javax.jdo.metadata.TypeMetadata;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * JDO-Implementation of an MS-Access Factory.

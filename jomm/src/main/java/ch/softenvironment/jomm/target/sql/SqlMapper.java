@@ -16,36 +16,18 @@ package ch.softenvironment.jomm.target.sql;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.DbMapper;
-import ch.softenvironment.jomm.DbObjectId;
-import ch.softenvironment.jomm.DbObjectServer;
-import ch.softenvironment.jomm.DbQuery;
-import ch.softenvironment.jomm.DbQueryBuilder;
-import ch.softenvironment.jomm.DbTransaction;
+import ch.softenvironment.jomm.*;
 import ch.softenvironment.jomm.datatypes.DbNlsString;
-import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
-import ch.softenvironment.jomm.descriptor.DbDescriptor;
-import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
-import ch.softenvironment.jomm.descriptor.DbFieldType;
-import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
+import ch.softenvironment.jomm.descriptor.*;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
 import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
 import ch.softenvironment.jomm.mvc.model.DbObject;
-import ch.softenvironment.util.BeanReflector;
-import ch.softenvironment.util.DeveloperException;
-import ch.softenvironment.util.NlsUtils;
-import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.util.UserException;
+import ch.softenvironment.util.*;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
 
 /**
  * Map <b>Entities from SQL-Target-DBMS</b> to <b>Java Objects</b> and vice versa. The <b>different types are mapped from one world to the other</b>. Also the technical Fields like T_* are considered
@@ -331,7 +313,7 @@ public class SqlMapper implements DbMapper {
 			if (((ResultSet) collection).wasNull()) {
 				return null;
 			} else {
-				return new Double(value);
+				return Double.valueOf(value);
 			}
 		} catch (SQLException e) {
 			throw new DeveloperException("Failed to map attribute <"
@@ -916,7 +898,7 @@ public class SqlMapper implements DbMapper {
 				return mapToTarget((DbFieldType) value);
 			}
 
-			throw new DeveloperException("Return Type <" + type.toString()
+			throw new DeveloperException("Return Type <" + type
 				+ "> for <" + change.getSource() + " => getter <"
 				+ change.getProperty() + "> not yet mapped");
 		} catch (Exception e) {
@@ -997,7 +979,7 @@ public class SqlMapper implements DbMapper {
 					return date;
 				}
 				case DbDateFieldDescriptor.TIME: {
-					return "'" + (new java.sql.Time(value.getTime())).toString()
+					return "'" + (new java.sql.Time(value.getTime()))
 						+ "'";
 					// java.text.SimpleDateFormat sf = new
 					// java.text.SimpleDateFormat(NlsUtils.TIME_24HOURS_PATTERN);

@@ -20,11 +20,7 @@ import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.math.MathUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.FactCostDetailView;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.TcoObject;
+import org.tcotool.model.*;
 
 /**
  * Format-Tool for Table's in *DetailView.
@@ -52,7 +48,7 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 	private Double costDriverMultitude = null;
 	private double totalCost = 0.0;
 
-	protected static final Double NOT_AVAILABLE = new Double(-1.0);
+	protected static final Double NOT_AVAILABLE = Double.valueOf(-1.0);
 
 	/**
 	 * CostDriverFormatter constructor comment.
@@ -75,18 +71,18 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 			double factor = ModelUtility.getMultitudeFactor((CostDriver) owner);
 			if (property.equals(COSTDRIVER_FACT_COST)) {
 				if (factor > 0.0) {
-					return new Double(sums[0] / factor);
+                    return Double.valueOf(sums[0] / factor);
 				} else {
-					return new Double(0.0);
+                    return Double.valueOf(0.0);
 				}
 			} else if (property.equals(COSTDRIVER_PERSONAL_COST)) {
 				if (factor > 0.0) {
-					return new Double(sums[1] / factor);
+                    return Double.valueOf(sums[1] / factor);
 				} else {
-					return new Double(0.0);
+                    return Double.valueOf(0.0);
 				}
 			} else if (property.equals(COSTDRIVER_TOTAL)) {
-				return new Double(total);
+                return Double.valueOf(total);
 			} else if (property.equals(COSTDRIVER_CURRENCY)) {
 				try {
 					return utility.getSystemParameter().getDefaultCurrency().getNameString(ModelUtility.getCodeTypeLocale());
@@ -98,14 +94,14 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 				if (totalCostDriver == 0.0) {
 					return NOT_AVAILABLE;
 				} else {
-					return new Double(MathUtils.fix(100.0 / totalCostDriver * total, 1));
+                    return Double.valueOf(MathUtils.fix(100.0 / totalCostDriver * total, 1));
 				}
 			}
 		} else if (owner instanceof org.tcotool.model.Cost) {
 			Cost cost = (Cost) owner;
 			double total = cost.getAmount() == null ? 0.0 : cost.getAmount().doubleValue();
 			if (property.equals(COST_TOTAL)) {
-				return new Double(ModelUtility.getMultitudeFactor(cost) * total);
+                return Double.valueOf(ModelUtility.getMultitudeFactor(cost) * total);
 			} else if (property.equals(COST_TYPE)) {
 				if (cost instanceof FactCost) {
 					return ResourceManager.getResource(Formatter.class, "CIFactCostAbbreviation");
@@ -119,8 +115,8 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 					if ((costDriverMultitude == null) || (costDriverMultitude.doubleValue() == 0.0)) {
 						return NOT_AVAILABLE;
 					} else {
-						return new Double(MathUtils.fix(
-							100.0 / (totalCost / costDriverMultitude.doubleValue()) * (total * ModelUtility.getMultitudeFactor(cost)), 1));
+                        return Double.valueOf(MathUtils.fix(
+                                100.0 / (totalCost / costDriverMultitude.doubleValue()) * (total * ModelUtility.getMultitudeFactor(cost)), 1));
 					}
 				}
 			} else if (property.equals("currency")) {
@@ -140,11 +136,11 @@ public class Formatter implements ch.softenvironment.util.Evaluator {
 				return ModelUtility.getTypeString(supplier.getClass());
 			} else if (property.equals(SUPPLIER_COST)) {
 				org.tcotool.tools.Calculator calculator = new org.tcotool.tools.CalculatorTco(utility);
-				return new Double(calculator.calculateOverallCosts(supplier));
+                return Double.valueOf(calculator.calculateOverallCosts(supplier));
 			} else if (property.equals(SUPPLIER_CLIENT_COST)) {
 				org.tcotool.tools.Calculator calculator = new org.tcotool.tools.CalculatorTco(utility);
 				double cost = calculator.calculateOverallCosts(supplier);
-				return new Double(MathUtils.fix(cost / 100.0 * ((Dependency) owner).getDistribution().doubleValue(), 1));
+                return Double.valueOf(MathUtils.fix(cost / 100.0 * ((Dependency) owner).getDistribution().doubleValue(), 1));
 			}
 		}
 

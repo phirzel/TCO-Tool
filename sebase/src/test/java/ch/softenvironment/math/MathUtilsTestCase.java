@@ -30,70 +30,70 @@ public class MathUtilsTestCase extends TestCase {
 
     public void testLog2() {
         double log2 = MathUtils.ld(4.0);
-        assertTrue(log2 == 2.0);
+        assertEquals(2.0, log2);
         log2 = MathUtils.ld(8.0);
-        assertTrue(log2 == 3.0);
+        assertEquals(3.0, log2);
     }
 
     public void testFix() {
-        assertTrue(MathUtils.fix(0.0, 0) == 0.0);
-        assertTrue(MathUtils.fix(0.0, 2) == 0.0);
-        assertTrue(MathUtils.fix(12.896, 2) == 12.89);
-        assertTrue(MathUtils.fix(-76.89667, 4) == -76.8966);
-        assertTrue(MathUtils.fix(30.989, 1) == 30.9);
-        assertTrue(MathUtils.fix(-76.89667, 0) == -76.0);
+        assertEquals(0.0, MathUtils.fix(0.0, 0));
+        assertEquals(0.0, MathUtils.fix(0.0, 2));
+        assertEquals(12.89, MathUtils.fix(12.896, 2));
+        assertEquals(-76.8966, MathUtils.fix(-76.89667, 4));
+        assertEquals(30.9, MathUtils.fix(30.989, 1));
+        assertEquals(-76.0, MathUtils.fix(-76.89667, 0));
     }
 
     public void testRound() {
-        assertTrue(MathUtils.round(0.0, 0) == 0.0);
-        assertTrue(MathUtils.round(0.0, 2) == 0.0);
-        assertTrue(MathUtils.round(12.876, 2) == 12.88);
-        assertTrue(MathUtils.round(-76.89667, 4) == -76.8967);
-        assertTrue(MathUtils.round(30.989, 1) == 31.0);
-        assertTrue(MathUtils.round(-76.89667, 0) == -77.0);
-        assertTrue(MathUtils.round(303.33333333333333333, 2) == 303.33);
-        assertTrue("round(double)", MathUtils.round(12345.5698, 2) == 12345.57);
-        assertTrue("round(double)", MathUtils.round(12345.403, 2) == 12345.40);
-        assertTrue("round(double)", MathUtils.round(12345.9, 2) == 12345.9);
-        assertTrue("round(double)", MathUtils.round(0.0, 2) == 0.0);
-        assertTrue("round(double)", MathUtils.round(1.23, 2) == 1.23);
-        assertTrue("round(double)", MathUtils.round(1.24, 2) == 1.24);
-        assertTrue("round(double)", MathUtils.round(1.25, 2) == 1.25);
-        assertTrue("round(double)", MathUtils.round(1.26, 2) == 1.26);
+        assertEquals(0.0, MathUtils.round(0.0, 0));
+        assertEquals(0.0, MathUtils.round(0.0, 2));
+        assertEquals(12.88, MathUtils.round(12.876, 2));
+        assertEquals(-76.8967, MathUtils.round(-76.89667, 4));
+        assertEquals(31.0, MathUtils.round(30.989, 1));
+        assertEquals(-77.0, MathUtils.round(-76.89667, 0));
+        assertEquals(303.33, MathUtils.round(303.33333333333333333, 2));
+        assertEquals("round(double)", 12345.57, MathUtils.round(12345.5698, 2));
+        assertEquals("round(double)", 12345.40, MathUtils.round(12345.403, 2));
+        assertEquals("round(double)", 12345.9, MathUtils.round(12345.9, 2));
+        assertEquals("round(double)", 0.0, MathUtils.round(0.0, 2));
+        assertEquals("round(double)", 1.23, MathUtils.round(1.23, 2));
+        assertEquals("round(double)", 1.24, MathUtils.round(1.24, 2));
+        assertEquals("round(double)", 1.25, MathUtils.round(1.25, 2));
+        assertEquals("round(double)", 1.26, MathUtils.round(1.26, 2));
     }
 
     public void testCompare() {
         double left = 0.0;
         double right = 0.0;
-        assertTrue(MathUtils.compare(left, right) == 0);
+        assertEquals(0, MathUtils.compare(left, right));
         left = 0.0;
         right = -0.0;
-        assertTrue("0.0 == -0.0", MathUtils.compare(left, right) == 0);
+        assertEquals("0.0 == -0.0", 0, MathUtils.compare(left, right));
 
         left = 0.00239000000001;
         right = 0.00239000000002;
-        assertTrue(MathUtils.compare(left, right) == 0);
+        assertEquals(0, MathUtils.compare(left, right));
         left = 0.002394;
         right = 0.002395;
-        assertTrue(MathUtils.compare(left, right) == -1);
-        assertTrue(MathUtils.compare(right, left) == 1);
+        assertEquals(-1, MathUtils.compare(left, right));
+        assertEquals(1, MathUtils.compare(right, left));
     }
 
     public void testNegate() {
-        Double number = new Double(0.0023);
+        Double number = Double.valueOf(0.0023);
         Double res = MathUtils.negate(number);
-        assertTrue(res.equals(new Double(-0.0023)));
-        assertTrue(res.doubleValue() == -0.0023);
+        assertEquals(res, Double.valueOf(-0.0023));
+        assertEquals(-0.0023, res.doubleValue());
 
-        number = new Double(-0.0023);
+        number = Double.valueOf(-0.0023);
         res = MathUtils.negate(number);
-        assertTrue(res.equals(new Double(0.0023)));
-        assertTrue(res.doubleValue() == 0.0023);
+        assertEquals(res, Double.valueOf(0.0023));
+        assertEquals(0.0023, res.doubleValue());
 
-        number = new Double(0.0);
+        number = Double.valueOf(0.0);
         res = MathUtils.negate(number);
-        assertTrue(res.equals(new Double(0.0)));
-        assertTrue(res.doubleValue() == 0.0);
+        assertEquals(res, Double.valueOf(0.0));
+        assertEquals(0.0, res.doubleValue());
         assertTrue(res.doubleValue() >= 0.0);
     }
 }

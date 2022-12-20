@@ -17,11 +17,7 @@ package org.tcotool.tools;
  */
 
 import ch.softenvironment.math.MathUtils;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoObject;
+import org.tcotool.model.*;
 
 /**
  * Accounting calculator for "linear depreciation".
@@ -74,7 +70,7 @@ public class CalculatorLinearDepreciation extends Calculator {
 				// capital);
 
 				// 2) [1+baseOffset..n] year
-				double depreciationPerMonth = MathUtils.negate(new Double(capital / (double) depreciationDuration)).doubleValue(); // de:
+				double depreciationPerMonth = MathUtils.negate(Double.valueOf(capital / (double) depreciationDuration)).doubleValue(); // de:
 				// Abschreibungsbetrag
 				// per
 				// month

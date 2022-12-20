@@ -21,23 +21,18 @@ import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.serialize.AttributeList;
 import ch.softenvironment.tcotool.tco.TCOPlugin;
-import java.io.IOException;
-import java.util.List;
 import org.tcotool.application.FactCostDetailView;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.ServiceDetailView;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Role;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.standard.report.ReportTool;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.ModelUtility;
 import org.tcotool.tools.TreeTool;
 import org.tcotool.tools.TreeToolListener;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Utility to report a financial Budget-Plan as Plugin for TCO-Tool in HTML or CSV. Design Pattern: Visitor
@@ -57,8 +52,8 @@ class ReportBudgetPlan extends ReportTool implements TreeToolListener {
         super(utility, ResourceManager.getResource(FinancePlugin.class, "MniReportBudgetPlan_text"));
 
         duration = calcYearlyDuration(durationMonths);
-        pCost = new double[duration];
-        fCost = new double[duration];
+        pCost = Double.valueOf[duration];
+        fCost = Double.valueOf[duration];
         for (int i = 0; i < duration; i++) {
             pCost[i] = 0.0;
             fCost[i] = 0.0;

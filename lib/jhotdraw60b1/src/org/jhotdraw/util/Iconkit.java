@@ -4,7 +4,7 @@
  * Project:		JHotdraw - a GUI framework for technical drawings
  *				http://www.jhotdraw.org
  *				http://jhotdraw.sourceforge.net
- * Copyright:	© by the original author(s) and all contributors
+ * Copyright:	ï¿½ by the original author(s) and all contributors
  * License:		Lesser GNU Public License (LGPL)
  *				http://www.opensource.org/licenses/lgpl-license.html
  */
@@ -136,7 +136,7 @@ public class Iconkit {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		try {
 			URL url = getClass().getResource(resourcename);
-			if (fgDebug) {
+			if (fgDebug /*TODO HIP*/) {
 				System.out.println(resourcename);
 			}
 			return toolkit.createImage((ImageProducer) url.getContent());

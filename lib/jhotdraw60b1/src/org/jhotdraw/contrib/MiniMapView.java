@@ -4,7 +4,7 @@
  * Project:		JHotdraw - a GUI framework for technical drawings
  *				http://www.jhotdraw.org
  *				http://jhotdraw.sourceforge.net
- * Copyright:	© by the original author(s) and all contributors
+ * Copyright:	ï¿½ by the original author(s) and all contributors
  * License:		Lesser GNU Public License (LGPL)
  *				http://www.opensource.org/licenses/lgpl-license.html
  */
@@ -141,8 +141,8 @@ public class MiniMapView extends JComponent {
 	protected Rectangle getViewRectangle() {
 		Rectangle visiblePortion = m_subject.getViewportBorderBounds();
 		Point upperLeftViewPos = m_subject.getViewport().getViewPosition();
-		double [] srcRecCorners = new double[4];
-		double [] dstRecCorners = new double[4];
+		double [] srcRecCorners = Double.valueOf[4];
+		double [] dstRecCorners = Double.valueOf[4];
 
 		srcRecCorners[0] = upperLeftViewPos.x + visiblePortion.getX(); srcRecCorners[1] = upperLeftViewPos.y + visiblePortion.getY(); srcRecCorners[2] = upperLeftViewPos.x + visiblePortion.getX() + visiblePortion.getWidth(); srcRecCorners[3] = upperLeftViewPos.y + visiblePortion.getY() + visiblePortion.getHeight();
 		getViewToMiniMapTransform(getMappedComponent()).transform(srcRecCorners, 0, dstRecCorners, 0, srcRecCorners.length/2);	// transform the coordinates to MiniMapView coordinates
@@ -165,8 +165,8 @@ public class MiniMapView extends JComponent {
 			return;
 		}
 
-		double [] srcPoints = new double[2];
-		double [] destPoints = new double[2];
+		double [] srcPoints = Double.valueOf[2];
+		double [] destPoints = Double.valueOf[2];
 		srcPoints[0] = upperLeftX;
 		srcPoints[1] = upperLeftY;
 		at.transform(srcPoints, 0, destPoints, 0, 1);

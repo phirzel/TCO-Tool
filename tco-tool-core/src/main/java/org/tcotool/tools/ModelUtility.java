@@ -24,57 +24,18 @@ import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.StringUtils;
 import ch.softenvironment.util.UserException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import lombok.extern.slf4j.Slf4j;
-import org.tcotool.application.CatalogueDetailView;
-import org.tcotool.application.CostDriverDetailView;
-import org.tcotool.application.FactCostDetailView;
-import org.tcotool.application.LauncherView;
-import org.tcotool.application.ModelDetailView;
-import org.tcotool.application.NavigationView;
-import org.tcotool.application.PackageDetailView;
-import org.tcotool.application.PersonalCostDetailView;
-import org.tcotool.application.RoleDetailView;
-import org.tcotool.application.ServiceDetailView;
-import org.tcotool.model.Activity;
-import org.tcotool.model.Branch;
-import org.tcotool.model.Catalogue;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostCentre;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.CostExponent;
-import org.tcotool.model.Course;
+import org.tcotool.application.*;
 import org.tcotool.model.Currency;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.LifeCycle;
-import org.tcotool.model.Occurance;
-import org.tcotool.model.PersonalCost;
 import org.tcotool.model.Process;
-import org.tcotool.model.ProjectPhase;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Role;
-import org.tcotool.model.Service;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.Site;
-import org.tcotool.model.SupplierInfluence;
-import org.tcotool.model.SystemParameter;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.presentation.Diagram;
 import org.tcotool.presentation.PresentationElement;
 import org.tcotool.standard.report.ReportTool;
+
+import javax.swing.*;
+import java.net.URL;
+import java.util.*;
 
 /**
  * Utility Class that knows how to <b>deal with Model (and TreeNode's)</b>.
@@ -83,13 +44,13 @@ import org.tcotool.standard.report.ReportTool;
  */
 @Slf4j
 public class ModelUtility implements
-	// TODO TreeNodeUtility should be implemented by NavigationView
-	ch.softenvironment.view.tree.TreeNodeUtility {
+		// TODO TreeNodeUtility should be implemented by NavigationView
+		ch.softenvironment.view.tree.TreeNodeUtility {
 
 	// public static final Long EXPENDABLE_DURATION = Long.valueOf(12); // 12
 	// month
 	public static final String XSD = "http://www.interlis.ch/INTERLIS2.2 TcoTool.xsd";
-	private TcoModel model = null;
+	private final TcoModel model;
 	private String filename = null;
 	private Diagram dependencyDiagram = null;
 	private final Map<Class<? extends TcoObject>, URL> iconMap = new HashMap<Class<? extends TcoObject>, URL>();
@@ -167,7 +128,7 @@ public class ModelUtility implements
 			// reverse link: element to owner
 			((Cost) element).setDriverId(((CostDriver) owner).getId());
 		} else if (element instanceof Service) {
-			List<Service> services = new java.util.ArrayList<Service>(((TcoPackage) owner).getService());
+			List<Service> services = new java.util.ArrayList<>(((TcoPackage) owner).getService());
 			services.add((Service) element);
 			((TcoPackage) owner).setService(services); // triggers node
 			// structure
@@ -175,14 +136,14 @@ public class ModelUtility implements
 			// reverse link: element to owner
 			((Service) element).setGroupId(((TcoPackage) owner).getId());
 		} else if (element instanceof Occurance) {
-			List<Occurance> occurance = new java.util.ArrayList<Occurance>(((CostDriver) owner).getOccurrance());
+			List<Occurance> occurance = new java.util.ArrayList<>(((CostDriver) owner).getOccurrance());
 			occurance.add((Occurance) element);
 			((CostDriver) owner).setOccurrance(occurance);
 
 			// reverse link: element to owner
 			((Occurance) element).setDriverId(((CostDriver) owner).getId());
 		} else if (element instanceof Course) {
-			List<Course> course = new java.util.ArrayList<Course>(((SystemParameter) owner).getCourse());
+			List<Course> course = new java.util.ArrayList<>(((SystemParameter) owner).getCourse());
 			course.add((Course) element);
 			((SystemParameter) owner).setCourse(course);
 
@@ -190,7 +151,7 @@ public class ModelUtility implements
 			((Course) element).setSystemParameterId(((SystemParameter) owner).getId());
 		} else {
 			// sub-package
-			List<TcoPackage> ownedElement = new java.util.ArrayList<TcoPackage>(((TcoPackage) owner).getOwnedElement());
+			List<TcoPackage> ownedElement = new java.util.ArrayList<>(((TcoPackage) owner).getOwnedElement());
 			ownedElement.add((TcoPackage) element);
 			((TcoPackage) owner).setOwnedElement(ownedElement); // triggers node
 			// structure
@@ -233,14 +194,14 @@ public class ModelUtility implements
 		TcoObject object = (TcoObject) createDbObject(server, element);
 
 		// 2) set default data
-		object.setMultitude(new Double(1.0));
+		object.setMultitude(Double.valueOf(1.0));
 		if (object instanceof CostDriver) {
 			object.setName(ResourceManager.getResource(ServiceDetailView.class, "CTNewObject"));
 		} else if (object instanceof FactCost) {
 			FactCost cost = (FactCost) object;
 			cost.setName(ResourceManager.getResource(CostDriverDetailView.class, "CTFactCostName"));
 			cost.setBaseOffset(Long.valueOf(0));
-			cost.setAmount(new Double(0.0));
+			cost.setAmount(Double.valueOf(0.0));
 			cost.setEstimated(Boolean.FALSE);
 			cost.setRepeatable(Boolean.FALSE);
 			cost.setCurrency(getSystemParameter().getDefaultCurrency());
@@ -251,7 +212,7 @@ public class ModelUtility implements
 			PersonalCost cost = (PersonalCost) object;
 			cost.setName(ResourceManager.getResource(CostDriverDetailView.class, "CTPersonalCostName"));
 			cost.setBaseOffset(Long.valueOf(0));
-			cost.setAmount(new Double(0.0));
+			cost.setAmount(Double.valueOf(0.0));
 			cost.setEstimated(Boolean.FALSE);
 			cost.setRepeatable(Boolean.TRUE);
 			cost.setCurrency(getSystemParameter().getDefaultCurrency());
@@ -273,7 +234,7 @@ public class ModelUtility implements
 	 */
 	public static Dependency createDependency(ch.softenvironment.jomm.DbObjectServer server) throws Exception {
 		Dependency dependency = (Dependency) server.createInstance(Dependency.class);
-		dependency.setDistribution(new Double(0.0));
+		dependency.setDistribution(Double.valueOf(0.0));
 		dependency.setSupplierInfluence((SupplierInfluence) server.getIliCode(SupplierInfluence.class, SupplierInfluence.NEUTRAL0));
 		dependency.setVariant(Boolean.FALSE);
 		return dependency;
@@ -317,10 +278,10 @@ public class ModelUtility implements
 		role.setInternal(Boolean.TRUE);
 		role.setEmploymentPercentageAvailable(Long.valueOf(100));
 		role.setCurrency(systemParameter.getDefaultCurrency());
-		role.setFullTimeEquivalent(new Double(100000));
+		role.setFullTimeEquivalent(Double.valueOf(100000));
 		role.setYearlyHours(systemParameter.getManYearHoursInternal());
 		if ((role.getFullTimeEquivalent() != null) && (role.getYearlyHours() != null)) {
-			role.setHourlyRate(new Double(Calculator.calculateHourlyRate(role)));
+			role.setHourlyRate(Double.valueOf(Calculator.calculateHourlyRate(role)));
 		}
 	}
 
@@ -399,7 +360,7 @@ public class ModelUtility implements
 	 * @return
 	 */
 	public Set<Dependency> findDependencies(TcoObject object) {
-		Set<Dependency> dependencies = new HashSet<Dependency>();
+		Set<Dependency> dependencies = new HashSet<>();
 		// determine current
 		dependencies.addAll(object.getSupplierId());
 		dependencies.addAll(object.getClientId());
@@ -594,7 +555,7 @@ public class ModelUtility implements
 			cost.setInternal(role.getInternal());
 			if ((cost.getHourlyRate() != null) && (cost.getHours() != null)) {
 				// calculate hourlyRate*hours
-				cost.setAmount(new Double(AmountFormat.round(cost.getHourlyRate().doubleValue() * cost.getHours().doubleValue())));
+				cost.setAmount(Double.valueOf(AmountFormat.round(cost.getHourlyRate().doubleValue() * cost.getHours().doubleValue())));
 			} else {
 				// use FTE because whole salary is assumed
 				cost.setAmount(role.getFullTimeEquivalent());
@@ -696,7 +657,7 @@ public class ModelUtility implements
 					/*
 					 * if (!((TcoObject)node).getObjectServer().equals(((TcoModel )getRoot()).getObjectServer())) { fileName = fileName + "_imported"; }
 					 */
-					setImageURL(key, ch.ehi.basics.i18n.ResourceBundle.getURL(ModelUtility.class, fileName + ".png"));
+					setImageURL(key, ResourceManager.getURL(ModelUtility.class, fileName + ".png"));
 					return iconMap.get(key);
 				}
 			}
@@ -734,7 +695,7 @@ public class ModelUtility implements
 		if (model.getSystemParameter() == null) {
 			// create default
 			SystemParameter tmp = (SystemParameter) getServer().createInstance(SystemParameter.class);
-			tmp.setDepreciationInterestRate(new Double(4.0));
+			tmp.setDepreciationInterestRate(Double.valueOf(4.0));
 			tmp.setDefaultDepreciationDuration(Long.valueOf(48));
 			tmp.setDefaultUsageDuration(Long.valueOf(48));
 			tmp.setManYearHoursInternal(Long.valueOf(1700));
@@ -1273,7 +1234,7 @@ public class ModelUtility implements
 			((TcoPackage) element).setNamespaceId(null);
 
 			// 2) unlink element
-			java.util.List<TcoPackage> ownedElements = new java.util.ArrayList<TcoPackage>(((TcoPackage) owner).getOwnedElement());
+			java.util.List<TcoPackage> ownedElements = new java.util.ArrayList<>(((TcoPackage) owner).getOwnedElement());
 			ownedElements.remove(element);
 			((TcoPackage) owner).setOwnedElement(ownedElements); // triggers
 			// node
@@ -1283,7 +1244,7 @@ public class ModelUtility implements
 			((Service) element).setGroupId(null);
 
 			// 2) unlink element
-			java.util.List<Service> services = new java.util.ArrayList<Service>(((TcoPackage) owner).getService());
+			java.util.List<Service> services = new java.util.ArrayList<>(((TcoPackage) owner).getService());
 			services.remove(element);
 			((TcoPackage) owner).setService(services); // triggers node
 			// structure
@@ -1292,7 +1253,7 @@ public class ModelUtility implements
 			((CostDriver) element).setServiceId(null);
 
 			// 2) unlink element
-			java.util.List<CostDriver> drivers = new java.util.ArrayList<CostDriver>(((Service) owner).getDriver());
+			java.util.List<CostDriver> drivers = new java.util.ArrayList<>(((Service) owner).getDriver());
 			drivers.remove(element);
 			((Service) owner).setDriver(drivers); // triggers node structure
 		} else if (element instanceof Cost) {
@@ -1300,7 +1261,7 @@ public class ModelUtility implements
 			((Cost) element).setDriverId(null);
 
 			// 2) unlink element
-			java.util.List<Cost> costs = new java.util.ArrayList<Cost>(((CostDriver) owner).getCost());
+			java.util.List<Cost> costs = new java.util.ArrayList<>(((CostDriver) owner).getCost());
 			costs.remove(element);
 			((CostDriver) owner).setCost(costs); // triggers node structure
 		}
@@ -1314,7 +1275,7 @@ public class ModelUtility implements
 		}
 
 		// 2) unlink element
-		java.util.List<Course> copy = new java.util.ArrayList<Course>(getSystemParameter().getCourse());
+		java.util.List<Course> copy = new java.util.ArrayList<>(getSystemParameter().getCourse());
 		copy.removeAll(courses);
 		getSystemParameter().setCourse(copy); // triggers node structure
 
@@ -1329,12 +1290,12 @@ public class ModelUtility implements
 		Double interest = null;
 		try {
 			if (getSystemParameter().getDepreciationInterestRate() == null) {
-				getSystemParameter().setDepreciationInterestRate(new Double(4.0));
+				getSystemParameter().setDepreciationInterestRate(Double.valueOf(4.0));
 			}
 			interest = getSystemParameter().getDepreciationInterestRate();
 		} catch (Exception e) {
 			log.warn("SystemParameter fault <DepreciationInterestRate>=4.0", e);
-			interest = new Double(4.0);
+			interest = Double.valueOf(4.0);
 		}
 		return interest.doubleValue();
 	}

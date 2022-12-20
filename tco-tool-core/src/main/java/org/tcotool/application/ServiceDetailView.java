@@ -28,25 +28,17 @@ import ch.softenvironment.view.BaseFrame;
 import ch.softenvironment.view.CommonUserAccess;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.table.NumberTableCellRenderer;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
-import java.util.List;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import org.tcotool.model.CostCentre;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Currency;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Service;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.standard.report.ReportTool;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.CalculatorTco;
 import org.tcotool.tools.Formatter;
 import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.util.EventObject;
+import java.util.List;
 
 /**
  * DetailView of a Service.
@@ -55,7 +47,7 @@ import org.tcotool.tools.ModelUtility;
  */
 
 public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
-    ch.softenvironment.view.ListMenuChoice, java.beans.PropertyChangeListener {
+        ch.softenvironment.view.ListMenuChoice, java.beans.PropertyChangeListener {
 
     private final Formatter evaluator = new Formatter(LauncherView.getInstance().getUtility()); // must be global -> @see
     // #refresh*()
@@ -792,7 +784,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP13SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -818,7 +810,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP13SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -863,7 +855,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -889,7 +881,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -915,7 +907,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -941,7 +933,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -967,7 +959,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -993,7 +985,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -1019,12 +1011,12 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                    getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -1045,7 +1037,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -1071,7 +1063,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1097,7 +1089,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1123,7 +1115,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP7SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -1149,7 +1141,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP7SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -2666,7 +2658,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -2719,7 +2711,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
             handleException(ivjExc);
         }
         // user code begin {2}
-        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(Service.class))).getImage()); // ResourceBundle.getImageIcon(ModelUtility.class,
+        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(Service.class))).getImage()); // ResourceManager.getImageIcon(ModelUtility.class,
         // "Service.png").getImage()
         setTitle(getResourceString("FrmWindow_text"));
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));

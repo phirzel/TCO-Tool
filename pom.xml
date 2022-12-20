@@ -32,7 +32,6 @@
     </properties>
 
     <modules>
-        <module>ehibasics</module>
         <module>sebase</module>
         <module>jomm</module>
         <module>tco-tool-core</module>

@@ -99,7 +99,7 @@ public class URLView extends javax.swing.JPanel {
 	 */
 	private void browse() {
 		try {
-			ch.ehi.basics.view.BrowserControl.displayURL(getTxtURLText());
+			BrowserControl.displayURL(getTxtURLText());
 		} catch (Throwable e) {
 			BaseDialog.showWarning(this, ResourceManager.getResource(URLView.class, "CT_BrowserError"), e.toString());
 		}
@@ -239,8 +239,8 @@ public class URLView extends javax.swing.JPanel {
 
     /**
      * Initializes connections
-     *
-     * @throws java.lang.Exception The exception description.
+	 *
+	 *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

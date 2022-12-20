@@ -1,6 +1,6 @@
 package org.tcotool.application;
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
@@ -302,13 +302,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP10SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP10Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setReportDepreciationDuration(new java.lang.Long(getTxtReportDepreciation().getText()));
+                        getObject().setReportDepreciationDuration(Long.valueOf(getTxtReportDepreciation().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -332,7 +332,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP10SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP10Aligning = true;
@@ -358,13 +358,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP11SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP11Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setReportUsageDuration(new java.lang.Long(getTxtReportUsage().getText()));
+                        getObject().setReportUsageDuration(Long.valueOf(getTxtReportUsage().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -388,7 +388,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP11SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -414,13 +414,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP1Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setDefaultUsageDuration(new java.lang.Long(getTxtUsage().getText()));
+                        getObject().setDefaultUsageDuration(Long.valueOf(getTxtUsage().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -444,7 +444,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -470,13 +470,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP2Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setDefaultDepreciationDuration(new java.lang.Long(getTxtDepreciation().getText()));
+                        getObject().setDefaultDepreciationDuration(Long.valueOf(getTxtDepreciation().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -500,7 +500,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -526,7 +526,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -552,7 +552,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -578,13 +578,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setManYearHoursInternal(new java.lang.Long(getTxtManYearInternal().getText()));
+                        getObject().setManYearHoursInternal(Long.valueOf(getTxtManYearInternal().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -608,7 +608,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -634,13 +634,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP5SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP5Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setManYearHoursExternal(new java.lang.Long(getTxtManYearExternal().getText()));
+                        getObject().setManYearHoursExternal(Long.valueOf(getTxtManYearExternal().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -664,7 +664,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP5SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -690,7 +690,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -716,7 +716,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -742,7 +742,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP7SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -768,7 +768,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP7SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -794,13 +794,13 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP8SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP8Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setDepreciationInterestRate(new java.lang.Double(getTxtInterestRate().getText()));
+                        getObject().setDepreciationInterestRate(Double.valueOf(getTxtInterestRate().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -824,7 +824,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     private void connPtoP8SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -1877,7 +1877,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -1927,7 +1927,7 @@ public class SystemParameterDetailView extends ch.softenvironment.jomm.mvc.view.
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_text"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(SystemParameter.class));
         getPnlStandardToolbar().setObjects(getObjects());

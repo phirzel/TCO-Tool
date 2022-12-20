@@ -283,7 +283,7 @@ public class TriStatePanel extends BasePanel {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

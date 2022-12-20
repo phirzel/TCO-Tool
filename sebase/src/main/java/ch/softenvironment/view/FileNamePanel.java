@@ -12,9 +12,8 @@ package ch.softenvironment.view;
  * Lesser General Public License for more details.
  */
 
-import ch.ehi.basics.view.FileChooser;
-import ch.ehi.basics.view.GenericFileFilter;
 import ch.softenvironment.client.ResourceManager;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -126,7 +125,7 @@ public class FileNamePanel extends javax.swing.JPanel {
                  * PrintStream(out); generateHtmlStream(s, metaInfo);
                  *
                  * s.flush(); out.close();
-                 * ch.ehi.basics.view.BrowserControl.displayURL("file://" +
+                 * ch.softenvironment.view.BrowserControl.displayURL("file://" +
                  * dialog.getSelectedFile().getAbsolutePath());
                  */
                 getTxtFileName().setText(dialog.getSelectedFile().getAbsolutePath());
@@ -261,7 +260,7 @@ public class FileNamePanel extends javax.swing.JPanel {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

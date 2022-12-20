@@ -20,8 +20,9 @@ import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.controller.DataBrowser;
 import ch.softenvironment.controller.DataBrowserListener;
-import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
 
 /**
  * Standard JToolbar extended by: - default object functions (new, save, remove, etc) - manage a multiple Object-List to browse - Inconsistency-list of current object
@@ -861,7 +862,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
                 ivjTbbFirst.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 ivjTbbFirst.setEnabled(false);
                 // user code begin {1}
-                ivjTbbFirst.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ToolBar.class, "first_arrow.gif"));
+                ivjTbbFirst.setIcon(ResourceManager.getImageIcon(ToolBar.class, "first_arrow.gif"));
                 ivjTbbFirst.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbFirst_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -892,7 +893,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
                 ivjTbbLast.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 ivjTbbLast.setEnabled(false);
                 // user code begin {1}
-                ivjTbbLast.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ToolBar.class, "last_arrow.gif"));
+                ivjTbbLast.setIcon(ResourceManager.getImageIcon(ToolBar.class, "last_arrow.gif"));
                 ivjTbbLast.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbLast_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -963,7 +964,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
                 ivjTbbNext.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 ivjTbbNext.setEnabled(false);
                 // user code begin {1}
-                ivjTbbNext.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ToolBar.class, "right_arrow.gif"));
+                ivjTbbNext.setIcon(ResourceManager.getImageIcon(ToolBar.class, "right_arrow.gif"));
                 ivjTbbNext.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbNext_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -1079,7 +1080,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
                 ivjTbbPrevious.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 ivjTbbPrevious.setEnabled(false);
                 // user code begin {1}
-                ivjTbbPrevious.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ToolBar.class, "left_arrow.gif"));
+                ivjTbbPrevious.setIcon(ResourceManager.getImageIcon(ToolBar.class, "left_arrow.gif"));
                 ivjTbbPrevious.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbPrevious_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -1264,7 +1265,7 @@ public class ToolBar extends javax.swing.JToolBar implements DataBrowserListener
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

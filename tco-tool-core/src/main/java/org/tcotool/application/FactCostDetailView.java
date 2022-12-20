@@ -23,12 +23,13 @@ import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
-import java.beans.PropertyChangeEvent;
 import org.tcotool.model.Catalogue;
 import org.tcotool.model.CostCause;
 import org.tcotool.model.Currency;
 import org.tcotool.model.FactCost;
 import org.tcotool.tools.ModelUtility;
+
+import java.beans.PropertyChangeEvent;
 
 /**
  * DetailView of Fact-Costs.
@@ -394,7 +395,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP10SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP10Aligning = true;
@@ -420,7 +421,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP10SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP10Aligning = true;
@@ -446,7 +447,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP11SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -472,7 +473,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP11SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -515,7 +516,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP13SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -541,7 +542,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP13SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -567,13 +568,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP14SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP14Aligning == false) {
+            if (!ivjConnPtoP14Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP14Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setPortsUseable(new java.lang.Long(getTxtPortsUseable().getText()));
+                        getObject().setPortsUseable(Long.valueOf(getTxtPortsUseable().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -598,7 +599,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP14SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP14Aligning == false) {
+            if (!ivjConnPtoP14Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP14Aligning = true;
@@ -624,13 +625,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP15SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP15Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setPortsISL(new java.lang.Long(getTxtPortsISL().getText()));
+                        getObject().setPortsISL(Long.valueOf(getTxtPortsISL().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -655,7 +656,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP15SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP15Aligning = true;
@@ -681,13 +682,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP16SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP16Aligning == false) {
+            if (!ivjConnPtoP16Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP16Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setPortsServer(new java.lang.Long(getTxtPortsServer().getText()));
+                        getObject().setPortsServer(Long.valueOf(getTxtPortsServer().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -712,7 +713,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP16SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP16Aligning == false) {
+            if (!ivjConnPtoP16Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP16Aligning = true;
@@ -738,12 +739,12 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP17SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP17Aligning == false) {
+            if (!ivjConnPtoP17Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP17Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setRepeatable(new java.lang.Boolean(getChxRepeatable().isSelected()));
+                    getObject().setRepeatable(Boolean.valueOf(getChxRepeatable().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -764,7 +765,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP17SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP17Aligning == false) {
+            if (!ivjConnPtoP17Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP17Aligning = true;
@@ -809,7 +810,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP19SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP19Aligning == false) {
+            if (!ivjConnPtoP19Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP19Aligning = true;
@@ -835,7 +836,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP19SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP19Aligning == false) {
+            if (!ivjConnPtoP19Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP19Aligning = true;
@@ -861,7 +862,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -887,7 +888,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -913,12 +914,12 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP20SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP20Aligning == false) {
+            if (!ivjConnPtoP20Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP20Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setExpendable(new java.lang.Boolean(getChxExpendable().isSelected()));
+                    getObject().setExpendable(Boolean.valueOf(getChxExpendable().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -939,7 +940,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP20SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP20Aligning == false) {
+            if (!ivjConnPtoP20Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP20Aligning = true;
@@ -965,7 +966,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -991,7 +992,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -1017,13 +1018,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP3Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setAmount(new java.lang.Double(getTxtCost().getText()));
+                        getObject().setAmount(Double.valueOf(getTxtCost().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1047,7 +1048,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -1073,13 +1074,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                        getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1104,7 +1105,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -1130,12 +1131,12 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP5SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setEstimated(new java.lang.Boolean(getChxEstimated().isSelected()));
+                    getObject().setEstimated(Boolean.valueOf(getChxEstimated().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -1156,7 +1157,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP5SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -1182,7 +1183,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1208,7 +1209,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1234,13 +1235,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP7SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP7Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setDepreciationDuration(new java.lang.Long(getTxtDepreciation().getText()));
+                        getObject().setDepreciationDuration(Long.valueOf(getTxtDepreciation().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1264,7 +1265,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP7SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -1290,13 +1291,13 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP8SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP8Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setUsageDuration(new java.lang.Long(getTxtUsage().getText()));
+                        getObject().setUsageDuration(Long.valueOf(getTxtUsage().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1320,7 +1321,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP8SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -1346,12 +1347,12 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP9SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP9Aligning == false) {
+            if (!ivjConnPtoP9Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP9Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setBaseOffset(new java.lang.Long(getTxtBaseOffset().getText()));
+                    getObject().setBaseOffset(Long.valueOf(getTxtBaseOffset().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -1372,7 +1373,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     private void connPtoP9SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP9Aligning == false) {
+            if (!ivjConnPtoP9Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP9Aligning = true;
@@ -2600,7 +2601,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -2667,7 +2668,7 @@ public class FactCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseF
         }
         // user code begin {2}
         setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(FactCost.class)))
-            .getImage()); //setIconImage(ResourceBundle.getImageIcon(ModelUtility.class, "FactCost.png").getImage());
+                .getImage()); //setIconImage(ResourceManager.getImageIcon(ModelUtility.class, "FactCost.png").getImage());
         setTitle(getResourceString("FrmWindow_text"));
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(FactCost.class));

@@ -18,26 +18,15 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
 import ch.softenvironment.jomm.implementation.DbCache;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
-import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
-import ch.softenvironment.jomm.mvc.model.DbCode;
-import ch.softenvironment.jomm.mvc.model.DbCodeType;
-import ch.softenvironment.jomm.mvc.model.DbEntityBean;
-import ch.softenvironment.jomm.mvc.model.DbEnumeration;
-import ch.softenvironment.jomm.mvc.model.DbObject;
-import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
-import ch.softenvironment.jomm.mvc.model.DbSessionBean;
+import ch.softenvironment.jomm.mvc.model.*;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.UserException;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
 
 /**
  * DbObjectServer treating all persistent Objects of a specific URL. A DbObjectServer serves as middleware between application and a Target-System (for e.g. DBMS).
@@ -197,8 +186,8 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 				}
 			}
 		} catch (javax.jdo.JDOException e) {
-			throw new UserException(ResourceManager.getResource(DbObjectServer.class, "CW_DisconnectionError"), ResourceManager.getResource(
-				DbObjectServer.class, "CT_ConnectionError"), e);
+			throw new UserException(ResourceManager.getResource(DbObjectServer.class, "CW_DisconnectionError"),
+					ResourceManager.getResource(DbObjectServer.class, "CT_ConnectionError"), e);
 		} finally {
 			connection = null;
 			factory = null;
@@ -266,8 +255,9 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 				// do not nest further
 				throw (UserException) exception;
 			} else {
-				throw new UserException(ResourceManager.getResource(DbObjectServer.class, "CW_TransactionError"), ResourceManager.getResource(
-					DbObjectServer.class, "CE_TransactionError"), exception);
+				throw new UserException(ResourceManager.getResource(DbObjectServer.class, "CW_TransactionError"),
+						ResourceManager.getResource(
+								DbObjectServer.class, "CE_TransactionError"), exception);
 			}
 		}
 	}
@@ -406,7 +396,6 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 		// if (!object.jdoIsTransactional()) {
 		if (pc instanceof DbEnumeration) {
 			log.warn("Developer warning: Cannot uncache DbEnumeration=>needs a restart to change");
-			return;
 		} else if (pc instanceof DbCode /* Type */) {
 			// uncache all codes of this type
 			codeCache.uncache(object.getClass());
@@ -1116,9 +1105,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	@Override
 	public java.lang.Object[] makePersistentAll(java.lang.Object[] pcs) {
 		java.util.List list = new ArrayList(pcs.length);
-		for (int i = 0; i < pcs.length; i++) {
-			list.add(pcs[i]);
-		}
+		Collections.addAll(list, pcs);
 		makePersistentAll(list);
 
 		//TODO HIP just added to compile
@@ -1562,9 +1549,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	@Override
 	public void retrieveAll(java.lang.Object[] pcs, boolean dFGOnly) {
 		List list = new ArrayList(pcs.length);
-		for (int i = 0; i < pcs.length; i++) {
-			list.add(pcs[i]);
-		}
+		Collections.addAll(list, pcs);
 		retrieveAll(list, dFGOnly);
 	}
 

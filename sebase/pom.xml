@@ -13,18 +13,6 @@
     <artifactId>sebase</artifactId>
 
     <dependencies>
-        <!--TODO not found by MVN central, include lib/ehibasics.jar instead https://mvnrepository.com/artifact/ch.ehi/ehibasics -->
-        <!--dependency>
-            <groupId>ch.ehi</groupId>
-            <artifactId>ehibasics</artifactId>
-            <version>1.4.1</version>
-        </dependency-->
-        <dependency>
-            <groupId>org.tcotool</groupId>
-            <artifactId>ehibasics</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

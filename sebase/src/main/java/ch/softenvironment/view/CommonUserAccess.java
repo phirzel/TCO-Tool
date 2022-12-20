@@ -1,7 +1,8 @@
 package ch.softenvironment.view;
 
-import ch.ehi.basics.i18n.ResourceBundle;
-import javax.swing.Icon;
+import ch.softenvironment.client.ResourceManager;
+
+import javax.swing.*;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -229,7 +230,7 @@ public abstract class CommonUserAccess {
      * @param property
      * @return
      */
-    private static String getResource(String property) {
+    private static String getResource(String property) { //TODO HIP
         return ch.softenvironment.client.ResourceManager.getResource(CommonUserAccess.class, property);
     }
 
@@ -243,46 +244,46 @@ public abstract class CommonUserAccess {
 
     // return typical Icons use in any application
     public static Icon getIconNew() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "new.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "new.gif");
     }
 
     public static Icon getIconChange() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "open.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "open.gif");
     }
 
     public static Icon getIconCopy() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "copy.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "copy.gif");
     }
 
     public static Icon getIconCut() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "cut.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "cut.gif");
     }
 
     public static Icon getIconFind() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "find.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "find.gif");
     }
 
     public static Icon getIconPaste() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "paste.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "paste.gif");
     }
 
     public static Icon getIconPrint() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "print.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "print.gif");
     }
 
     public static Icon getIconRemove() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "delete.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "delete.gif");
     }
 
     public static Icon getIconRedo() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "redo.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "redo.gif");
     }
 
     public static Icon getIconSave() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "save.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "save.gif");
     }
 
     public static Icon getIconUndo() {
-        return ResourceBundle.getImageIcon(CommonUserAccess.class, "undo.gif");
+        return ResourceManager.getImageIcon(CommonUserAccess.class, "undo.gif");
     }
 }

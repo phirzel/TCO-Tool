@@ -16,7 +16,7 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Keep Settings in a <user.home>/.tcoTool file.
@@ -25,7 +25,7 @@ import java.awt.Color;
  */
 public class ApplicationOptions extends ch.softenvironment.client.ApplicationOptions {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; //TODO HIP not necessary
 
     // chart-colors
     private static final String CHART_BACKGROUND = "CHART_BG";
@@ -47,7 +47,7 @@ public class ApplicationOptions extends ch.softenvironment.client.ApplicationOpt
     }
 
     public java.awt.Color getChartBackground() {
-        return new java.awt.Color(Integer.valueOf(getProperty(CHART_BACKGROUND)));
+        return new java.awt.Color(Integer.parseInt(getProperty(CHART_BACKGROUND)));
     }
 
     public void setChartBackground(java.awt.Color color) {
@@ -55,7 +55,7 @@ public class ApplicationOptions extends ch.softenvironment.client.ApplicationOpt
     }
 
     public java.awt.Color getChartDomainGridLine() {
-        return new java.awt.Color(Integer.valueOf(getProperty(CHART_DOMAINGRIDLINE)));
+        return new java.awt.Color(Integer.parseInt(getProperty(CHART_DOMAINGRIDLINE)));
     }
 
     public void setChartDomainGridLine(java.awt.Color color) {
@@ -63,7 +63,7 @@ public class ApplicationOptions extends ch.softenvironment.client.ApplicationOpt
     }
 
     public java.awt.Color getChartRangeGridLine() {
-        return new java.awt.Color(Integer.valueOf(getProperty(CHART_RANGEGRIDLINE)));
+        return new java.awt.Color(Integer.parseInt(getProperty(CHART_RANGEGRIDLINE)));
     }
 
     public void setChartRangeGridLine(java.awt.Color color) {

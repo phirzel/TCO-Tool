@@ -16,22 +16,13 @@ package ch.softenvironment.jomm.tools;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.view.AboutDialog;
-import ch.softenvironment.view.FileNamePanel;
-import ch.softenvironment.view.SimpleEditorPanel;
-import ch.softenvironment.view.StatusBar;
-import ch.softenvironment.view.ToolBar;
-import ch.softenvironment.view.ViewOptions;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import ch.softenvironment.view.*;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
 
 /**
  * Tool to execute any-SQL-Code.
@@ -781,7 +772,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -863,7 +854,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
             // establish an initialize database connection
             DbObjectServer objSrv = initializeDatabase(dialog.getUserId(), dialog.getPassword(), dialog.getUrl());
 
-            showSplashScreen(new java.awt.Dimension(500, 400), ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DbGeneratorView.class, "splash.png"));
+            showSplashScreen(new java.awt.Dimension(500, 400), ResourceManager.getImageIcon(DbGeneratorView.class, "splash.png"));
 
             instance = new DbGeneratorView(new ViewOptions(), objSrv);
             // getInstance().addDefaultClosingListener();
@@ -895,6 +886,6 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
      * Comment
      */
     private void mniHelpTopics_ActionPerformed(java.awt.event.ActionEvent actionEvent) {
-        ch.ehi.basics.view.BrowserControl.displayURL("http://www.softenvironment.ch");
+        BrowserControl.displayURL("http://www.softenvironment.ch");
     }
 }

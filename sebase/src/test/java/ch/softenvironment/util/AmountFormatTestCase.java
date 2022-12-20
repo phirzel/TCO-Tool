@@ -34,33 +34,33 @@ public class AmountFormatTestCase extends junit.framework.TestCase {
 
         java.text.NumberFormat af = AmountFormat.getAmountInstance(/*default*/);
         //	assertTrue("format(null) => Exception", af.format(null).equals(""));
-        assertTrue("format(Double)", af.format(new Double(12345.563)).equals("12’345.56"));
-        assertTrue("toString(double)", af.format(1343492.3422).equals("1’343’492.34"));
-        assertTrue("toString(Double)", af.format(new Double(1343492.3422)).equals("1’343’492.34"));
-        assertTrue("toString(long)", af.format(1343492).equals("1’343’492.00"));
-        assertTrue("toString(Long)", af.format(Long.valueOf(1343492)).equals("1’343’492.00"));
-        assertTrue("toString(Double)", af.format(new Double(1343492.3472)).equals("1’343’492.35"));
-        assertTrue("toString(Double)", af.format(new Double(1343492.367822)).equals("1’343’492.37"));
+        assertEquals("format(Double)", "12’345.56", af.format(Double.valueOf(12345.563)));
+        assertEquals("toString(double)", "1’343’492.34", af.format(1343492.3422));
+        assertEquals("toString(Double)", "1’343’492.34", af.format(Double.valueOf(1343492.3422)));
+        assertEquals("toString(long)", "1’343’492.00", af.format(1343492));
+        assertEquals("toString(Long)", "1’343’492.00", af.format(Long.valueOf(1343492)));
+        assertEquals("toString(Double)", "1’343’492.35", af.format(Double.valueOf(1343492.3472)));
+        assertEquals("toString(Double)", "1’343’492.37", af.format(Double.valueOf(1343492.367822)));
 
         af = AmountFormat.getAmountInstance(new Locale("de", "CH"));
         //  assertTrue("format(null) => Exception", af.format(null).equals(""));
-        assertTrue("format(Double)", af.format(new Double(12345.563)).equals("12’345.56"));
-        assertTrue("toString(double)", af.format(1343492.3422).equals("1’343’492.34"));
-        assertTrue("toString(Double)", af.format(new Double(1343492.3422)).equals("1’343’492.34"));
-        assertTrue("toString(long)", af.format(1343492).equals("1’343’492.00"));
-        assertTrue("toString(Long)", af.format(Long.valueOf(1343492)).equals("1’343’492.00"));
+        assertEquals("format(Double)", "12’345.56", af.format(Double.valueOf(12345.563)));
+        assertEquals("toString(double)", "1’343’492.34", af.format(1343492.3422));
+        assertEquals("toString(Double)", "1’343’492.34", af.format(Double.valueOf(1343492.3422)));
+        assertEquals("toString(long)", "1’343’492.00", af.format(1343492));
+        assertEquals("toString(Long)", "1’343’492.00", af.format(Long.valueOf(1343492)));
 
         af = AmountFormat.getAmountInstance(new Locale("en", "US"));
         //  assertTrue("format(null) => Exception", af.format(null).equals(""));
-        assertTrue("format(Double)", af.format(new Double(12345.563)).equals("12,345.56"));
-        assertTrue("toString(double)", af.format(1343492.3422).equals("1,343,492.34"));
-        assertTrue("toString(Double)", af.format(new Double(1343492.3422)).equals("1,343,492.34"));
-        assertTrue("toString(long)", af.format(1343492).equals("1,343,492.00"));
-        assertTrue("toString(Long)", af.format(Long.valueOf(1343492)).equals("1,343,492.00"));
+        assertEquals("format(Double)", "12,345.56", af.format(Double.valueOf(12345.563)));
+        assertEquals("toString(double)", "1,343,492.34", af.format(1343492.3422));
+        assertEquals("toString(Double)", "1,343,492.34", af.format(Double.valueOf(1343492.3422)));
+        assertEquals("toString(long)", "1,343,492.00", af.format(1343492));
+        assertEquals("toString(Long)", "1,343,492.00", af.format(Long.valueOf(1343492)));
 
-        assertTrue("toString(null)", AmountFormat.toString(null).equals(""));
-        //  assertTrue("toString(Double, 3, 5)", AmountFormat.toString(new Double(1343492.3422567), 3, 5).equals("1'343'492.34226"));
-        //  assertTrue("toString(Double,3 ,3)", AmountFormat.toString(new Double(1343492.3), 3, 3).equals("1'343'492.300"));
+        assertEquals("toString(null)", "", AmountFormat.toString(null));
+        //  assertTrue("toString(Double, 3, 5)", AmountFormat.toString(Double.valueOf(1343492.3422567), 3, 5).equals("1'343'492.34226"));
+        //  assertTrue("toString(Double,3 ,3)", AmountFormat.toString(Double.valueOf(1343492.3), 3, 3).equals("1'343'492.300"));
 
     }
 }

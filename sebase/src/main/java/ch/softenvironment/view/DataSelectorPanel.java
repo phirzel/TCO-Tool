@@ -313,7 +313,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbDelete.setEnabled(false);
                 ivjTbbDelete.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbDelete.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "delete.gif"));
+                ivjTbbDelete.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "delete.gif"));
                 ivjTbbDelete.setToolTipText(CommonUserAccess.getMniEditRemoveText());
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -347,7 +347,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbFirst.setEnabled(false);
                 ivjTbbFirst.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbFirst.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "first_arrow.gif"));
+                ivjTbbFirst.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "first_arrow.gif"));
                 ivjTbbFirst.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbFirst_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -381,7 +381,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbLast.setEnabled(false);
                 ivjTbbLast.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbLast.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "last_arrow.gif"));
+                ivjTbbLast.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "last_arrow.gif"));
                 ivjTbbLast.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbLast_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -415,7 +415,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbNew.setEnabled(true);
                 ivjTbbNew.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbNew.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "new.gif"));
+                ivjTbbNew.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "new.gif"));
                 ivjTbbNew.setToolTipText(CommonUserAccess.getMniFileNewText());
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -449,7 +449,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbNext.setEnabled(false);
                 ivjTbbNext.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbNext.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "right_arrow.gif"));
+                ivjTbbNext.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "right_arrow.gif"));
                 ivjTbbNext.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbNext_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -483,7 +483,7 @@ public class DataSelectorPanel extends BasePanel {
                 ivjTbbPrevious.setEnabled(false);
                 ivjTbbPrevious.setMinimumSize(new java.awt.Dimension(23, 23));
                 // user code begin {1}
-                ivjTbbPrevious.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DataSelectorPanel.class, "left_arrow.gif"));
+                ivjTbbPrevious.setIcon(ResourceManager.getImageIcon(DataSelectorPanel.class, "left_arrow.gif"));
                 ivjTbbPrevious.setToolTipText(ResourceManager.getResource(DataSelectorPanel.class, "TbbPrevious_toolTipText"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -536,7 +536,7 @@ public class DataSelectorPanel extends BasePanel {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

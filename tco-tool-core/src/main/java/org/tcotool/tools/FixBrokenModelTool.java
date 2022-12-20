@@ -17,20 +17,10 @@ package org.tcotool.tools;
  */
 
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
-import java.util.Iterator;
 import lombok.extern.slf4j.Slf4j;
-import org.tcotool.model.Catalogue;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Role;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
+
+import java.util.Iterator;
 
 /**
  * Fix model changes for current version of the TCO-Tool against older versions.
@@ -107,10 +97,10 @@ public class FixBrokenModelTool {
 				role.setEmploymentPercentageAvailable(Long.valueOf(100));
 			}
 			if (role.getFullTimeEquivalent() == null) {
-				role.setFullTimeEquivalent(new Double(170000.0));
+				role.setFullTimeEquivalent(Double.valueOf(170000.0));
 			}
 			if (role.getHourlyRate() == null) {
-				role.setHourlyRate(new Double(100.0));
+                role.setHourlyRate(Double.valueOf(100.0));
 			}
 			if (role.getInternal() == null) {
 				role.setInternal(Boolean.TRUE);

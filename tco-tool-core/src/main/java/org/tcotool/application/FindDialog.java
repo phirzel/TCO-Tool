@@ -20,19 +20,18 @@ import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.view.TriStatePanel;
 import ch.softenvironment.view.ViewOptions;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Iterator;
-import java.util.List;
-import javax.swing.ButtonGroup;
-import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
-import javax.swing.event.HyperlinkEvent;
 import org.tcotool.model.CostDriver;
 import org.tcotool.model.Service;
 import org.tcotool.model.TcoPackage;
 import org.tcotool.tools.FindTool;
 import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import java.util.ArrayList;
+import java.util.EventObject;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Find-dialog to search for name-String's in Configuration.
@@ -750,7 +749,7 @@ public class FindDialog extends ch.softenvironment.view.BaseDialog implements ch
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -780,7 +779,7 @@ public class FindDialog extends ch.softenvironment.view.BaseDialog implements ch
         // user code begin {2}
         setSize(475, 520);
         setTitle(getResourceString("FrmWindow_text"));
-        // TODO setFrameIcon(ResourceBundle.getImageIcon(LauncherView.class,
+        // TODO setFrameIcon(ResourceManager.getImageIcon(LauncherView.class,
         // "TCO_Icon.png") /*.getImage()*/);
 
         editor = new JEditorPane();

@@ -16,9 +16,9 @@ package ch.softenvironment.view.tree;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import java.awt.dnd.DnDConstants;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeSelectionModel;
+import java.awt.dnd.DnDConstants;
 
 /**
  * User Interface to choose a Package within Model-Tree.
@@ -283,7 +283,7 @@ public class TreeSelectionDialog extends ch.softenvironment.view.BaseDialog {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

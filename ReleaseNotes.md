@@ -19,12 +19,14 @@ Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
 
 # TODO
 * provide sample.xml
-* bug fixex:
-* LauncherView #getNameString() -> in "SUDY sampe.xml"
-    * java.lang.NullPointerException: Cannot invoke "org.tcotool.model.Site.getNameString()" because the return value of "org.tcotool.model.Occurance.getSite()" is null
-      at org.tcotool.standard.report.ReportComplete.encodeCompleteAbstract(ReportComplete.java:155)
-      at org.tcotool.standard.report.ReportComplete.walkServiceComplete(ReportComplete.java:102)
-      at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:81)
-      at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
-      at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
-      at
+* bug fixes:
+    * Dialogs open in background
+    * LauncherView #getNameString() -> in "SUDY sampe.xml" -> opening one of the above Reports
+        * java.lang.NullPointerException: Cannot invoke "org.tcotool.model.Site.getNameString()" because the return
+          value of "org.tcotool.model.Occurance.getSite()" is null
+          at org.tcotool.standard.report.ReportComplete.encodeCompleteAbstract(ReportComplete.java:155)
+          at org.tcotool.standard.report.ReportComplete.walkServiceComplete(ReportComplete.java:102)
+          at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:81)
+          at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
+          at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
+          at

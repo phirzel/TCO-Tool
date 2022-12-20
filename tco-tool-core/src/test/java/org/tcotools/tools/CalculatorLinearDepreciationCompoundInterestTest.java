@@ -59,35 +59,35 @@ public class CalculatorLinearDepreciationCompoundInterestTest {
             double amount = 1000.0;
             long duration = 48;
             double interest = 5.0; // [%]
-            m.utility.getSystemParameter().setDepreciationInterestRate(new Double(interest));
+            m.utility.getSystemParameter().setDepreciationInterestRate(Double.valueOf(interest));
             FactCost fcost = (FactCost) m.utility.createTcoObject(m.server, FactCost.class);
             m.utility.addOwnedElement(m.clientDriver, fcost);
-            fcost.setMultitude(new Double(1.0));
-            fcost.setAmount(new Double(amount));
+            fcost.setMultitude(Double.valueOf(1.0));
+            fcost.setAmount(Double.valueOf(amount));
             fcost.setDepreciationDuration(Long.valueOf(duration));
 
             CalculatorLinearDepreciationCompountInterest c = new CalculatorLinearDepreciationCompountInterest(m.utility, (TcoObject) m.utility.getRoot(),
-                duration);
+                    duration);
             // Calculator c = new Calculator(m.utility, (TcoObject)m.utility.getRoot(), duration);
             java.util.List<Double> list = c.getCostBlock(/* getDepreciationCostBlock( */m.clientService /* , Calculator.COST_CAUSE_UNDEFINED */);
             double total = list.get(1 /* FC-Total */).doubleValue(); // 120'000.0
-            Assert.assertTrue("Total FactCost", total == m.utility.getMultitudeFactor(fcost, true) * amount);
+            Assert.assertEquals("Total FactCost", total, m.utility.getMultitudeFactor(fcost, true) * amount, 0.0);
 
             double year = total - total / (duration / 12.0); // 90'000.0
             total = year + total / 100.0 * interest; // 96'000.0
-            Assert.assertTrue("1.Year", (long) total == (long) list.get(2).doubleValue());
+            Assert.assertEquals("1.Year", (long) total, (long) list.get(2).doubleValue());
 
             year = year /* should be total */ - year /* should be total */ / ((duration - 12.0) / 12.0); // 60'000.0
             total = year + total / 100.0 * interest;// 64'800.0
-            Assert.assertTrue("2.Year", (long) total == (long) list.get(3).doubleValue());
+            Assert.assertEquals("2.Year", (long) total, (long) list.get(3).doubleValue());
 
             year = year - year / ((duration - 12.0 - 12.0) / 12.0);
             total = year + total / 100.0 * interest; // 33'240
-            Assert.assertTrue("3.Year", (long) total == (long) list.get(4).doubleValue());
+            Assert.assertEquals("3.Year", (long) total, (long) list.get(4).doubleValue());
 
             year = year - year / ((duration - 12.0 - 12.0 - 12.0) / 12.0);
             total = year + total / 100.0 * interest; // 1'662
-            Assert.assertTrue("4.Year", (long) total == (long) list.get(5).doubleValue());
+            Assert.assertEquals("4.Year", (long) total, (long) list.get(5).doubleValue());
         } catch (Exception e) {
             Assert.fail(e.getLocalizedMessage());
         }
@@ -98,34 +98,34 @@ public class CalculatorLinearDepreciationCompoundInterestTest {
         try {
             double amount = 1000.0;
             long duration = 48;
-            m.utility.getSystemParameter().setDepreciationInterestRate(new Double(0.0));
+            m.utility.getSystemParameter().setDepreciationInterestRate(Double.valueOf(0.0));
             FactCost fcost = (FactCost) m.utility.createTcoObject(m.server, FactCost.class);
             m.utility.addOwnedElement(m.clientDriver, fcost);
-            fcost.setMultitude(new Double(1.0));
-            fcost.setAmount(new Double(amount));
+            fcost.setMultitude(Double.valueOf(1.0));
+            fcost.setAmount(Double.valueOf(amount));
             fcost.setDepreciationDuration(Long.valueOf(duration));
 
             // Calculator c = new Calculator(m.utility, (TcoObject)m.utility.getRoot(), duration);
             CalculatorLinearDepreciationCompountInterest c = new CalculatorLinearDepreciationCompountInterest(m.utility, (TcoObject) m.utility.getRoot(),
-                duration);
+                    duration);
             // java.util.List list = c.getDepreciationCostBlock(m.service);
             java.util.List<Double> list = c.getCostBlock(/* getDepreciationCostBlock( */m.clientService /* , Calculator.COST_CAUSE_UNDEFINED */);
             double total = list.get(1 /* FactCost-Total */).doubleValue(); // 120'000.0
-            Assert.assertTrue("Total FactCost", total == m.utility.getMultitudeFactor(fcost, true) * amount);
+            Assert.assertEquals("Total FactCost", total, m.utility.getMultitudeFactor(fcost, true) * amount, 0.0);
 
             double year = total - total / (duration / 12.0);
             total = year + total / 100.0 * 0.0;
-            Assert.assertTrue("1.Year", (long) total == (long) list.get(2).doubleValue());
+            Assert.assertEquals("1.Year", (long) total, (long) list.get(2).doubleValue());
 
             year = total - total / ((duration - 12.0) / 12.0);
             total = year + total / 100.0 * 0.0;
-            Assert.assertTrue("2.Year", (long) total == (long) list.get(3).doubleValue());
+            Assert.assertEquals("2.Year", (long) total, (long) list.get(3).doubleValue());
 
             year = total - total / ((duration - 12.0 - 12.0) / 12.0);
             total = year + total / 100.0 * 0.0;
-            Assert.assertTrue("3.Year", (long) total == (long) list.get(4).doubleValue());
+            Assert.assertEquals("3.Year", (long) total, (long) list.get(4).doubleValue());
 
-            Assert.assertTrue("4.Year", (long) 0 == (long) list.get(5).doubleValue());
+            Assert.assertEquals("4.Year", (long) 0, (long) list.get(5).doubleValue());
         } catch (Exception e) {
             Assert.fail(e.getLocalizedMessage());
         }

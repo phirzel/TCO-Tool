@@ -13,11 +13,9 @@ package ch.softenvironment.client;
  */
 
 import ch.softenvironment.util.DeveloperException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
+
+import java.net.URL;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +26,7 @@ import java.util.regex.Pattern;
  * @author Peter Hirzel
  */
 public class ResourceManager {
-
+	private final static String RESOURCES_DIRECTORY = "resources";
 	private static final String ELIPSIS = "...";
 	// singleton
 	private static ResourceManager manager = null;
@@ -76,14 +74,44 @@ public class ResourceManager {
 	}
 
 	/**
+	 * Return an ImageIcon.
+	 *
+	 * @return ImageIcon
+	 */
+	public static javax.swing.ImageIcon getImageIcon(Class aClass, String imageFileName) {
+		return new javax.swing.ImageIcon(getURL(aClass, imageFileName));
+	}
+
+	/**
+	 * Return URL of given filename in a Package named "resources" relative to
+	 * the given Class' path.
+	 *
+	 * @param aClass
+	 * @param fileName
+	 * @return URL
+	 */
+	public static URL getURL(Class aClass, String fileName) {
+		String className = aClass.getName();
+		int index = className.lastIndexOf('.');
+		String file = className.substring(0, index).replace('.', '/') + "/" + RESOURCES_DIRECTORY + "/" + fileName;
+
+		// var I) from IDE with relative FileSystem or compiled within Jar
+		URL url = aClass.getResource("/" + file);
+
+		// var II) from JAR with External FileSystem
+		//	java.net.URL url = getClass().getResource(file);
+
+		return url;
+	}
+
+	/**
 	 * Return NLS-String for a certain Property.
 	 *
-	 * @param holder A <holder-Class>[_<language>].properties file must exist
+	 * @param holder       A <holder-Class>[_<language>].properties file must exist
 	 * @param locale
 	 * @param propertyName
-	 * @param loader null for default ClassLoader
+	 * @param loader       null for default ClassLoader
 	 * @return String NLS-String
-	 * @see ch.ehi.basics.i18n.ResourceBundle
 	 */
 	private String getResource(java.lang.Class<?> holder, Locale locale, String propertyName, ClassLoader loader) throws MissingResourceException {
 		java.util.ResourceBundle bundle = getBundle(holder, locale, loader);
@@ -106,21 +134,54 @@ public class ResourceManager {
 		if (resources.containsKey(locale.getLanguage())) {
 			languages = resources.get(locale.getLanguage());
 		} else {
-			languages = new HashMap<Class<?>, java.util.ResourceBundle>();
+			languages = new HashMap<>();
 			resources.put(locale.getLanguage(), languages);
 		}
 		if (languages.containsKey(holder)) {
 			return languages.get(holder);
 		} else {
-			java.util.ResourceBundle bundle = null;
+			java.util.ResourceBundle bundle;
 			if (loader == null) {
-				bundle = ch.ehi.basics.i18n.ResourceBundle.getBundle(holder, locale);
+				bundle = ResourceManager.getBundle(holder, locale);
 			} else {
-				bundle = ch.ehi.basics.i18n.ResourceBundle.getBundle(holder, locale, loader);
+				bundle = getBundle(holder, locale, loader);
 			}
 			languages.put(holder, bundle);
 			return bundle;
 		}
+	}
+
+	/**
+	 * Get the appropriate ResourceBundle for a given Locale.
+	 * Uses transformName() to get the right bundle name.
+	 */
+
+	//TODO HIP ehi version! non wanted
+	@Deprecated(since = "NON ehi.basics")
+	public static java.util.ResourceBundle getBundle(Class baseClass, java.util.Locale locale) {
+		return java.util.ResourceBundle.getBundle(transformName(baseClass.getName()), locale);
+	}
+	/*
+	 * Get the appropriate ResourceBundle for a given Locale and ClassLoader.
+	 * Uses transformName() to get the right bundle name.
+
+	@Deprecated(since="NON ehi.basics")
+	public static java.util.ResourceBundle getBundle(Class baseClass, java.util.Locale locale, ClassLoader loader) {
+		return java.util.ResourceBundle.getBundle(transformName(baseClass.getName()), locale, loader);
+	}*/
+
+	/**
+	 * transform a class name into a corresponding resource bundle name.
+	 * insert 'resources' into the given fully qualified classname.
+	 *
+	 * @param 'ch.ehi.Text'
+	 * @returns 'ch.ehi.resources.Text'
+	 */
+	@Deprecated(since = "NON ehi.basics")
+	private static String transformName(String className) {
+		StringBuffer resourceName = new StringBuffer(className);
+		resourceName.insert(className.lastIndexOf('.'), "." + RESOURCES_DIRECTORY);
+		return resourceName.toString();
 	}
 
 	/**

@@ -14,8 +14,9 @@ package ch.softenvironment.view;
 
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.view.swingext.SwingWorker;
-import java.awt.Frame;
 import lombok.extern.slf4j.Slf4j;
+
+import java.awt.*;
 
 /**
  * Wait-Dialog for busy actions. Design Pattern: Singleton
@@ -106,7 +107,7 @@ public class WaitDialog extends BaseDialog {
                 ivjLblImage.setBounds(16, 14, 120, 232);
                 // user code begin {1}
                 ivjLblImage.setText("");
-                ivjLblImage.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(WaitDialog.class, "traffic_redlight.png"));
+                ivjLblImage.setIcon(ResourceManager.getImageIcon(WaitDialog.class, "traffic_redlight.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}

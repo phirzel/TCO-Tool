@@ -16,35 +16,17 @@ package ch.softenvironment.jomm.tools;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbQuery;
 import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.DbUserTransactionBlock;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.view.AboutDialog;
-import ch.softenvironment.view.FileNamePanel;
-import ch.softenvironment.view.SimpleEditorPanel;
-import ch.softenvironment.view.StatusBar;
-import ch.softenvironment.view.ToolBar;
-import ch.softenvironment.view.ViewOptions;
-import ch.softenvironment.view.WaitDialog;
-import java.awt.GridBagConstraints;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import ch.softenvironment.view.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
 
 /**
  * Tool to execute any-SQL-Code.
@@ -1239,7 +1221,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 	/**
 	 * Initializes connections
 	 *
-	 * @throws java.lang.Exception The exception description.
+	 *
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
 	private void initConnections() {
@@ -1322,7 +1304,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 		try {
 			setSystemLookAndFeel();
 
-			showSplashScreen(new java.awt.Dimension(500, 400), ch.ehi.basics.i18n.ResourceBundle.getImageIcon(DbSchemaAnalyzerView.class, "splash.png"));
+			showSplashScreen(new java.awt.Dimension(500, 400), ResourceManager.getImageIcon(DbSchemaAnalyzerView.class, "splash.png"));
 
 			instance = new DbSchemaAnalyzerView(new ViewOptions(), null);
 			// getInstance().addDefaultClosingListener();
@@ -1354,7 +1336,7 @@ public class DbSchemaAnalyzerView extends ch.softenvironment.jomm.mvc.view.DbBas
 	 * Show Help
 	 */
 	private void mniHelpTopics_ActionPerformed(java.awt.event.ActionEvent actionEvent) {
-		ch.ehi.basics.view.BrowserControl.displayURL("http://www.softenvironment.ch");
+		BrowserControl.displayURL("http://www.softenvironment.ch");
 	}
 
 	/**

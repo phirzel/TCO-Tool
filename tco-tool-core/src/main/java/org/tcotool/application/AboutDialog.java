@@ -16,6 +16,8 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.client.ResourceManager;
+
 /**
  * Product Info Dialog.
  *
@@ -121,7 +123,7 @@ public class AboutDialog extends ch.softenvironment.view.BaseDialog {
                 ivjLblIsb.setText("ISB");
                 ivjLblIsb.setBounds(15, 222, 630, 87);
                 // user code begin {1}
-                ivjLblIsb.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(AboutDialog.class, "isb_de.gif"));
+                ivjLblIsb.setIcon(ResourceManager.getImageIcon(AboutDialog.class, "isb_de.gif"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -172,7 +174,7 @@ public class AboutDialog extends ch.softenvironment.view.BaseDialog {
                 ivjLblPHW.setText("PHW");
                 ivjLblPHW.setBounds(15, 321, 113, 38);
                 // user code begin {1}
-                ivjLblPHW.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(AboutDialog.class, "phw_logo.gif"));
+                ivjLblPHW.setIcon(ResourceManager.getImageIcon(AboutDialog.class, "phw_logo.gif"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -248,7 +250,7 @@ public class AboutDialog extends ch.softenvironment.view.BaseDialog {
                 ivjTxaAbout.setLineWrap(true);
                 ivjTxaAbout.setWrapStyleWord(true);
                 ivjTxaAbout
-                    .setText("Dies ist ein Werkzeug zur Berechnung der Total Cost of Ownership fuer Unternehmen mit IT-Infrastruktur.\n\nWeitere Infos unter: http://www.tcotool.org");
+                        .setText("Dies ist ein Werkzeug zur Berechnung der Total Cost of Ownership fuer Unternehmen mit IT-Infrastruktur.\n\nWeitere Infos unter: http://www.tcotool.org");
                 ivjTxaAbout.setBounds(15, 63, 630, 72);
                 ivjTxaAbout.setEditable(false);
                 ivjTxaAbout.setEnabled(true);
@@ -276,14 +278,14 @@ public class AboutDialog extends ch.softenvironment.view.BaseDialog {
                 ivjTxaLicence = new ch.softenvironment.view.SimpleEditorPanel();
                 ivjTxaLicence.setName("TxaLicence");
                 ivjTxaLicence.setFont(new java.awt.Font("Arial", 1, 12));
-                ivjTxaLicence.setText("Dieses Produkt enthaelt Software, die entwickelt wurde durch:\n- Apache Software Foundation (http://www.apache.org)");
+                //ivjTxaLicence.setText("Dieses Produkt enthaelt Software, die entwickelt wurde durch:\n- Apache Software Foundation (http://www.apache.org)");
                 ivjTxaLicence.setBounds(12, 431, 630, 119);
                 // user code begin {1}
                 ivjTxaLicence.setEditable(false);
-                ivjTxaLicence.setText(getResourceString("TxaLicence_text") + "\n- softEnvironment GmbH (http://www.softenvironment.ch)"
-                    + "\n- Eisenhut Informatik AG (http://www.eisenhutinformatik.ch)" + "\n- Apache Software Foundation (http://www.apache.org)"
-                    + "\n- JHotDraw (http://www.jhotdraw.org" + "\n- JFreeChart (http://www.jfree.org/jfreechart)"
-                    + "\n- Java Plugin Framework (http://jpf.sourceforge.net/)");
+                ivjTxaLicence.setText(getResourceString("TxaLicence_text")
+                        + "\n- softEnvironment GmbH, liq. (http://www.softenvironment.ch)"
+                        + "\n- Apache Software Foundation (http://www.apache.org)"
+                        + "\n- JHotDraw (http://www.jhotdraw.org" + "\n- JFreeChart (http://www.jfree.org/jfreechart)");
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}

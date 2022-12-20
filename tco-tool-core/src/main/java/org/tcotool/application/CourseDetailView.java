@@ -16,7 +16,7 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
@@ -27,13 +27,14 @@ import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.view.CommonUserAccess;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
-import java.util.EventObject;
-import java.util.Iterator;
-import java.util.List;
 import org.tcotool.model.Course;
 import org.tcotool.model.SystemParameter;
 import org.tcotool.model.TcoModel;
 import org.tcotool.tools.ModelUtility;
+
+import java.util.EventObject;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * DetailView of a TcoPackage.
@@ -42,7 +43,7 @@ import org.tcotool.tools.ModelUtility;
  */
 
 public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements DbObjectValidator, ch.softenvironment.view.DetailView,
-    ch.softenvironment.view.SearchView {
+        ch.softenvironment.view.SearchView {
 
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
     IvjEventHandler ivjEventHandler = new IvjEventHandler();
@@ -526,7 +527,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -552,7 +553,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -578,7 +579,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -604,7 +605,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -649,13 +650,13 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setFactor(new java.lang.Double(getTxtFactor().getText()));
+                        getObject().setFactor(Double.valueOf(getTxtFactor().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -679,7 +680,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -705,7 +706,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -731,7 +732,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1226,7 +1227,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -1268,7 +1269,7 @@ public class CourseDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFra
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_text"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getConsistencyController().addValidator(this);
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(Course.class));

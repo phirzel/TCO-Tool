@@ -15,10 +15,10 @@ package ch.softenvironment.jomm.mvc.view;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.view.FileChooser;
 import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
 import ch.softenvironment.view.BaseDialog;
 import ch.softenvironment.view.CommonUserAccess;
+import ch.softenvironment.view.FileChooser;
 
 /**
  * Login Dialog for Application startup.
@@ -654,7 +654,7 @@ public class DbLoginDialog extends BaseDialog {
 	/**
 	 * Initializes connections
 	 *
-	 * @throws java.lang.Exception The exception description.
+	 *
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
 	private void initConnections() {
