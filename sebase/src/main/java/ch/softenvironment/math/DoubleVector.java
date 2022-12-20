@@ -28,7 +28,7 @@ public class DoubleVector {
 		if (initialCapacity < 0) {
 			throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
 		}
-		v = Double.valueOf[initialCapacity];
+		v = new double[initialCapacity];
 		for (int i = 0; i < initialCapacity; i++) {
 			// set default initial value
 			v[i] = 0;
@@ -112,7 +112,7 @@ public class DoubleVector {
 	 * Set all values of Vector to constant scalar value
 	 */
 	public static DoubleVector getConstantInstance(int vectorSize, double scalar) {
-        DoubleVector vec = Double.valueOfVector(vectorSize);
+		DoubleVector vec = new DoubleVector(vectorSize);
 
 		for (int i = 0; i < vectorSize; i++) {
 			vec.v[i] = scalar;
@@ -132,7 +132,7 @@ public class DoubleVector {
 			// throw range()        exit(OUTOFRANGE);
 		}
 
-        DoubleVector c = Double.valueOfVector(size());
+		DoubleVector c = new DoubleVector(size());
 		c.v[0] = v[1] * b.v[2] - v[2] * b.v[1];
 		c.v[1] = -v[0] * b.v[2] + v[2] * b.v[0];
 		c.v[2] = v[0] * b.v[1] - v[1] * b.v[0];
@@ -147,7 +147,7 @@ public class DoubleVector {
 			//throw range(OUTOFRANGE);
 		}
 
-        DoubleVector r = Double.valueOfVector(m.getVectorSize());
+		DoubleVector r = new DoubleVector(m.getVectorSize());
 		for (int i = 0; i < m.getVectorSize(); i++) {
 			// rows of M r[i]=a[i]*b
 			r.v[i] = 0;
@@ -163,8 +163,8 @@ public class DoubleVector {
 	 * return length of a vector (Norm)
 	 */
 	public DoubleVector getNorm() {
-        double dist = getAbs();
-        DoubleVector n = Double.valueOfVector(size());
+		double dist = getAbs();
+		DoubleVector n = new DoubleVector(size());
 
 		if (dist == 0.0) {
 			//throw( zero-length vectors cannot be normalized)

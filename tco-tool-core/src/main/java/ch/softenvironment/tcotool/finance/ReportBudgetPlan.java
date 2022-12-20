@@ -52,8 +52,8 @@ class ReportBudgetPlan extends ReportTool implements TreeToolListener {
         super(utility, ResourceManager.getResource(FinancePlugin.class, "MniReportBudgetPlan_text"));
 
         duration = calcYearlyDuration(durationMonths);
-        pCost = Double.valueOf[duration];
-        fCost = Double.valueOf[duration];
+        pCost = new double[duration];
+        fCost = new double[duration];
         for (int i = 0; i < duration; i++) {
             pCost[i] = 0.0;
             fCost[i] = 0.0;

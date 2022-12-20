@@ -35,7 +35,7 @@ public class DoubleMatrix {
 
 		this.vectorSize = vectorSize;
 		this.nbrOfVectors = nbrOfVectors;
-        m = Double.valueOf[vectorSize * nbrOfVectors];
+		m = new double[vectorSize * nbrOfVectors];
 		for (int i = 0; i < m.length; i++) {
 			// set default initial value
 			m[i] = 0;
@@ -84,7 +84,7 @@ public class DoubleMatrix {
 	 * Creates an adjacency Matrix
 	 */
 	public static DoubleMatrix getAdjacencyInstance(DoubleMatrix a) {
-        DoubleMatrix adj = Double.valueOfMatrix();
+		DoubleMatrix adj = new DoubleMatrix();
 		//TODO NYI: following algorithm
 /*
 /*
@@ -129,7 +129,7 @@ end; (*adj*)
 	 * Set all values of Matrix to constant scalar value
 	 */
 	public static DoubleMatrix getConstantInstance(int vectorSize, int nbrOfVectors, double scalar) {
-        DoubleMatrix con = Double.valueOfMatrix(vectorSize, nbrOfVectors);
+		DoubleMatrix con = new DoubleMatrix(vectorSize, nbrOfVectors);
 
 		for (int i = 0; i < vectorSize; i++) {
 			for (int j = 0; j < nbrOfVectors; j++) {
@@ -217,7 +217,7 @@ end; (*det*)
 	 * Creates an inversed Matrix A(3,4) => AT(4,3)
 	 */
 	public static DoubleMatrix getInverseInstance(DoubleMatrix a) {
-        DoubleMatrix inv = Double.valueOfMatrix();
+		DoubleMatrix inv = new DoubleMatrix();
 		//TODO NYI: following algorithm
 /*
 procedure inv(matr:mat;var res:mat);
@@ -252,7 +252,7 @@ end; (*inv*)
 	 * Creates a minor Matrix
 	 */
 	public static DoubleMatrix getMinorInstance(DoubleMatrix a, int row, int col) {
-        DoubleMatrix minor = Double.valueOfMatrix();
+		DoubleMatrix minor = new DoubleMatrix();
 		//TODO NYI: following algorithm
 /*
 procedure minor(matr:mat;bx,by:integer;var res:mat);
@@ -293,25 +293,25 @@ procedure minor(matr:mat;bx,by:integer;var res:mat);
 		quadraticCheck();
 
 		switch (exponent) {
-            case -1:
-                return getInverseInstance(this);
-            case 0:
-                return getIdentityInstance(getVectorSize());
-            case 1:
-                return this;
-            default:
-                DoubleMatrix pow = Double.valueOfMatrix(getVectorSize(), getNumberOfVectors());
-                DoubleMatrix h = Double.valueOfMatrix(getVectorSize(), getNumberOfVectors());
-                if (exponent < 0) {
-                    h = getInverseInstance(this);
-                } else {
-                    // exponent>1
-                    h = this;
-                }
-                pow = h;
-                for (; exponent > 1; exponent--) {
-                    pow = pow.getFalk(h);
-                }
+			case -1:
+				return getInverseInstance(this);
+			case 0:
+				return getIdentityInstance(getVectorSize());
+			case 1:
+				return this;
+			default:
+				DoubleMatrix pow = new DoubleMatrix(getVectorSize(), getNumberOfVectors());
+				DoubleMatrix h = new DoubleMatrix(getVectorSize(), getNumberOfVectors());
+				if (exponent < 0) {
+					h = getInverseInstance(this);
+				} else {
+					// exponent>1
+					h = this;
+				}
+				pow = h;
+				for (; exponent > 1; exponent--) {
+					pow = pow.getFalk(h);
+				}
 				return pow;
 		}
 	}
@@ -320,7 +320,7 @@ procedure minor(matr:mat;bx,by:integer;var res:mat);
 	 * Creates a transponed Matrix german: transponierte Matrix A(3,4) => AT(4,3)
 	 */
 	public DoubleMatrix getTransponed() {
-        DoubleMatrix trn = Double.valueOfMatrix(getNumberOfVectors(), getVectorSize());
+		DoubleMatrix trn = new DoubleMatrix(getNumberOfVectors(), getVectorSize());
 		for (int i = 0; i < getVectorSize(); i++) {
 			for (int j = 0; j < getNumberOfVectors(); j++) {
 				trn.setCell(j, i, getCell(i, j));
