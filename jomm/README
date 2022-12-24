@@ -1,4 +1,6 @@
-# JOMM - Persistence-Framework (**DEPRECATED, use JPA** nowadays instead)
+# JOMM - Persistence-Framework
+
+Rather a self-made legacy persistence framework, nowadays one would use JPA instead.
 
 This library contains persistence Mapping classes:
 * ch.softenvironment.jomm.* (basic structures & mechanisms)

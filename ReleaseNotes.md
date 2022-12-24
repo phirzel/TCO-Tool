@@ -9,7 +9,7 @@ Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
 * update to OpenJDK 11 (tested by OpenJDK 19 as well)
 * library updates (where found on Maven central)
 * optional commercial softEnvironment Plugins added/sponsored
-* JPF (Java Plugin Framework removed, considered als old and badly maintained)
+* JPF (Java Plugin Framework removed, considered as old and badly maintained)
 
 # How to build
 1. add `TCO-Tool\lib\jhotdraw60b1\jhotdraw.jar` to classpath (seems not to be provided by MAVEN central yet or any more)
@@ -30,3 +30,4 @@ Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
           at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
           at org.tcotool.standard.report.ReportComplete.walkPackageComplete(ReportComplete.java:87)
           at
+* upgrade JHotDraw lib

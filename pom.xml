@@ -14,8 +14,8 @@
     <organization>
         <name>softEnvironment GmbH (liq.), Peter Hirzel, Switzerland</name>
     </organization>
-    <description>Total Cost of Ownership calculation (Standalone Java UI Application with XML files
-        for your Project-Data).
+    <description>Total Cost of Ownership calculation (Standalone Java Swing UI Application with XML files for your
+        Project-Data).
     </description>
 
     <properties>
