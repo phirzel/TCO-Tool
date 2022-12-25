@@ -21,9 +21,6 @@ import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.serialize.AttributeList;
 import ch.softenvironment.util.NlsUtils;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.tcotool.application.FactCostDetailView;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.PersonalCostDetailView;
@@ -37,6 +34,10 @@ import org.tcotool.standard.report.ReportTool;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.CalculatorTco;
 import org.tcotool.tools.ModelUtility;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility to report estimated TCO costs based Cost#estimated . Calculations as Plugin for TCO-Tool. Design Pattern: Visitor
@@ -91,7 +92,7 @@ class ReportTcoEstimated extends ReportTco {
         double estimatedValue = Calculator.getValue(calculator.getCodeTotal(root, Calculator.ESTIMATED), Calculator.INDEX_TOTAL);
         paragraph(tmp + amount(estimatedValue) + " : " + amount(knownValue));
         /*
-         * getCsvWriter().cell(tmp); getCsvWriter().cell(new Double(estimatedValue)); getCsvWriter().cell(" : "); getCsvWriter().cell(new Double(knownValue));
+         * getCsvWriter().cell(tmp); getCsvWriter().cell(Double.valueOf(estimatedValue)); getCsvWriter().cell(" : "); getCsvWriter().cell(Double.valueOf(knownValue));
          * getCsvWriter().newline();
          */
         startTable(1);

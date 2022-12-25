@@ -23,26 +23,10 @@ import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
 import ch.softenvironment.util.UserException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.Occurance;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Role;
-import org.tcotool.model.Service;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
+
+import java.util.*;
 
 /**
  * Generic calculator for configuration of the TCO-Tool.
@@ -283,7 +267,7 @@ public abstract class Calculator {
             // adapt distribution percentage
             double distribution = dependency.getDistribution().doubleValue() / 100.0;
             for (int i = 0; i < tmp.size(); i++) {
-                tmp.set(i, new Double(tmp.get(i).doubleValue() * distribution));
+                tmp.set(i, Double.valueOf(tmp.get(i).doubleValue() * distribution));
             }
             accumulateLists(results, tmp);
         }
@@ -450,7 +434,7 @@ public abstract class Calculator {
                 } else {
                     if (cost.getAmount() == null) {
                         log.warn("Developer warning: Auto-correction: cost#amount set to 0.0");
-                        cost.setAmount(new Double(0.0));
+                        cost.setAmount(Double.valueOf(0.0));
                     }
                     double costFactor = groupFactor * serviceFactor * driverFactor * ModelUtility.getMultitudeFactor(cost);
                     double totalCost = cost.getAmount().doubleValue() * costFactor;
@@ -608,7 +592,7 @@ public abstract class Calculator {
     private static List<Double> getCodeList(Map<String, List<Double>> map, final String key) {
         if (!map.containsKey(key)) {
             List<Double> codeList = new ArrayList<Double>();
-            codeList.add(new Double(0.0)); // [INDEX_TOTAL] initial Total Costs
+            codeList.add(Double.valueOf(0.0)); // [INDEX_TOTAL] initial Total Costs
             map.put(key, codeList);
         }
         return map.get(key);
@@ -631,9 +615,9 @@ public abstract class Calculator {
         List<Double> codeList = getCodeList(serviceMap, createCodeKey(kind, code));
         for (int i = codeList.size(); i <= year; i++) {
             // (first entry in this year) || (Cost#baseOffset > 1 year)
-            codeList.add(new Double(0.0));
+            codeList.add(Double.valueOf(0.0));
         }
-        codeList.set(year, new Double(codeList.get(year).doubleValue() + amount));
+        codeList.set(year, Double.valueOf(codeList.get(year).doubleValue() + amount));
     }
 
     /**
@@ -700,7 +684,7 @@ public abstract class Calculator {
         // TODO move to sebase ListUtils
         for (int i = 0; i < summand.size(); i++) {
             if (results.size() > i) {
-                results.set(i, new Double(results.get(i).doubleValue() + summand.get(i).doubleValue()));
+                results.set(i, Double.valueOf(results.get(i).doubleValue() + summand.get(i).doubleValue()));
             } else {
                 results.add(summand.get(i));
             }
@@ -719,12 +703,12 @@ public abstract class Calculator {
 
         List<Double> totalPersonal = getTotalCosts(costObject, KIND_PC);
         List<Double> totalFacts = getTotalCosts(costObject, KIND_FC);
-        costs.add(new Double(getValue(totalPersonal, INDEX_TOTAL)));
-        costs.add(new Double(getValue(totalFacts, INDEX_TOTAL)));
+        costs.add(Double.valueOf(getValue(totalPersonal, INDEX_TOTAL)));
+        costs.add(Double.valueOf(getValue(totalFacts, INDEX_TOTAL)));
         for (int i = 0; i < getDurationYears(); i++) {
             // print years
             int index = i + INDEX_TOTAL + 1;
-            costs.add(new Double(getValue(totalFacts, index) + getValue(totalPersonal, index)));
+            costs.add(Double.valueOf(getValue(totalFacts, index) + getValue(totalPersonal, index)));
         }
         return costs;
     }

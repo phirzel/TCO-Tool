@@ -14,8 +14,8 @@
     <organization>
         <name>softEnvironment GmbH (liq.), Peter Hirzel, Switzerland</name>
     </organization>
-    <description>Total Cost of Ownership calculation (Standalone Java UI Application with XML files
-        for your Project-Data).
+    <description>Total Cost of Ownership calculation (Standalone Java Swing UI Application with XML files for your
+        Project-Data).
     </description>
 
     <properties>
@@ -32,7 +32,6 @@
     </properties>
 
     <modules>
-        <module>ehibasics</module>
         <module>sebase</module>
         <module>jomm</module>
         <module>tco-tool-core</module>
@@ -48,6 +47,11 @@
             <dependency>
                 <groupId>org.tcotool</groupId>
                 <artifactId>jomm</artifactId>
+                <version>1.6.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tcotool</groupId>
+                <artifactId>tco-tool-core</artifactId>
                 <version>1.6.0-SNAPSHOT</version>
             </dependency>
 

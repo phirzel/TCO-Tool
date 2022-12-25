@@ -55,7 +55,7 @@ public class NumberTableCellRenderer extends javax.swing.table.DefaultTableCellR
 				setText("");
 			} else if (MathUtils.compare(0.0, ((Number) value).doubleValue()) == 0) {
 				// prevent 0.0 is represented as -0.0
-				setText(numberFormat.format(new Double(0.0)));
+				setText(numberFormat.format(Double.valueOf(0.0)));
 			} else {
 				setText((value == null) ? "" : numberFormat.format(value));
 			}

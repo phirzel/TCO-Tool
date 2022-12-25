@@ -26,9 +26,10 @@ import ch.softenvironment.view.CommonUserAccess;
 import ch.softenvironment.view.ListMenuChoice;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.swingext.JListUtility;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.EventObject;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Allow selection of multiple Codes, especially for Code-Cardinalities [0..*].
@@ -500,7 +501,7 @@ public class DbMultiCodeView extends ch.softenvironment.view.BasePanel implement
 	/**
 	 * Initializes connections
 	 *
-	 * @throws java.lang.Exception The exception description.
+	 *
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
 	private void initConnections() {

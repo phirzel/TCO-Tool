@@ -47,9 +47,7 @@ public class DoubleMatrix {
 	 */
 	public DoubleMatrix(DoubleMatrix a) {
 		this(a.getVectorSize(), a.getNumberOfVectors());
-		for (int i = 0; i < m.length; i++) {
-			m[i] = a.m[i];
-		}
+		System.arraycopy(a.m, 0, m, 0, m.length);
 	}
 
 	/**

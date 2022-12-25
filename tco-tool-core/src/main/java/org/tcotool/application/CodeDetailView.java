@@ -16,8 +16,6 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.view.FileChooser;
-import ch.ehi.basics.view.GenericFileFilter;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.jomm.DbUserTransactionBlock;
@@ -29,23 +27,16 @@ import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.view.BaseDialog;
 import ch.softenvironment.view.CommonUserAccess;
+import ch.softenvironment.view.FileChooser;
+import ch.softenvironment.view.GenericFileFilter;
+import org.tcotool.model.*;
+import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JFileChooser;
-import org.tcotool.model.Activity;
-import org.tcotool.model.Catalogue;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostCentre;
-import org.tcotool.model.ProjectPhase;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Role;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.Site;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoPackage;
-import org.tcotool.tools.ModelUtility;
 
 /**
  * Code changing Dialog.
@@ -1104,7 +1095,7 @@ public class CodeDetailView extends ch.softenvironment.view.BaseDialog implement
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

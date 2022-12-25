@@ -14,24 +14,15 @@ package ch.softenvironment.jomm.demoapp.testsuite;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbQueryBuilder;
-import ch.softenvironment.jomm.demoapp.model.Activity;
-import ch.softenvironment.jomm.demoapp.model.CompanyType;
-import ch.softenvironment.jomm.demoapp.model.LegalPerson;
-import ch.softenvironment.jomm.demoapp.model.NaturalPerson;
-import ch.softenvironment.jomm.demoapp.model.Person;
-import ch.softenvironment.jomm.demoapp.model.Phase;
-import ch.softenvironment.jomm.demoapp.model.Project;
-import ch.softenvironment.jomm.demoapp.model.ProjectSessionBean;
-import ch.softenvironment.jomm.demoapp.model.Role;
-import ch.softenvironment.jomm.demoapp.model.RoleType;
-import ch.softenvironment.jomm.demoapp.model.WorkProduct;
+import ch.softenvironment.jomm.demoapp.model.*;
 import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
+import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import junit.framework.TestCase;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * JUnit Testcase to testsuite JOMM with DemoApp-Model. This Testcase will: - create some Test-Data - manipulate the Test-Data see ch.softenvironment.jomm.demoapp.*TestSuite to run this TestCase
@@ -66,11 +57,11 @@ public class DemoAppTestCase extends TestCase {
 			DbQueryBuilder builder = server.createQueryBuilder(DbQueryBuilder.SELECT, "Count Person");
 			builder.setAttributeList("COUNT(*)");
 			builder.setTableList(Person.class);
-			assertTrue("Number of generated Person's", ((Number) server.getFirstValue(builder)).longValue() == COUNTER);
+			assertEquals("Number of generated Person's", COUNTER, ((Number) server.getFirstValue(builder)).longValue());
 			// OR
 			builder = server.createQueryBuilder(DbQueryBuilder.RAW, "Count Person");
 			builder.setRaw("SELECT COUNT(*) FROM Person");
-			assertTrue("Number of generated Person's", ((Number) server.getFirstValue(builder)).longValue() == COUNTER);
+			assertEquals("Number of generated Person's", COUNTER, ((Number) server.getFirstValue(builder)).longValue());
 
 			DbEnumeration enumeration = server.retrieveEnumeration(RoleType.class, RoleType.DEVELOPER);
 			assertTrue("RolyType->Developer", (enumeration != null) && DbEnumeration.isIliCode(enumeration, RoleType.DEVELOPER));
@@ -122,13 +113,13 @@ public class DemoAppTestCase extends TestCase {
 				role.setMemberId(np.getId());
 				role.setProjectId(project.getId());
 				role.setType((RoleType) server.retrieveEnumeration(RoleType.class, RoleType.DEVELOPER));
-				role.setPercentage(new Double(generator.getGenerator().nextInt(100)));
-				role.save();
+                role.setPercentage(Double.valueOf(generator.getGenerator().nextInt(100)));
+                role.save();
 
 				Activity activity = (Activity) server.createInstance(Activity.class);
-				activity.setDescription(generator.getRandomString(1024));
-				activity.setEffort(new Double(generator.getGenerator().nextInt(5184000) /*24h*/));
-				activity.setProjectId(project.getId());
+                activity.setDescription(generator.getRandomString(1024));
+                activity.setEffort(Double.valueOf(generator.getGenerator().nextInt(5184000) /*24h*/));
+                activity.setProjectId(project.getId());
 				activity.setRoleId(role.getId());
 				//	         	activity.setWorkProductId(wp.getId());
 				activity.setPhase((Phase) server.retrieveEnumeration(Phase.class, Phase.CONSTRUCTION));

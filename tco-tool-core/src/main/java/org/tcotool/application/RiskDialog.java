@@ -356,7 +356,7 @@ public class RiskDialog extends ch.softenvironment.view.BaseDialog {
             handleException(ivjExc);
         }
         // user code begin {2}
-        //TODO setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        //TODO setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         // user code end
     }
 }

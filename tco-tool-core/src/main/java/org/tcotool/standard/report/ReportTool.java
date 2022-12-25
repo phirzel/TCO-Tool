@@ -26,27 +26,18 @@ import ch.softenvironment.jomm.serialize.CsvSerializer;
 import ch.softenvironment.jomm.serialize.HtmlSerializer;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.tcotool.application.LauncherView;
+import org.tcotool.model.Process;
+import org.tcotool.model.*;
+import org.tcotool.tools.Calculator;
+import org.tcotool.tools.ModelUtility;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import lombok.extern.slf4j.Slf4j;
-import org.tcotool.application.LauncherView;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostCentre;
-import org.tcotool.model.CostExponent;
-import org.tcotool.model.Process;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Service;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.Site;
-import org.tcotool.model.SystemParameter;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
-import org.tcotool.tools.Calculator;
-import org.tcotool.tools.ModelUtility;
 
 /**
  * Reporting Utility to generate different Outputs by TCO-Tool in HTML or CSV. Design Pattern: Visitor
@@ -206,8 +197,8 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 		/*
 		 * String tmp = getRsc("CIEstimatedRatio") + " = "; double known = Calculator.getValue(calculator.getCodeTotal(root, Calculator.KNOWN),
 		 * Calculator.INDEX_TOTAL); double estimated = Calculator.getValue(calculator.getCodeTotal(root, Calculator.ESTIMATED), Calculator.INDEX_TOTAL);
-		 * nativeContent(tmp + amount(estimated) + " : " + amount(known)); getCsvWriter().cell(tmp); getCsvWriter().cell(new Double(estimated));
-		 * getCsvWriter().cell(" : "); getCsvWriter().cell(new Double(known)); getCsvWriter().newline();
+		 * nativeContent(tmp + amount(estimated) + " : " + amount(known)); getCsvWriter().cell(tmp); getCsvWriter().cell(Double.valueOf(estimated));
+		 * getCsvWriter().cell(" : "); getCsvWriter().cell(Double.valueOf(known)); getCsvWriter().newline();
 		 */
 		// Cost->CostCause (most important Enumeration)
 		List<? extends DbCodeType> codes = server.retrieveCodes(CostCause.class);
@@ -394,7 +385,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 	public static String getTcoObjectImage(ModelUtility utility, Class<? extends TcoObject> tcoObject) {
 		URL url = utility.getImageURL(tcoObject);
 		if (tcoObject.equals(TcoPackage.class) || tcoObject.equals(TcoModel.class)) {
-			url = ch.ehi.basics.i18n.ResourceBundle.getURL(ModelUtility.class, StringUtils.getPureClassName(TcoPackage.class) + ".png");
+			url = ResourceManager.getURL(ModelUtility.class, StringUtils.getPureClassName(TcoPackage.class) + ".png");
 		}
 		return "<img src='" + url + "' border='0' alt='" + ModelUtility.getTypeString(tcoObject) + ":'>";
 	}
@@ -565,7 +556,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 		}
 		nativeContent("</td>");
 
-		getCsvWriter().cell(new Double(value));
+		getCsvWriter().cell(Double.valueOf(value));
 	}
 
 	/**
@@ -617,7 +608,7 @@ public abstract class ReportTool extends ch.softenvironment.jomm.serialize.HtmlS
 		}
 		nativeContent("</td>");
 
-		getCsvWriter().cell(new Double(value));
+		getCsvWriter().cell(Double.valueOf(value));
 	}
 
 	@Override

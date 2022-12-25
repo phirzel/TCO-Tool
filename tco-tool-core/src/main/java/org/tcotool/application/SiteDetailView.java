@@ -1,6 +1,6 @@
 package org.tcotool.application;
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
 import org.tcotool.model.Site;
@@ -213,7 +213,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -239,7 +239,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -265,7 +265,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -291,7 +291,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -317,7 +317,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -343,7 +343,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -726,7 +726,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -762,7 +762,7 @@ public class SiteDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
         }
         // user code begin {2}
         setTitle(ch.softenvironment.client.ResourceManager.getResourceAsNonLabeled(CostDriverDetailView.class, "LblSite_text"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(Site.class));
         getPnlStandardToolbar().setObjects(getObjects());

@@ -72,7 +72,7 @@ public class GraphLayout extends FigureChangeAdapter {
 		  Dimension d2 = edge.getEndConnector().owner().size();
 		  int len = Math.max(d1.width,d1.height)/2 +
 				Math.max(d2.width,d2.height)/2 + addlen;
-		  edges.put(edge, new Double(len));
+		  edges.put(edge, Double.valueOf(len));
 	}
 
 	public synchronized void relax() {

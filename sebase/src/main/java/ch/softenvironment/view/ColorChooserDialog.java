@@ -12,7 +12,7 @@ package ch.softenvironment.view;
  * Lesser General Public License for more details.
  */
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Show a Dialog to select a Color.
@@ -235,7 +235,7 @@ public class ColorChooserDialog extends BaseDialog {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

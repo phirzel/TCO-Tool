@@ -22,9 +22,6 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.tcotool.application.LauncherView;
 import org.tcotool.application.NavigationView;
@@ -34,6 +31,10 @@ import org.tcotool.model.TcoPackage;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.CalculatorTco;
 import org.tcotool.tools.ModelUtility;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Utility to report TCO-Costs in HTML or CSV. Design Pattern: Visitor
@@ -78,7 +79,7 @@ public class ReportTco extends ReportTool {
 		// tableHeader(getRsc("CIFactCostOverAll"));
 		for (int year = 0; year < calculator.getDurationYears(); year++) {
 			String partialYear = "";
-			if ((calculator.getMaxDurationMonths() - year * 12) < 12) {
+			if ((calculator.getMaxDurationMonths() - year * 12L) < 12) {
 				partialYear = NlsUtils.formatMessage("<br>" + getRsc("CIPartialYear"), (int) calculator.getMaxDurationMonths() % 12);
 			}
 			String header = getRsc("CITCO") + partialYear;
@@ -148,8 +149,8 @@ public class ReportTco extends ReportTool {
 			// make same array Structure as in serviceDependencyCost (cummulate
 			// PC + FC in first cell)
 			double totalPC_FC = Calculator.getValue(totalCosts, 0) + Calculator.getValue(totalCosts, 1);
-			totalCosts.set(1, new Double(totalPC_FC));
-			totalCosts.remove(0);
+			totalCosts.set(1, Double.valueOf(totalPC_FC));
+            totalCosts.remove(0);
 			Calculator.accumulateLists(totalCosts, serviceDependencyCosts);
 			sumTcoOverUsage = 0.0;
 			// tableDataAmount(Calculator.getValue(totalCosts, 0), true, 2);

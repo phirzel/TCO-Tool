@@ -16,48 +16,28 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
-import ch.ehi.basics.view.FileChooser;
-import ch.ehi.basics.view.GenericFileFilter;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.client.ViewManager;
 import ch.softenvironment.jomm.mvc.model.DbObject;
-import ch.softenvironment.view.BaseDialog;
-import ch.softenvironment.view.CommonUserAccess;
-import ch.softenvironment.view.ToolBar;
-import ch.softenvironment.view.WaitDialog;
-import ch.softenvironment.view.tree.AutoScrollingTree;
-import ch.softenvironment.view.tree.NavigationTreeCellEditor;
-import ch.softenvironment.view.tree.NavigationTreeCellRenderer;
-import ch.softenvironment.view.tree.NavigationTreeModel;
-import ch.softenvironment.view.tree.TreeSelectionDialog;
-import java.awt.Component;
-import java.awt.dnd.DnDConstants;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import ch.softenvironment.view.*;
+import ch.softenvironment.view.tree.*;
+import org.tcotool.model.*;
 import org.tcotool.pluginsupport.Menu;
 import org.tcotool.standard.report.ReportInvestment;
 import org.tcotool.standard.report.ReportTco;
 import org.tcotool.tools.ModelCopyTool;
 import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.awt.dnd.DnDConstants;
+import java.util.ArrayList;
+import java.util.EventObject;
+import java.util.List;
 
 /**
  * Panel to represent a Model as a Tree.
@@ -214,7 +194,6 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
 
             getMniImportConfiguration().setEnabled(false);
             getMniExportConfiguration().setEnabled(false);
-            return;
         } else {
             boolean isPackage = node instanceof TcoPackage;
             boolean isService = node instanceof Service;
@@ -295,7 +274,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
             if (isGroup == null) {
                 // report is available for Group or Package
                 comp.setEnabled(isService || isPackage);
-            } else if (isGroup.booleanValue()) {
+            } else if (isGroup) {
                 // only TcoPackage specific
                 comp.setEnabled(isPackage);
             } else {
@@ -333,8 +312,8 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
 
     /**
      * Do anything at DoubleClick-Event for e.g. open selected Object(s) in a JTable.
-     *
-     * @see ch.softenvironment.view.BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
+     * <p>
+     * see ch.softenvironment.view.BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -892,7 +871,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
                 ivjMniEditChangeWindow.setText("Oeffnen...");
                 // user code begin {1}
                 ivjMniEditChangeWindow.setText(CommonUserAccess.getMniEditChangeWindowText());
-                ivjMniEditChangeWindow.setIcon(ResourceBundle.getImageIcon(ToolBar.class, "open.gif"));
+                ivjMniEditChangeWindow.setIcon(ResourceManager.getImageIcon(ToolBar.class, "open.gif"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -1045,7 +1024,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
                 ivjMniGroup.setText("Gruppe...");
                 // user code begin {1}
                 ivjMniGroup.setText(ResourceManager.getResource(PackageDetailView.class, "FrmWindow_text") + "...");
-                ivjMniGroup.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "TcoPackage.png")); // special
+                ivjMniGroup.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "TcoPackage.png")); // special
                 // case
                 // in
                 // ModelUtility.getIcon()
@@ -1494,7 +1473,7 @@ public class NavigationView extends ch.softenvironment.view.BasePanel implements
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

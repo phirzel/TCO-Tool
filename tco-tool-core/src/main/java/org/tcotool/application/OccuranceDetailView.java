@@ -16,15 +16,16 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
 import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
 import ch.softenvironment.view.DetailView;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
-import java.beans.PropertyChangeEvent;
 import org.tcotool.model.Occurance;
 import org.tcotool.tools.ModelUtility;
+
+import java.beans.PropertyChangeEvent;
 
 /**
  * DetailView of an Occurance.
@@ -33,7 +34,7 @@ import org.tcotool.tools.ModelUtility;
  */
 
 public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
-    java.beans.PropertyChangeListener {
+        java.beans.PropertyChangeListener {
 
     private DetailView caller = null;
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -256,7 +257,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -282,7 +283,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -308,7 +309,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -334,7 +335,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -360,13 +361,13 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                        getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -391,7 +392,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -417,7 +418,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -443,7 +444,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -812,7 +813,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -850,7 +851,7 @@ public class OccuranceDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_title"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(Occurance.class));
         getPnlStandardToolbar().setObjects(getObjects());

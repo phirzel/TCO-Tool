@@ -12,12 +12,10 @@ package ch.softenvironment.view;
  * Lesser General Public License for more details.
  */
 
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JWindow;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Splash screen for Application startup.
@@ -167,7 +165,7 @@ public class SplashScreen extends JWindow {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

@@ -5,7 +5,7 @@ package ch.softenvironment.math;
  *
  * @author Peter Hirzel <i>soft</i>Environment
  */
-public class DoubleVector extends Object {
+public class DoubleVector {
 
 	protected double[] v;        // type of Vector elements is double
 
@@ -15,9 +15,7 @@ public class DoubleVector extends Object {
 	public DoubleVector(double[] array) {
 		this(array.length);
 
-		for (int i = 0; i < size(); i++) {
-			v[i] = array[i];
-		}
+		if (size() >= 0) System.arraycopy(array, 0, v, 0, size());
 	}
 
 	/**
@@ -43,9 +41,7 @@ public class DoubleVector extends Object {
 	public DoubleVector(DoubleVector a) {
 		this(a.size());
 
-		for (int i = 0; i < a.size(); i++) {
-			v[i] = a.v[i];
-		}
+		if (a.size() >= 0) System.arraycopy(a.v, 0, v, 0, a.size());
 	}
 
 	/**

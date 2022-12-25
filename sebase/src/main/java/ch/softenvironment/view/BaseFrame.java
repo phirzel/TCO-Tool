@@ -12,36 +12,20 @@ package ch.softenvironment.view;
  * Lesser General Public License for more details.
  */
 
-import ch.ehi.basics.view.BrowserControl;
-import ch.ehi.basics.view.FileChooser;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.BeanReflector;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Window;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.MissingResourceException;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * TemplateFrame defining minimal functionality.
@@ -117,7 +101,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 */
 	protected final void createLookAndFeelMenu(JMenu lookAndFeelMenu) {
 		UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
-		JMenuItem menuItem = null;
+		JMenuItem menuItem;
 
 		ButtonGroup buttons = new ButtonGroup();
 		for (int i = 0; i < lafs.length; i++) {
@@ -183,7 +167,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 		 * getWorkingDirectory()
 		 */);
 		saveDialog.setDialogTitle(CommonUserAccess.getMniFileSaveAsText());//$NON-NLS-1$
-		saveDialog.addChoosableFileFilter(ch.ehi.basics.view.GenericFileFilter.createCsvFilter());
+		saveDialog.addChoosableFileFilter(GenericFileFilter.createCsvFilter());
 
 		if (saveDialog.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			showBusy(new Runnable() {
@@ -488,8 +472,6 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 			BaseDialog.showError(owner, title, message, exception);
 		} catch (Throwable e) {
 			log.error("Developer error: should not have been reached", e);
-		} finally {
-			// this method must not throw an Exception under any circumstances
 		}
 	}
 
@@ -550,7 +532,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 	 * Reset GUI-Components NLS-Strings, such as Component-text or Component-textToolTip, usually after the Locale#getDefault() has changed. Property "text" and "toolTipText" are changed in a generic,
 	 * recursive matter.
 	 *
-	 * @see #getResourceString(..)
+	 * @see #getResourceString(String)
 	 */
 	protected void updateStringComponent(Component component) {
 		// @see SwingUtilities#updateComponentTreeUI(Component)
@@ -590,7 +572,7 @@ public abstract class BaseFrame extends javax.swing.JFrame {
 			BeanReflector<Component> bean = new BeanReflector<Component>(component, property);
 			if (bean.hasProperty() == BeanReflector.GETTER_AND_SETTER) {
 				try {
-					String nls = null;
+					String nls ;
 					if (resource == null) {
 						nls = getResourceString(component.getName() + "_" + property);
 					} else {

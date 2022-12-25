@@ -16,9 +16,7 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
-import ch.ehi.basics.view.FileChooser;
-import ch.ehi.basics.view.GenericFileFilter;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbUserTransactionBlock;
@@ -32,21 +30,21 @@ import ch.softenvironment.util.ListUtils;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.ParserCSV;
 import ch.softenvironment.util.StringUtils;
-import ch.softenvironment.view.BaseDialog;
-import ch.softenvironment.view.BaseFrame;
-import ch.softenvironment.view.CommonUserAccess;
-import ch.softenvironment.view.DetailView;
-import ch.softenvironment.view.FileHistoryListener;
-import ch.softenvironment.view.FileHistoryMenu;
-import ch.softenvironment.view.JInternalFrameUtils;
-import ch.softenvironment.view.PlatformInfoPanel;
-import ch.softenvironment.view.SimpleEditorPanel;
-import ch.softenvironment.view.StatusBar;
-import ch.softenvironment.view.ToolBar;
-import ch.softenvironment.view.ViewOptions;
-import ch.softenvironment.view.WaitDialog;
-import java.awt.Color;
-import java.awt.Image;
+import ch.softenvironment.view.*;
+import lombok.extern.slf4j.Slf4j;
+import org.tcotool.model.Process;
+import org.tcotool.model.*;
+import org.tcotool.pluginsupport.ApplicationPlugin;
+import org.tcotool.presentation.Diagram;
+import org.tcotool.standard.charts.ChartTool;
+import org.tcotool.standard.drawing.DependencyView;
+import org.tcotool.standard.drawing.Layout;
+import org.tcotool.standard.report.*;
+import org.tcotool.tools.Calculator;
+import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -56,42 +54,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
-import javax.swing.KeyStroke;
-import lombok.extern.slf4j.Slf4j;
-import org.tcotool.model.Activity;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.CostCentre;
-import org.tcotool.model.Dependency;
-import org.tcotool.model.Process;
-import org.tcotool.model.Responsibility;
-import org.tcotool.model.Role;
-import org.tcotool.model.ServiceCategory;
-import org.tcotool.model.Site;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
-import org.tcotool.pluginsupport.ApplicationPlugin;
-import org.tcotool.presentation.Diagram;
-import org.tcotool.standard.charts.ChartTool;
-import org.tcotool.standard.drawing.DependencyView;
-import org.tcotool.standard.drawing.Layout;
-import org.tcotool.standard.report.ReportComplete;
-import org.tcotool.standard.report.ReportInvestment;
-import org.tcotool.standard.report.ReportStaff;
-import org.tcotool.standard.report.ReportTco;
-import org.tcotool.standard.report.ReportTool;
-import org.tcotool.tools.Calculator;
-import org.tcotool.tools.ModelUtility;
 
 /**
  * Entry Point for TCO-Tool.
@@ -355,7 +317,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         // Bar-Chart
         JMenuItem item = new JMenuItem();
         item.setText(title);
-        item.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "bar_chart.png"));
+        item.setIcon(ResourceManager.getImageIcon(LauncherView.class, "bar_chart.png"));
         item.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -379,7 +341,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         // Pie-Chart
         item = new JMenuItem();
         item.setText(title);
-        item.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "pie_chart.png"));
+        item.setIcon(ResourceManager.getImageIcon(LauncherView.class, "pie_chart.png"));
         item.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -413,15 +375,15 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         final String title = NlsUtils.formatMessage(getResourceString("MniSubordinateCodesWithin_text"), tokens);
         JMenuItem item = new JMenuItem();
         item.setText(title);
-        item.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "bar_chart.png"));
+        item.setIcon(ResourceManager.getImageIcon(LauncherView.class, "bar_chart.png"));
         item.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 final java.util.List primaryCodes = ((TcoModel) getUtility().getRoot()).getObjectServer().retrieveCodes(dbCodeTypePrimary);
                 if ((primaryCodes == null) || (primaryCodes.size() == 0)) {
                     BaseDialog.showWarning(getInstance(),
-                        ResourceManager.getResource(ChartTool.class, "CWNoCode_title") + " " + ModelUtility.getTypeString(dbCodeTypePrimary),
-                        ResourceManager.getResource(ChartTool.class, "CWNoCode_text"));
+                            ResourceManager.getResource(ChartTool.class, "CWNoCode_title") + " " + ModelUtility.getTypeString(dbCodeTypePrimary),
+                            ResourceManager.getResource(ChartTool.class, "CWNoCode_text"));
                     return;
                 }
                 showBusy(new Runnable() {
@@ -448,15 +410,15 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
 
         item = new JMenuItem();
         item.setText(title);
-        item.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "pie_chart.png"));
+        item.setIcon(ResourceManager.getImageIcon(LauncherView.class, "pie_chart.png"));
         item.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 final java.util.List primaryCodes = ((TcoModel) getUtility().getRoot()).getObjectServer().retrieveCodes(dbCodeTypePrimary);
                 if ((primaryCodes == null) || (primaryCodes.size() == 0)) {
                     BaseDialog.showWarning(getInstance(),
-                        ResourceManager.getResource(ChartTool.class, "CWNoCode_title") + " " + ModelUtility.getTypeString(dbCodeTypePrimary),
-                        ResourceManager.getResource(ChartTool.class, "CWNoCode_text"));
+                            ResourceManager.getResource(ChartTool.class, "CWNoCode_title") + " " + ModelUtility.getTypeString(dbCodeTypePrimary),
+                            ResourceManager.getResource(ChartTool.class, "CWNoCode_text"));
                     return;
                 }
                 showBusy(new Runnable() {
@@ -1183,7 +1145,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 ivjDtpRoot = new javax.swing.JDesktopPane();
                 ivjDtpRoot.setName("DtpRoot");
                 // user code begin {1}
-                setBackgroundImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Tool.jpg").getImage());
+                setBackgroundImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Tool.jpg").getImage());
                 ivjDtpRoot = new javax.swing.JDesktopPane() {
                     @Override
                     public void paintComponent(java.awt.Graphics g) {
@@ -1344,7 +1306,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 // user code begin {1}
                 ivjMniDependencyGraph.setText(getResourceString("MniDependencyGraph_text") + " (--[%]-->)");
                 ivjMniDependencyGraph.setToolTipText(ResourceManager.getResourceAsNonLabeled(DependencyView.class, "MniDependencyOverall_toolTipText"));
-                ivjMniDependencyGraph.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "Dependency.png"));
+                ivjMniDependencyGraph.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "Dependency.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -1369,7 +1331,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 mniDependencyGraphTCO.setText(getResourceString("MniDependencyGraph_text") + " (--[%]-->) : "
                     + ResourceManager.getResourceAsNonLabeled(FactCostDetailView.class, "LblUsageDuration_text"));
                 mniDependencyGraphTCO.setToolTipText(ResourceManager.getResourceAsNonLabeled(DependencyView.class, "MniDependencyTCO_toolTipText"));
-                mniDependencyGraphTCO.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "Dependency.png"));
+                mniDependencyGraphTCO.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "Dependency.png"));
                 mniDependencyGraphTCO.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1705,7 +1667,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 ivjMniReportPersonalCost.setText("Personalkosten");
                 // user code begin {1}
                 ivjMniReportPersonalCost.setText(ResourceManager.getResource(PersonalCostDetailView.class, "FrmWindow_text"));
-                ivjMniReportPersonalCost.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "PersonalCost.png")); // getUtility().getIcon(PersonalCost.class,
+                ivjMniReportPersonalCost.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "PersonalCost.png")); // getUtility().getIcon(PersonalCost.class,
                 // false)
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -1779,7 +1741,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 ivjMniTcoChart.setText("Gesamtkosten TCO (Balkendiagramm)");
                 // user code begin {1}
                 ivjMniTcoChart.setText(getResourceString("MniTcoChart_text"));
-                ivjMniTcoChart.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "bar_chart.png"));
+                ivjMniTcoChart.setIcon(ResourceManager.getImageIcon(LauncherView.class, "bar_chart.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -2124,7 +2086,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
 
                 JMenu codeCharts = new JMenu();
                 codeCharts.setText(getResourceString("MinCodes_text"));
-                codeCharts.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "bar_chart.png"));
+                codeCharts.setIcon(ResourceManager.getImageIcon(LauncherView.class, "bar_chart.png"));
                 ivjMnuReportTco.add(codeCharts);
                 // Service charts
                 addMenuChartReports(codeCharts, ServiceCategory.class);
@@ -2146,7 +2108,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 // Subordinate-Codes within Service-codes
                 codeCharts = new JMenu();
                 codeCharts.setText(NlsUtils.formatMessage(getResourceString("MniSubordinateCodes_text"), getResourceString("MinCodes_text")));
-                codeCharts.setIcon(ResourceBundle.getImageIcon(LauncherView.class, "bar_chart.png"));
+                codeCharts.setIcon(ResourceManager.getImageIcon(LauncherView.class, "bar_chart.png"));
                 ivjMnuReportTco.add(codeCharts);
                 addMenuChartReports(codeCharts, CostCause.class, Responsibility.class);
                 codeCharts.add(new JSeparator());
@@ -2682,7 +2644,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -2736,7 +2698,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
             handleException(ivjExc);
         }
         // user code begin {2}
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setTitle(getResourceString("FrmWindow_text"));
         refreshDocumentation();
 
@@ -2873,7 +2835,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
             if (Locale.getDefault().getLanguage().equals(Locale.GERMAN.getLanguage())) {
                 splashImage = "splash_de.jpg";
             }
-            showSplashScreen(new java.awt.Dimension(624, 400), ch.ehi.basics.i18n.ResourceBundle.getImageIcon(LauncherView.class, splashImage));
+            showSplashScreen(new java.awt.Dimension(624, 400), ResourceManager.getImageIcon(LauncherView.class, splashImage));
 
             ch.softenvironment.jomm.mvc.controller.ConsistencyController.setCascaded(true);
 
@@ -3011,7 +2973,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      */
     private void mniHelp() {
         try {
-            ch.ehi.basics.view.BrowserControl.displayURL("http://www.tcotool.org/index.html");
+            BrowserControl.displayURL("http://www.tcotool.org/index.html");
         } catch (Exception e) {
             handleException(e);
         }
@@ -3243,7 +3205,6 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 List baskets = (List) block.getReturnValue();
                 if (baskets == null) {
                     BaseDialog.showWarning(this, getResourceString("CEConfigFault"), getResourceString("CIConfigFault"));
-                    return;
                 } else {
                     setUtility(new ModelUtility((TcoModel) baskets.get(0), filename));
                     getUtility().setDependencyDiagram((Diagram) baskets.get(1));

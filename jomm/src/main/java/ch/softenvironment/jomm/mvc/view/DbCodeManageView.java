@@ -16,22 +16,18 @@ package ch.softenvironment.jomm.mvc.view;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
 import ch.softenvironment.jomm.mvc.model.DbCode;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.util.ListUtils;
-import ch.softenvironment.view.BaseDialog;
-import ch.softenvironment.view.BaseFrame;
-import ch.softenvironment.view.CommonUserAccess;
-import ch.softenvironment.view.DetailView;
-import ch.softenvironment.view.ViewOptions;
+import ch.softenvironment.view.*;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
-import java.awt.Component;
-import java.awt.event.MouseEvent;
+
+import java.awt.*;
 import java.util.EventObject;
 import java.util.List;
-import javax.swing.JPopupMenu;
 
 /**
  * Show a DbCode in a ComboBox and provide New/Change/Remove-Buttons to manipulate the given code-items. Simple codes (having a DbNlsString name property only) can be managed with this view. Extended
@@ -143,8 +139,8 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
 
     /**
      * Change the currently selected code in ComboBox.
-     *
-     * @see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
+     * <p>
+     * see BaseFrame#genericPopupDisplay(MouseEvent, JPopupMenu)
      */
     @Override
     public void changeObjects(java.lang.Object source) {
@@ -272,7 +268,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
                 ivjBtnChange.setBounds(349, 0, 25, 25);
                 // user code begin {1}
                 ivjBtnChange.setText("");
-                ivjBtnChange.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ch.softenvironment.view.ToolBar.class, "open.gif"));
+                ivjBtnChange.setIcon(ResourceManager.getImageIcon(ch.softenvironment.view.ToolBar.class, "open.gif"));
                 ivjBtnChange.setToolTipText(CommonUserAccess.getMniFileOpenWindowText());
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -299,7 +295,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
                 ivjBtnNew.setText("");
                 ivjBtnNew.setBounds(320, 0, 25, 25);
                 // user code begin {1}
-                ivjBtnNew.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ch.softenvironment.view.ToolBar.class, "new.gif"));
+                ivjBtnNew.setIcon(ResourceManager.getImageIcon(ch.softenvironment.view.ToolBar.class, "new.gif"));
                 ivjBtnNew.setToolTipText(CommonUserAccess.getMniFileNewWindowText());
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -326,7 +322,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
                 ivjBtnRemove.setText("");
                 ivjBtnRemove.setBounds(378, 0, 25, 25);
                 // user code begin {1}
-                ivjBtnRemove.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ch.softenvironment.view.ToolBar.class, "delete.gif"));
+                ivjBtnRemove.setIcon(ResourceManager.getImageIcon(ch.softenvironment.view.ToolBar.class, "delete.gif"));
                 ivjBtnRemove.setToolTipText(CommonUserAccess.getMniEditRemoveText());
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
@@ -369,7 +365,7 @@ public class DbCodeManageView extends ch.softenvironment.view.BasePanel implemen
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

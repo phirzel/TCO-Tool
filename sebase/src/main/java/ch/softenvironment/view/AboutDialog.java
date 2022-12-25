@@ -48,6 +48,7 @@ public class AboutDialog extends BaseDialog {
 
         setTitle(getResourceString("DlgTitle") + " " + application);
         getLblTitle().setText(/* application + " " + */version);
+        //TODO HIP upgrade lib/copyright
         getLblCopyright().setText("Copyright (c) softEnvironment " + copyrightPeriod);
         getTxaLicence().setText(licence);
 
@@ -120,7 +121,7 @@ public class AboutDialog extends BaseDialog {
                 ivjLblAbout.setText("");
                 ivjLblAbout.setBounds(31, 81, 462, 240);
                 // user code begin {1}
-                ivjLblAbout.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(AboutDialog.class, "about.png"));
+                ivjLblAbout.setIcon(ResourceManager.getImageIcon(AboutDialog.class, "about.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}

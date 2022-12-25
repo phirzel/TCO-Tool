@@ -13,9 +13,10 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import java.util.EventObject;
-import javax.swing.JTextArea;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
+import java.util.EventObject;
 
 /**
  * Provide a simple editor Area with minimal functionality.
@@ -766,7 +767,7 @@ public class SimpleEditorPanel extends javax.swing.JPanel {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

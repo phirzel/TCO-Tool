@@ -16,7 +16,7 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
 import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
@@ -335,7 +335,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP11SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -361,7 +361,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP11SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -387,7 +387,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP13SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -413,7 +413,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP13SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP13Aligning == false) {
+            if (!ivjConnPtoP13Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP13Aligning = true;
@@ -458,7 +458,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -484,7 +484,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -510,7 +510,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -536,7 +536,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -562,12 +562,12 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setPrice(new java.lang.Double(getTxtCost().getText()));
+                    getObject().setPrice(Double.valueOf(getTxtCost().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -588,7 +588,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -614,7 +614,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -640,7 +640,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -666,12 +666,12 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP5SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setDepreciationDuration(new java.lang.Long(getTxtDepreciation().getText()));
+                    getObject().setDepreciationDuration(Long.valueOf(getTxtDepreciation().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -692,7 +692,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP5SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -718,7 +718,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -744,7 +744,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -770,12 +770,12 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP7SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setUsageDuration(new java.lang.Long(getTxtUsage().getText()));
+                    getObject().setUsageDuration(Long.valueOf(getTxtUsage().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -796,7 +796,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP7SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -822,12 +822,12 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP8SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setExpendable(new java.lang.Boolean(getChxExpendable().isSelected()));
+                    getObject().setExpendable(Boolean.valueOf(getChxExpendable().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -848,7 +848,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     private void connPtoP8SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -1495,7 +1495,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -1545,7 +1545,7 @@ public class CatalogueDetailView extends ch.softenvironment.jomm.mvc.view.DbBase
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_text"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(Catalogue.class));
         getPnlStandardToolbar().setObjects(getObjects());

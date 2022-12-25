@@ -18,17 +18,8 @@ package org.tcotools.tools;
 
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
-import org.tcotool.model.Catalogue;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.PersonalCost;
 import org.tcotool.model.Process;
-import org.tcotool.model.ProjectPhase;
-import org.tcotool.model.Role;
-import org.tcotool.model.Service;
-import org.tcotool.model.Site;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.tools.ModelUtility;
 
 /**
@@ -76,8 +67,8 @@ public class TestModel {
 
 		// add own codes
 		role = (Role) server.createInstance(Role.class);
-		role.setFullTimeEquivalent(new Double(124000.0));
-		role.setYearlyHours(Long.valueOf(1750));
+        role.setFullTimeEquivalent(Double.valueOf(124000.0));
+        role.setYearlyHours(Long.valueOf(1750));
 		role.setCurrency(utility.getSystemParameter().getDefaultCurrency());
 		role.setInternal(Boolean.TRUE);
 		role.setEmploymentPercentageAvailable(Long.valueOf(50));
@@ -108,25 +99,25 @@ public class TestModel {
 		server.cacheCode(phase);
 
 		// create Model structure without FactCost or PersonalCost
-		model = (TcoModel) utility.getRoot();
-		model.setMultitude(new Double(2.0));
-		group = (TcoPackage) utility.createTcoObject(server, TcoPackage.class);
-		group.setMultitude(new Double(3.0));
-		utility.addOwnedElement(model, group);
-		clientService = (Service) utility.createTcoObject(server, Service.class);
-		clientService.setMultitude(new Double(4.0));
-		utility.addOwnedElement(group, clientService);
-		clientDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
-		clientDriver.setMultitude(new Double(5.0));
-		clientDriver.setPhase(phase);
+        model = (TcoModel) utility.getRoot();
+        model.setMultitude(Double.valueOf(2.0));
+        group = (TcoPackage) utility.createTcoObject(server, TcoPackage.class);
+        group.setMultitude(Double.valueOf(3.0));
+        utility.addOwnedElement(model, group);
+        clientService = (Service) utility.createTcoObject(server, Service.class);
+        clientService.setMultitude(Double.valueOf(4.0));
+        utility.addOwnedElement(group, clientService);
+        clientDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
+        clientDriver.setMultitude(Double.valueOf(5.0));
+        clientDriver.setPhase(phase);
 		clientDriver.setProcess(process);
 		utility.addOwnedElement(clientService, clientDriver);
-		supplierService = (Service) utility.createTcoObject(server, Service.class);
-		supplierService.setMultitude(new Double(1.0));
-		utility.addOwnedElement(group, supplierService);
-		supplierDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
-		supplierDriver.setMultitude(new Double(1.0));
-		utility.addOwnedElement(supplierService, supplierDriver);
+        supplierService = (Service) utility.createTcoObject(server, Service.class);
+        supplierService.setMultitude(Double.valueOf(1.0));
+        utility.addOwnedElement(group, supplierService);
+        supplierDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
+        supplierDriver.setMultitude(Double.valueOf(1.0));
+        utility.addOwnedElement(supplierService, supplierDriver);
 	}
 
 	public TcoPackage addGroup(TcoPackage owner) throws Exception {
@@ -141,8 +132,8 @@ public class TestModel {
 
 	public PersonalCost addPersonalCost(CostDriver driver) throws Exception {
 		PersonalCost pCost = (PersonalCost) utility.createTcoObject(server, PersonalCost.class);
-		utility.addOwnedElement(driver, pCost);
-		pCost.setMultitude(new Double(6.0));
+        utility.addOwnedElement(driver, pCost);
+        pCost.setMultitude(Double.valueOf(6.0));
 		return pCost;
 	}
 
@@ -152,8 +143,8 @@ public class TestModel {
 
 	public FactCost addFactCost(CostDriver driver) throws Exception {
 		FactCost fCost = (FactCost) utility.createTcoObject(server, FactCost.class);
-		utility.addOwnedElement(driver, fCost);
-		fCost.setMultitude(new Double(7.0));
+        utility.addOwnedElement(driver, fCost);
+        fCost.setMultitude(Double.valueOf(7.0));
 		return fCost;
 	}
 

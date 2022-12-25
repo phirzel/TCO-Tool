@@ -250,7 +250,7 @@ public class DateRangePanel extends javax.swing.JPanel {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

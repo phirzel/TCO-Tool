@@ -16,24 +16,18 @@ package ch.softenvironment.tcotool.tco;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.StringUtils;
 import ch.softenvironment.view.BaseDialog;
-import java.net.URL;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import org.tcotool.application.LauncherView;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.pluginsupport.ApplicationPlugin;
 import org.tcotool.pluginsupport.MenuExtension;
 import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import java.net.URL;
 
 /**
  * Free <i>soft</i>Environment Plugins (might serve as sample). PLUGIN_ID = "ch.softenvironment.tcotool.finance";
@@ -46,7 +40,7 @@ public final class TCOPlugin implements org.tcotool.pluginsupport.Plugin, org.tc
 
     public static URL getHeader() {
         if (header == null) {
-            header = ResourceBundle.getURL(TCOPlugin.class, "ReportHeader.png");
+            header = ResourceManager.getURL(TCOPlugin.class, "ReportHeader.png");
         }
         return header;
     }
@@ -55,7 +49,7 @@ public final class TCOPlugin implements org.tcotool.pluginsupport.Plugin, org.tc
 
     public static URL getIconURL() {
         if (iconURL == null) {
-            iconURL = ResourceBundle.getURL(TCOPlugin.class, "MenuIcon.png");
+            iconURL = ResourceManager.getURL(TCOPlugin.class, "MenuIcon.png");
         }
         return iconURL;
     }

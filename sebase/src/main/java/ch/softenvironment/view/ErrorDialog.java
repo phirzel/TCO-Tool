@@ -1,5 +1,6 @@
 package ch.softenvironment.view;
 
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.UserException;
 
 /*
@@ -344,7 +345,7 @@ class ErrorDialog extends BaseDialog {
 				ivjLblExceptionIcon.setIcon(null);
 				ivjLblExceptionIcon.setText("");
 				// user code begin {1}
-				ivjLblExceptionIcon.setIcon(ch.ehi.basics.i18n.ResourceBundle.getImageIcon(ErrorDialog.class, "exception-icon.gif"));
+				ivjLblExceptionIcon.setIcon(ResourceManager.getImageIcon(ErrorDialog.class, "exception-icon.gif"));
 				// user code end
 			} catch (java.lang.Throwable ivjExc) {
 				// user code begin {2}
@@ -437,7 +438,7 @@ class ErrorDialog extends BaseDialog {
 	/**
 	 * Initializes connections
 	 *
-	 * @throws java.lang.Exception The exception description.
+	 *
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
 	private void initConnections() {

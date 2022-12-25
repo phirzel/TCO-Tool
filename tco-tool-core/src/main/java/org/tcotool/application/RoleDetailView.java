@@ -16,7 +16,6 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
 import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
@@ -252,14 +251,14 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
             // be aware of ping-pong effect
             if ((evt.getPropertyName().equals("fullTimeEquivalent") || evt.getPropertyName().equals("yearlyHours"))
                 && (getObject().getFullTimeEquivalent() != null) && (getObject().getYearlyHours() != null)) {
-                getObject().setHourlyRate(new Double(Calculator.calculateHourlyRate(getObject())));
+                getObject().setHourlyRate(Double.valueOf(Calculator.calculateHourlyRate(getObject())));
                 // update PersonalCost entries
                 LauncherView.getInstance().getUtility().updateCost((TcoObject) LauncherView.getInstance().getUtility().getRoot());
             } else if (evt.getPropertyName().equals("currency") || evt.getPropertyName().equals("hourlyRate")) {
                 if ((getObject().getHourlyRate() != null) && (getObject().getYearlyHours() != null)) {
                     // recalculate FTE
                     getObject().setFullTimeEquivalent(
-                        new Double(AmountFormat.round(getObject().getHourlyRate().doubleValue() * getObject().getYearlyHours().doubleValue())));
+                            Double.valueOf(AmountFormat.round(getObject().getHourlyRate().doubleValue() * getObject().getYearlyHours().doubleValue())));
                 }
                 // update PersonalCost entries
                 LauncherView.getInstance().getUtility().updateCost((TcoObject) LauncherView.getInstance().getUtility().getRoot());
@@ -354,13 +353,13 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP12SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP12Aligning == false) {
+            if (!ivjConnPtoP12Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP12Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setHourlyRate(new java.lang.Double(getTxtHourlyRate().getText()));
+                        getObject().setHourlyRate(Double.valueOf(getTxtHourlyRate().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -384,7 +383,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP12SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP12Aligning == false) {
+            if (!ivjConnPtoP12Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP12Aligning = true;
@@ -410,12 +409,12 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP15SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP15Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setInternal(new java.lang.Boolean(getChxInternal().isSelected()));
+                    getObject().setInternal(Boolean.valueOf(getChxInternal().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -436,7 +435,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP15SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP15Aligning = true;
@@ -462,7 +461,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -488,7 +487,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -514,7 +513,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -540,7 +539,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -566,13 +565,13 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP3Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setYearlyHours(new java.lang.Long(getTxtMultitude().getText()));
+                        getObject().setYearlyHours(Long.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -596,7 +595,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -622,13 +621,13 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setEmploymentPercentageAvailable(new java.lang.Long(getTxtHourlyRate1().getText()));
+                        getObject().setEmploymentPercentageAvailable(Long.valueOf(getTxtHourlyRate1().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -652,7 +651,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -678,13 +677,13 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP5SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP5Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setFullTimeEquivalent(new java.lang.Double(getTxtFte().getText()));
+                        getObject().setFullTimeEquivalent(Double.valueOf(getTxtFte().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -708,7 +707,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP5SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -734,7 +733,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -760,7 +759,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -805,7 +804,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP8SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -831,7 +830,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     private void connPtoP8SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -1526,7 +1525,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -1575,7 +1574,7 @@ public class RoleDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_text"));
-        setIconImage(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(Role.class));
         getPnlStandardToolbar().setObjects(getObjects());

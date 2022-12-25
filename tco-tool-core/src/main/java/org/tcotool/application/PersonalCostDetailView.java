@@ -7,15 +7,12 @@ import ch.softenvironment.jomm.mvc.controller.DbObjectEvaluator;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
-import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import org.tcotool.model.Activity;
-import org.tcotool.model.CostCause;
-import org.tcotool.model.Currency;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Role;
+import org.tcotool.model.*;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.ModelUtility;
+
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
 /**
  * DetailView of PersonalCost's.
@@ -23,7 +20,7 @@ import org.tcotool.tools.ModelUtility;
  * @author Peter Hirzel, softEnvironment GmbH
  */
 public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame implements ch.softenvironment.view.DetailView,
-    java.beans.PropertyChangeListener {
+        java.beans.PropertyChangeListener {
 
     private ch.softenvironment.view.DetailView caller = null;
     private javax.swing.JPanel ivjBaseDialogContentPane = null;
@@ -359,12 +356,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP10SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP10Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setEstimated(new java.lang.Boolean(getChxEstimated().isSelected()));
+                    getObject().setEstimated(Boolean.valueOf(getChxEstimated().isSelected()));
                 }
                 // user code begin {2}
                 // user code end
@@ -385,7 +382,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP10SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP10Aligning == false) {
+            if (!ivjConnPtoP10Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
@@ -417,7 +414,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP11SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -443,7 +440,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP11SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP11Aligning == false) {
+            if (!ivjConnPtoP11Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP11Aligning = true;
@@ -469,13 +466,13 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP12SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP12Aligning == false) {
+            if (!ivjConnPtoP12Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP12Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setHourlyRate(new java.lang.Double(getTxtHourlyRate().getText()));
+                        getObject().setHourlyRate(Double.valueOf(getTxtHourlyRate().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -499,7 +496,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP12SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP12Aligning == false) {
+            if (!ivjConnPtoP12Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP12Aligning = true;
@@ -542,7 +539,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP14SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP14Aligning == false) {
+            if (!ivjConnPtoP14Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP14Aligning = true;
@@ -568,7 +565,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP14SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP14Aligning == false) {
+            if (!ivjConnPtoP14Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP14Aligning = true;
@@ -594,12 +591,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP15SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP15Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setInternal(new java.lang.Boolean(getChxInternal().isSelected()));
+                    getObject().setInternal(getChxInternal().isSelected());
                 }
                 // user code begin {2}
                 // user code end
@@ -620,12 +617,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP15SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP15Aligning == false) {
+            if (!ivjConnPtoP15Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP15Aligning = true;
                 if ((getObject() != null)) {
-                    getChxInternal().setSelected((getObject().getInternal()).booleanValue());
+                    getChxInternal().setSelected(getObject().getInternal());
                 }
                 // user code begin {2}
                 // user code end
@@ -646,12 +643,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP16SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP16Aligning == false) {
+            if (!ivjConnPtoP16Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP16Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setRepeatable(new java.lang.Boolean(getChxRepeatable().isSelected()));
+                    getObject().setRepeatable(getChxRepeatable().isSelected());
                 }
                 // user code begin {2}
                 // user code end
@@ -672,12 +669,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP16SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP16Aligning == false) {
+            if (!ivjConnPtoP16Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP16Aligning = true;
                 if ((getObject() != null)) {
-                    getChxRepeatable().setSelected((getObject().getRepeatable()).booleanValue());
+                    getChxRepeatable().setSelected(getObject().getRepeatable());
                 }
                 // user code begin {2}
                 // user code end
@@ -736,7 +733,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -762,7 +759,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -788,7 +785,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -814,7 +811,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -840,7 +837,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP3SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -866,7 +863,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP3SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP3Aligning == false) {
+            if (!ivjConnPtoP3Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP3Aligning = true;
@@ -892,13 +889,13 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                        getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -923,7 +920,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -949,7 +946,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP5SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -975,7 +972,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP5SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP5Aligning == false) {
+            if (!ivjConnPtoP5Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP5Aligning = true;
@@ -1001,7 +998,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1027,7 +1024,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1053,13 +1050,13 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP7SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP7Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setHours(new java.lang.Double(getTxtHours().getText()));
+                        getObject().setHours(Double.valueOf(getTxtHours().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1083,7 +1080,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP7SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP7Aligning == false) {
+            if (!ivjConnPtoP7Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP7Aligning = true;
@@ -1109,13 +1106,13 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP8SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP8Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setAmount(new java.lang.Double(getTxtCost().getText()));
+                        getObject().setAmount(Double.valueOf(getTxtCost().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -1139,7 +1136,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP8SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP8Aligning == false) {
+            if (!ivjConnPtoP8Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP8Aligning = true;
@@ -1165,12 +1162,12 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP9SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP9Aligning == false) {
+            if (!ivjConnPtoP9Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP9Aligning = true;
                 if ((getObject() != null)) {
-                    getObject().setBaseOffset(new java.lang.Long(getTxtBaseOffset().getText()));
+                    getObject().setBaseOffset(Long.valueOf(getTxtBaseOffset().getText()));
                 }
                 // user code begin {2}
                 // user code end
@@ -1191,7 +1188,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     private void connPtoP9SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP9Aligning == false) {
+            if (!ivjConnPtoP9Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP9Aligning = true;
@@ -2266,7 +2263,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -2327,7 +2324,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
             handleException(ivjExc);
         }
         // user code begin {2}
-        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(PersonalCost.class))).getImage()); // setIconImage(ResourceBundle.getImageIcon(ModelUtility.class,
+        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(PersonalCost.class))).getImage()); // setIconImage(ResourceManager.getImageIcon(ModelUtility.class,
         // "PersonalCost.png").getImage());
         setTitle(getResourceString("FrmWindow_text"));
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
@@ -2392,7 +2389,7 @@ public class PersonalCostDetailView extends ch.softenvironment.jomm.mvc.view.DbB
                 // calc total
                 getTxtCost().setEditable(false);
                 getTxtCost().setEnabled(false);
-                getObject().setAmount(new Double(getObject().getHourlyRate().doubleValue() * getObject().getHours().doubleValue()));
+                getObject().setAmount(Double.valueOf(getObject().getHourlyRate() * getObject().getHours()));
             } else {
                 // allow setting total
                 getTxtCost().setEditable(true);

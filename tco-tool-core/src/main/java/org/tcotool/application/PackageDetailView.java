@@ -12,7 +12,7 @@ package org.tcotool.application;
  * Lesser General Public License for more details.
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
+
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.controller.ConsistencyController;
 import org.tcotool.model.TcoPackage;
@@ -245,7 +245,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -271,7 +271,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -297,7 +297,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -323,7 +323,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -368,13 +368,13 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                        getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -398,7 +398,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -424,7 +424,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -450,7 +450,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -933,8 +933,6 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
 
     /**
      * Initializes connections
-     *
-     * @throws java.lang.Exception The exception description.
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -972,7 +970,7 @@ public class PackageDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
         }
         // user code begin {2}
         setTitle(getResourceString("FrmWindow_text"));
-        setIconImage(ResourceBundle.getImageIcon(ModelUtility.class, "TcoPackage.png").getImage());
+        setIconImage(ResourceManager.getImageIcon(ModelUtility.class, "TcoPackage.png").getImage());
         setConsistencyController(new ch.softenvironment.jomm.mvc.controller.ConsistencyController(this));
         getPnlStandardToolbar().adaptRights(getViewOptions().getViewManager().getRights(TcoPackage.class));
         getPnlStandardToolbar().setObjects(getObjects());

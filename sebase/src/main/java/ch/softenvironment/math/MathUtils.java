@@ -70,7 +70,7 @@ public class MathUtils {
             // prevent "-0.0" 
             return value;
         } else {
-            return new Double(value.doubleValue() * -1.0);
+            return Double.valueOf(value.doubleValue() * -1.0);
         }
     }
 
@@ -83,7 +83,7 @@ public class MathUtils {
         if (value == null) {
             return null;
         } else {
-            return new Double(java.lang.Math.abs(value.doubleValue()));
+            return Double.valueOf(java.lang.Math.abs(value.doubleValue()));
         }
     }
 
@@ -167,6 +167,6 @@ public class MathUtils {
         } else if (value2 == null) {
             return value1;
         }
-        return new Double(value1.doubleValue() + value2.doubleValue());
+        return Double.valueOf(value1.doubleValue() + value2.doubleValue());
     }
 }

@@ -15,8 +15,6 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
-import ch.ehi.basics.view.FileChooser;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.model.DbCode;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
@@ -24,17 +22,17 @@ import ch.softenvironment.jomm.target.xml.XmlObjectServer;
 import ch.softenvironment.util.NlsUtils;
 import ch.softenvironment.util.StringUtils;
 import ch.softenvironment.view.BaseDialog;
+import ch.softenvironment.view.BrowserControl;
+import ch.softenvironment.view.FileChooser;
+import ch.softenvironment.view.GenericFileFilter;
 import ch.softenvironment.view.swingext.JEditorPanePrintUtility;
+import org.tcotool.standard.report.ReportTool;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Iterator;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import org.tcotool.standard.report.ReportTool;
 
 /**
  * InternalFrame for HTML-Reports.
@@ -253,7 +251,7 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -290,7 +288,7 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         getJInternalFrameContentPane().add(sp);
         //	editor.setSize(new Dimension(100, 150));
-        setFrameIcon(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png") /*.getImage()*/);
+        setFrameIcon(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png") /*.getImage()*/);
         // user code end
     }
 
@@ -330,8 +328,8 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
             FileChooser saveDialog = new FileChooser(LauncherView.getInstance().getSettings().getWorkingDirectory());
             saveDialog.setDialogTitle(ch.softenvironment.view.CommonUserAccess.getMniFileSaveAsText());
             saveDialog.setSelectedFile(new File(fileName));
-            saveDialog.addChoosableFileFilter(ch.ehi.basics.view.GenericFileFilter.createHtmlFilter());
-            saveDialog.addChoosableFileFilter(ch.ehi.basics.view.GenericFileFilter.createCsvFilter());
+            saveDialog.addChoosableFileFilter(GenericFileFilter.createHtmlFilter());
+            saveDialog.addChoosableFileFilter(GenericFileFilter.createCsvFilter());
 
             if (saveDialog.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
                 String filename = saveDialog.getSelectedFile().getAbsolutePath();
@@ -357,7 +355,7 @@ public class HTMLReportFrame extends JInternalFrame implements javax.swing.event
                     if (out != null) {
                         out.close();
                         if (fileName != null) {
-                            ch.ehi.basics.view.BrowserControl.displayURL("file://" + filename);
+                            BrowserControl.displayURL("file://" + filename);
                         }
                     }
                 }

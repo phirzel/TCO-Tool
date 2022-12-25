@@ -144,7 +144,7 @@ public class DateUtils {
         double milliSeconds = (end.getTime() - start.getTime()) / 1000.0 / 3600.0;
         double accuracy = Math.pow(10, precision);
 
-        return new Double((Math.round(milliSeconds * accuracy)) / accuracy);
+        return Double.valueOf((Math.round(milliSeconds * accuracy)) / accuracy);
     }
 
     /**

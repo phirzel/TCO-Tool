@@ -91,7 +91,7 @@ public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 	private void connPtoP1SetSource() {
 		/* Set the source from the target */
 		try {
-			if (ivjConnPtoP1Aligning == false) {
+			if (!ivjConnPtoP1Aligning) {
 				// user code begin {1}
 				// user code end
 				ivjConnPtoP1Aligning = true;
@@ -117,7 +117,7 @@ public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 	private void connPtoP1SetTarget() {
 		/* Set the target from the source */
 		try {
-			if (ivjConnPtoP1Aligning == false) {
+			if (!ivjConnPtoP1Aligning) {
 				// user code begin {1}
 				// user code end
 				ivjConnPtoP1Aligning = true;
@@ -210,7 +210,7 @@ public class DbNlsStringView extends ch.softenvironment.view.BasePanel {
 	/**
 	 * Initializes connections
 	 *
-	 * @throws java.lang.Exception The exception description.
+     *
 	 */
 	/* WARNING: THIS METHOD WILL BE REGENERATED. */
 	private void initConnections() {

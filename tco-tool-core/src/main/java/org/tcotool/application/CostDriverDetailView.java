@@ -16,7 +16,6 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.client.UserActionRights;
 import ch.softenvironment.jomm.DbObjectServer;
@@ -26,32 +25,18 @@ import ch.softenvironment.jomm.mvc.controller.DbTableModel;
 import ch.softenvironment.jomm.mvc.model.DbObject;
 import ch.softenvironment.util.AmountFormat;
 import ch.softenvironment.util.ParserCSV;
-import ch.softenvironment.view.BaseFrame;
-import ch.softenvironment.view.CommonUserAccess;
-import ch.softenvironment.view.DetailView;
-import ch.softenvironment.view.ListMenuChoice;
-import ch.softenvironment.view.SimpleEditorPanel;
-import ch.softenvironment.view.StatusBar;
-import ch.softenvironment.view.ToolBar;
+import ch.softenvironment.view.*;
 import ch.softenvironment.view.swingext.JComboBoxUtility;
 import ch.softenvironment.view.table.NumberTableCellRenderer;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.Currency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.LifeCycle;
-import org.tcotool.model.Occurance;
-import org.tcotool.model.PersonalCost;
 import org.tcotool.model.Process;
-import org.tcotool.model.ProjectPhase;
+import org.tcotool.model.*;
 import org.tcotool.standard.report.ReportTool;
 import org.tcotool.tools.Formatter;
 import org.tcotool.tools.ModelUtility;
+
+import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.util.EventObject;
 
 /**
  * DetailView of a CostDriver.
@@ -786,7 +771,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP1SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -812,7 +797,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP1SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP1Aligning == false) {
+            if (!ivjConnPtoP1Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP1Aligning = true;
@@ -838,7 +823,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP2SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -864,7 +849,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP2SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP2Aligning == false) {
+            if (!ivjConnPtoP2Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP2Aligning = true;
@@ -890,13 +875,13 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP4SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 try {
                     // user code end
                     ivjConnPtoP4Aligning = true;
                     if ((getObject() != null)) {
-                        getObject().setMultitude(new java.lang.Double(getTxtMultitude().getText()));
+                        getObject().setMultitude(Double.valueOf(getTxtMultitude().getText()));
                     }
                     // user code begin {2}
                 } catch (RuntimeException e) {
@@ -921,7 +906,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP4SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP4Aligning == false) {
+            if (!ivjConnPtoP4Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP4Aligning = true;
@@ -947,7 +932,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP56SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP56Aligning == false) {
+            if (!ivjConnPtoP56Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP56Aligning = true;
@@ -973,7 +958,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP56SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP56Aligning == false) {
+            if (!ivjConnPtoP56Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP56Aligning = true;
@@ -999,7 +984,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP57SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP57Aligning == false) {
+            if (!ivjConnPtoP57Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP57Aligning = true;
@@ -1025,7 +1010,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP57SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP57Aligning == false) {
+            if (!ivjConnPtoP57Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP57Aligning = true;
@@ -1051,7 +1036,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP58SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP58Aligning == false) {
+            if (!ivjConnPtoP58Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP58Aligning = true;
@@ -1077,7 +1062,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP58SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP58Aligning == false) {
+            if (!ivjConnPtoP58Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP58Aligning = true;
@@ -1103,7 +1088,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP6SetSource() {
         /* Set the source from the target */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1129,7 +1114,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     private void connPtoP6SetTarget() {
         /* Set the target from the source */
         try {
-            if (ivjConnPtoP6Aligning == false) {
+            if (!ivjConnPtoP6Aligning) {
                 // user code begin {1}
                 // user code end
                 ivjConnPtoP6Aligning = true;
@@ -1820,7 +1805,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
                 ivjMniNewFactCost.setText("Neu Sachkosten...");
                 // user code begin {1}
                 ivjMniNewFactCost.setText(ResourceManager.getResource(FactCostDetailView.class, "FrmWindow_text") + "...");
-                ivjMniNewFactCost.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "FactCost.png"));
+                ivjMniNewFactCost.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "FactCost.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -1869,7 +1854,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
                 ivjMniNewPersonalCost.setText("Neu Personalaufwand...");
                 // user code begin {1}
                 ivjMniNewPersonalCost.setText(ResourceManager.getResource(PersonalCostDetailView.class, "FrmWindow_text") + "...");
-                ivjMniNewPersonalCost.setIcon(ResourceBundle.getImageIcon(ModelUtility.class, "PersonalCost.png"));
+                ivjMniNewPersonalCost.setIcon(ResourceManager.getImageIcon(ModelUtility.class, "PersonalCost.png"));
                 // user code end
             } catch (java.lang.Throwable ivjExc) {
                 // user code begin {2}
@@ -2610,7 +2595,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -2663,7 +2648,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
             handleException(ivjExc);
         }
         // user code begin {2}
-        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(CostDriver.class))).getImage()); // setIconImage(ResourceBundle.getImageIcon(ModelUtility.class,
+        setIconImage((new javax.swing.ImageIcon(LauncherView.getInstance().getUtility().getImageURL(CostDriver.class))).getImage()); // setIconImage(ResourceManager.getImageIcon(ModelUtility.class,
         // "CostDriver.png").getImage());
         setTitle(getResourceString("FrmWindow_text")); // ReportTool.getTypeString(object.getClass()));
 
@@ -2721,7 +2706,7 @@ public class CostDriverDetailView extends ch.softenvironment.jomm.mvc.view.DbBas
         try {
             if (source.equals(getMniNewOccurance())) {
                 Occurance occurance = (Occurance) getObject().getObjectServer().createInstance(Occurance.class);
-                occurance.setMultitude(new Double(0.0));
+                occurance.setMultitude(Double.valueOf(0.0));
 
                 LauncherView.getInstance().getUtility().addOwnedElement(getObject(), occurance);
                 java.util.List<Occurance> objects = ch.softenvironment.util.ListUtils.createList(occurance);

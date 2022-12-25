@@ -212,7 +212,7 @@ public class BeanReflector<T> {
 		} else if (value instanceof Long) {
 			return Long.valueOf(value.toString());
 		} else if (value instanceof Double) {
-			return new Double(value.toString());
+			return Double.valueOf(value.toString());
 		} else if (value instanceof Integer) {
 			return Integer.valueOf(value.toString());
 		} else if (value instanceof Float) {

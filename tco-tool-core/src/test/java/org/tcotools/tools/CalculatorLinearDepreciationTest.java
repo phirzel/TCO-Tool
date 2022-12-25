@@ -17,7 +17,6 @@ package org.tcotools.tools;
  */
 
 import ch.softenvironment.math.MathUtils;
-import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,6 +25,8 @@ import org.tcotool.model.FactCost;
 import org.tcotool.model.TcoObject;
 import org.tcotool.tools.Calculator;
 import org.tcotool.tools.CalculatorLinearDepreciation;
+
+import java.util.List;
 
 /**
  * Tests org.tcotool.tools.CalculatorLinearDepreciation
@@ -61,76 +62,76 @@ public class CalculatorLinearDepreciationTest {
 	@Test
 	public void financeLinearDepreciation() {
 		try {
-			long durationMonths = 60;
-			m.utility.getSystemParameter().setDefaultUsageDuration(Long.valueOf(durationMonths));
+            long durationMonths = 60;
+            m.utility.getSystemParameter().setDefaultUsageDuration(Long.valueOf(durationMonths));
 
-			m.model.setMultitude(new Double(1.0));
-			m.group.setMultitude(new Double(1.0));
-			m.clientService.setMultitude(new Double(1.0));
-			m.clientDriver.setMultitude(new Double(1.0));
-			FactCost fCost = m.addClientFactCost();
-			fCost.setMultitude(new Double(1.0));
-			fCost.setDepreciationDuration(Long.valueOf(durationMonths)); // !!!
-			fCost.setAmount(new Double(10000.0));
-			fCost.setBaseOffset(Long.valueOf(0));
-			fCost.setRepeatable(Boolean.FALSE);
+            m.model.setMultitude(Double.valueOf(1.0));
+            m.group.setMultitude(Double.valueOf(1.0));
+            m.clientService.setMultitude(Double.valueOf(1.0));
+            m.clientDriver.setMultitude(Double.valueOf(1.0));
+            FactCost fCost = m.addClientFactCost();
+            fCost.setMultitude(Double.valueOf(1.0));
+            fCost.setDepreciationDuration(Long.valueOf(durationMonths)); // !!!
+            fCost.setAmount(Double.valueOf(10000.0));
+            fCost.setBaseOffset(Long.valueOf(0));
+            fCost.setRepeatable(Boolean.FALSE);
 
-			// 1st TCO-Year
-			Calculator c = new CalculatorLinearDepreciation(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /* must be longer */);
-			List<Double> list = c.getCostBlock( /* getDepreciationCostBlock( */(TcoObject) m.utility.getRoot());
+            // 1st TCO-Year
+            Calculator c = new CalculatorLinearDepreciation(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /* must be longer */);
+            List<Double> list = c.getCostBlock( /* getDepreciationCostBlock( */(TcoObject) m.utility.getRoot());
 			double f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=0", MathUtils.compare(10000.0, f) == 0);
-			Assert.assertTrue("Total cost; offset=0", MathUtils.compare(10000.0, list.get(1 /* FC-Totall */).doubleValue()) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=0", 0, MathUtils.compare(10000.0, f));
+			Assert.assertEquals("Total cost; offset=0", 0, MathUtils.compare(10000.0, list.get(1 /* FC-Totall */).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0", MathUtils.compare(8000.0, f) == 0);
-			Assert.assertTrue("1. year; offset=0", MathUtils.compare(8000.0, list.get(2).doubleValue()) == 0);
+			Assert.assertEquals("1. year; offset=0", 0, MathUtils.compare(8000.0, f));
+			Assert.assertEquals("1. year; offset=0", 0, MathUtils.compare(8000.0, list.get(2).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=0", MathUtils.compare(6000.0, f) == 0);
-			Assert.assertTrue("2. year; offset=0", MathUtils.compare(6000.0, list.get(3).doubleValue()) == 0);
+			Assert.assertEquals("2. year; offset=0", 0, MathUtils.compare(6000.0, f));
+			Assert.assertEquals("2. year; offset=0", 0, MathUtils.compare(6000.0, list.get(3).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=0", MathUtils.compare(4000.0, f) == 0);
-			Assert.assertTrue("3. year; offset=0", MathUtils.compare(4000.0, list.get(4).doubleValue()) == 0);
+			Assert.assertEquals("3. year; offset=0", 0, MathUtils.compare(4000.0, f));
+			Assert.assertEquals("3. year; offset=0", 0, MathUtils.compare(4000.0, list.get(4).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=0", MathUtils.compare(2000.0, f) == 0);
-			Assert.assertTrue("4. year; offset=0", MathUtils.compare(2000.0, list.get(5).doubleValue()) == 0);
+			Assert.assertEquals("4. year; offset=0", 0, MathUtils.compare(2000.0, f));
+			Assert.assertEquals("4. year; offset=0", 0, MathUtils.compare(2000.0, list.get(5).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 5);
-			Assert.assertTrue("5. year; offset=0", MathUtils.compare(0.0, f) == 0);
-			Assert.assertTrue("5. year; offset=0", MathUtils.compare(0.0, list.get(6).doubleValue()) == 0);
+			Assert.assertEquals("5. year; offset=0", 0, MathUtils.compare(0.0, f));
+			Assert.assertEquals("5. year; offset=0", 0, MathUtils.compare(0.0, list.get(6).doubleValue()));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 6);
-			Assert.assertTrue("6. year => no more depreciatable; offset=0", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("6. year => no more depreciatable; offset=0", 0, MathUtils.compare(0.0, f));
 			// assertTrue("6. year => no more depreciatable; offset=0", MathUtils.compare(0.0, ((Double)list.get(6)).doubleValue()) == 0);
 
 			// TODO test repeatable;
 			fCost.setRepeatable(Boolean.TRUE);
 			c = new CalculatorLinearDepreciation(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /* must be longer */);
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=0", MathUtils.compare(10000.0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=0", 0, MathUtils.compare(10000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0", MathUtils.compare(8000.0, f) == 0);
+			Assert.assertEquals("1. year; offset=0", 0, MathUtils.compare(8000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=0", MathUtils.compare(6000.0, f) == 0);
+			Assert.assertEquals("2. year; offset=0", 0, MathUtils.compare(6000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=0", MathUtils.compare(4000.0, f) == 0);
+			Assert.assertEquals("3. year; offset=0", 0, MathUtils.compare(4000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=0", MathUtils.compare(2000.0, f) == 0);
+			Assert.assertEquals("4. year; offset=0", 0, MathUtils.compare(2000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 5);
-			Assert.assertTrue("5. year => RE-INVEST; offset=0", MathUtils.compare(10000.0, f) == 0);
+			Assert.assertEquals("5. year => RE-INVEST; offset=0", 0, MathUtils.compare(10000.0, f));
 			f = Calculator.getValue(c.getCosts((TcoObject) m.utility.getRoot(), Calculator.KIND_FC, Calculator.COST_CAUSE_UNDEFINED),
 				Calculator.INDEX_TOTAL + 6);
-			Assert.assertTrue("6. year => RE-INVEST; offset=0", MathUtils.compare(8000.0, f) == 0);
+			Assert.assertEquals("6. year => RE-INVEST; offset=0", 0, MathUtils.compare(8000.0, f));
 
 			// TODO test baseOffset;
 		} catch (Exception e) {

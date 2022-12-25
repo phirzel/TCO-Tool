@@ -60,24 +60,24 @@ public class CalculatorTcoTest {
 
 	@Test
 	public void multitudeFactor() {
-		Assert.assertTrue("Multitude model", ModelUtility.getMultitudeFactor(m.model) == 2.0);
-		Assert.assertTrue("Multitude group", ModelUtility.getMultitudeFactor(m.group) == 3.0);
-		Assert.assertTrue("Multitude service", ModelUtility.getMultitudeFactor(m.clientService) == 4.0);
-		Assert.assertTrue("Multitude driver", ModelUtility.getMultitudeFactor(m.clientDriver) == 5.0);
+		Assert.assertEquals("Multitude model", 2.0, ModelUtility.getMultitudeFactor(m.model), 0.0);
+		Assert.assertEquals("Multitude group", 3.0, ModelUtility.getMultitudeFactor(m.group), 0.0);
+		Assert.assertEquals("Multitude service", 4.0, ModelUtility.getMultitudeFactor(m.clientService), 0.0);
+		Assert.assertEquals("Multitude driver", 5.0, ModelUtility.getMultitudeFactor(m.clientDriver), 0.0);
 
-		Assert.assertTrue("Multitude driver", m.utility.getMultitudeFactor(m.clientDriver, true) == m.getClientDriverFactor());
+		Assert.assertEquals("Multitude driver", m.utility.getMultitudeFactor(m.clientDriver, true), m.getClientDriverFactor(), 0.0);
 
 		try {
 			PersonalCost pcost = (PersonalCost) m.utility.createTcoObject(m.server, PersonalCost.class);
-			Assert.assertTrue("Multitude DEFAULT", ModelUtility.getMultitudeFactor(pcost) == 1.0);
+			Assert.assertEquals("Multitude DEFAULT", 1.0, ModelUtility.getMultitudeFactor(pcost), 0.0);
 
 			pcost.setMultitude(null);
-			Assert.assertTrue("Multitude lazy init", ModelUtility.getMultitudeFactor(pcost) == 0.0);
+			Assert.assertEquals("Multitude lazy init", 0.0, ModelUtility.getMultitudeFactor(pcost), 0.0);
 
 			m.utility.addOwnedElement(m.clientDriver, pcost);
-			Assert.assertTrue("Multitude driver", m.utility.getMultitudeFactor(pcost, true) == 0.0);
-			pcost.setMultitude(new Double(6.0));
-			Assert.assertTrue("Multitude driver", m.utility.getMultitudeFactor(pcost, true) == m.getClientDriverFactor() * 6.0);
+			Assert.assertEquals("Multitude driver", 0.0, m.utility.getMultitudeFactor(pcost, true), 0.0);
+            pcost.setMultitude(Double.valueOf(6.0));
+			Assert.assertEquals("Multitude driver", m.utility.getMultitudeFactor(pcost, true), m.getClientDriverFactor() * 6.0, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -94,22 +94,22 @@ public class CalculatorTcoTest {
 			double hours = 65.0;
 			double total = m.getClientDriverFactor() * 6.0 * hours;
 			PersonalCost pcost = m.addClientPersonalCost();
-			// pcost.setAmount(new Double(195));
-			pcost.setInternal(Boolean.TRUE);
-			pcost.setHours(new Double(hours));
+            // pcost.setAmount(Double.valueOf(195));
+            pcost.setInternal(Boolean.TRUE);
+            pcost.setHours(Double.valueOf(hours));
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL /* "INTERNAL" */),
 				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == total);
+			Assert.assertEquals("PC Internal", val, total, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL /* "EXTERNAL" */), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == 0.0);
+			Assert.assertEquals("PC External", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP /* "INTERNAL_LUMP" */),
 				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == 0.0);
+			Assert.assertEquals("PC Internal Lump", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP /* "EXTERNAL_LUMP" */),
 				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == 0.0);
+			Assert.assertEquals("PC External Lump", 0.0, val, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -126,19 +126,19 @@ public class CalculatorTcoTest {
 			double hours = 65.0;
 			double total = m.getClientDriverFactor() * 6.0 * hours;
 			PersonalCost pcost = m.addClientPersonalCost();
-			pcost.setAmount(new Double(195));
-			pcost.setInternal(Boolean.FALSE);
-			pcost.setHours(new Double(hours));
+            pcost.setAmount(Double.valueOf(195));
+            pcost.setInternal(Boolean.FALSE);
+            pcost.setHours(Double.valueOf(hours));
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == 0.0);
+			Assert.assertEquals("PC Internal", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == total);
+			Assert.assertEquals("PC External", val, total, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == 0.0);
+			Assert.assertEquals("PC Internal Lump", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == 0.0);
+			Assert.assertEquals("PC External Lump", 0.0, val, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -155,18 +155,18 @@ public class CalculatorTcoTest {
 			double amount = 195.0;
 			double total = m.getClientDriverFactor() * 6.0 * amount;
 			PersonalCost pcost = m.addClientPersonalCost();
-			pcost.setAmount(new Double(amount));
-			pcost.setInternal(Boolean.TRUE);
+            pcost.setAmount(Double.valueOf(amount));
+            pcost.setInternal(Boolean.TRUE);
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == 0.0);
+			Assert.assertEquals("PC Internal", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == 0.0);
+			Assert.assertEquals("PC External", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == total);
+			Assert.assertEquals("PC Internal Lump", val, total, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == 0.0);
+			Assert.assertEquals("PC External Lump", 0.0, val, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -183,18 +183,18 @@ public class CalculatorTcoTest {
 			double amount = 195.0;
 			double total = m.getClientDriverFactor() * 6.0 * amount;
 			PersonalCost pcost = m.addClientPersonalCost();
-			pcost.setAmount(new Double(amount));
-			pcost.setInternal(Boolean.FALSE);
+            pcost.setAmount(Double.valueOf(amount));
+            pcost.setInternal(Boolean.FALSE);
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == 0.0);
+			Assert.assertEquals("PC Internal", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == 0.0);
+			Assert.assertEquals("PC External", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == 0.0);
+			Assert.assertEquals("PC Internal Lump", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == total);
+			Assert.assertEquals("PC External Lump", val, total, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -211,13 +211,13 @@ public class CalculatorTcoTest {
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == hours);
+			Assert.assertEquals("PC Internal", val, hours, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == 0.0);
+			Assert.assertEquals("PC External", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == 0.0);
+			Assert.assertEquals("PC Internal Lump", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == 0.0);
+			Assert.assertEquals("PC External Lump", 0.0, val, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -228,20 +228,20 @@ public class CalculatorTcoTest {
 		try {
 			// double total = m.getDriverFactor() * 6.0 * amount;
 			PersonalCost pcost = m.addClientPersonalCost();
-			pcost.setRole(m.role);
-			pcost.setHours(new Double(13.0));
-			ModelUtility.updateRole(pcost);
+            pcost.setRole(m.role);
+            pcost.setHours(Double.valueOf(13.0));
+            ModelUtility.updateRole(pcost);
 			double hours = m.getClientDriverFactor() * 6.0 * 13.0;
 
 			Calculator c = new CalculatorTco(m.utility);
 			double val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_INTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal", val == hours);
+			Assert.assertEquals("PC Internal", val, hours, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_HOURS_EXTERNAL), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External", val == 0.0);
+			Assert.assertEquals("PC External", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_INTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC Internal Lump", val == 0.0);
+			Assert.assertEquals("PC Internal Lump", 0.0, val, 0.0);
 			val = Calculator.getValue(c.getCosts(m.model, Calculator.KIND_PC, Calculator.PERSONAL_COST_EXTERNAL_LUMP), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("PC External Lump", val == 0.0);
+			Assert.assertEquals("PC External Lump", 0.0, val, 0.0);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -267,41 +267,41 @@ public class CalculatorTcoTest {
 			double fIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.INDIRECT, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL);
 			double fUndefined = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("Personal DIRECT", MathUtils.compare(0.0, pDirect) == 0);
-			Assert.assertTrue("Personal INDIRECT", MathUtils.compare(0.0, pIndirect) == 0);
-			Assert.assertTrue("Personal UNDEFINED", MathUtils.compare(0.0, pUndefined) == 0);
-			Assert.assertTrue("Fact DIRECT", MathUtils.compare(0.0, fDirect) == 0);
-			Assert.assertTrue("Fact INDIRECT", MathUtils.compare(0.0, fIndirect) == 0);
-			Assert.assertTrue("Fact UNDEFINED", MathUtils.compare(0.0, fUndefined) == 0);
+                    Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Personal DIRECT", 0, MathUtils.compare(0.0, pDirect));
+			Assert.assertEquals("Personal INDIRECT", 0, MathUtils.compare(0.0, pIndirect));
+			Assert.assertEquals("Personal UNDEFINED", 0, MathUtils.compare(0.0, pUndefined));
+			Assert.assertEquals("Fact DIRECT", 0, MathUtils.compare(0.0, fDirect));
+			Assert.assertEquals("Fact INDIRECT", 0, MathUtils.compare(0.0, fIndirect));
+			Assert.assertEquals("Fact UNDEFINED", 0, MathUtils.compare(0.0, fUndefined));
 
-			PersonalCost pCost = m.addClientPersonalCost();
-			// pCost.setRole(m.role);
-			// pCost.setHours(new Double(13.0));
-			pCost.setAmount(new Double(100.45));
-			c = new CalculatorTco(m.utility);
-			pDirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */DIRECT, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL);
-			pIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */INDIRECT, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL);
-			pUndefined = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL);
-			fDirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */DIRECT, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL);
-			fIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */INDIRECT, Calculator.KIND_FC),
+            PersonalCost pCost = m.addClientPersonalCost();
+            // pCost.setRole(m.role);
+            // pCost.setHours(Double.valueOf(13.0));
+            pCost.setAmount(Double.valueOf(100.45));
+            c = new CalculatorTco(m.utility);
+            pDirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */DIRECT, Calculator.KIND_PC),
+                    Calculator.INDEX_TOTAL);
+            pIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */INDIRECT, Calculator.KIND_PC),
+                    Calculator.INDEX_TOTAL);
+            pUndefined = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */DIRECT_UNDEFINED, Calculator.KIND_PC),
+                    Calculator.INDEX_TOTAL);
+            fDirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */DIRECT, Calculator.KIND_FC),
+                    Calculator.INDEX_TOTAL);
+            fIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */INDIRECT, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL);
 			fUndefined = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("Personal DIRECT", MathUtils.compare(0.0, pDirect) == 0);
-			Assert.assertTrue("Personal INDIRECT", MathUtils.compare(0.0, pIndirect) == 0);
-			Assert.assertTrue("Personal UNDEFINED", MathUtils.compare(m.getClientDriverFactor() * 6.0 * 100.45, pUndefined) == 0);
-			Assert.assertTrue("Fact DIRECT", MathUtils.compare(0.0, fDirect) == 0);
-			Assert.assertTrue("Fact INDIRECT", MathUtils.compare(0.0, fIndirect) == 0);
-			Assert.assertTrue("Fact UNDEFINED", MathUtils.compare(0.0, fUndefined) == 0);
+			Assert.assertEquals("Personal DIRECT", 0, MathUtils.compare(0.0, pDirect));
+			Assert.assertEquals("Personal INDIRECT", 0, MathUtils.compare(0.0, pIndirect));
+			Assert.assertEquals("Personal UNDEFINED", 0, MathUtils.compare(m.getClientDriverFactor() * 6.0 * 100.45, pUndefined));
+			Assert.assertEquals("Fact DIRECT", 0, MathUtils.compare(0.0, fDirect));
+			Assert.assertEquals("Fact INDIRECT", 0, MathUtils.compare(0.0, fIndirect));
+			Assert.assertEquals("Fact UNDEFINED", 0, MathUtils.compare(0.0, fUndefined));
 
 			FactCost fCost = m.addClientFactCost();
-			fCost.setAmount(new Double(93.17));
-			c = new CalculatorTco(m.utility);
+            fCost.setAmount(Double.valueOf(93.17));
+            c = new CalculatorTco(m.utility);
 			pDirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */DIRECT, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL);
 			pIndirect = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */INDIRECT, Calculator.KIND_PC),
@@ -314,12 +314,12 @@ public class CalculatorTcoTest {
 				Calculator.INDEX_TOTAL);
 			fUndefined = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* FACT_ */DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL);
-			Assert.assertTrue("Personal DIRECT", MathUtils.compare(0.0, pDirect) == 0);
-			Assert.assertTrue("Personal INDIRECT", MathUtils.compare(0.0, pIndirect) == 0);
-			Assert.assertTrue("Personal UNDEFINED", MathUtils.compare(m.getClientDriverFactor() * 6.0 * 100.45, pUndefined) == 0);
-			Assert.assertTrue("Fact DIRECT", MathUtils.compare(0.0, fDirect) == 0);
-			Assert.assertTrue("Fact INDIRECT", MathUtils.compare(0.0, fIndirect) == 0);
-			Assert.assertTrue("Fact UNDEFINED", MathUtils.compare(m.getClientDriverFactor() * 7.0 * 93.17, fUndefined) == 0);
+			Assert.assertEquals("Personal DIRECT", 0, MathUtils.compare(0.0, pDirect));
+			Assert.assertEquals("Personal INDIRECT", 0, MathUtils.compare(0.0, pIndirect));
+			Assert.assertEquals("Personal UNDEFINED", 0, MathUtils.compare(m.getClientDriverFactor() * 6.0 * 100.45, pUndefined));
+			Assert.assertEquals("Fact DIRECT", 0, MathUtils.compare(0.0, fDirect));
+			Assert.assertEquals("Fact INDIRECT", 0, MathUtils.compare(0.0, fIndirect));
+			Assert.assertEquals("Fact UNDEFINED", 0, MathUtils.compare(m.getClientDriverFactor() * 7.0 * 93.17, fUndefined));
 			// TODO for real CostCause instances
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
@@ -340,25 +340,25 @@ public class CalculatorTcoTest {
 				Calculator.INDEX_TOTAL);
 			double totalEstimated = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.ESTIMATED), Calculator.INDEX_TOTAL);
 			double totalKnown = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.KNOWN), Calculator.INDEX_TOTAL);
-			Assert.assertTrue("Personal ESTIMATED", MathUtils.compare(0.0, pEstimated) == 0);
-			Assert.assertTrue("Personal KNOWN", MathUtils.compare(0.0, pKnown) == 0);
-			Assert.assertTrue("Fact ESTIMATED", MathUtils.compare(0.0, fEstimated) == 0);
-			Assert.assertTrue("Fact KNOWN", MathUtils.compare(0.0, fKnown) == 0);
-			Assert.assertTrue("Total ESTIMATED", MathUtils.compare(0.0, totalEstimated) == 0);
-			Assert.assertTrue("TOTAL KNOWN", MathUtils.compare(0.0, totalKnown) == 0);
+			Assert.assertEquals("Personal ESTIMATED", 0, MathUtils.compare(0.0, pEstimated));
+			Assert.assertEquals("Personal KNOWN", 0, MathUtils.compare(0.0, pKnown));
+			Assert.assertEquals("Fact ESTIMATED", 0, MathUtils.compare(0.0, fEstimated));
+			Assert.assertEquals("Fact KNOWN", 0, MathUtils.compare(0.0, fKnown));
+			Assert.assertEquals("Total ESTIMATED", 0, MathUtils.compare(0.0, totalEstimated));
+			Assert.assertEquals("TOTAL KNOWN", 0, MathUtils.compare(0.0, totalKnown));
 
 			PersonalCost pCost = m.addClientPersonalCost();
-			pCost.setAmount(new Double(100.0));
-			pCost.setEstimated(Boolean.TRUE);
-			pCost = m.addClientPersonalCost();
-			pCost.setAmount(new Double(50.0));
-			pCost.setEstimated(Boolean.FALSE);
+            pCost.setAmount(Double.valueOf(100.0));
+            pCost.setEstimated(Boolean.TRUE);
+            pCost = m.addClientPersonalCost();
+            pCost.setAmount(Double.valueOf(50.0));
+            pCost.setEstimated(Boolean.FALSE);
 			FactCost fCost = m.addClientFactCost();
-			fCost.setAmount(new Double(70.0));
-			fCost.setEstimated(Boolean.TRUE);
-			fCost = m.addClientFactCost();
-			fCost.setAmount(new Double(30.0));
-			fCost.setEstimated(Boolean.FALSE);
+            fCost.setAmount(Double.valueOf(70.0));
+            fCost.setEstimated(Boolean.TRUE);
+            fCost = m.addClientFactCost();
+            fCost.setAmount(Double.valueOf(30.0));
+            fCost.setEstimated(Boolean.FALSE);
 
 			c = new CalculatorTco(m.utility);
 			pEstimated = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator./* PERSONAL_ */ESTIMATED, Calculator.KIND_PC),
@@ -372,15 +372,15 @@ public class CalculatorTcoTest {
 			totalEstimated = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.ESTIMATED), Calculator.INDEX_TOTAL);
 			totalKnown = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.KNOWN), Calculator.INDEX_TOTAL);
 			double pTmp = m.getClientDriverFactor() * 6.0 * 100.0;
-			Assert.assertTrue("Personal ESTIMATED", MathUtils.compare(pTmp, pEstimated) == 0);
+			Assert.assertEquals("Personal ESTIMATED", 0, MathUtils.compare(pTmp, pEstimated));
 			double fTmp = m.getClientDriverFactor() * 7.0 * 70.0;
-			Assert.assertTrue("Fact ESTIMATED", MathUtils.compare(fTmp, fEstimated) == 0);
-			Assert.assertTrue("Total ESTIMATED", MathUtils.compare(pTmp + fTmp, totalEstimated) == 0);
+			Assert.assertEquals("Fact ESTIMATED", 0, MathUtils.compare(fTmp, fEstimated));
+			Assert.assertEquals("Total ESTIMATED", 0, MathUtils.compare(pTmp + fTmp, totalEstimated));
 			pTmp = m.getClientDriverFactor() * 6.0 * 50.0;
-			Assert.assertTrue("Personal KNOWN", MathUtils.compare(pTmp, pKnown) == 0);
+			Assert.assertEquals("Personal KNOWN", 0, MathUtils.compare(pTmp, pKnown));
 			fTmp = m.getClientDriverFactor() * 7.0 * 30.0;
-			Assert.assertTrue("Fact KNOWN", MathUtils.compare(fTmp, fKnown) == 0);
-			Assert.assertTrue("TOTAL KNOWN", MathUtils.compare(pTmp + fTmp, totalKnown) == 0);
+			Assert.assertEquals("Fact KNOWN", 0, MathUtils.compare(fTmp, fKnown));
+			Assert.assertEquals("TOTAL KNOWN", 0, MathUtils.compare(pTmp + fTmp, totalKnown));
 			// TODO for real CostCause instances
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
@@ -395,9 +395,9 @@ public class CalculatorTcoTest {
 			m.utility.getSystemParameter().setDefaultUsageDuration(Long.valueOf(durationMonths));
 
 			FactCost fCost = m.addClientFactCost();
-			fCost.setUsageDuration(Long.valueOf(durationMonths));
-			fCost.setAmount(new Double(2000.0));
-			fCost.setBaseOffset(Long.valueOf(0));
+            fCost.setUsageDuration(Long.valueOf(durationMonths));
+            fCost.setAmount(Double.valueOf(2000.0));
+            fCost.setBaseOffset(Long.valueOf(0));
 			fCost.setRepeatable(Boolean.FALSE);
 
 			double total0 = m.getClientDriverFactor() * (7.0 * 2000.0);
@@ -407,75 +407,75 @@ public class CalculatorTcoTest {
 			 * must be longer
 			 */);
 			double f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=0", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=0", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("1. year; offset=0", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=0", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("2. year; offset=0", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=0", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("3. year; offset=0", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=0", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("4. year; offset=0", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 5);
-			Assert.assertTrue("5. year; offset=0, non-repeatable", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("5. year; offset=0, non-repeatable", 0, MathUtils.compare(0.0, f));
 
 			fCost.setBaseOffset(Long.valueOf(12));
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /*
 			 * must be longer
 			 */);
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=12", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=12", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=12", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("1. year; offset=12", 0, MathUtils.compare(0.0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("2. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("3. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("4. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 5);
-			Assert.assertTrue("5. year; offset=12;", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("5. year; offset=12;", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 6);
-			Assert.assertTrue("6. year; offset=12; non-repeatable", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("6. year; offset=12; non-repeatable", 0, MathUtils.compare(0.0, f));
 
 			fCost.setRepeatable(Boolean.TRUE);
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /*
 			 * must be longer
 			 */);
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=12", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=12", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=12", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("1. year; offset=12", 0, MathUtils.compare(0.0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("2. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("3. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=12", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("4. year; offset=12", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 5);
-			Assert.assertTrue("5. year; offset=12;", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("5. year; offset=12;", 0, MathUtils.compare(total0 / perYear, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 6);
-			Assert.assertTrue("6. year; offset=12; repeatable=>never ending", MathUtils.compare(total0 / perYear, f) == 0);
+			Assert.assertEquals("6. year; offset=12; repeatable=>never ending", 0, MathUtils.compare(total0 / perYear, f));
 
 			fCost.setBaseOffset(Long.valueOf(3)); // check offset in the middle
 			// of the year
@@ -483,8 +483,8 @@ public class CalculatorTcoTest {
 			 * must be longer
 			 */);
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=12", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=12", 0, MathUtils.compare(total0, f));
 			// TODO test years 1..n
 
 			fCost.setUsageDuration(Long.valueOf(3));
@@ -494,25 +494,25 @@ public class CalculatorTcoTest {
 			 * must be longer
 			 */);
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("total; offset=0; usage=3 => 1x for Total", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("total; offset=0; usage=3 => 1x for Total", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0; usage=3 =>4x if repeatable", MathUtils.compare(total0 * 4, f) == 0);
+			Assert.assertEquals("1. year; offset=0; usage=3 =>4x if repeatable", 0, MathUtils.compare(total0 * 4, f));
 
 			fCost.setRepeatable(Boolean.FALSE);
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), durationMonths + 24 /*
 			 * must be longer
 			 */);
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("total; offset=0; usage=3 => 1x for Total", MathUtils.compare(total0, f) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("total; offset=0; usage=3 => 1x for Total", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0; usage=3 =>1x cause non-repeatable", MathUtils.compare(total0, f) == 0);
+			Assert.assertEquals("1. year; offset=0; usage=3 =>1x cause non-repeatable", 0, MathUtils.compare(total0, f));
 			f = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_FC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=0; usage=3 =>0x cause non-repeatable", MathUtils.compare(0.0, f) == 0);
+			Assert.assertEquals("2. year; offset=0; usage=3 =>0x cause non-repeatable", 0, MathUtils.compare(0.0, f));
 
 			// TODO test repeatable 4 times in same year with baseOffset
 		} catch (Exception e) {
@@ -523,29 +523,29 @@ public class CalculatorTcoTest {
 	@Test
 	public void tcoPersonalCostBaseOffset() {
 		try {
-			int tcoDurationMonths = 36;
-			Long baseOffset = Long.valueOf(0);
+            int tcoDurationMonths = 36;
+            Long baseOffset = Long.valueOf(0);
 
-			// PersonalCost always invested for 1 year!
-			PersonalCost pCost = m.addClientPersonalCost();
-			pCost.setMultitude(new Double(7.0));
-			pCost.setAmount(new Double(2000.0));
-			pCost.setBaseOffset(baseOffset);
-			pCost.setRepeatable(Boolean.FALSE);
+            // PersonalCost always invested for 1 year!
+            PersonalCost pCost = m.addClientPersonalCost();
+            pCost.setMultitude(Double.valueOf(7.0));
+            pCost.setAmount(Double.valueOf(2000.0));
+            pCost.setBaseOffset(baseOffset);
+            pCost.setRepeatable(Boolean.FALSE);
 
-			double total0 = m.getClientDriverFactor() * (7.0 * 2000.0);
+            double total0 = m.getClientDriverFactor() * (7.0 * 2000.0);
 
-			// 1st TCO-Year, where duration is 36 months totally; BaseOffset=0
-			Calculator c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
-			double p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=0", MathUtils.compare(total0, p) == 0);
+            // 1st TCO-Year, where duration is 36 months totally; BaseOffset=0
+            Calculator c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
+            double p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=0", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=0", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("1. year; offset=0", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=0", MathUtils.compare(0.0, p) == 0);
+			Assert.assertEquals("2. year; offset=0", 0, MathUtils.compare(0.0, p));
 
 			// start after 1 year
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
@@ -554,37 +554,37 @@ public class CalculatorTcoTest {
 			// calculate at least for 24 months
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=12", MathUtils.compare(total0, p) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=12", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=12", MathUtils.compare(0.0, p) == 0);
+			Assert.assertEquals("1. year; offset=12", 0, MathUtils.compare(0.0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=12", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("2. year; offset=12", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=12; non-repeatable", MathUtils.compare(0.0, p) == 0);
+			Assert.assertEquals("3. year; offset=12; non-repeatable", 0, MathUtils.compare(0.0, p));
 
 			// extend duration and make costs repeatable
 			tcoDurationMonths = 48;
 			pCost.setRepeatable(Boolean.TRUE);
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=12", MathUtils.compare(total0, p) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=12", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=12", MathUtils.compare(0.0, p) == 0);
+			Assert.assertEquals("1. year; offset=12", 0, MathUtils.compare(0.0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=12", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("2. year; offset=12", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("3. year; offset=12, repeatable!!!", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("3. year; offset=12, repeatable!!!", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 4);
-			Assert.assertTrue("4. year; offset=12, repeatable!!!", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("4. year; offset=12, repeatable!!!", 0, MathUtils.compare(total0, p));
 
 			// check offset in the middle of the year (after 6 months)
 			tcoDurationMonths = 36;
@@ -593,20 +593,20 @@ public class CalculatorTcoTest {
 			pCost.setRepeatable(Boolean.TRUE);
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("Total cost; offset=6 (same overall costs, investment just a bit later)", MathUtils.compare(total0, p) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("Total cost; offset=6 (same overall costs, investment just a bit later)", 0, MathUtils.compare(total0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 1);
-			Assert.assertTrue("1. year; offset=6 => only half the costs results end of year", MathUtils.compare(total0 / 2.0, p) == 0);
+			Assert.assertEquals("1. year; offset=6 => only half the costs results end of year", 0, MathUtils.compare(total0 / 2.0, p));
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 2);
-			Assert.assertTrue("2. year; offset=6 => full cost again, offset irrelevant in 2nd year", MathUtils.compare(total0, p) == 0);
+			Assert.assertEquals("2. year; offset=6 => full cost again, offset irrelevant in 2nd year", 0, MathUtils.compare(total0, p));
 
 			pCost.setRepeatable(Boolean.FALSE);
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), tcoDurationMonths);
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
 				Calculator.INDEX_TOTAL + 3);
-			Assert.assertTrue("2. year; offset=6 => no investment any more", MathUtils.compare(0.0, p) == 0);
+			Assert.assertEquals("2. year; offset=6 => no investment any more", 0, MathUtils.compare(0.0, p));
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		}
@@ -618,38 +618,38 @@ public class CalculatorTcoTest {
 	@Test
 	public void tcoDependency() {
 		try {
-			PersonalCost pCost = m.addClientPersonalCost();
-			pCost.setMultitude(new Double(4.0));
-			pCost.setAmount(new Double(25.0));
-			pCost.setBaseOffset(Long.valueOf(0));
-			pCost.setRepeatable(Boolean.TRUE);
-			double totalClientPC = m.getClientDriverFactor() * (4.0 * 25.0);
+            PersonalCost pCost = m.addClientPersonalCost();
+            pCost.setMultitude(Double.valueOf(4.0));
+            pCost.setAmount(Double.valueOf(25.0));
+            pCost.setBaseOffset(Long.valueOf(0));
+            pCost.setRepeatable(Boolean.TRUE);
+            double totalClientPC = m.getClientDriverFactor() * (4.0 * 25.0);
 
-			pCost = m.addPersonalCost(m.supplierDriver);
-			pCost.setMultitude(new Double(2.0));
-			pCost.setAmount(new Double(250.0));
-			pCost.setBaseOffset(Long.valueOf(0));
-			pCost.setRepeatable(Boolean.TRUE);
-			double totalSupplierPC = m.getSupplierDriverFactor() * 2.0 * 250.0;
+            pCost = m.addPersonalCost(m.supplierDriver);
+            pCost.setMultitude(Double.valueOf(2.0));
+            pCost.setAmount(Double.valueOf(250.0));
+            pCost.setBaseOffset(Long.valueOf(0));
+            pCost.setRepeatable(Boolean.TRUE);
+            double totalSupplierPC = m.getSupplierDriverFactor() * 2.0 * 250.0;
 
-			Calculator c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), 36);
-			double p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("setup", MathUtils.compare(totalClientPC + totalSupplierPC, p) == 0);
+            Calculator c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), 36);
+            double p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("setup", 0, MathUtils.compare(totalClientPC + totalSupplierPC, p));
 
-			Dependency dependency = ModelUtility.createDependency(m.server);
+            Dependency dependency = ModelUtility.createDependency(m.server);
 			m.utility.addDependencyEnds(dependency, m.clientService, m.supplierService);
 			dependency.setDistribution(Double.valueOf(50.0));
 
 			c = new CalculatorTco(m.utility, (TcoObject) m.utility.getRoot(), 36);
 			p = Calculator.getValue(c.getCodeTotal((TcoObject) m.utility.getRoot(), Calculator.DIRECT_UNDEFINED, Calculator.KIND_PC),
-				Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("setup not influenced by additional Dependency", MathUtils.compare(totalClientPC + totalSupplierPC, p) == 0);
-			p = Calculator.getValue(c.calculateDependency(m.supplierService), Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("supplier of Dependency has no additional costs", MathUtils.compare(0.0, p) == 0);
+					Calculator.INDEX_TOTAL);
+			Assert.assertEquals("setup not influenced by additional Dependency", 0, MathUtils.compare(totalClientPC + totalSupplierPC, p));
+			p = Calculator.getValue(c.calculateDependency(m.supplierService), Calculator.INDEX_TOTAL);
+			Assert.assertEquals("supplier of Dependency has no additional costs", 0, MathUtils.compare(0.0, p));
 			// TODO check for NullPointerException
-			p = Calculator.getValue(c.calculateDependency(m.clientService), Calculator.INDEX_TOTAL + 0);
-			Assert.assertTrue("client gets 50% of supplier", MathUtils.compare(totalSupplierPC * 0.5, p) == 0);
+			p = Calculator.getValue(c.calculateDependency(m.clientService), Calculator.INDEX_TOTAL);
+			Assert.assertEquals("client gets 50% of supplier", 0, MathUtils.compare(totalSupplierPC * 0.5, p));
 
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());

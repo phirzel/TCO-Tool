@@ -16,16 +16,14 @@ package org.tcotool.application;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.ehi.basics.i18n.ResourceBundle;
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.view.BaseFrame;
 import ch.softenvironment.view.ToolBar;
 import ch.softenvironment.view.swingext.JPanelPrintable;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.print.PageFormat;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  * InternalFrame to show graphical reports.
@@ -45,7 +43,7 @@ public class GraphicReportFrame extends JInternalFrame {
     public GraphicReportFrame(final String title, JPanel graph) {
         super(title, true, true, true, true);
         initialize();
-        setFrameIcon(ResourceBundle.getImageIcon(LauncherView.class, "TCO_Icon.png"));
+        setFrameIcon(ResourceManager.getImageIcon(LauncherView.class, "TCO_Icon.png"));
 
         this.graph = graph;
         graph.setAutoscrolls(true);

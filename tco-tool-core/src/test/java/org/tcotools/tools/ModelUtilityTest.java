@@ -19,13 +19,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.tcotool.model.Cost;
-import org.tcotool.model.Currency;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.TcoModel;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
+import org.tcotool.model.*;
 import org.tcotool.tools.ModelUtility;
 
 /**
@@ -60,10 +54,10 @@ public class ModelUtilityTest {
 
     @Test
     public void multitude() {
-        Assert.assertTrue("Multitude model", ((TcoObject) m.utility.getRoot()).getMultitude().doubleValue() == 2.0);
-        Assert.assertTrue("Multitude group", m.group.getMultitude().doubleValue() == 3.0);
-        Assert.assertTrue("Multitude service", m.clientService.getMultitude().doubleValue() == 4.0);
-        Assert.assertTrue("Multitude driver", m.clientDriver.getMultitude().doubleValue() == 5.0);
+        Assert.assertEquals("Multitude model", 2.0, ((TcoObject) m.utility.getRoot()).getMultitude().doubleValue(), 0.0);
+        Assert.assertEquals("Multitude group", 3.0, m.group.getMultitude().doubleValue(), 0.0);
+        Assert.assertEquals("Multitude service", 4.0, m.clientService.getMultitude().doubleValue(), 0.0);
+        Assert.assertEquals("Multitude driver", 5.0, m.clientDriver.getMultitude().doubleValue(), 0.0);
     }
 
     @Test
@@ -73,8 +67,8 @@ public class ModelUtilityTest {
             Assert.assertNotNull("Default Usage", m.utility.getSystemParameter().getDefaultUsageDuration());
             Assert.assertNotNull("Default Depreciation", m.utility.getSystemParameter().getDefaultDepreciationDuration());
 
-            m.utility.getSystemParameter().setDepreciationInterestRate(new Double(5.6));
-            Assert.assertTrue(m.utility.getSystemParameter().getDepreciationInterestRate().doubleValue() == 5.6);
+            m.utility.getSystemParameter().setDepreciationInterestRate(Double.valueOf(5.6));
+            Assert.assertEquals(5.6, m.utility.getSystemParameter().getDepreciationInterestRate().doubleValue(), 0.0);
         } catch (Exception e) {
             Assert.fail(e.getLocalizedMessage());
         }
@@ -111,7 +105,7 @@ public class ModelUtilityTest {
 
             Assert.assertEquals("Personal->role(FTE)", pcost.getAmount(), m.role.getFullTimeEquivalent());
             Assert.assertEquals("Personal->role(INTERNAL)", pcost.getInternal(), m.role.getInternal());
-            Assert.assertEquals("Personal->role(hours)", pcost.getHours(), null);
+            Assert.assertNull("Personal->role(hours)", pcost.getHours());
         } catch (Exception e) {
             Assert.fail(e.getLocalizedMessage());
         }

@@ -12,14 +12,11 @@ package ch.softenvironment.view;
  */
 
 import ch.softenvironment.client.ResourceManager;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import javax.swing.JPopupMenu;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * Template-Dialog defining minimal functionality.
@@ -484,9 +481,9 @@ public abstract class BaseDialog extends javax.swing.JDialog {
 	private static int showOptionPane(java.awt.Component owner, String title, Object message, Object[] options, String iconFile) {
 		try {
 			return javax.swing.JOptionPane.showOptionDialog(owner, message, title,
-				javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE,
-				ch.ehi.basics.i18n.ResourceBundle.getImageIcon(BaseDialog.class, iconFile),
-				options, options[0]);
+					javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE,
+					ResourceManager.getImageIcon(BaseDialog.class, iconFile),
+					options, options[0]);
 		} catch (Throwable e) {
 			log.error("Developer error", e);
 			return -1;

@@ -126,7 +126,7 @@ public class DateTextField extends javax.swing.JTextField {
     /**
      * Initializes connections
      *
-     * @throws java.lang.Exception The exception description.
+     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {

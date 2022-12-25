@@ -4,15 +4,8 @@ The given obsolete libraries could not be added by Maven, therefore they are jus
 
 [Version 6.0.1b](https://sourceforge.net/projects/jhotdraw/files/JHotDraw/JHotDraw60b1/)
 
-# /sebase
 
-# (Ancient) libraries
-
-Reusable utilities (which might be found nowadays in Apache Commons, Spring and the like)
-
-## ehibasics
-
-KUDOs to Claude Eisenhut see [UML-Editor](https://sourceforge.net/projects/umleditor/)
+# Other (Legacy) libraries
 
 ## sebase
 
