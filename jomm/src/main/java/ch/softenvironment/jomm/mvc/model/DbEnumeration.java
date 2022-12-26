@@ -54,7 +54,7 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
             throw new IllegalArgumentException("enumeration and iliCode must not be null");
         }
         if (enumeration.getIliCode() == null) {
-            log.warn("Developer warning: DbEnumeration <" + enumeration + "->[" + enumeration.getNameString() + "]> without IliCode");
+            log.warn("Developer warning: DbEnumeration <" + enumeration + "]> without IliCode");
             return false;
         }
         return enumeration.getIliCode().equals(iliCode);
@@ -67,12 +67,6 @@ public abstract class DbEnumeration extends DbObject implements DbCodeType {
         super(objectServer);
     }
 
-    /**
-     * Create a minimal Descriptor for the given DbEnumeration subclass.
-     *
-     * @param dbCode
-     * @return
-     */
     public static DbDescriptor createDefaultDescriptor(Class<? extends DbEnumeration> dbCode) {
         DbDescriptor descriptor = new DbDescriptor(dbCode);
         descriptor.addNlsString(PROPERTY_NAME, DbMapper.ATTRIBUTE_NAME_ID, new DbMultiplicityRange(1, 1));

@@ -19,26 +19,14 @@ package org.tcotool.standard.report;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.serialize.AttributeList;
+import org.tcotool.application.*;
+import org.tcotool.model.*;
+import org.tcotool.tools.ModelUtility;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.tcotool.application.CatalogueDetailView;
-import org.tcotool.application.CostDriverDetailView;
-import org.tcotool.application.FactCostDetailView;
-import org.tcotool.application.LauncherView;
-import org.tcotool.application.PersonalCostDetailView;
-import org.tcotool.application.RoleDetailView;
-import org.tcotool.application.ServiceDetailView;
-import org.tcotool.model.Cost;
-import org.tcotool.model.CostDriver;
-import org.tcotool.model.FactCost;
-import org.tcotool.model.Occurance;
-import org.tcotool.model.PersonalCost;
-import org.tcotool.model.Service;
-import org.tcotool.model.TcoObject;
-import org.tcotool.model.TcoPackage;
-import org.tcotool.tools.ModelUtility;
 
 /**
  * Reporting Utility to generate detailed Output of whole contents as is.
@@ -152,7 +140,8 @@ public class ReportComplete extends ReportTool {
                 while (iterator.hasNext()) {
                     Occurance occurance = iterator.next();
                     startTableRow();
-                    tableData(getRsc("CIOccurance") + " " + occurance.getSite().getNameString() + ":", abstractCell);
+                    tableData(getRsc("CIOccurance") + " " + (occurance.getSite() == null ? "<NO SITE>" : occurance.getSite().getNameString())
+                            + ":", abstractCell);
                     tableData("" + occurance.getMultitude());
                     endTableRow();
                 }
@@ -186,20 +175,20 @@ public class ReportComplete extends ReportTool {
             startTable(fixTableWidth);
             startTableRow();
             // print header
-            tableHeader(ResourceManager.getResourceAsNonLabeled(ServiceDetailView.class, "LblName_text"), getAttributeWidth(Integer.valueOf(190)));
-            tableHeader(ResourceManager.getResource(CostDriverDetailView.class, "TbcCosttype_text"), getAttributeWidth(Integer.valueOf(180)));
-            tableHeader(ResourceManager.getResourceAsNonLabeled(ServiceDetailView.class, "LblMultitude_text"), getAttributeWidth(Integer.valueOf(60)));
-            tableHeader(ResourceManager.getResource(ServiceDetailView.class, "PnlCost_text"), getAttributeWidth(Integer.valueOf(80)));
-            tableHeader(ResourceManager.getResourceAsNonLabeled(FactCostDetailView.class, "LblCurrency_text"), getAttributeWidth(Integer.valueOf(50)));
+            tableHeader(ResourceManager.getResourceAsNonLabeled(ServiceDetailView.class, "LblName_text"), getAttributeWidth(190));
+            tableHeader(ResourceManager.getResource(CostDriverDetailView.class, "TbcCosttype_text"), getAttributeWidth(180));
+            tableHeader(ResourceManager.getResourceAsNonLabeled(ServiceDetailView.class, "LblMultitude_text"), getAttributeWidth(60));
+            tableHeader(ResourceManager.getResource(ServiceDetailView.class, "PnlCost_text"), getAttributeWidth(80));
+            tableHeader(ResourceManager.getResourceAsNonLabeled(FactCostDetailView.class, "LblCurrency_text"), getAttributeWidth(50));
             if (costClass.equals(PersonalCost.class)) {
-                tableHeader(ResourceManager.getResource(PersonalCostDetailView.class, "ChxInternal_text"), getAttributeWidth(Integer.valueOf(50)));
-                tableHeader(ResourceManager.getResource(RoleDetailView.class, "FrmWindow_text"), getAttributeWidth(Integer.valueOf(50)));
-                tableHeader("h", getAttributeWidth(Integer.valueOf(20))); // [hours]
-                tableHeader(ResourceManager.getResourceAsNonLabeled(RoleDetailView.class, "LblHourlyRate_text"), getAttributeWidth(Integer.valueOf(70)));
+                tableHeader(ResourceManager.getResource(PersonalCostDetailView.class, "ChxInternal_text"), getAttributeWidth(50));
+                tableHeader(ResourceManager.getResource(RoleDetailView.class, "FrmWindow_text"), getAttributeWidth(50));
+                tableHeader("h", getAttributeWidth(20)); // [hours]
+                tableHeader(ResourceManager.getResourceAsNonLabeled(RoleDetailView.class, "LblHourlyRate_text"), getAttributeWidth(70));
                 tableHeader(ResourceManager.getResourceAsNonLabeled(PersonalCostDetailView.class, "LblActivity_text"));
             } else if (costClass.equals(FactCost.class)) {
-                tableHeader(ResourceManager.getResourceAsNonLabeled(FactCostDetailView.class, "LblBaseOffset_text"), getAttributeWidth(Integer.valueOf(50)));
-                tableHeader(ResourceManager.getResourceAsNonLabeled(CatalogueDetailView.class, "FrmWindow_text"), getAttributeWidth(Integer.valueOf(70)));
+                tableHeader(ResourceManager.getResourceAsNonLabeled(FactCostDetailView.class, "LblBaseOffset_text"), getAttributeWidth(50));
+                tableHeader(ResourceManager.getResourceAsNonLabeled(CatalogueDetailView.class, "FrmWindow_text"), getAttributeWidth(70));
             }
             tableHeader(ResourceManager.getResource(ServiceDetailView.class, "PnlNote_text"));
             endTableRow();
