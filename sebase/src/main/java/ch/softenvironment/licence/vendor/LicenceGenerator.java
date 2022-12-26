@@ -22,6 +22,7 @@ package ch.softenvironment.licence.vendor;
  *
  * @author Peter Hirzel <i>soft</i>Environment
  */
+@Deprecated(since = "1.6.0")
 public class LicenceGenerator {
 
 	private int expirationDuration = -1;

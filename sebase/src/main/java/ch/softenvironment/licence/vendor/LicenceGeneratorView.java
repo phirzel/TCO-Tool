@@ -24,7 +24,7 @@ import ch.softenvironment.view.BaseDialog;
  *
  * @author Peter Hirzel
  */
-
+@Deprecated(since = "1.6.0")
 public class LicenceGeneratorView extends javax.swing.JFrame {
 
     private final java.util.List<String> products;

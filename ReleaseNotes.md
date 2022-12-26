@@ -19,4 +19,5 @@
   * https://sourceforge.net/p/tcotool/discussion/491266/thread/e234d2db/?limit=25#1dfc Deleting dependency
 * upgrade JHotDraw lib
 * modernize old Java 1.4/6 code-style
+* replace @Deprecated code
 * XmlObjectService::retrieveCodes -> logs missing DbCode's -> perhaps add a default Set to new configs?
