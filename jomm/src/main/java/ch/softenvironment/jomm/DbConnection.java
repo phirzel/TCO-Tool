@@ -87,10 +87,10 @@ public abstract class DbConnection {
 
     /**
      * Bind persistent Class representing persistent objects (by analyzing inheritance hierarchy and maintaining its Descriptor).
+     * <p>
+     * see org.odmg.Database#bind(Object, String), ::lookup(String)
      *
      * @param dbObject DbObject
-     * @see org.odmg.Database#bind(Object, String)
-     * @see org.odmg.Database#lookup(String)
      * @see #getRootClassFor(Class)
      */
     protected final void bind(Class<? extends DbObject> dbObject, final String targetInstance) {
@@ -122,13 +122,14 @@ public abstract class DbConnection {
             while (!temp.getSuperclass().equals(DbEntityBean.class)) {
                 temp = (Class<? extends DbObject>) temp.getSuperclass();
                 if (hierarchy.containsKey(temp)) {
-                    log.warn("Developer warning: Root-class <" + temp + "> for concrete object <" + dbObject + "> already bound");
-                }
-                // 2) map other leaves in chain (might be abstract)
-                hierarchy.put(temp, rootClass);
+                    log.debug("Ingore: Root-class <" + temp + "> for concrete object <" + dbObject + "> already bound");
+                } else {
+                    // 2) map other leaves in chain (might be abstract)
+                    hierarchy.put(temp, rootClass);
 
-                // 3) add Descriptor of inheritance chain
-                addDescriptor(temp);
+                    // 3) add Descriptor of inheritance chain
+                    addDescriptor(temp);
+                }
             }
         }
         if (!StringUtils.isNullOrEmpty(targetInstance)) {
@@ -144,7 +145,7 @@ public abstract class DbConnection {
     /**
      * Return the matching Class-Type for a registered given Target-Type.
      *
-     * @see #DbConnection()
+     * @see #DbConnection(DbObjectServer) 
      */
     public final Class<? extends DbObject> getDbObject(final String targetName) {
         if (DbNlsString.class.getName().equals(targetName)) {
@@ -204,7 +205,7 @@ public abstract class DbConnection {
     /**
      * Return a TargetName for a registered given Class. Each instance of a DbObject Class is mapped to the same Table by one DbConnection.
      *
-     * @see #DbConnection()
+     * @see #DbConnection(DbObjectServer) 
      */
     protected final String getTargetNameFor(Class<? extends DbObject> dbObject) {
         if (tables.containsKey(dbObject)) {
