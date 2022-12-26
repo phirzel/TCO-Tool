@@ -22,3 +22,4 @@
 * modernize old Java 1.4/6 code-style
 * replace @Deprecated code
 * XmlObjectService::retrieveCodes -> logs missing DbCode's -> perhaps add a default Set to new configs?
+* replace softEnvironment logo (splash-screen, ..)
