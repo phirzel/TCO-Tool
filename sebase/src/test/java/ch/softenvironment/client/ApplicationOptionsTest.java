@@ -16,9 +16,12 @@ package ch.softenvironment.client;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Color;
 import java.awt.Font;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * TestCase for ApplicationOptions.
@@ -26,28 +29,19 @@ import junit.framework.TestCase;
  * @author Peter Hirzel <i>soft</i>Environment GmbH
  * @version $Revision: 1.2 $ $Date: 2006-05-07 14:53:51 $
  */
-public class ApplicationOptionsTestCase extends TestCase {
+public class ApplicationOptionsTest {
 
     private final String fileName = "ApplicationOptions.test";
     private ApplicationOptions settings = null;
 
-    @Override
+    @Before
     public void setUp() {
         //        super.setUp();
         settings = new ApplicationOptions(fileName);
     }
 
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#tearDown()
-     */
-    @Override
-    protected void tearDown() throws Exception {
-        // TODO Auto-generated method stub
-        super.tearDown();
-        // remove "fileName";
-    }
-
-    public void testFont() {
+    @Test
+    public void setFont() {
         Font font = new java.awt.Font("Arial", java.awt.Font.BOLD, 12);
         settings.setFont(font);
         Font fontGet = settings.getFont();
@@ -56,7 +50,8 @@ public class ApplicationOptionsTestCase extends TestCase {
         assertTrue("Font-Size", font.getSize() == fontGet.getSize());
     }
 
-    public void testColor() {
+    @Test
+    public void setColor() {
         Color color = Color.MAGENTA;
         settings.setBackgroundColor(color);
         Color colorGet = settings.getBackgroundColor();

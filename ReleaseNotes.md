@@ -17,6 +17,7 @@
 * bug fixes:
   * Dialogs open in background
   * https://sourceforge.net/p/tcotool/discussion/491266/thread/e234d2db/?limit=25#1dfc Deleting dependency
+  * jomm Unit-Tests
 * upgrade JHotDraw lib
 * modernize old Java 1.4/6 code-style
 * replace @Deprecated code

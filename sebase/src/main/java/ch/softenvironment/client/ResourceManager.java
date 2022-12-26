@@ -13,9 +13,12 @@ package ch.softenvironment.client;
  */
 
 import ch.softenvironment.util.DeveloperException;
-
 import java.net.URL;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +29,6 @@ import java.util.regex.Pattern;
  * @author Peter Hirzel
  */
 public class ResourceManager {
-	private final static String RESOURCES_DIRECTORY = "resources";
 	private static final String ELIPSIS = "...";
 	// singleton
 	private static ResourceManager manager = null;
@@ -93,7 +95,7 @@ public class ResourceManager {
 	public static URL getURL(Class aClass, String fileName) {
 		String className = aClass.getName();
 		int index = className.lastIndexOf('.');
-		String file = className.substring(0, index).replace('.', '/') + "/" + RESOURCES_DIRECTORY + "/" + fileName;
+		String file = className.substring(0, index).replace('.', '/') + "/" + fileName;
 
 		// var I) from IDE with relative FileSystem or compiled within Jar
 		URL url = aClass.getResource("/" + file);
@@ -173,20 +175,13 @@ public class ResourceManager {
 	/**
 	 * transform a class name into a corresponding resource bundle name.
 	 * insert 'resources' into the given fully qualified classname.
-	 *
-	 * @param 'ch.ehi.Text'
-	 * @returns 'ch.ehi.resources.Text'
 	 */
 	@Deprecated(since = "NON ehi.basics")
 	private static String transformName(String className) {
 		StringBuffer resourceName = new StringBuffer(className);
-		resourceName.insert(className.lastIndexOf('.'), "." + RESOURCES_DIRECTORY);
 		return resourceName.toString();
 	}
 
-	/**
-	 * @see #getResourceAsLabel(Class, String)
-	 */
 	private static String getResource(java.lang.Class<?> owner, String propertyName, boolean asLabel) {
 		try {
 			String resource = getInstance().getResource(owner, Locale.getDefault(), propertyName, null).trim();
