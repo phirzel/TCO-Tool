@@ -18,15 +18,27 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
 import ch.softenvironment.jomm.implementation.DbCache;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
-import ch.softenvironment.jomm.mvc.model.*;
+import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
+import ch.softenvironment.jomm.mvc.model.DbCode;
+import ch.softenvironment.jomm.mvc.model.DbCodeType;
+import ch.softenvironment.jomm.mvc.model.DbEntityBean;
+import ch.softenvironment.jomm.mvc.model.DbEnumeration;
+import ch.softenvironment.jomm.mvc.model.DbObject;
+import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
+import ch.softenvironment.jomm.mvc.model.DbSessionBean;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.UserException;
-import lombok.extern.slf4j.Slf4j;
-
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DbObjectServer treating all persistent Objects of a specific URL. A DbObjectServer serves as middleware between application and a Target-System (for e.g. DBMS).
@@ -116,7 +128,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 			codes.add(code);
 			// cacheNlsString(code.getName());
 			codeCache.addAll(code.getClass(), codes);
-			log.info("cache #" + codes.size() + " of code <" + code + ">");
+			log.debug("cache #{} of code <{}>", codes.size(), code);
 		}
 	}
 

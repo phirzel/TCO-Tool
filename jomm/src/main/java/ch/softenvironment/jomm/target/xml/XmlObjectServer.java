@@ -56,8 +56,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 
-	private static final Long MODEL_ROOT_ID = Long.valueOf(1000000);
-	private volatile long idCounter = MODEL_ROOT_ID.longValue();
+	private static final Long MODEL_ROOT_ID = 1000000L;
+	private volatile long idCounter = MODEL_ROOT_ID;
 
 	private java.util.Set<Class<? extends DbCodeType>> codeTypes = new HashSet<>();
 
@@ -93,7 +93,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	 */
 	@Deprecated
 	public synchronized DbEnumeration createEnumeration(java.lang.Class<? extends DbEnumeration> dbEnumeration, final String iliCode, Locale locale, String name) {
-		DbEnumeration enumeration = null;
+		DbEnumeration enumeration;
 		try {
 			enumeration = (DbEnumeration) createInstance(dbEnumeration);
 			setUniqueId(enumeration, getNewId(enumeration));
@@ -246,11 +246,11 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	 */
 	protected Long getNewId(Object po) {
 		if (po instanceof DbObject) {
-			if ((((DbObject) po).getId() == null) || (((DbObject) po).getId().longValue() < 0 /*
+			if ((((DbObject) po).getId() == null) || (((DbObject) po).getId() < 0 /*
 			 * temporary
 			 * only
 			 */)) {
-				Long id = Long.valueOf(idCounter++);
+				Long id = idCounter++;
 				setUniqueId(po, id);
 			}
 			return ((DbObject) po).getId();
@@ -258,7 +258,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 			if (po != null) {
 				log.error("Developer error: non DbObject");
 			}
-			return Long.valueOf(idCounter++);
+			return idCounter++;
 		}
 	}
 
@@ -590,7 +590,8 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	public List<? extends DbCodeType> retrieveCodes(Class<? extends DbCodeType> dbCodeType, Locale locale) {
 		Collection codes = codeCache.getAll(dbCodeType);
 		if (codes == null) {
-			log.warn("expected code <{}> N/A", dbCodeType);
+			// User needs to setup those master data
+			log.info("expected code <{}> N/A yet", dbCodeType);
 			return new ArrayList(); // PATCH
 		} else {
 			return new ArrayList(codes); // keep sort order
@@ -599,7 +600,7 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 
 	@Override
 	@Deprecated
-	public DbEnumeration retrieveEnumeration(Class<? extends DbEnumeration> dbEnumeration, final String iliCode) throws Exception {
+	public DbEnumeration retrieveEnumeration(Class<? extends DbEnumeration> dbEnumeration, final String iliCode) {
 		List codes = retrieveCodes(dbEnumeration);
 		Iterator<? extends DbEnumeration> iterator = codes.iterator();
 		while (iterator.hasNext()) {
@@ -617,17 +618,17 @@ public class XmlObjectServer extends ch.softenvironment.jomm.DbObjectServer {
 	public final void setUniqueId(Object object, Long id) {
 		// TODO should not be public
 		super.setUniqueId(object, id);
-		if (idCounter <= id.longValue()) {
+		if (idCounter <= id) {
 			// make sure next given id by #getNewId() won't be an existing one
-			idCounter = id.longValue() + 1;
+			idCounter = id + 1;
 			return;
 		}
 		// TODO @deprecated => Bug fix for an older TCO-Tool Release (<V1.4.0)
 		// where negative T_Id' might have been saved to XML-instance
-		if (temporaryId >= id.longValue()) {
+		if (temporaryId >= id) {
 			// make sure next given id by #getNewTemporaryId() won't be an
 			// existing one
-			temporaryId = id.longValue() - 1;
+			temporaryId = id - 1;
 		}
 	}
 

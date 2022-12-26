@@ -11,7 +11,10 @@ package ch.softenvironment.util;
  * Lesser General Public License for more details.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import org.junit.Test;
 
 /**
  * Test class UserException.
@@ -19,7 +22,7 @@ import junit.framework.TestCase;
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.1 $ $Date: 2006-06-29 22:31:57 $
  */
-public class UserExceptionTestCase extends TestCase {
+public class UserExceptionTest {
 
     private static final String FAULT_TITLE = "My Title";
     private static final String FAULT_MSG = "My fault!";
@@ -31,7 +34,8 @@ public class UserExceptionTestCase extends TestCase {
         }
     }
 
-    public void testConstructor() {
+    @Test
+    public void constructor() {
         // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace
         throwEx(null);
         throwEx(new NullPointerException("Test"));
@@ -39,7 +43,8 @@ public class UserExceptionTestCase extends TestCase {
         throwStaticEx(new NullPointerException("Test"));
     }
 
-    public void testConstructorHere() {
+    @Test
+    public void constructor_Here() {
         try {
             throw new UserException(FAULT_MSG, FAULT_TITLE);
         } catch (UserException e) {
@@ -48,8 +53,7 @@ public class UserExceptionTestCase extends TestCase {
             }
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("testConstructorHere") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("UserExceptionTestCase") >= 0);
+            assertTrue("origin-method", (Arrays.stream(e.getStackTrace()).toArray()[0].toString().contains("UserExceptionTest.constructor_Here")));
         }
     }
 
@@ -66,8 +70,7 @@ public class UserExceptionTestCase extends TestCase {
             }
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwEx") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("UserExceptionTestCase") >= 0);
+            assertTrue("origin-method", (Arrays.stream(e.getStackTrace()).toArray()[0].toString().contains("UserExceptionTest.throwEx")));
         }
     }
 
@@ -84,17 +87,17 @@ public class UserExceptionTestCase extends TestCase {
             }
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwStaticEx") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("UserExceptionTestCase") >= 0);
+            assertTrue("origin-method", (Arrays.stream(e.getStackTrace()).toArray()[0].toString().contains("UserExceptionTest.throwStaticEx")));
         }
     }
 
-    public void testNestedClassReference() {
+    @Test
+    public void nestedClassReference() {
         try {
             // must be implemented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwWithinNested();
         } catch (DeveloperException e) {
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("UserExceptionTestCase") >= 0);
+            assertTrue("origin-method", (Arrays.stream(e.getStackTrace()).toArray()[2].toString().contains("UserExceptionTest.nestedClassReference")));
             //assertTrue("origin-method", e.getLocalizedMessage().indexOf("NestedError") >= 0);
         }
     }

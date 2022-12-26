@@ -37,7 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class XmlDemoAppTestCase extends TestCase {
 
-	private final String filename = "C:\\Temp\\" + XmlMapperSuite.SCHEMA + ".xml";
+	//TODO HIP
+	private final String filename = "./" + XmlMapperSuite.SCHEMA + ".xml";
 	private XmlObjectServer server = null;
 	private XmlDemoAppModel root = null;
 

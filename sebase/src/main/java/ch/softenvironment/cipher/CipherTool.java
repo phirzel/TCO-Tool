@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Peter Hirzel <i>soft</i>Environment
  */
 @Slf4j
+@Deprecated(since = "1.6.0")
 public class CipherTool {
 
 	private javax.crypto.Cipher cipher = null;

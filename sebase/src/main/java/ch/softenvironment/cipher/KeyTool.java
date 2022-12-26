@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Peter Hirzel <i>soft</i>Environment
  */
 @Slf4j
+@Deprecated(since = "1.6.0")
 public final class KeyTool {
 
     private KeyTool() {

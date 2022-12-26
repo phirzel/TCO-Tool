@@ -1,4 +1,4 @@
-import ch.softenvironment.cipher.CipherTestCase;
+import ch.softenvironment.cipher.CipherTest;
 import ch.softenvironment.licence.LicenceCheckerTestCase;
 import junit.framework.TestSuite;
 
@@ -51,7 +51,7 @@ public class SeMiscTestSuite extends junit.framework.TestSuite {
     public static junit.framework.Test suite() {
         TestSuite suite = new TestSuite("Testing: seMisc");
 
-        suite.addTest(new TestSuite(CipherTestCase.class));
+        suite.addTest(new TestSuite(CipherTest.class));
         suite.addTest(new TestSuite(LicenceCheckerTestCase.class));
 
         /*

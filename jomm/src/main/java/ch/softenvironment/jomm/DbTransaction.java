@@ -147,7 +147,7 @@ public class DbTransaction implements javax.jdo.Transaction {
             // Tracer.getInstance().debug("[Transaction-level = " + level +
             // " (nested -> " + action + " supressed)]");
         } else {
-            log.info("[Transaction-level = {} ({})]", level, action);
+            log.debug("[Transaction-level = {} ({})]", level, action);
         }
         return nested;
     }

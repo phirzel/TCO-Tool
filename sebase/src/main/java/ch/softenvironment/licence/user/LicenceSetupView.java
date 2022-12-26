@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
+@Deprecated(since = "1.6.0")
 class LicenceSetupView extends ch.softenvironment.view.BaseDialog {
 
 	private transient LicenceChecker checker = null;

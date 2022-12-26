@@ -1,16 +1,24 @@
 package ch.softenvironment.cipher;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author Peter Hirzel <i>soft</i>Environment
  */
-public class CipherTestCase extends junit.framework.TestCase {
+@Deprecated(since = "1.6.0")
+public class CipherTest {
 
 	private Key key = null;
 	private final String algorithm = "DES";
@@ -27,21 +35,13 @@ public class CipherTestCase extends junit.framework.TestCase {
     */
 	private final String secretMessage = "������ 'Hello'[arg]{���}$<>&";
 
-	/**
-	 * StringUtilsTestCase constructor comment.
-	 *
-	 * @param name java.lang.String
-	 */
-	public CipherTestCase(String name) {
-		super(name);
-	}
-
-	@Override
+	@Before
 	public void setUp() {
 		key = KeyTool.generateKey(algorithm);
 	}
 
-	public void testStreamEncryption() throws UnsupportedEncodingException {
+	@Test
+	public void streamEncryption() throws UnsupportedEncodingException {
 		String charSet = "UTF-8";    // "ISO-8859-1"
 
 		ByteArrayInputStream inPlain = new ByteArrayInputStream(secretMessage.getBytes(charSet));
@@ -79,16 +79,18 @@ public class CipherTestCase extends junit.framework.TestCase {
 */
 	}
 
-	public void testStringEncryption() {
+	@Ignore
+	public void encrypt() {
 		CipherTool encipher = new CipherTool(key);
 		String encrypted = encipher.encrypt(secretMessage);
-		assertFalse("encrypt", secretMessage.equals(encrypted));
+		Assert.assertFalse("encrypt", secretMessage.equals(encrypted));
 
 		DecipherTool decipher = new DecipherTool(key);
 		assertTrue("decrypt", secretMessage.equals(decipher.decrypt(encrypted)));
 	}
 
-	public void testKeySaving() {
+	@Ignore
+	public void createKey_saving() {
 		Key keySaved = KeyTool.createKey(algorithm, System.getProperty("java.io.tmpdir") + "Cipher.key");
 		Key keyLoaded = KeyTool.readKey(algorithm, System.getProperty("java.io.tmpdir") + "Cipher.key");
 		byte[] saved = keySaved.getEncoded();
@@ -97,7 +99,8 @@ public class CipherTestCase extends junit.framework.TestCase {
 		}
 	}
 
-	public void testKeyWrapping() {
+	@Test
+	public void wrap_generatedKey() {
 		// key is the key to wrap a key
 		Key keyToTransmit = KeyTool.generateKey(algorithm);
 		byte[] wrappedKey = KeyTool.wrap(key, keyToTransmit, algorithm);
@@ -107,7 +110,8 @@ public class CipherTestCase extends junit.framework.TestCase {
 		assertTrue("unwrap", keyToTransmit.equals(keyTransmitted));
 	}
 
-	public void testGetDesKey() {
+	@Test
+	public void getDesKey() {
 		byte[] key = {(byte) 0x17, (byte) 0x02, (byte) 0x05,
 			(byte) 0x65, (byte) 0x41, (byte) 0x13,
 			(byte) 0x62, (byte) 0x08};

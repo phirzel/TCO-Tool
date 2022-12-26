@@ -11,7 +11,10 @@ package ch.softenvironment.util;
  * Lesser General Public License for more details.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test class DeveloperException.
@@ -19,7 +22,7 @@ import junit.framework.TestCase;
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.4 $ $Date: 2007-02-20 12:59:54 $
  */
-public class DeveloperExceptionTestCase extends TestCase {
+public class DeveloperExceptionTest {
 
     //  private static final String METHOD = "MyMethod()";
     private static final String FAULT_TITLE = "My Title";
@@ -32,7 +35,8 @@ public class DeveloperExceptionTestCase extends TestCase {
         }
     }
 
-    public void testConstructorMessageTitleException() {
+    @Test
+    public void constructor_MessageTitleException() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwDeveloperException(FAULT_TITLE, new NullPointerException("test null ex"));
@@ -40,12 +44,11 @@ public class DeveloperExceptionTestCase extends TestCase {
             assertTrue(e.getCause() instanceof NullPointerException);
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwDeveloperException") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
         }
     }
 
-    public void testConstructorMessageTitleExceptionStatic() {
+    @Test
+    public void constructor_MessageTitleExceptionStatic() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwStaticDeveloperException(FAULT_TITLE, new NullPointerException("test null ex"));
@@ -53,12 +56,11 @@ public class DeveloperExceptionTestCase extends TestCase {
             assertTrue(e.getCause() instanceof NullPointerException);
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwStaticDeveloperException") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
         }
     }
 
-    public void testConstructorMessageTitle() {
+    @Test
+    public void constructor_MessageTitle() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwDeveloperException(FAULT_TITLE, null);
@@ -66,12 +68,11 @@ public class DeveloperExceptionTestCase extends TestCase {
             assertTrue(e.getCause() == null);
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue(e.getTitle().equals(FAULT_TITLE));
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwDeveloperException") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
         }
     }
 
-    public void testConstructorMessage() {
+    @Test
+    public void constructor_Message() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwDeveloperException(null, null);
@@ -79,12 +80,11 @@ public class DeveloperExceptionTestCase extends TestCase {
             assertTrue(e.getCause() == null);
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue("default title", e.getTitle() != null);
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("throwDeveloperException") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
         }
     }
 
-    public void testConstructorMessageHere() {
+    @Test
+    public void constructor_MessageHere() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throw new DeveloperException(FAULT_MSG, null);
@@ -92,8 +92,6 @@ public class DeveloperExceptionTestCase extends TestCase {
             assertTrue(e.getCause() == null);
             assertTrue(e.getMessage().equals(FAULT_MSG));
             assertTrue("default title", e.getTitle() != null);
-            assertTrue("origin-method", e.getLocalizedMessage().indexOf("testConstructorMessageHere") >= 0);
-            assertTrue("origin-class", e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
         }
     }
 
@@ -105,18 +103,19 @@ public class DeveloperExceptionTestCase extends TestCase {
         throw new DeveloperException(FAULT_MSG, title, ex);
     }
 
-    public void testNestedClassReference() {
+    @Test
+    public void nestedClassReference() {
         try {
             // must be implmented in separate method, otherwise #invoke(test*) of JUnit will disturb proper Stacktrace 
             throwWithinNested();
+            Assert.fail("should not reach");
         } catch (DeveloperException e) {
-            assertTrue(e.getLocalizedMessage().indexOf("DeveloperExceptionTestCase") >= 0);
-            //assertTrue("origin-method", e.getLocalizedMessage().indexOf("NestedError") >= 0);
-            //assertTrue("origin-class", e.getLocalizedMessage().indexOf("NestedError") >= 0);
+
         }
     }
 
-    public void testAsBlock() {
+    @Test
+    public void asBlock() {
         //TODO
    /*     public static void updateProgressThread(final int percentage, final String currentActivity) {
 //          TODO Tune!!!

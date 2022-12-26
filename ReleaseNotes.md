@@ -1,6 +1,6 @@
 @Author: Peter Hirzel, Switzerland
 
-Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
+2022 moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
 * (Originally hosted at [SourceForge **TCO-Tool**](https://sourceforge.net/projects/tcotool/) where coding was terminated and migrated to Github instead!)
 
 # v1.6.0
@@ -11,14 +11,15 @@ Moved to [Github **TCO-Tool**](https://github.com/phirzel/TCO-Tool):
 * optional commercial softEnvironment Plugins added/sponsored
 * JPF (Java Plugin Framework removed, considered as old and badly maintained)
 
-# How to build
-1. add `TCO-Tool\lib\jhotdraw60b1\jhotdraw.jar` to classpath (seems not to be provided by MAVEN central yet or any more)
-2. mvn install **without test** (not all tests run through yet)
-3. main: org.tcotool.application.LauncherView (javax.swing UI-Application)
-
 
 # TODO
 * provide sample.xml
 * bug fixes:
-    * Dialogs open in background
+  * Dialogs open in background
+  * https://sourceforge.net/p/tcotool/discussion/491266/thread/e234d2db/?limit=25#1dfc Deleting dependency
+  * jomm Unit-Tests
 * upgrade JHotDraw lib
+* modernize old Java 1.4/6 code-style
+* replace @Deprecated code
+* XmlObjectService::retrieveCodes -> logs missing DbCode's -> perhaps add a default Set to new configs?
+* replace softEnvironment logo (splash-screen, ..)

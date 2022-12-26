@@ -15,7 +15,8 @@ import java.util.Base64;
  *
  * @since 0.8.2
  */
-public final class EncodingUtils {
+@Deprecated(since = "1.6.0")
+final class EncodingUtils {
 
     //TODO HIP private static final Logger LOGGER = LoggerFactory.getLogger(EncodingUtils.class);
     static final String MASK_PATH_PARAM = "0";
