@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.demoapp.testsuite;
+package ch.softenvironment.jomm.demoapp.xml;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -21,33 +21,37 @@ import ch.softenvironment.jomm.demoapp.model.RoleType;
 import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.target.xml.IliBasket;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
+import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.ListUtils;
+import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
-import junit.framework.TestCase;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * JUnit Testcase to testsuite JOMM with DemoApp-Model. This Testcase will: - create some Test-Data - manipulate the Test-Data
  *
  * @author Peter Hirzel
- * @see @see ch.softenvironment.demoapp.*TestSuite to run this TestCase
+ * @see XmlMapperSuite
  */
 @Slf4j
 public class XmlDemoAppTestCase extends TestCase {
-
-	//TODO HIP
-	private final String filename = "./" + XmlMapperSuite.SCHEMA + ".xml";
+	//TODO save in target
+	private final String filename = "./target/" + XmlMapperSuite.SCHEMA + ".xml";
 	private XmlObjectServer server = null;
 	private XmlDemoAppModel root = null;
 
 	@Override
 	protected void setUp() {
+		if (DbDomainNameServer.getDefaultServer() == null) {
+			throw new DeveloperException("must be executed by XmlMapperSuite");
+		}
 		server = (XmlObjectServer) DbDomainNameServer.getDefaultServer();
 		try {
 			root = (XmlDemoAppModel) server
-				.createInstance(XmlDemoAppModel.class);
+					.createInstance(XmlDemoAppModel.class);
 			root.save();
 		} catch (Exception e) {
 			fail("creation of root failed: " + e.getLocalizedMessage());
@@ -69,11 +73,8 @@ public class XmlDemoAppTestCase extends TestCase {
 			projects.add(prj);
 			root.setProjects(projects);
 			reload();
-			assertTrue("Number of generated Projects's", root.getProjects()
-				.size() /*
-			 * ((Number)server.getFirstValue(builder)).longValue(
-			 * )
-			 */ == (1 + DemoAppTestCase.COUNTER));
+			assertEquals("Number of generated Projects's", (1 + DemoAppTestCase.COUNTER), root.getProjects()
+					.size());
 
 			DbEnumeration enumeration = server.retrieveEnumeration(
 				RoleType.class, RoleType.DEVELOPER);

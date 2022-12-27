@@ -24,7 +24,9 @@ import junit.framework.TestSuite;
  * Suite of SQL-Target TestCases to testsuite JOMM against a real SQL Target-System.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 class SqlSuite extends TestSuite {
 
     public SqlSuite() {

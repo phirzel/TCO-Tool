@@ -19,7 +19,7 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
-import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.target.sql.mysql.AutoIncrementTestCase;
@@ -28,7 +28,6 @@ import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +37,10 @@ import java.util.List;
  * background.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
 @Slf4j
-@Ignore("not used for TCO-Tool")
+@Deprecated(since = "1.6.0")
 public class MySqlTestSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";

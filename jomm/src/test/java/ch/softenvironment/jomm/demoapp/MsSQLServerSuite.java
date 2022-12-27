@@ -19,7 +19,7 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
-import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
@@ -27,16 +27,16 @@ import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS SQL Server. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a the following services are running in the
  * background: - SQL Server 2003 (SQLExpress or Enterprise server) - SQL Server Browser - default login id: "sa"
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
 @Slf4j
-@Ignore("not used for TCO-Tool")
+@Deprecated(since = "1.6.0")
 public class MsSQLServerSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";

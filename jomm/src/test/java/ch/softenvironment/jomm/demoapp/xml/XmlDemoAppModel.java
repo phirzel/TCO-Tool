@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.demoapp.testsuite;
+package ch.softenvironment.jomm.demoapp.xml;
 
 /*
  * This library is free software; you can redistribute it and/or
@@ -17,6 +17,7 @@ import ch.softenvironment.jomm.demoapp.model.Project;
 import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 import ch.softenvironment.jomm.mvc.model.DbEntityBean;
+
 import java.util.ArrayList;
 import java.util.List;
 

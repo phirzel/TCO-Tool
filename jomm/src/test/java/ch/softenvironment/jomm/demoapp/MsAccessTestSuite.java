@@ -25,16 +25,16 @@ import ch.softenvironment.jomm.tools.DbDataGenerator;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS Access. No JDBC-Driver is necessary because connection will be established by ODBC-JDBC-Bridge. Make sure an empty DemoApp.mdb application is
  * available in demo_app/sql directory.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
 @Slf4j
-@Ignore("not used for TCO-Tool")
+@Deprecated(since = "1.6.0")
 public class MsAccessTestSuite extends junit.framework.TestSuite {
 
 	public MsAccessTestSuite() {

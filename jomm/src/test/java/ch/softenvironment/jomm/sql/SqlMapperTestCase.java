@@ -15,13 +15,16 @@ package ch.softenvironment.jomm.sql;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbMapper;
 import ch.softenvironment.jomm.target.sql.SqlQueryBuilder;
+import ch.softenvironment.util.DeveloperException;
 
 /**
  * Test DbMapper
  *
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.4 $ $Date: 2007-09-18 12:47:30 $
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class SqlMapperTestCase extends junit.framework.TestCase {
 
 	private DbMapper mapper = null;
@@ -41,20 +44,23 @@ public class SqlMapperTestCase extends junit.framework.TestCase {
 
 	@Override
 	protected void setUp() throws java.lang.Exception {
-		mapper = DbDomainNameServer.getDefaultServer().getMapper(); //new SqlMapper();
+		if (DbDomainNameServer.getDefaultServer() == null) {
+			throw new DeveloperException("must be executed within a <DB-specific> *TestSuite");
+		}
+		mapper = DbDomainNameServer.getDefaultServer().getMapper();
 	}
 
 	/**
 	 *
 	 */
 	public void testMapToTarget_String() {
-		assertTrue("DbMapper", "'Hello'".equals(mapper.mapToTarget("Hello")));
-		assertTrue(mapper.mapToTarget("a'd and o'd").equals("'a''d and o''d'"));
+		assertEquals("DbMapper", "'Hello'", mapper.mapToTarget("Hello"));
+		assertEquals("'a''d and o''d'", mapper.mapToTarget("a'd and o'd"));
 	}
 
 	public void testMapToTarget_Boolean() {
-		assertTrue("DbMapper", "'T'".equals(mapper.mapToTarget(Boolean.TRUE)));
-		assertTrue("DbMapper", "'F'".equals(mapper.mapToTarget(Boolean.FALSE)));
-		assertTrue("DbMapper", SqlQueryBuilder.SQL_NULL.equals(mapper.mapToTarget((Boolean) null)));
+		assertEquals("DbMapper", "'T'", mapper.mapToTarget(Boolean.TRUE));
+		assertEquals("DbMapper", "'F'", mapper.mapToTarget(Boolean.FALSE));
+		assertEquals("DbMapper", SqlQueryBuilder.SQL_NULL, mapper.mapToTarget((Boolean) null));
 	}
 }

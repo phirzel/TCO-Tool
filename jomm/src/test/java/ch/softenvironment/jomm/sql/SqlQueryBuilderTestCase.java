@@ -23,13 +23,17 @@ import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
 import ch.softenvironment.jomm.target.sql.hsqldb.HSQLDBObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
+import ch.softenvironment.util.DeveloperException;
+
 import java.util.Date;
 
 /**
  * Test SqlQueryBuilder.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class SqlQueryBuilderTestCase extends junit.framework.TestCase {
 
 	private DbObjectServer server = null;
@@ -49,6 +53,9 @@ public class SqlQueryBuilderTestCase extends junit.framework.TestCase {
 
 	@Override
 	protected void setUp() throws java.lang.Exception {
+		if (DbDomainNameServer.getDefaultServer() == null) {
+			throw new DeveloperException("must be executed within a <DB-specific> *TestSuite");
+		}
 		server = DbDomainNameServer.getDefaultServer();
 	}
 
@@ -83,8 +90,7 @@ public class SqlQueryBuilderTestCase extends junit.framework.TestCase {
 		builder.setTableList(server.getMapper().getTargetNlsName());
 		builder.setAttributeList("COUNT(*)");
 		builder.addFilter(server.getMapper().getTargetIdName(), nlsId);
-		assertTrue("1 record in T_NLS",
-			(long) 1 == ((Number) server.getFirstValue(builder))
+		assertEquals("1 record in T_NLS", (long) 1, ((Number) server.getFirstValue(builder))
 				.longValue());
 	}
 }

@@ -18,14 +18,13 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
-import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
-import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,9 @@ import java.util.List;
  *
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.4 $ $Date: 2007-02-20 13:33:18 $
+ * @deprecated not used by TCO-Tool
  */
-@Ignore("not used for TCO-Tool")
+@Deprecated(since = "1.6.0")
 public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 
 	private static final String DATABSE = "template1"; // assumed to exist in your PostgreSQL-Server

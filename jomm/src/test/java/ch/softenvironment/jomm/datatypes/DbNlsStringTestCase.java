@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 import java.util.Date;
 import java.util.Locale;
 
+import static org.junit.Assert.assertNotEquals;
 /**
  * Test DbNlsString.
  * <p>
@@ -41,6 +42,9 @@ public class DbNlsStringTestCase extends TestCase {
 
     @Override
     protected void setUp() {
+        if (DbDomainNameServer.getDefaultServer() == null) {
+            throw new DeveloperException("must be executed within a <DB-specific> *TestSuite");
+        }
         server = DbDomainNameServer.getDefaultServer();
     }
 

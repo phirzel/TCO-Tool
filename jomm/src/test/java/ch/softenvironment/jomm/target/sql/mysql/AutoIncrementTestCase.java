@@ -16,7 +16,9 @@ import static org.junit.Assert.*;
  * see ch.softenvironment.demoapp.MySqlTestSuite to run this TestCase.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class AutoIncrementTestCase {
 
     private DbObjectServer server = null;

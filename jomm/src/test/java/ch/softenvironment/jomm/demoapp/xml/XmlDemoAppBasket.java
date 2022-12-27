@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.demoapp.testsuite;
+package ch.softenvironment.jomm.demoapp.xml;
 /*
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,6 +15,7 @@ import ch.softenvironment.jomm.DbObjectId;
 import ch.softenvironment.jomm.demoapp.XmlMapperSuite;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.target.xml.IliBasket;
+
 import java.util.Set;
 
 /**

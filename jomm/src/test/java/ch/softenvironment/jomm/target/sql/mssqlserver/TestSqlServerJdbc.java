@@ -29,7 +29,9 @@ import java.sql.DriverManager;
  *
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.1 $ $Date: 2006-04-25 14:57:54 $
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class TestSqlServerJdbc {
 
     public static void testConnect(String driverClass, String url) {

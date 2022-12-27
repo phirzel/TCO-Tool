@@ -1,4 +1,4 @@
-package ch.softenvironment.jomm.demoapp.testsuite;
+package ch.softenvironment.jomm.demoapp.xml;
 /*
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,6 +17,7 @@ import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.jomm.demoapp.model.*;
 import ch.softenvironment.jomm.mvc.model.DbEnumeration;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
+import ch.softenvironment.util.DeveloperException;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +40,9 @@ public class DemoAppTestCase extends TestCase {
 
 	@Override
 	protected void setUp() {
+		if (DbDomainNameServer.getDefaultServer() == null) {
+			throw new DeveloperException("must be executed by XmlMapperSuite");
+		}
 		server = DbDomainNameServer.getDefaultServer();
 	}
 

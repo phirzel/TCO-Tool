@@ -2,6 +2,7 @@ package ch.softenvironment.jomm;
 
 import ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.mysql.MySqlObjectServerFactory;
+import ch.softenvironment.util.DeveloperException;
 import junit.framework.TestCase;
 
 import java.util.Iterator;
@@ -9,8 +10,18 @@ import java.util.List;
 
 /**
  * @author Peter Hirzel, softEnvironment GmbH
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class DbObjectServerTestCase extends TestCase {
+
+    @Override
+    protected void setUp() throws java.lang.Exception {
+        if (DbDomainNameServer.getDefaultServer() == null) {
+            throw new DeveloperException("must be executed within a <DB-specific> *TestSuite");
+        }
+    }
+
     /**
      * Only for Schemas with self implemented Identity/Sequence by Table
      * "T_Key_Object".

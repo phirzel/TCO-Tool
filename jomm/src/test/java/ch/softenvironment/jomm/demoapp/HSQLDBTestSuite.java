@@ -19,14 +19,13 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
-import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
-import org.junit.Ignore;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with HSQLDB in "Memory-Mode", by means same JVM and therefore no separate HSQLDB-Server must be running. Make sure appropriate vendor specific JDBC-Driver
@@ -35,8 +34,9 @@ import org.junit.Ignore;
  * Default login: "sa" (without password)
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
-@Ignore("not needed for TCO-Tool")
+@Deprecated(since = "1.6.0")
 public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
     private static final String SCHEMA = "demoapp"; // "_DemoApp_";

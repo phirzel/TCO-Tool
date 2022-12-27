@@ -28,7 +28,9 @@ import static org.junit.Assert.assertEquals;
  * Test MsAccessQueryBuilder.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class MsAccessQueryBuilderTestCase {
 
     //  @see ch.softenvironment.demoapp.MsAccessTestSuite to run this TestCase
