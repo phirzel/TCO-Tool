@@ -35,7 +35,9 @@ import static org.junit.Assert.assertNotEquals;
  * see ch.softenvironment.demoapp.*TestSuite to run this TestCase
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 public class DbNlsStringTestCase extends TestCase {
 
     private DbObjectServer server = null;
