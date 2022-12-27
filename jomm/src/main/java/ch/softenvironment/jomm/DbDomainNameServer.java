@@ -368,7 +368,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
         if (locations.containsKey(dbURL)) {
             return (DbObjectServer) locations.get(dbURL);
         } else {
-            log.error("URL not contained for registered servers: {}", dbURL);
+            log.warn("URL not contained for registered servers: {}", dbURL);
             return null;
         }
     }

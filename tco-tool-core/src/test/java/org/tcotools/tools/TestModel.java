@@ -30,19 +30,19 @@ import org.tcotool.tools.ModelUtility;
 public class TestModel {
 
 	// define public for easier test-access
-	public XmlObjectServer server = null;
-	public ModelUtility utility = null;
-	public TcoModel model = null;
-	public TcoPackage group = null;
-	public Service clientService = null;
-	public Service supplierService = null;
-	public CostDriver clientDriver = null;
-	public CostDriver supplierDriver = null;
-	public Role role = null;
-	public Catalogue catalogue = null;
-	public Site site = null;
-	public Process process = null;
-	public ProjectPhase phase = null;
+	public XmlObjectServer server;
+	public ModelUtility utility;
+	public TcoModel model;
+	public TcoPackage group;
+	public Service clientService;
+	public Service supplierService;
+	public CostDriver clientDriver;
+	public CostDriver supplierDriver;
+	public Role role;
+	public Catalogue catalogue;
+	public Site site;
+	public Process process;
+	public ProjectPhase phase;
 
 	// public double driverFactor = 2.0 * 3.0 * 4.0 * 5.0;
 
@@ -63,12 +63,12 @@ public class TestModel {
 		// connection & Utility initialization
 		server = (XmlObjectServer) initializeDatabase();
 		utility = ModelUtility.createDefaultConfiguration(server); // new
-		// ModelUtility(server);
+		// model.ModelUtility(server);
 
 		// add own codes
 		role = (Role) server.createInstance(Role.class);
-        role.setFullTimeEquivalent(Double.valueOf(124000.0));
-        role.setYearlyHours(Long.valueOf(1750));
+		role.setFullTimeEquivalent(124000.0);
+		role.setYearlyHours(1750L);
 		role.setCurrency(utility.getSystemParameter().getDefaultCurrency());
 		role.setInternal(Boolean.TRUE);
 		role.setEmploymentPercentageAvailable(Long.valueOf(50));
@@ -99,25 +99,25 @@ public class TestModel {
 		server.cacheCode(phase);
 
 		// create Model structure without FactCost or PersonalCost
-        model = (TcoModel) utility.getRoot();
-        model.setMultitude(Double.valueOf(2.0));
-        group = (TcoPackage) utility.createTcoObject(server, TcoPackage.class);
-        group.setMultitude(Double.valueOf(3.0));
-        utility.addOwnedElement(model, group);
-        clientService = (Service) utility.createTcoObject(server, Service.class);
-        clientService.setMultitude(Double.valueOf(4.0));
-        utility.addOwnedElement(group, clientService);
-        clientDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
-        clientDriver.setMultitude(Double.valueOf(5.0));
-        clientDriver.setPhase(phase);
+		model = (TcoModel) utility.getRoot();
+		model.setMultitude(2.0);
+		group = (TcoPackage) utility.createTcoObject(server, TcoPackage.class);
+		group.setMultitude(3.0);
+		utility.addOwnedElement(model, group);
+		clientService = (Service) utility.createTcoObject(server, Service.class);
+		clientService.setMultitude(4.0);
+		utility.addOwnedElement(group, clientService);
+		clientDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
+		clientDriver.setMultitude(5.0);
+		clientDriver.setPhase(phase);
 		clientDriver.setProcess(process);
 		utility.addOwnedElement(clientService, clientDriver);
-        supplierService = (Service) utility.createTcoObject(server, Service.class);
-        supplierService.setMultitude(Double.valueOf(1.0));
-        utility.addOwnedElement(group, supplierService);
-        supplierDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
-        supplierDriver.setMultitude(Double.valueOf(1.0));
-        utility.addOwnedElement(supplierService, supplierDriver);
+		supplierService = (Service) utility.createTcoObject(server, Service.class);
+		supplierService.setMultitude(1.0);
+		utility.addOwnedElement(group, supplierService);
+		supplierDriver = (CostDriver) utility.createTcoObject(server, CostDriver.class);
+		supplierDriver.setMultitude(1.0);
+		utility.addOwnedElement(supplierService, supplierDriver);
 	}
 
 	public TcoPackage addGroup(TcoPackage owner) throws Exception {
@@ -132,8 +132,8 @@ public class TestModel {
 
 	public PersonalCost addPersonalCost(CostDriver driver) throws Exception {
 		PersonalCost pCost = (PersonalCost) utility.createTcoObject(server, PersonalCost.class);
-        utility.addOwnedElement(driver, pCost);
-        pCost.setMultitude(Double.valueOf(6.0));
+		utility.addOwnedElement(driver, pCost);
+		pCost.setMultitude(6.0);
 		return pCost;
 	}
 
@@ -143,8 +143,8 @@ public class TestModel {
 
 	public FactCost addFactCost(CostDriver driver) throws Exception {
 		FactCost fCost = (FactCost) utility.createTcoObject(server, FactCost.class);
-        utility.addOwnedElement(driver, fCost);
-        fCost.setMultitude(Double.valueOf(7.0));
+		utility.addOwnedElement(driver, fCost);
+		fCost.setMultitude(7.0);
 		return fCost;
 	}
 

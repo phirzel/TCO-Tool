@@ -12,7 +12,7 @@ package ch.softenvironment.jomm.demoapp.xml;
  */
 
 import ch.softenvironment.jomm.DbObjectId;
-import ch.softenvironment.jomm.demoapp.XmlMapperSuite;
+import ch.softenvironment.jomm.demoapp.XmlObjectMapperTest;
 import ch.softenvironment.jomm.mvc.model.DbCodeType;
 import ch.softenvironment.jomm.target.xml.IliBasket;
 
@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * @author Peter Hirzel
  */
-class XmlDemoAppBasket implements IliBasket {
+public class XmlDemoAppBasket implements IliBasket {
 
     private Object root = null;
 
@@ -33,12 +33,12 @@ class XmlDemoAppBasket implements IliBasket {
 
     @Override
     public String getComment() {
-        return XmlMapperSuite.SCHEMA + " TestCases";
+        return XmlObjectMapperTest.SCHEMA + " TestCases";
     }
 
     @Override
     public String getElementName() {
-        return "ch.softenvironment.demoapp.testsuite." + XmlMapperSuite.SCHEMA;
+        return "ch.softenvironment.jomm.demoapp." + XmlObjectMapperTest.SCHEMA;
     }
 
     @Override

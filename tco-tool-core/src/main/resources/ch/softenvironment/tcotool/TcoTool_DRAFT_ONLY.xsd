@@ -1,0 +1,835 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.interlis.ch/INTERLIS2.2"
+            targetNamespace="http://www.interlis.ch/INTERLIS2.2" elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+    <xsd:element name="TRANSFER" type="Transfer"/>
+    <xsd:simpleType name="IliID">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="x[0-9a-zA-Z]*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Transfer">
+        <xsd:sequence>
+            <xsd:element name="HEADERSECTION" type="HeaderSection"/>
+            <xsd:element name="DATASECTION" type="DataSection"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- ALIAS TABLE 
+      <ENTRIES FOR="tcotool">
+        <TAGENTRY FROM="tcotool.model" TO="tcotool.model"/>
+        <TAGENTRY FROM="tcotool.model.ImportReference" TO="tcotool.model.ImportReference"/>
+        <TAGENTRY FROM="tcotool.model.SystemParameter" TO="tcotool.model.SystemParameter"/>
+        <TAGENTRY FROM="tcotool.model.CostDriver" TO="tcotool.model.CostDriver"/>
+        <TAGENTRY FROM="tcotool.model.Service" TO="tcotool.model.Service"/>
+        <TAGENTRY FROM="tcotool.model.TcoPackage" TO="tcotool.model.TcoPackage"/>
+        <TAGENTRY FROM="tcotool.model.TcoModel" TO="tcotool.model.TcoPackage"/>
+        <DELENTRY TAG="tcotool.model.TcoModel.author"/>
+        <DELENTRY TAG="tcotool.model.TcoModel.version"/>
+        <TAGENTRY FROM="tcotool.model.Dependency" TO="tcotool.model.Dependency"/>
+        <TAGENTRY FROM="tcotool.model.ExternalReference" TO="tcotool.model.ExternalReference"/>
+        <TAGENTRY FROM="tcotool.model.FactCost" TO="tcotool.model.FactCost"/>
+        <TAGENTRY FROM="tcotool.model.PersonalCost" TO="tcotool.model.PersonalCost"/>
+        <TAGENTRY FROM="tcotool.model.TcoModel" TO="tcotool.model.TcoModel"/>
+        <TAGENTRY FROM="tcotool.model.DriverCost" TO="tcotool.model.DriverCost"/>
+        <TAGENTRY FROM="tcotool.model.ObjectDriver" TO="tcotool.model.ObjectDriver"/>
+        <TAGENTRY FROM="tcotool.model.PackageContent" TO="tcotool.model.PackageContent"/>
+        <TAGENTRY FROM="tcotool.model.SubPackage" TO="tcotool.model.SubPackage"/>
+        <TAGENTRY FROM="tcotool.model.GroupParameter" TO="tcotool.model.GroupParameter"/>
+      </ENTRIES>
+      <ENTRIES FOR="softEnvironment">
+        <TAGENTRY FROM="softEnvironment.NlsTranslation" TO="softEnvironment.NlsTranslation"/>
+        <TAGENTRY FROM="softEnvironment.NlsText" TO="softEnvironment.NlsText"/>
+      </ENTRIES>
+      <ENTRIES FOR="Anwendung">
+        <TAGENTRY FROM="Anwendung.FirmenVerzeichnis" TO="Anwendung.FirmenVerzeichnis"/>
+        <TAGENTRY FROM="Anwendung.FirmenVerzeichnis.Firma" TO="Anwendung.FirmenVerzeichnis.Firma"/>
+      </ENTRIES>
+        ALIAS TABLE -->
+    <xsd:complexType name="HeaderSection">
+        <xsd:sequence>
+            <xsd:element name="ALIAS" type="Alias"/>
+            <xsd:element name="COMMENT" type="xsd:anyType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="VERSION" type="xsd:decimal" use="required" fixed="2.2"/>
+        <xsd:attribute name="SENDER" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="Alias">
+        <xsd:sequence>
+            <xsd:element name="ENTRIES" type="Entries" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Entries">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element name="TAGENTRY" type="Tagentry"/>
+                <xsd:element name="VALENTRY" type="Valentry"/>
+                <xsd:element name="DELENTRY" type="Delentry"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="FOR" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="Tagentry">
+        <xsd:attribute name="FROM" type="xsd:string" use="required"/>
+        <xsd:attribute name="TO" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="Valentry">
+        <xsd:attribute name="ATTR" type="xsd:string" use="required"/>
+        <xsd:attribute name="FROM" type="xsd:string" use="required"/>
+        <xsd:attribute name="TO" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="Delentry">
+        <xsd:attribute name="TAG" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="BasketValue">
+        <xsd:attribute name="TOPIC" type="xsd:string" use="required"/>
+        <xsd:attribute name="KIND" type="xsd:string" use="required"/>
+        <xsd:attribute name="BID" type="IliID" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="CoordValue">
+        <xsd:sequence>
+            <xsd:element name="C1" type="xsd:double"/>
+            <xsd:element name="C2" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="C3" type="xsd:double" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ArcPoint">
+        <xsd:sequence>
+            <xsd:element name="C1" type="xsd:double"/>
+            <xsd:element name="C2" type="xsd:double"/>
+            <xsd:element name="C3" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="A1" type="xsd:double"/>
+            <xsd:element name="A2" type="xsd:double"/>
+            <xsd:element name="R" type="xsd:double" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RoleType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="REF" type="IliID"/>
+                <xsd:attribute name="EXTREF" type="IliID"/>
+                <xsd:attribute name="BID" type="IliID"/>
+                <xsd:attribute name="NEXT_TID" type="IliID"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="DataSection">
+        <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="tcotool.model" type="tcotool.model"/>
+                <xsd:element name="Anwendung.FirmenVerzeichnis" type="Anwendung.FirmenVerzeichnis"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="INTERLIS.HALIGNMENT">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Left"/>
+            <xsd:enumeration value="Center"/>
+            <xsd:enumeration value="Right"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="INTERLIS.VALIGNMENT">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Top"/>
+            <xsd:enumeration value="Cap"/>
+            <xsd:enumeration value="Half"/>
+            <xsd:enumeration value="Base"/>
+            <xsd:enumeration value="Bottom"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="INTERLIS.URI">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1023"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="INTERLIS.NAME">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="INTERLIS.INTERLIS_1_DATE">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="INTERLIS.METAOBJECT">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.METAOBJECT_TRANSLATION">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+            <xsd:element name="NameInBaseLanguage" type="INTERLIS.NAME"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.AXIS">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.REFSYSTEM">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.COORDSYSTEM">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+            <xsd:element name="Axis">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="INTERLIS.AXIS" type="INTERLIS.AXIS" maxOccurs="3"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.SCALSYSTEM">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="INTERLIS.SIGN">
+        <xsd:sequence>
+            <xsd:element name="Name" type="INTERLIS.NAME"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="tcotool.model.Activity">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="EnumElement25"/>
+            <xsd:enumeration value="Support1stLevel"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Amount">
+        <xsd:restriction base="xsd:double">
+            <xsd:minInclusive value="0.0"/>
+            <xsd:maxInclusive value="9.99999999999E11"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Catalogue">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Undefined"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.CostCentre">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Internal"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.CostExponent">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="InMillion"/>
+            <xsd:enumeration value="InThousend"/>
+            <xsd:enumeration value="AsIs"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.CostType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Installation"/>
+            <xsd:enumeration value="Service"/>
+            <xsd:enumeration value="Infrastructure"/>
+            <xsd:enumeration value="Education"/>
+            <xsd:enumeration value="Operation"/>
+            <xsd:enumeration value="OperationHardware"/>
+            <xsd:enumeration value="OperationSoftware"/>
+            <xsd:enumeration value="Integration"/>
+            <xsd:enumeration value="Software"/>
+            <xsd:enumeration value="Hardware"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Currency">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Euro"/>
+            <xsd:enumeration value="USD"/>
+            <xsd:enumeration value="CHF"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.LifeCycle">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Displacement"/>
+            <xsd:enumeration value="Operation"/>
+            <xsd:enumeration value="Initialisation"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Percentage">
+        <xsd:restriction base="xsd:double">
+            <xsd:minInclusive value="0.0"/>
+            <xsd:maxInclusive value="100.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.PositiveLong">
+        <xsd:restriction base="xsd:double">
+            <xsd:minInclusive value="0.0"/>
+            <xsd:maxInclusive value="9999999.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Process">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="P0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.ProjectPhase">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Initialisation"/>
+            <xsd:enumeration value="Analysis"/>
+            <xsd:enumeration value="Concept"/>
+            <xsd:enumeration value="Realisation"/>
+            <xsd:enumeration value="Transition"/>
+            <xsd:enumeration value="Deployment"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Role">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="EnumElement19"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.ServiceCategory">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="SecurityService"/>
+            <xsd:enumeration value="NetworkService"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.Site">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="HeadOffice"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="tcotool.model.SupplierInfluence">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Aiding2"/>
+            <xsd:enumeration value="Aiding1"/>
+            <xsd:enumeration value="Neutral0"/>
+            <xsd:enumeration value="Repressive1"/>
+            <xsd:enumeration value="Repressive2"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="tcotool.model.ImportReference">
+        <xsd:sequence>
+            <xsd:element name="importFile" type="INTERLIS.URI" minOccurs="0"/>
+            <xsd:element name="externalId" type="tcotool.model.PositiveLong" minOccurs="0"/>
+            <xsd:element name="importer">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.SystemParameter">
+        <xsd:sequence>
+            <xsd:element name="defaultDepreciationDuration" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="defaultCurrency" type="tcotool.model.Currency"/>
+            <xsd:element name="defaultUsageDuration" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="reportCostExponent" type="tcotool.model.CostExponent"/>
+            <xsd:element name="manYearHoursInternal" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="manYearHoursExternal" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="model">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.TcoObject">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.Cost">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="amount" type="tcotool.model.Amount"/>
+            <xsd:element name="currency" type="tcotool.model.Currency"/>
+            <xsd:element name="estimated" type="xsd:boolean"/>
+            <xsd:element name="type" type="tcotool.model.CostType"/>
+            <xsd:element name="driver">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.CostDriver">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="phase" type="tcotool.model.ProjectPhase" minOccurs="0"/>
+            <xsd:element name="cycle" type="tcotool.model.LifeCycle" minOccurs="0"/>
+            <xsd:element name="site" type="tcotool.model.Site" minOccurs="0"/>
+            <xsd:element name="process" type="tcotool.model.Process" minOccurs="0"/>
+            <xsd:element name="service">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.Service">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="costCentre" type="tcotool.model.CostCentre" minOccurs="0"/>
+            <xsd:element name="entry" type="tcotool.model.Catalogue" minOccurs="0"/>
+            <xsd:element name="category" type="tcotool.model.ServiceCategory" minOccurs="0"/>
+            <xsd:element name="catalogue" type="tcotool.model.Catalogue" minOccurs="0"/>
+            <xsd:element name="group">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.TcoPackage">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="namespace">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.Dependency">
+        <xsd:sequence>
+            <xsd:element name="supplierInfluence" type="tcotool.model.SupplierInfluence"/>
+            <xsd:element name="distribution" type="tcotool.model.Percentage" minOccurs="0"/>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="supplier" type="RoleType"/>
+            <xsd:element name="client" type="RoleType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.ExternalReference">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.FactCost">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="amount" type="tcotool.model.Amount"/>
+            <xsd:element name="currency" type="tcotool.model.Currency"/>
+            <xsd:element name="estimated" type="xsd:boolean"/>
+            <xsd:element name="type" type="tcotool.model.CostType"/>
+            <xsd:element name="depreciationDuration" type="tcotool.model.PositiveLong" minOccurs="0"/>
+            <xsd:element name="usageDuration" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="serialNumber" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="20"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="portsUseable" type="tcotool.model.PositiveLong" minOccurs="0"/>
+            <xsd:element name="portsISL" type="tcotool.model.PositiveLong" minOccurs="0"/>
+            <xsd:element name="portsServer" type="tcotool.model.PositiveLong" minOccurs="0"/>
+            <xsd:element name="driver">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.PersonalCost">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="amount" type="tcotool.model.Amount"/>
+            <xsd:element name="currency" type="tcotool.model.Currency"/>
+            <xsd:element name="estimated" type="xsd:boolean"/>
+            <xsd:element name="type" type="tcotool.model.CostType"/>
+            <xsd:element name="role" type="tcotool.model.Role" minOccurs="0"/>
+            <xsd:element name="activity" type="tcotool.model.Activity" minOccurs="0"/>
+            <xsd:element name="hours" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:double">
+                        <xsd:minInclusive value="0.0"/>
+                        <xsd:maxInclusive value="9.99999999999E11"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="hourlyRate" type="tcotool.model.Amount" minOccurs="0"/>
+            <xsd:element name="internal" type="xsd:boolean"/>
+            <xsd:element name="driver">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.TcoModel">
+        <xsd:sequence>
+            <xsd:element name="name">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="documentation" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="multitude" type="tcotool.model.PositiveLong"/>
+            <xsd:element name="baseDate" type="INTERLIS.INTERLIS_1_DATE" minOccurs="0"/>
+            <xsd:element name="author" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="100"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="version" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="20"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="namespace">
+                <xsd:complexType>
+                    <xsd:attribute name="REF" type="IliID"/>
+                    <xsd:attribute name="EXTREF" type="IliID"/>
+                    <xsd:attribute name="BID" type="IliID"/>
+                    <xsd:attribute name="NEXT_TID" type="IliID"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.DriverCost">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.ObjectDriver">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.PackageContent">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.SubPackage">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model.GroupParameter">
+        <xsd:sequence>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tcotool.model">
+        <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="tcotool.model.ImportReference">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.ImportReference">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.SystemParameter">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.SystemParameter">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.CostDriver">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.CostDriver">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.Service">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.Service">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.TcoPackage">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.TcoPackage">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.Dependency">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.Dependency">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.FactCost">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.FactCost">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.PersonalCost">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.PersonalCost">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tcotool.model.TcoModel">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="tcotool.model.TcoModel">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="BID" type="IliID" use="required"/>
+        <xsd:attribute name="TOPICS" type="xsd:string"/>
+        <xsd:attribute name="KIND" type="xsd:string"/>
+        <xsd:attribute name="STARTSTATE" type="xsd:string"/>
+        <xsd:attribute name="ENDSTATE" type="xsd:string"/>
+    </xsd:complexType>
+    <xsd:simpleType name="softEnvironment.Country">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="DE"/>
+            <xsd:enumeration value="US"/>
+            <xsd:enumeration value="GB"/>
+            <xsd:enumeration value="IT"/>
+            <xsd:enumeration value="FR"/>
+            <xsd:enumeration value="CH"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="softEnvironment.Language">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="de"/>
+            <xsd:enumeration value="fr"/>
+            <xsd:enumeration value="en"/>
+            <xsd:enumeration value="it"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="softEnvironment.NlsTranslation">
+        <xsd:sequence>
+            <xsd:element name="language" type="softEnvironment.Language"/>
+            <xsd:element name="country" type="softEnvironment.Country" minOccurs="0"/>
+            <xsd:element name="text">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1024"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="softEnvironment.NlsText">
+        <xsd:sequence>
+            <xsd:element name="translation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="softEnvironment.NlsTranslation" type="softEnvironment.NlsTranslation"
+                                     maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Anwendung.FirmenVerzeichnis.Firma">
+        <xsd:sequence>
+            <xsd:element name="Name" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="softEnvironment.NlsText" type="softEnvironment.NlsText"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Anwendung.FirmenVerzeichnis">
+        <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="Anwendung.FirmenVerzeichnis.Firma">
+                    <xsd:complexType>
+                        <xsd:complexContent>
+                            <xsd:extension base="Anwendung.FirmenVerzeichnis.Firma">
+                                <xsd:attribute name="TID" type="IliID" use="required"/>
+                                <xsd:attribute name="BID" type="IliID"/>
+                                <xsd:attribute name="OPERATION" type="xsd:string"/>
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="BID" type="IliID" use="required"/>
+        <xsd:attribute name="TOPICS" type="xsd:string"/>
+        <xsd:attribute name="KIND" type="xsd:string"/>
+        <xsd:attribute name="STARTSTATE" type="xsd:string"/>
+        <xsd:attribute name="ENDSTATE" type="xsd:string"/>
+    </xsd:complexType>
+</xsd:schema>

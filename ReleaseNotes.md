@@ -10,6 +10,8 @@
 * library updates (where found on Maven central)
 * optional commercial softEnvironment Plugins added/sponsored
 * JPF (Java Plugin Framework removed, considered as old and badly maintained)
+* Unit-Tests executable again
+* Module JOMM focused on XML-Mapping only (SQL stuff is deprecated and not used by TCO-Tool)
 
 
 # TODO
@@ -17,7 +19,6 @@
 * bug fixes:
   * Dialogs open in background
   * https://sourceforge.net/p/tcotool/discussion/491266/thread/e234d2db/?limit=25#1dfc Deleting dependency
-  * jomm Unit-Tests
 * upgrade JHotDraw lib
 * modernize old Java 1.4/6 code-style
 * replace @Deprecated code

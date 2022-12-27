@@ -15,7 +15,7 @@ package ch.softenvironment.jomm.demoapp;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.DbObjectIdTestCase;
+import ch.softenvironment.jomm.DbObjectIdTest;
 import ch.softenvironment.jomm.implementation.DbPropertyChangeTestCase;
 import ch.softenvironment.jomm.implementation.DbStateTestCase;
 import ch.softenvironment.jomm.serialize.XmlSerializerTestCase;
@@ -33,7 +33,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         DbStateTestCase.class,
         DbPropertyChangeTestCase.class,
-        DbObjectIdTestCase.class,
+        DbObjectIdTest.class,
         DbDataGeneratorTestCase.class,
         XmlSerializerTestCase.class,
         LoginValidatorTestCase.class

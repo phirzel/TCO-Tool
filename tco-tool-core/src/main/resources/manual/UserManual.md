@@ -1,4 +1,10 @@
-coming soon..
+# Manuals
+
+Historical versions:
+
+* [Manual](documents/TCO-Tool%20User-Manual.docx)
+* [Manual v1.4.4 de](documents/TCO-Tool%20UserManual_de_V1_4_4.doc)
+* [Manual v1.5.0 en](documents/Tutorial_en_V1_5_0.doc)
 
 # Use cases
 
@@ -10,7 +16,3 @@ Legacy website:
 
 * [index en](website/index_en.html)
 * [index de](website/index.html)
-
-# Technical aspects
-
-Define log-level in tco-tool-core/src/main/resources/logback.xml

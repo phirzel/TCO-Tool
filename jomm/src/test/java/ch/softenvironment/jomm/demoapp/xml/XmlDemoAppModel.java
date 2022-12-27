@@ -17,16 +17,19 @@ import ch.softenvironment.jomm.demoapp.model.Project;
 import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 import ch.softenvironment.jomm.mvc.model.DbEntityBean;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Pseudo DbObject, just to maintain all Projects within a root container. Peter Hirzel, softEnvironment GmbH
+ * Pseudo DbObject, just to maintain all Projects within a root container.
+ *
+ * @author Peter Hirzel
  */
 public class XmlDemoAppModel extends DbEntityBean {
 
-    protected XmlDemoAppModel(DbObjectServer objectServer) {
+    protected XmlDemoAppModel(@NonNull DbObjectServer objectServer) {
         super(objectServer);
     }
 
@@ -36,7 +39,7 @@ public class XmlDemoAppModel extends DbEntityBean {
         return descriptor;
     }
 
-    private List<Project> fieldProjects = new ArrayList<Project>();
+    private List<Project> fieldProjects = new ArrayList<>();
 
     public List<Project> getProjects() {
         refresh(isModified());
@@ -51,19 +54,16 @@ public class XmlDemoAppModel extends DbEntityBean {
 
     @Override
     public Object jdoGetVersion() {
-        //TODO HIP just added to compile
         return null;
     }
 
     @Override
     public boolean jdoIsDetached() {
-        //TODO HIP just added to compile
         return false;
     }
 
     @Override
     public Object jdoNewObjectIdInstance(Object o) {
-        //TODO HIP just added to compile
         return null;
     }
 }

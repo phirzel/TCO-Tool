@@ -19,6 +19,7 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTest;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.target.sql.msaccess.MsAccessQueryBuilderTestCase;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
@@ -53,7 +54,7 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 		TestSuite suite = new TestSuite("MS Access tests");
 		//suite.addTest(new IndependentTestSuite());
 		suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
-		// TODO suite.addTest(new TestSuite(DemoAppTestCase.class));
+		suite.addTest(new TestSuite(DemoAppTest.class));
 		suite.addTest(new TestSuite(MsAccessQueryBuilderTestCase.class));
 
 		// define setUp() for all TestCases in this suite()
@@ -71,9 +72,8 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 							dialog.getPassword(), dialog.getUrl());
 					} catch (Throwable e) {
 						log.error("initializeTarget()",
-							e);
-						fail("Schema creation failed: "
-							+ e.getLocalizedMessage());
+								e);
+						fail("Schema creation failed: " + e.getLocalizedMessage());
 					}
 				} else {
 					fail("login aborted by user");

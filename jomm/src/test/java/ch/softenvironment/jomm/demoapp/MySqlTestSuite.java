@@ -19,7 +19,7 @@ package ch.softenvironment.jomm.demoapp;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
-import ch.softenvironment.jomm.demoapp.xml.DemoAppTestCase;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTest;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.target.sql.mysql.AutoIncrementTestCase;
@@ -84,8 +84,8 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite("MySQL tests");
 		//suite.addTest(new IndependentTestSuite());
-		suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
-		suite.addTest(new TestSuite(DemoAppTestCase.class));
+		suite.addTest(new SqlSuite());
+		suite.addTest(new TestSuite(DemoAppTest.class));
 
 		// MySql Specific TestCase's
 		suite.addTest(new TestSuite(AutoIncrementTestCase.class));
