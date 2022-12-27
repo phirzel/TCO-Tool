@@ -15,16 +15,17 @@ package ch.softenvironment.jomm.tools;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.ListUtils;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
+import java.net.URL;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Generator utility to create Random literals.
@@ -96,12 +97,18 @@ public class DbDataGenerator {
      * @param server
      * @param sqlFileName
      */
-    public static void executeSqlCode(DbObjectServer server, String sqlFileName) throws Exception {
-        log.info("Generating file: {}  on server: {}", sqlFileName, server.getPersistenceManagerFactory().getConnectionURL());
+    public static void executeSqlCode(@NonNull DbObjectServer server, @NonNull Class sqlMarkerClazz, @NonNull String sqlFileName) throws Exception {
+        URL tmp = //"."+sqlFileName;
+                //"../jomm/src/main/resources/"+sqlFileName;
+                ResourceManager.getURL(sqlMarkerClazz, sqlFileName);
+        if (tmp == null) {
+            throw new DeveloperException("Resources problem with file: " + sqlFileName + " marked by: " + sqlMarkerClazz);
+        }
+        log.info("Generating file: {}  on server: {}", tmp, server.getPersistenceManagerFactory().getConnectionURL());
         FileReader reader = null;
         Exception ex = null;
         try {
-            File file = new File(sqlFileName);
+            File file = new File(tmp.toURI());
             reader = new FileReader(file);
             BufferedReader inputStream = new BufferedReader(reader);
             String line = "";
@@ -170,8 +177,6 @@ public class DbDataGenerator {
         } catch (IOException e) {
             log.error("IO-failure <{}>", sqlFileName, e);
             ex = e;
-        } finally {
-            //reader.close();
         }
         if (ex != null) {
             throw ex;

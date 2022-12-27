@@ -18,27 +18,15 @@ import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbDescriptorEntry;
 import ch.softenvironment.jomm.implementation.DbCache;
 import ch.softenvironment.jomm.implementation.DbPropertyChange;
-import ch.softenvironment.jomm.mvc.model.DbChangeableBean;
-import ch.softenvironment.jomm.mvc.model.DbCode;
-import ch.softenvironment.jomm.mvc.model.DbCodeType;
-import ch.softenvironment.jomm.mvc.model.DbEntityBean;
-import ch.softenvironment.jomm.mvc.model.DbEnumeration;
-import ch.softenvironment.jomm.mvc.model.DbObject;
-import ch.softenvironment.jomm.mvc.model.DbRelationshipBean;
-import ch.softenvironment.jomm.mvc.model.DbSessionBean;
+import ch.softenvironment.jomm.mvc.model.*;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.UserException;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
 
 /**
  * DbObjectServer treating all persistent Objects of a specific URL. A DbObjectServer serves as middleware between application and a Target-System (for e.g. DBMS).
@@ -268,8 +256,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 				throw (UserException) exception;
 			} else {
 				throw new UserException(ResourceManager.getResource(DbObjectServer.class, "CW_TransactionError"),
-						ResourceManager.getResource(
-								DbObjectServer.class, "CE_TransactionError"), exception);
+						ResourceManager.getResource(DbObjectServer.class, "CE_TransactionError"), exception);
 			}
 		}
 	}
@@ -656,7 +643,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 * For e.g. SELECT T_Id FROM T_Map...
 	 */
 	public java.util.List<Object> getFirstValues(DbQueryBuilder builder) {
-		java.util.List<Object> values = new ArrayList<Object>();
+		java.util.List<Object> values = new ArrayList<>();
 		DbTransaction trans = null;
 		DbQuery query = null;
 		try {
@@ -731,7 +718,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	 *
 	 * @see #getTemporaryNewId()
 	 */
-	public synchronized Long getIncrementalId(String key) throws Exception {
+	public synchronized Long getIncrementalId(String key) {
 		Long id = null;
 
 		DbTransaction trans = null;
@@ -948,7 +935,7 @@ public abstract class DbObjectServer implements javax.jdo.PersistenceManager {
 	protected final Long getTemporaryNewId() {
 		// TODO use the very same id instead of state-dependend id's for same
 		// DbObject
-		return Long.valueOf(temporaryId--);
+		return temporaryId--;
 	}
 
 	/**

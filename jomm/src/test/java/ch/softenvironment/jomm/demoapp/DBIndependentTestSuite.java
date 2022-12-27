@@ -21,23 +21,22 @@ import ch.softenvironment.jomm.implementation.DbStateTestCase;
 import ch.softenvironment.jomm.serialize.XmlSerializerTestCase;
 import ch.softenvironment.jomm.tools.DbDataGeneratorTestCase;
 import ch.softenvironment.jomm.tools.LoginValidatorTestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Define a set/suite of TestCases to testsuite JOMM independent of a specific Target-System.
  *
  * @author Peter Hirzel
  */
-class IndependentTestSuite extends TestSuite {
-
-    public IndependentTestSuite() {
-        super("Target independent Test-Suite for JOMM");
-
-        addTest(new TestSuite(DbStateTestCase.class));
-        addTest(new TestSuite(DbPropertyChangeTestCase.class));
-        addTest(new TestSuite(DbObjectIdTestCase.class));
-        addTest(new TestSuite(DbDataGeneratorTestCase.class));
-        addTest(new TestSuite(XmlSerializerTestCase.class));
-        addTest(new TestSuite(LoginValidatorTestCase.class));
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        DbStateTestCase.class,
+        DbPropertyChangeTestCase.class,
+        DbObjectIdTestCase.class,
+        DbDataGeneratorTestCase.class,
+        XmlSerializerTestCase.class,
+        LoginValidatorTestCase.class
+})
+public class DBIndependentTestSuite {
 }

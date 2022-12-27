@@ -18,24 +18,30 @@ package ch.softenvironment.jomm.target.sql.msaccess;
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbQueryBuilder;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test MsAccessQueryBuilder.
  *
  * @author Peter Hirzel
  */
-public class MsAccessQueryBuilderTestCase extends TestCase {
+public class MsAccessQueryBuilderTestCase {
 
     //  @see ch.softenvironment.demoapp.MsAccessTestSuite to run this TestCase
     private DbObjectServer server = null;
 
-    @Override
-    protected void setUp() throws java.lang.Exception {
+    @Before
+    public void setUp() throws java.lang.Exception {
         server = DbDomainNameServer.getDefaultServer();
     }
 
-    public void testSELECT() {
+    @Ignore("not used for TCO-Tool")
+    @Test
+    public void doSelect() {
         DbQueryBuilder builder = new MsAccessQueryBuilder(server, DbQueryBuilder.SELECT, "Test SELECT");
         builder.setAttributeList("*");
         builder.setTableList("MYTABLE");

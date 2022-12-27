@@ -23,10 +23,11 @@ import ch.softenvironment.jomm.demoapp.model.RoleType;
 import ch.softenvironment.jomm.demoapp.testsuite.XmlDemoAppModel;
 import ch.softenvironment.jomm.demoapp.testsuite.XmlDemoAppTestCase;
 import ch.softenvironment.jomm.target.xml.XmlObjectServer;
-import java.util.Locale;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Locale;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS SQL Server. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a MySQL-Server (V4.1.10 or higher) is running
@@ -77,7 +78,7 @@ public class XmlMapperSuite extends junit.framework.TestSuite {
      */
     public static junit.framework.Test suite() {
         TestSuite suite = new TestSuite("XML mapping tests");
-        suite.addTest(new IndependentTestSuite());
+        //suite.addTest(new IndependentTestSuite());
         suite.addTest(new TestSuite(XmlDemoAppTestCase.class));
 
         // define setUp() for all TestCases in this suite()

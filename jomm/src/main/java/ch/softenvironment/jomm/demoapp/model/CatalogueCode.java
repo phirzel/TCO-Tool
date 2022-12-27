@@ -1,10 +1,6 @@
 package ch.softenvironment.jomm.demoapp.model;
 
-import ch.softenvironment.jomm.descriptor.DbDescriptor;
-import ch.softenvironment.jomm.descriptor.DbFieldTypeDescriptor;
-import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
-import ch.softenvironment.jomm.descriptor.DbNumericFieldDescriptor;
-import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
+import ch.softenvironment.jomm.descriptor.*;
 import ch.softenvironment.jomm.mvc.model.DbCode;
 
 /**
@@ -158,7 +154,7 @@ public final class CatalogueCode extends DbCode {
     }
 
     @Deprecated // wrong design: makes no sense here
-    public final Boolean getExpendable() {
+    public Boolean getExpendable() {
         return fieldExpendable;
     }
 

@@ -56,7 +56,7 @@ public class Role extends DbRelationshipBean {
         firePropertyChange("type", oldValue, fieldType);
     }
 
-    private java.util.List<Activity> fieldActivity = new java.util.ArrayList<Activity>();
+    private java.util.List<Activity> fieldActivity = new java.util.ArrayList<>();
 
     public java.util.List<Activity> getActivity() {
         refresh(false); // read lazy initialized objects
@@ -69,7 +69,7 @@ public class Role extends DbRelationshipBean {
         firePropertyChange("activity", oldValue, fieldActivity);
     }
 
-    private java.util.List<WorkProduct> fieldWorkProduct = new java.util.ArrayList<WorkProduct>();
+    private java.util.List<WorkProduct> fieldWorkProduct = new java.util.ArrayList<>();
 
     public java.util.List<WorkProduct> getWorkProduct() {
         refresh(false); // read lazy initialized objects

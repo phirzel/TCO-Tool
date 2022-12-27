@@ -18,13 +18,16 @@ package ch.softenvironment.jomm.demoapp;
 
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
 import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
+import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MS SQL Server. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a the following services are running in the
@@ -33,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Peter Hirzel
  */
 @Slf4j
+@Ignore("not used for TCO-Tool")
 public class MsSQLServerSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";
@@ -74,7 +78,8 @@ public class MsSQLServerSuite extends junit.framework.TestSuite {
 	 * Define all tests for desired Target.
 	 */
 	public static junit.framework.Test suite() {
-		TestSuite suite = new IndependentTestSuite();
+		TestSuite suite = new TestSuite("MS SQL Server tests");
+		//suite.addTest(new IndependentTestSuite());
 		suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
 		suite.addTest(new TestSuite(DemoAppTestCase.class));
 
@@ -149,13 +154,10 @@ public class MsSQLServerSuite extends junit.framework.TestSuite {
 		// for optimistic locking
 		server.execute("Use Test SCHEMA", ListUtils.createList("USE " + SCHEMA));
 
-		DbDataGenerator.executeSqlCode(server,
-			"sql/T_Key_Object_MS_SQL_Server.sql");
-		DbDataGenerator.executeSqlCode(server,
-			"sql/NLS_Schema_MS_SQL_Server.sql");
-		DbDataGenerator.executeSqlCode(server,
-			"demo_app/sql/DemoApp_MS_SQL_Server.sql");
-		DbDataGenerator.executeSqlCode(server, "demo_app/sql/CreateData.sql");
+		DbDataGenerator.executeSqlCode(server, DbConstants.class, "T_Key_Object_MS_SQL_Server.sql");
+		DbDataGenerator.executeSqlCode(server, DbConstants.class, "NLS_Schema_MS_SQL_Server.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "DemoApp_MS_SQL_Server.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "CreateData.sql");
 
 		return server;
 	}

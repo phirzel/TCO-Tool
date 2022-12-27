@@ -16,11 +16,7 @@ package ch.softenvironment.jomm.demoapp.model;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
-import ch.softenvironment.jomm.descriptor.DbDescriptor;
-import ch.softenvironment.jomm.descriptor.DbFieldTypeDescriptor;
-import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
-import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
+import ch.softenvironment.jomm.descriptor.*;
 import ch.softenvironment.jomm.mvc.model.DbEntityBean;
 
 /**
@@ -71,7 +67,7 @@ public class Project extends DbEntityBean {
         firePropertyChange("start", oldValue, fieldStart);
     }
 
-    private java.util.List<Activity> fieldTask = new java.util.ArrayList<Activity>();
+    private java.util.List<Activity> fieldTask = new java.util.ArrayList<>();
 
     public java.util.List<Activity> getTask() {
         refresh(false); // read lazy initialized objects
@@ -84,7 +80,7 @@ public class Project extends DbEntityBean {
         firePropertyChange("task", oldValue, fieldTask);
     }
 
-    private java.util.List<Long> fieldMemberId = new java.util.ArrayList<Long>();
+    private java.util.List<Long> fieldMemberId = new java.util.ArrayList<>();
 
     public java.util.List<Long> getMemberId() {
         refresh(false); // read lazy initialized objects

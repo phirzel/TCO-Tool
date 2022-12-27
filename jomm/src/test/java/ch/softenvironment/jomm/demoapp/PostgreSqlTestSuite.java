@@ -17,14 +17,18 @@ package ch.softenvironment.jomm.demoapp;
 
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
 import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
+import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import java.util.ArrayList;
-import java.util.List;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import org.junit.Ignore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with PostgreSQL. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a PostgreSQL-Server (V8.0 or higher) is running in
@@ -33,6 +37,7 @@ import junit.framework.TestSuite;
  * @author Peter Hirzel <i>soft</i>Environment
  * @version $Revision: 1.4 $ $Date: 2007-02-20 13:33:18 $
  */
+@Ignore("not used for TCO-Tool")
 public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 
 	private static final String DATABSE = "template1"; // assumed to exist in your PostgreSQL-Server
@@ -75,7 +80,8 @@ public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 	 * Define all tests for desired Target.
 	 */
 	public static junit.framework.Test suite() {
-		TestSuite suite = new IndependentTestSuite();
+		TestSuite suite = new TestSuite("PostgreSQL tests");
+		//suite.addTest(new IndependentTestSuite());
 		suite.addTest(new SqlSuite()); //suite.addTestSuite(SqlSuite.class);
 		suite.addTest(new TestSuite(DemoAppTestCase.class));
 
@@ -124,15 +130,15 @@ public class PostgreSqlTestSuite extends junit.framework.TestSuite {
 
 		RegisterUtility.registerClasses(server);// register Model (all persistent DbObject's)
 		// create SQL-Schema corresponding to Java-Model
-		List<String> createSchema = new ArrayList<String>();
+		List<String> createSchema = new ArrayList<>();
 		//specific
 		createSchema.add("CREATE SCHEMA " + SCHEMA);
 		createSchema.add("SET search_path TO " + SCHEMA /*+",public"*/);
 		server.execute("Create Test SCHEMA", createSchema);
 
-		DbDataGenerator.executeSqlCode(server, "sql/NLS_Schema_PostgreSQL.sql");
-		DbDataGenerator.executeSqlCode(server, "demo_app/sql/DemoApp_PostgreSQL.sql");
-		DbDataGenerator.executeSqlCode(server, "demo_app/sql/CreateData.sql");
+		DbDataGenerator.executeSqlCode(server, DbConstants.class, "NLS_Schema_PostgreSQL.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "DemoApp_PostgreSQL.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "CreateData.sql");
 
 		return server;
 	}

@@ -45,7 +45,7 @@ public class WorkProduct extends DbEntityBean {
         firePropertyChange("description", oldValue, fieldDescription);
     }
 
-    private java.util.List<Activity> fieldActivity = new java.util.ArrayList<Activity>();
+    private java.util.List<Activity> fieldActivity = new java.util.ArrayList<>();
 
     public java.util.List<Activity> getActivity() {
         refresh(false); // read lazy initialized objects

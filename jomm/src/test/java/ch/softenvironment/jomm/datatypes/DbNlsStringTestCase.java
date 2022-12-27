@@ -23,9 +23,10 @@ import ch.softenvironment.jomm.target.sql.hsqldb.HSQLDBObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.oracle.OracleObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.postgresql.PostgreSqlObjectServerFactory;
 import ch.softenvironment.util.DeveloperException;
+import junit.framework.TestCase;
+
 import java.util.Date;
 import java.util.Locale;
-import junit.framework.TestCase;
 
 /**
  * Test DbNlsString.
@@ -62,13 +63,13 @@ public class DbNlsStringTestCase extends TestCase {
             nls.setValue("<non lo so>");
             wp.save(); // UPDATE
 
-            assertTrue(nls.getValue().equals("<non lo so>"));
+            assertEquals("<non lo so>", nls.getValue());
 
-            assertTrue(nls.getValue(Locale.ENGLISH).equals("Yesterday"));
-            assertTrue(nls.getValue(Locale.FRENCH).equals("Hier"));
-            assertTrue(nls.getValue(Locale.GERMAN).equals("Gestern"));
+            assertEquals("Yesterday", nls.getValue(Locale.ENGLISH));
+            assertEquals("Hier", nls.getValue(Locale.FRENCH));
+            assertEquals("Gestern", nls.getValue(Locale.GERMAN));
 
-            assertTrue(nls.getValue(Locale.ITALIAN).equals("<non lo so>"));
+            assertEquals("<non lo so>", nls.getValue(Locale.ITALIAN));
         } catch (Exception e) {
             fail(e.getLocalizedMessage());
         }
@@ -80,9 +81,9 @@ public class DbNlsStringTestCase extends TestCase {
     public void testEmptyNlsString() {
         try {
             WorkProduct wp = (WorkProduct) server
-                .createInstance(WorkProduct.class);
-            assertTrue(wp.getName().getValue() == null);
-            assertTrue(wp.getOptionalName().getValue() == null);
+                    .createInstance(WorkProduct.class);
+            assertNull(wp.getName().getValue());
+            assertNull(wp.getOptionalName().getValue());
 
             wp.setDescription("no optionalName");
             wp.getName().setValue("mandatory"); // T_Id_Name[1] is Mandatory
@@ -91,7 +92,7 @@ public class DbNlsStringTestCase extends TestCase {
 
             assertTrue("wp itself!", wp.getPersistencyState().isSaved());
             assertTrue("wp.T_Id_Name must not be saved!", wp.getName()
-                .getPersistencyState().isSaved());
+                    .getPersistencyState().isSaved());
             assertTrue("wp.T_Id_optionalName must not be saved because empty!",
                 wp.getOptionalName().getPersistencyState().isNew());
 
@@ -179,8 +180,7 @@ public class DbNlsStringTestCase extends TestCase {
                 .createInstance(DbNlsString.class));
             wp.getOptionalName().setValue("new option");
             wp.save();
-            assertTrue("new DbNlsString => different Id",
-                !optionaNameId.equals(wp.getOptionalName().getId()));
+            assertNotEquals("new DbNlsString => different Id", optionaNameId, wp.getOptionalName().getId());
             // TODO old NLS should have been removed because not used any more
 
             // TODO DbSessionBean's must not own DbNlsString's
@@ -223,14 +223,14 @@ public class DbNlsStringTestCase extends TestCase {
      * server.createInstance(DbNlsString.class); nls.set*(); nls.save();
      */
     public void testSqlDmlDql() {
-        Long nlsId = Long.valueOf(1); // fine for T_Key_Object in this
+        Long nlsId = 1L; // fine for T_Key_Object in this
         // testdata-szenario
         // = server.getMapper().getNewId(server, transaction,
         // server.getMapper().getTargetNlsName()).longValue();
         if ((server.getPersistenceManagerFactory() instanceof HSQLDBObjectServerFactory)
             || (server.getPersistenceManagerFactory() instanceof OracleObjectServerFactory)
             || (server.getPersistenceManagerFactory() instanceof PostgreSqlObjectServerFactory)) {
-            nlsId = Long.valueOf(10000);
+            nlsId = 10000L;
         }
 
         // sequence important
@@ -292,8 +292,7 @@ public class DbNlsStringTestCase extends TestCase {
         builder.setTableList(server.getMapper().getTargetNlsName());
         builder.setAttributeList("COUNT(*)");
         builder.addFilter(server.getMapper().getTargetIdName(), nlsId);
-        assertTrue("1 record in T_NLS",
-            (long) 1 == ((Number) server.getFirstValue(builder))
+        assertEquals("1 record in T_NLS", 1, ((Number) server.getFirstValue(builder))
                 .longValue());
 
         builder = server.createQueryBuilder(DbQueryBuilder.SELECT,
@@ -301,8 +300,7 @@ public class DbNlsStringTestCase extends TestCase {
         builder.setTableList(server.getMapper().getTargetNlsTranslationName());
         builder.setAttributeList("COUNT(*)");
         builder.addFilter("T_Id_Nls", nlsId);
-        assertTrue("2 records in T_NLS_Translation",
-            (long) 2 == ((Number) server.getFirstValue(builder))
+        assertEquals("2 records in T_NLS_Translation", 2, ((Number) server.getFirstValue(builder))
                 .longValue());
     }
 
@@ -318,9 +316,7 @@ public class DbNlsStringTestCase extends TestCase {
         builder.setTableList(server.getMapper().getTargetNlsTranslationName());
         builder.setAttributeList("COUNT(*)");
         builder.addFilter(DbNlsString.ATTRIBUTE_TRANSLATION_ID, nlsId);
-        assertTrue(
-            "ReferentialIntegrity should have removed T_NLS_Translation entries",
-            (long) 0 == ((Number) server.getFirstValue(builder))
+        assertEquals("ReferentialIntegrity should have removed T_NLS_Translation entries", 0, ((Number) server.getFirstValue(builder))
                 .longValue());
     }
 }

@@ -18,16 +18,20 @@ package ch.softenvironment.jomm.demoapp;
 
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
 import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
+import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.target.sql.mysql.AutoIncrementTestCase;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
-import java.util.ArrayList;
-import java.util.List;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with MySQL. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a MySQL-Server (V4.1.10 or higher) is running in the
@@ -36,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Peter Hirzel
  */
 @Slf4j
+@Ignore("not used for TCO-Tool")
 public class MySqlTestSuite extends junit.framework.TestSuite {
 
 	private static final String SCHEMA = "_DMY_DemoApp_";
@@ -78,7 +83,7 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 	 */
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite("MySQL tests");
-		suite.addTest(new IndependentTestSuite());
+		//suite.addTest(new IndependentTestSuite());
 		suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
 		suite.addTest(new TestSuite(DemoAppTestCase.class));
 
@@ -148,18 +153,18 @@ public class MySqlTestSuite extends junit.framework.TestSuite {
 		RegisterUtility.registerClasses(server);// register Model (all
 		// persistent DbObject's)
 		// create SQL-Schema corresponding to Java-Model
-		List<String> createSchema = new ArrayList<String>();
+		List<String> createSchema = new ArrayList<>();
 		// TODO MySQL specific
 		createSchema.add("DROP DATABASE IF EXISTS " + SCHEMA);
 		createSchema.add("CREATE DATABASE " + SCHEMA);
 		createSchema.add("USE " + SCHEMA);
 		server.execute("Create Test SCHEMA", createSchema);
 
-		DbDataGenerator.executeSqlCode(server, "sql/T_Key_Object_MySQL.sql");
-		DbDataGenerator.executeSqlCode(server, "sql/NLS_Schema_MySQL.sql");
+		DbDataGenerator.executeSqlCode(server, DbConstants.class, "T_Key_Object_MySQL.sql");
+		DbDataGenerator.executeSqlCode(server, DbConstants.class, "NLS_Schema_MySQL.sql");
 		DbDataGenerator
-			.executeSqlCode(server, "demo_app/sql/DemoApp_MySQL.sql");
-		DbDataGenerator.executeSqlCode(server, "demo_app/sql/CreateData.sql");
+				.executeSqlCode(server, DemoAppConstants.class, "DemoApp_MySQL.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "CreateData.sql");
 
 		return server;
 	}

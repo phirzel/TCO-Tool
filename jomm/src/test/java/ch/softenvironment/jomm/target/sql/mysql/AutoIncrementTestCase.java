@@ -4,27 +4,34 @@ import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
 import ch.softenvironment.jomm.DbQueryBuilder;
 import ch.softenvironment.util.ListUtils;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import java.util.Date;
-import junit.framework.TestCase;
+
+import static org.junit.Assert.*;
 
 /**
  * see ch.softenvironment.demoapp.MySqlTestSuite to run this TestCase.
  *
  * @author Peter Hirzel
  */
-public class AutoIncrementTestCase extends TestCase {
+public class AutoIncrementTestCase {
 
     private DbObjectServer server = null;
 
-    @Override
-    protected void setUp() throws java.lang.Exception {
+    @Before
+    public void setUp() throws java.lang.Exception {
         server = DbDomainNameServer.getDefaultServer();
     }
 
     /**
      * Test MySQL specific LAST_INSERT_ID() Function for AUTO_INCREMENT PK's. SELECT LAST_INSERT_ID()
      */
-    public void testSequence() {
+    @Ignore("not used for TCO-Tool")
+    @Test
+    public void sequence() {
         try {
             //        server.execute("Create Test SCHEMA", ListUtils.createList("USE " + SCHEMA));
             server.execute("create auto table", ListUtils.createList("CREATE TABLE X (T_Id int not null auto_increment PRIMARY KEY, val CHAR(1))"));
@@ -41,6 +48,8 @@ public class AutoIncrementTestCase extends TestCase {
         }
     }
 
+    @Ignore("not used for TCO-Tool")
+    @Test
     public void testDefaultTechFields() {
         try {
             //        server.execute("Create Test SCHEMA", ListUtils.createList("USE " + SCHEMA));

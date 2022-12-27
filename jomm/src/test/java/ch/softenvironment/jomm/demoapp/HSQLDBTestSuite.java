@@ -18,12 +18,15 @@ package ch.softenvironment.jomm.demoapp;
 
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
 import ch.softenvironment.jomm.demoapp.testsuite.DemoAppTestCase;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
+import ch.softenvironment.jomm.sql.DbConstants;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
 import ch.softenvironment.util.ListUtils;
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+import org.junit.Ignore;
 
 /**
  * Run this JUnit TestSuite to testsuite JOMM with HSQLDB in "Memory-Mode", by means same JVM and therefore no separate HSQLDB-Server must be running. Make sure appropriate vendor specific JDBC-Driver
@@ -33,6 +36,7 @@ import junit.framework.TestSuite;
  *
  * @author Peter Hirzel
  */
+@Ignore("not needed for TCO-Tool")
 public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
     private static final String SCHEMA = "demoapp"; // "_DemoApp_";
@@ -73,7 +77,8 @@ public class HSQLDBTestSuite extends junit.framework.TestSuite {
      * Define all tests for desired Target.
      */
     public static junit.framework.Test suite() {
-        TestSuite suite = new IndependentTestSuite();
+        TestSuite suite = new TestSuite("H2 tests");
+        //suite.addTest(new IndependentTestSuite());
         suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
         suite.addTest(new TestSuite(DemoAppTestCase.class));
 
@@ -83,7 +88,7 @@ public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
             @Override
             protected void setUp() {
-                // Var. I) non persistent db ("mem") for testsuite-reasons only in
+                // Var. I) non-persistent db ("mem") for testsuite-reasons only in
                 // same JVM as this TestSuite
                 DbLoginDialog dialog = new DbLoginDialog(null,
                     "jdbc:hsqldb:mem:" + SCHEMA);
@@ -141,14 +146,13 @@ public class HSQLDBTestSuite extends junit.framework.TestSuite {
 
         // create SQL-Schema corresponding to Java-Model
         server.execute(
-            "Create Test SCHEMA",
-            ListUtils.createList("CREATE SCHEMA " + SCHEMA
-                + " AUTHORIZATION DBA"));
+                "Create Test SCHEMA",
+                ListUtils.createList("CREATE SCHEMA " + SCHEMA
+                        + " AUTHORIZATION DBA"));
 
-        DbDataGenerator.executeSqlCode(server, "sql/NLS_Schema_HSQLDB.sql");
-        DbDataGenerator.executeSqlCode(server,
-            "demo_app/sql/DemoApp_HSQLDB.sql");
-        DbDataGenerator.executeSqlCode(server, "demo_app/sql/CreateData.sql");
+        DbDataGenerator.executeSqlCode(server, DbConstants.class, "NLS_Schema_HSQLDB.sql");
+        DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "DemoApp_HSQLDB.sql");
+        DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "CreateData.sql");
 
         return server;
     }
