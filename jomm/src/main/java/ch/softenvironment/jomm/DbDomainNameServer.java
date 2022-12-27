@@ -24,10 +24,12 @@ import ch.softenvironment.jomm.target.sql.oracle.OracleObjectServerFactory;
 import ch.softenvironment.jomm.target.sql.postgresql.PostgreSqlObjectServerFactory;
 import ch.softenvironment.util.DeveloperException;
 import ch.softenvironment.util.Statistic;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.jdo.JDOUnsupportedOptionException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Distributed Name Service. Several DbObjectServer's may be managed by DbDomainNameServer.
@@ -309,7 +311,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
      * @param alias to store this server
      * @return a <code>PersistenceManager</code> instance with default options.
      */
-    public javax.jdo.PersistenceManager getPersistenceManager(final String userid, final String password, final String alias) {
+    public javax.jdo.PersistenceManager getPersistenceManager(final String userid, final String password, @NonNull String alias) {
         setConnectionUserName(userid);
         setConnectionPassword(password);
 
@@ -362,10 +364,11 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
      * Return the ObjectServer for a given Location specified by URL.
      */
     public static DbObjectServer getServer(final String dbURL) {
+        log.info("Getting DbObjectServer for: URL={}", dbURL);
         if (locations.containsKey(dbURL)) {
             return (DbObjectServer) locations.get(dbURL);
         } else {
-            log.error("URL not contained for registered servers: {}", dbURL);
+            log.warn("URL not contained for registered servers: {}", dbURL);
             return null;
         }
     }
@@ -388,7 +391,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
             throw new DeveloperException("PersistenceManager for URL-alias=" + alias + " already registered!");
         } else {
             locations.put(alias, objectServer);
-            log.info("PersistenceManager[DbObjectServer@" + alias + "] created");
+            log.info("PersistenceManager[DbObjectServer@{}] created", alias);
         }
     }
 
@@ -626,7 +629,7 @@ public abstract class DbDomainNameServer implements javax.jdo.PersistenceManager
      */
     @Override
     public java.util.Collection<String> supportedOptions() {
-        java.util.Set<String> set = new java.util.HashSet<String>();
+        java.util.Set<String> set = new java.util.HashSet<>();
         set.add("javax.jdo.option.Optimistic");
         set.add("javax.jdo.option.ApplicationIdentity");
         set.add("javax.jdo.option.NontransactionalRead");

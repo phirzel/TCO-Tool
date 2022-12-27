@@ -1,6 +1,8 @@
 package ch.softenvironment.util;
 
 import ch.softenvironment.client.ResourceManager;
+import lombok.NonNull;
+
 import java.io.File;
 
 /*
@@ -24,7 +26,6 @@ public abstract class StringUtils {
 
 	// @see java.nio.charset.Charset
 	public static final String CHARSET_UTF8 = "UTF-8";
-	public static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
 
 	/**
 	 * Return PackageName of given class.
@@ -44,16 +45,12 @@ public abstract class StringUtils {
 
 	/**
 	 * Return ClassName of given class without package path.
+	 *
+	 * @deprecated use Class::getSimpleName instead
 	 */
-	public static String getPureClassName(java.lang.Class<?> type) {
-		/*
-		 * StringBuffer className = new StringBuffer(aclass.getName());
-		 * className.delete(0, aclass.getName().lastIndexOf('.') + 1); return
-		 * className.toString();
-		 */
-		String className = type.getName();
-		int index = className.lastIndexOf('.');
-		return className.substring(index + 1);
+	@Deprecated(since = "1.6.0")
+	public static String getPureClassName(@NonNull java.lang.Class<?> type) {
+		return type.getSimpleName();
 	}
 
 	/**
@@ -80,21 +77,6 @@ public abstract class StringUtils {
 		} else {
 			return value.toString();
 		}
-	}
-
-	/**
-	 * Cut off value if longer than given length for e.g. getStringLimited("abcdefgh", 5) => "abcd.."
-	 *
-	 * @param value
-	 * @param length
-	 * @return
-	 */
-	public static String getStringLimited(String value, int length) {
-		if (!isNullOrEmpty(value) && (value.length() > length)) {
-			// replace last character by elipsis
-			return value.substring(0, length - 1) + ((char) 1461) /* elipsis=".." */;
-		}
-		return value;
 	}
 
 	/**
@@ -129,7 +111,9 @@ public abstract class StringUtils {
 	 * Return whether String is null or contains nothing.
 	 *
 	 * @return boolean
+	 * @deprecated use Apache StringUtils::isBlank
 	 */
+	@Deprecated(since = "1.6.0")
 	public static boolean isNullOrEmpty(String value) {
 		return ((value == null) || (value.trim().length() == 0));
 	}

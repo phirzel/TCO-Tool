@@ -24,15 +24,14 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
  */
 public final class RoleType extends DbEnumeration {
 
-    protected RoleType(ch.softenvironment.jomm.DbObjectServer objectServer) {
+    private RoleType(ch.softenvironment.jomm.DbObjectServer objectServer) {
         super(objectServer);
     }
 
     /**
      * Return the database mappings for this persistence object.
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<RoleType> dbCode*/) {
         return DbEnumeration.createDefaultDescriptor(RoleType.class);

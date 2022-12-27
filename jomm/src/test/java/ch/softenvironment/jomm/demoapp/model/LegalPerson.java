@@ -18,6 +18,7 @@ package ch.softenvironment.jomm.demoapp.model;
 import ch.softenvironment.jomm.descriptor.DbDescriptor;
 import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
 import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
+
 import java.util.Date;
 
 /**

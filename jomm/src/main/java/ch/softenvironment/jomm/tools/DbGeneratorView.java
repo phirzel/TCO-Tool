@@ -33,7 +33,7 @@ import javax.swing.*;
 public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame {
 
     // Launcher as Singleton
-    private DbObjectServer server = null;
+    private final DbObjectServer server;
     private JPanel ivjJFrameContentPane = null;
     private JMenuBar ivjLauncherViewJMenuBar = null;
     private JMenuItem ivjMniAboutBox = null;
@@ -229,7 +229,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
         String fileName = getPnlFile().getText();
         if (!StringUtils.isNullOrEmpty(fileName)) {
             try {
-                DbDataGenerator.executeSqlCode(server, fileName);
+                DbDataGenerator.executeSqlCode(server, null /*TODO HIP*/, fileName);
             } catch (Throwable e) {
                 log.error("Generating failure <{}>", fileName, e);
                 getPnlLog().setText("read error: " + e.getLocalizedMessage());
@@ -771,8 +771,6 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
 
     /**
      * Initializes connections
-     *
-     *
      */
     /* WARNING: THIS METHOD WILL BE REGENERATED. */
     private void initConnections() {
@@ -812,7 +810,7 @@ public class DbGeneratorView extends ch.softenvironment.jomm.mvc.view.DbBaseFram
     /**
      * Setup the database connection.
      */
-    private static DbObjectServer initializeDatabase(String userId, String password, String url) throws Exception {
+    private static DbObjectServer initializeDatabase(String userId, String password, String url) {
         // ch.softenvironment.business.persistency.Registry.registerAll();
 
         javax.jdo.PersistenceManagerFactory pmFactory = new ch.softenvironment.jomm.target.sql.msaccess.MsAccessObjectServerFactory();

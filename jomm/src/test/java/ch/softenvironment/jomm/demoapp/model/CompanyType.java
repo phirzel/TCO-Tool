@@ -24,15 +24,14 @@ import ch.softenvironment.jomm.mvc.model.DbEnumeration;
  */
 public final class CompanyType extends DbEnumeration {
 
-    protected CompanyType(ch.softenvironment.jomm.DbObjectServer objectServer) {
+    private CompanyType(ch.softenvironment.jomm.DbObjectServer objectServer) {
         super(objectServer);
     }
 
     /**
      * Return the database mappings for this persistence object.
      *
-     * @see ch.softenvironment.jomm.DbObjectServer.register()
-     * @see ch.softenvironment.jomm.DbConnection.addDescriptor()
+     * @see ch.softenvironment.jomm.DbObjectServer#register(Class, String)
      */
     public static DbDescriptor createDescriptor(/*Class<Phase> dbCode*/) {
         return DbEnumeration.createDefaultDescriptor(CompanyType.class);

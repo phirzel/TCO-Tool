@@ -15,24 +15,27 @@ package ch.softenvironment.jomm.demoapp;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.datatypes.DbNlsStringTestCase;
-import ch.softenvironment.jomm.sql.SqlMapperTestCase;
-import ch.softenvironment.jomm.sql.SqlQueryBuilderTestCase;
+import ch.softenvironment.jomm.DbObjectServerTest;
+import ch.softenvironment.jomm.datatypes.DbNlsStringTest;
+import ch.softenvironment.jomm.sql.SqlMapperTest;
+import ch.softenvironment.jomm.sql.SqlQueryBuilderTest;
 import junit.framework.TestSuite;
 
 /**
- * Suite of SQL-Target TestCases to testsuite JOMM against a real SQL Target-System.
+ * Suite of SQL-Target TestCases to test JOMM against a real, concrete SQL Target-System.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
+@Deprecated(since = "1.6.0")
 class SqlSuite extends TestSuite {
 
     public SqlSuite() {
         super("SQL Target dependent Test-Suite for JOMM");
 
-        addTest(new TestSuite(SqlMapperTestCase.class));
-        addTest(new TestSuite(SqlQueryBuilderTestCase.class));
-        addTest(new TestSuite(DbNlsStringTestCase.class));
-        //TODO HIP addTest(new TestSuite(DbObjectServerTestCase.class));
+        addTest(new TestSuite(SqlMapperTest.class));
+        addTest(new TestSuite(SqlQueryBuilderTest.class));
+        addTest(new TestSuite(DbNlsStringTest.class));
+        addTest(new TestSuite(DbObjectServerTest.class));
     }
 }

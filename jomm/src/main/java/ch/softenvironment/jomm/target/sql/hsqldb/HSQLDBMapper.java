@@ -37,7 +37,7 @@ public class HSQLDBMapper extends SqlMapper {
     @Override
     public Long getNewId(javax.jdo.PersistenceManager objectServer, javax.jdo.Transaction transaction, final String key) {
         DbQueryBuilder builder = ((DbObjectServer) objectServer).createQueryBuilder(DbQueryBuilder.RAW, "Create UNIQUE ID (HSQLDB SEQUENCE)");
-        //TODO @see sql/NLS_Schema_HSQLDB.sql => introducing PATCH with pseudo-"DUAL"-table
+        //TODO seems buggy with newest H2 -> upgrade ID sequence @see sql/NLS_Schema_HSQLDB.sql => introducing PATCH with pseudo-"DUAL"-table
         String patchTable = "DUAL" /*like ORACLE's implementation*/; // correct should be  SYSTEM_SEQUENCES here!
         builder.setRaw("SELECT NEXT VALUE FOR " + /* public. */ DbMapper.ATTRIBUTE_KEY_TABLE + "_" + key + " FROM " + patchTable);
         Number tmp = (Number) ((DbObjectServer) objectServer).getFirstValue(builder);

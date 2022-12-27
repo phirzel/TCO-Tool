@@ -18,6 +18,8 @@ package ch.softenvironment.jomm.demoapp;
 
 import ch.softenvironment.jomm.DbDomainNameServer;
 import ch.softenvironment.jomm.DbObjectServer;
+import ch.softenvironment.jomm.demoapp.sql.DemoAppConstants;
+import ch.softenvironment.jomm.demoapp.xml.DemoAppTest;
 import ch.softenvironment.jomm.mvc.view.DbLoginDialog;
 import ch.softenvironment.jomm.target.sql.msaccess.MsAccessQueryBuilderTestCase;
 import ch.softenvironment.jomm.tools.DbDataGenerator;
@@ -30,8 +32,10 @@ import lombok.extern.slf4j.Slf4j;
  * available in demo_app/sql directory.
  *
  * @author Peter Hirzel
+ * @deprecated not used by TCO-Tool
  */
 @Slf4j
+@Deprecated(since = "1.6.0")
 public class MsAccessTestSuite extends junit.framework.TestSuite {
 
 	public MsAccessTestSuite() {
@@ -47,9 +51,10 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 	}
 
 	public static junit.framework.Test suite() {
-		TestSuite suite = new IndependentTestSuite();
+		TestSuite suite = new TestSuite("MS Access tests");
+		//suite.addTest(new IndependentTestSuite());
 		suite.addTest(new SqlSuite()); // suite.addTestSuite(SqlSuite.class);
-		// TODO suite.addTest(new TestSuite(DemoAppTestCase.class));
+		suite.addTest(new TestSuite(DemoAppTest.class));
 		suite.addTest(new TestSuite(MsAccessQueryBuilderTestCase.class));
 
 		// define setUp() for all TestCases in this suite()
@@ -67,9 +72,8 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 							dialog.getPassword(), dialog.getUrl());
 					} catch (Throwable e) {
 						log.error("initializeTarget()",
-							e);
-						fail("Schema creation failed: "
-							+ e.getLocalizedMessage());
+								e);
+						fail("Schema creation failed: " + e.getLocalizedMessage());
 					}
 				} else {
 					fail("login aborted by user");
@@ -82,7 +86,7 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 					try {
 						// TODO NYI: DROP SCHEMA not supported => execute
 						// SQL-DDL within MS Access itself => Query
-						java.util.List<String> dropSchema = new java.util.ArrayList<String>();
+						java.util.List<String> dropSchema = new java.util.ArrayList<>();
 
 						// dropSchema.add("DROP TABLE T_MAP_NLS");
 						// dropSchema.add("DROP TABLE T_Translation");
@@ -136,8 +140,7 @@ public class MsAccessTestSuite extends junit.framework.TestSuite {
 		 * DbDataGenerator.executeFile(server,
 		 * "demo_app/sql/DemoApp_MS_Access.sql");
 		 */
-		DbDataGenerator.executeSqlCode(server,
-			"demo_app/sql/CreateData_MS_Access.sql");
+		DbDataGenerator.executeSqlCode(server, DemoAppConstants.class, "CreateData_MS_Access.sql");
 
 		return server;
 	}

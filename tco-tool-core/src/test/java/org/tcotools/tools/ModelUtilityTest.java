@@ -23,7 +23,7 @@ import org.tcotool.model.*;
 import org.tcotool.tools.ModelUtility;
 
 /**
- * TestCase for org.tcotool.tools.ModelUtility.
+ * TestCase for {@link ModelUtility}.
  *
  * @author Peter Hirzel
  */
@@ -54,10 +54,10 @@ public class ModelUtilityTest {
 
     @Test
     public void multitude() {
-        Assert.assertEquals("Multitude model", 2.0, ((TcoObject) m.utility.getRoot()).getMultitude().doubleValue(), 0.0);
-        Assert.assertEquals("Multitude group", 3.0, m.group.getMultitude().doubleValue(), 0.0);
-        Assert.assertEquals("Multitude service", 4.0, m.clientService.getMultitude().doubleValue(), 0.0);
-        Assert.assertEquals("Multitude driver", 5.0, m.clientDriver.getMultitude().doubleValue(), 0.0);
+        Assert.assertEquals("Multitude model", 2.0, ((TcoObject) m.utility.getRoot()).getMultitude(), 0.0);
+        Assert.assertEquals("Multitude group", 3.0, m.group.getMultitude(), 0.0);
+        Assert.assertEquals("Multitude service", 4.0, m.clientService.getMultitude(), 0.0);
+        Assert.assertEquals("Multitude driver", 5.0, m.clientDriver.getMultitude(), 0.0);
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ModelUtilityTest {
             Assert.assertNotNull("Default Usage", m.utility.getSystemParameter().getDefaultUsageDuration());
             Assert.assertNotNull("Default Depreciation", m.utility.getSystemParameter().getDefaultDepreciationDuration());
 
-            m.utility.getSystemParameter().setDepreciationInterestRate(Double.valueOf(5.6));
-            Assert.assertEquals(5.6, m.utility.getSystemParameter().getDepreciationInterestRate().doubleValue(), 0.0);
+            m.utility.getSystemParameter().setDepreciationInterestRate(5.6);
+            Assert.assertEquals(5.6, m.utility.getSystemParameter().getDepreciationInterestRate(), 0.0);
         } catch (Exception e) {
             Assert.fail(e.getLocalizedMessage());
         }
@@ -115,11 +115,11 @@ public class ModelUtilityTest {
     public void updateCatalogue() {
         try {
             FactCost cost = (FactCost) m.utility.createTcoObject(m.server, FactCost.class);
-            cost.setUsageDuration(Long.valueOf(56));
+            cost.setUsageDuration(56L);
             Assert.assertNotSame("entry check", cost.getUsageDuration(), m.catalogue.getUsageDuration());
-            cost.setDepreciationDuration(Long.valueOf(78));
+            cost.setDepreciationDuration(78L);
             Assert.assertNotSame("entry check", cost.getDepreciationDuration(), m.catalogue.getDepreciationDuration());
-            cost.setAmount(Double.valueOf(231.15));
+            cost.setAmount(231.15);
             Assert.assertNotSame("entry check", cost.getAmount(), m.catalogue.getPrice());
             cost.setExpendable(Boolean.TRUE);
 

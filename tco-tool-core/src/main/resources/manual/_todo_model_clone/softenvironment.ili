@@ -1,0 +1,33 @@
+INTERLIS 2.2;
+
+MODEL softEnvironment (de) =
+
+  DOMAIN
+
+    Country= (
+      DE
+      ,US
+      ,GB
+      ,IT
+      ,FR
+      ,CH
+    );
+
+    Language= (
+      de
+      ,fr
+      ,en
+      ,it
+    );
+
+  STRUCTURE Translation =
+    language : MANDATORY Language;
+    country : Country;
+    nlsText : MANDATORY TEXT*1024;
+  END Translation;
+
+  STRUCTURE Nls =
+    translation : BAG {1..*} OF Translation;
+  END Nls;
+
+END softEnvironment.

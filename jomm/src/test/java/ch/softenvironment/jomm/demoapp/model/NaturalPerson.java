@@ -16,11 +16,8 @@ package ch.softenvironment.jomm.demoapp.model;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import ch.softenvironment.jomm.descriptor.DbDateFieldDescriptor;
-import ch.softenvironment.jomm.descriptor.DbDescriptor;
-import ch.softenvironment.jomm.descriptor.DbFieldTypeDescriptor;
-import ch.softenvironment.jomm.descriptor.DbMultiplicityRange;
-import ch.softenvironment.jomm.descriptor.DbTextFieldDescriptor;
+import ch.softenvironment.jomm.descriptor.*;
+
 import java.util.Date;
 
 /**
@@ -71,7 +68,7 @@ public class NaturalPerson extends Person {
         firePropertyChange("sex", oldValue, fieldSex);
     }
 
-    private java.util.List<Long> fieldProjectId = new java.util.ArrayList<Long>();
+    private java.util.List<Long> fieldProjectId = new java.util.ArrayList<>();
 
     public java.util.List<Long> getProjectId() {
         refresh(false); // read lazy initialized objects
