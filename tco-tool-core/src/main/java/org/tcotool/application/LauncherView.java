@@ -2702,7 +2702,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         setTitle(getResourceString("FrmWindow_text"));
         refreshDocumentation();
 
-        setSize(getSettings().getWindowWidth().intValue(), getSettings().getWindowHeight().intValue());
+        setSize(getSettings().getWindowWidth(), getSettings().getWindowHeight());
         getSppMain().setDividerLocation(280); // width of Tree
         getSppLeft().setDividerLocation(450); // height of Tree
         getTlbStandard().setTbbNewEnabled(true);
@@ -2769,7 +2769,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
      *
      * @param userId java.lang.String
      */
-    private static DbObjectServer initializeDatabase(String userId, String password, String url) throws Exception {
+    private static DbObjectServer initializeDatabase(String userId, String password, String url) {
         javax.jdo.PersistenceManagerFactory pmFactory = new ch.softenvironment.jomm.target.xml.XmlObjectServerFactory();
         pmFactory.setConnectionURL(url);
         pmFactory.setNontransactionalRead(true); // NO Commit at all
@@ -2900,6 +2900,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                             setModelChanged(true);
                             getUtility().setDependencyDiagram((Diagram) ModelUtility.createDbObject(getUtility().getServer(), Diagram.class));
                         }
+                        //TODO should be a singleton, see setModelChanged(boolean, boolean)
                         org.tcotool.standard.drawing.DependencyView depView = new org.tcotool.standard.drawing.DependencyView(getUtility(), getUtility()
                             .getDependencyDiagram(), dependencies, overallOnly, getDtpRoot().getWidth(), getDtpRoot().getHeight());
                         WaitDialog.updateProgress(50, getResourceString("CIReportInit"));
@@ -2918,7 +2919,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                         // get DataBrowser changes for "currentObject"
                         internalFrame.getTlbToolbar().addPropertyChangeListener(depView);
 
-                        List<Integer> usageDuration = new ArrayList<Integer>();
+                        List<Integer> usageDuration = new ArrayList<>();
                         if (overallOnly) {
                             // provide overall only
                             usageDuration.add(Calculator.INDEX_TOTAL);
@@ -3269,7 +3270,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
                 if (answer == null) {
                     // canceled -> do nothing yet!
                     return false;
-                } else if (answer.booleanValue()) {
+                } else if (answer) {
                     // depends whether save is ok!
                     return mniSaveFile();
                 }
@@ -3349,18 +3350,13 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
     private void saveSettings() {
         getSettings().setLastFiles(mnuFileHistory.getHistory());
         // getSettings().setNavigationSort(NavigationTreeModel.SORT_BY_KIND_NAME);
-        getSettings().setWindowHeight(Integer.valueOf(getHeight()));
-        getSettings().setWindowWidth(Integer.valueOf(getWidth()));
+        getSettings().setWindowHeight(getHeight());
+        getSettings().setWindowWidth(getWidth());
         // getSettings().setWindowX(Integer.valueOf(getX()));
         // getSettings().setWindowY(Integer.valueOf(getY()));
         getSettings().save();
     }
 
-    /**
-     * Set the image to be displayed in the Report-Desktop-Pane.
-     *
-     * @param image
-     */
     public void setBackgroundImage(Image image) {
         this.image = image;
     }
@@ -3446,15 +3442,24 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         }
     }
 
+    public void setModelChanged(boolean changed) {
+        setModelChanged(changed, false);
+    }
+
     /**
      * Keep changes of Model in mind.
      */
-    public void setModelChanged(boolean changed) {
+    public void setModelChanged(boolean changed, boolean dependenciesChanged) {
         // hasModelChanged = changed;
         boolean saveable = getViewOptions().getViewManager().getRights(TcoModel.class).isSaveObjectAllowed();
         getMniFileSave().setEnabled(saveable && changed);
         getMniFileSaveAs().setEnabled(saveable);
         getTlbStandard().setTbbSaveEnabled(saveable && changed);
+
+        if (dependenciesChanged) {
+            //TODO if mniDependencyGraphTCO is open -> refresh Dependency-Overview Frame (should be a singleton window)
+            log.warn("developer nyi: should refresh mniDependencyGraphTCO if open");
+        }
     }
 
     /**
@@ -3479,7 +3484,7 @@ public class LauncherView extends ch.softenvironment.jomm.mvc.view.DbBaseFrame i
         setModelChanged(false);
     }
 
-    private static void showInstance(ViewOptions viewOptions, ModelUtility utility, ApplicationOptions options) throws Exception {
+    private static void showInstance(ViewOptions viewOptions, ModelUtility utility, ApplicationOptions options) {
         new LauncherView(viewOptions, options);
         // getInstance().addDefaultClosingListener();
         // getInstance().setLookAndFeel(settings.getLookAndFeel());

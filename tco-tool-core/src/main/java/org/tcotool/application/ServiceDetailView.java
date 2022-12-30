@@ -2766,6 +2766,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
             if (source.equals(getMniNewDependency())) {
                 Dependency dependency = ModelUtility.createDependency(getObject().getObjectServer());
                 openDependency(ch.softenvironment.util.ListUtils.createList(dependency));
+                refreshDependencies();
             } else if (source.equals(getMniNewDriver())) {
                 CostDriver driver = (CostDriver) LauncherView.getInstance().getUtility().createTcoObject(server, CostDriver.class);
                 LauncherView.getInstance().getUtility().addOwnedElement(getObject(), driver);
@@ -2837,9 +2838,6 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
         refreshDependencies();
     }
 
-    /**
-     *
-     */
     private void refreshDependencies() {
         ((DbTableModel) getTblServices().getModel()).setAll(getObject().getSupplierId());
         // getCbxCurrencyFact().setSelectedItem(LauncherView.getInstance().sysParams.getDefaultCurrency());
@@ -2859,6 +2857,9 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
         getTxtSumDependency().setText(af.format(sum));
 
         getTxtSumAll().setText(af.format(sum + currentLocalSum));
+
+        // PATCH
+        LauncherView.getInstance().setModelChanged(true, true);
     }
 
     /**
@@ -2901,7 +2902,7 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
                     if (source.equals(getMniRemoveDriver())) {
                         java.util.List<CostDriver> removedItems = DbTableModel.removeSelectedItems(getTblCostDriver(), getViewOptions(), false);
                         // getObject().getDriver().removeAll(removedItems);
-                        java.util.List<CostDriver> list = new java.util.ArrayList<CostDriver>(getObject().getDriver());
+                        java.util.List<CostDriver> list = new java.util.ArrayList<>(getObject().getDriver());
                         list.removeAll(removedItems);
                         getObject().setDriver(list);
 
@@ -2924,8 +2925,6 @@ public class ServiceDetailView extends ch.softenvironment.jomm.mvc.view.DbBaseFr
                         registerPropertyChangeListener(removedItems, false);
 
                         refreshDependencies();
-                        // PATCH
-                        LauncherView.getInstance().setModelChanged(true);
                     }
                 } catch (Exception e) {
                     handleException(e);

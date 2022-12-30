@@ -5,19 +5,16 @@ import ch.softenvironment.cipher.DecipherTool;
 import ch.softenvironment.client.ResourceManager;
 import ch.softenvironment.util.UserException;
 import ch.softenvironment.view.BaseDialog;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
+import java.util.Date;
 
 /**
  * Tool for an Application to check wether licence is ok.
  *
  * @author Peter Hirzel <i>soft</i>Environment
+ * @deprecated not used by TCO-Tool anymore
  */
 @Slf4j
 @Deprecated(since = "1.6.0")
@@ -66,7 +63,7 @@ public class LicenceChecker {
 
             // if already licenced go on here
             int index = out.toString().indexOf(';', 20);
-            startDate = new java.util.Date((Long.valueOf(out.toString().substring(20, index))));
+            startDate = new java.util.Date((Long.parseLong(out.toString().substring(20, index))));
             checkLicence(key);
         } catch (FileNotFoundException e) {
             // if not licenced yet
@@ -96,12 +93,6 @@ public class LicenceChecker {
         }
     }
 
-    /**
-     * Check a licence-String.
-     *
-     * @param userKey
-     * @throws IllegalStateException
-     */
     public void checkLicence(String userKey) throws IllegalStateException {
         // check length
         if ((userKey == null) || (userKey.length() != 19)) {

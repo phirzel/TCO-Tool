@@ -29,17 +29,18 @@ public abstract class StringUtils {
 
 	/**
 	 * Return PackageName of given class.
+	 *
+	 * @deprecated use Class::getPackageName instead
 	 */
+	@Deprecated(since = "1.6.0")
 	public static String getPackageName(java.lang.Class<?> type) {
-		String className = type.getName();
-		int index = className.lastIndexOf('.');
-		return className.substring(0, index);
+		return type.getPackageName();
 	}
 
 	/**
 	 * Return PackageName of an Instance.
 	 */
-	public static String getPackageName(Object object) {
+	public static String getPackageName(@NonNull Object object) {
 		return getPackageName(object.getClass());
 	}
 
@@ -56,7 +57,8 @@ public abstract class StringUtils {
 	/**
 	 * Return ClassName of an Instance without package path.
 	 */
-	public static String getPureClassName(Object object) {
+	@Deprecated(since = "1.6.0")
+	public static String getPureClassName(@NonNull Object object) {
 		return getPureClassName(object.getClass());
 	}
 

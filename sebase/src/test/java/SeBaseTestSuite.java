@@ -29,12 +29,12 @@ import org.junit.runners.Suite;
         DateUtilsTestCase.class,
         DeveloperExceptionTest.class,
         ImageUtilsTest.class,
-        ListUtilsTestCase.class,
+        ListUtilsTest.class,
         UserExceptionTest.class,
         DOMUtilsTestCase.class,
         NlsUtilsTestCase.class,
         ParserCSVTestCase.class,
-        StringUtilsTestCase.class
+        StringUtilsTest.class
 })
 public class SeBaseTestSuite {
 }

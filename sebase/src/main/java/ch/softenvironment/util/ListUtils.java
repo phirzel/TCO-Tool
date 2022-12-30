@@ -12,12 +12,10 @@ package ch.softenvironment.util;
  * Lesser General Public License for more details.
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Set;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.*;
 
 /**
  * Provides some often used features in using java.util.List.
@@ -55,11 +53,6 @@ public abstract class ListUtils {
 			collator = java.text.Collator.getInstance(Locale.getDefault());
 		}
 
-		/**
-		 * @param o1 ValueWrapper
-		 * @param o1 ValueWrapper
-		 * @see java.util.Comparator
-		 */
 		@Override
 		public int compare(java.lang.Object o1, java.lang.Object o2) {
 			try {
@@ -84,8 +77,8 @@ public abstract class ListUtils {
 						return 1;
 					} else {
 						if ((v1 instanceof String) && (v2 instanceof String)) {
-							String s1 = (v1 == null ? "" : v1.toString());
-							String s2 = (v1 == null ? "" : v2.toString());
+							String s1 = v1.toString();
+							String s2 = v2.toString();
 							return collator.compare(s1, s2);
 						} else {
 							if ((v1 instanceof Long) && (v2 instanceof Long)) {
@@ -114,8 +107,10 @@ public abstract class ListUtils {
 	 * Return an ArrayList containing the given item.
 	 *
 	 * @return java.util.ArrayList
+	 * @deprecated use List.of() instead
 	 */
-	public static <T> java.util.List<T> createList(T item) {
+	@Deprecated(since = "1.6.0")
+	public static <T> java.util.List<T> createList(@NonNull T item) {
 		java.util.List<T> list = new java.util.ArrayList<>(1);
 		list.add(item);
 		return list;
@@ -156,10 +151,10 @@ public abstract class ListUtils {
 	 * @param property
 	 */
 	public static <T> void eliminateDuplicates(java.util.List<T> list, final String property) throws Exception {
-		Set<Object> set = new HashSet<Object>();
+		Set<Object> set = new HashSet<>();
 		Iterator<T> it = list.iterator();
 		while (it.hasNext()) {
-			Object value = (new BeanReflector<T>(it.next(), property)).getValue();
+			Object value = (new BeanReflector<>(it.next(), property)).getValue();
 			if (set.contains(value)) {
 				it.remove();
 			} else {
