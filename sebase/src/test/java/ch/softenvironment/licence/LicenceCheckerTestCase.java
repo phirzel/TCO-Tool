@@ -7,6 +7,7 @@ import ch.softenvironment.licence.vendor.LicenceGenerator;
  *
  * @author Peter Hirzel
  */
+@Deprecated(since = "1.6.0")
 public class LicenceCheckerTestCase extends junit.framework.TestCase {
 
     private ch.softenvironment.licence.vendor.LicenceGenerator generator = null;
@@ -30,7 +31,7 @@ public class LicenceCheckerTestCase extends junit.framework.TestCase {
     public void test1User1Month() {
         // create key
         generator.setExpirationDuration(0);
-        generator.setNumberOfUsers(Integer.valueOf(1));
+        generator.setNumberOfUsers(1);
         generator.setProductName("TRAr"); // Traffic regional
         generator.setProductVersion("010000");
 
@@ -38,14 +39,14 @@ public class LicenceCheckerTestCase extends junit.framework.TestCase {
         checker = new ch.softenvironment.licence.user.LicenceChecker(generator.getKey());
         // assertTrue("expirationDate",
         // now.getYear()checker.getExpirationDate()..);
-        assertTrue("User", 1 == checker.getNumberOfUsers());
-        assertTrue("Product", checker.getProductName().equals("TRAr"));
+        assertEquals("User", 1, checker.getNumberOfUsers());
+        assertEquals("Product", "TRAr", checker.getProductName());
     }
 
     public void test35User2Month() {
         // create key
         generator.setExpirationDuration(1);
-        generator.setNumberOfUsers(Integer.valueOf(35));
+        generator.setNumberOfUsers(35);
         generator.setProductName("TRAn"); // Traffic regional
         generator.setProductVersion("010000");
 
@@ -53,14 +54,14 @@ public class LicenceCheckerTestCase extends junit.framework.TestCase {
         checker = new ch.softenvironment.licence.user.LicenceChecker(generator.getKey());
         // assertTrue("expirationDate",
         // now.getYear()checker.getExpirationDate()..);
-        assertTrue("User", 35 == checker.getNumberOfUsers());
-        assertTrue("Product", checker.getProductName().equals("TRAn"));
+        assertEquals("User", 35, checker.getNumberOfUsers());
+        assertEquals("Product", "TRAn", checker.getProductName());
     }
 
     public void test998User3Month() {
         // create key
         generator.setExpirationDuration(2);
-        generator.setNumberOfUsers(Integer.valueOf(998));
+        generator.setNumberOfUsers(998);
         generator.setProductName("TRAr"); // Traffic regional
         generator.setProductVersion("010000");
 
@@ -68,15 +69,10 @@ public class LicenceCheckerTestCase extends junit.framework.TestCase {
         checker = new ch.softenvironment.licence.user.LicenceChecker(generator.getKey());
         // assertTrue("expirationDate",
         // now.getYear()checker.getExpirationDate()..);
-        assertTrue("User", 998 == checker.getNumberOfUsers());
-        assertTrue("Product", checker.getProductName().equals("TRAr"));
+        assertEquals("User", 998, checker.getNumberOfUsers());
+        assertEquals("Product", "TRAr", checker.getProductName());
     }
 
-    /**
-     * Test expirationDates by hand...
-     *
-     * @param args
-     */
     public static void main(String[] args) {
         for (int i = 0; i < 8; i++) { // should throw exception if i==7
             LicenceGenerator generator = new ch.softenvironment.licence.vendor.LicenceGenerator();
@@ -88,7 +84,7 @@ public class LicenceCheckerTestCase extends junit.framework.TestCase {
                 // will throw an exception because expired
                 users = 999;
             }
-            generator.setNumberOfUsers(Integer.valueOf(users));
+            generator.setNumberOfUsers(users);
             System.out.println("Users: " + users);
             if (i % 2 == 0) {
                 generator.setProductName("TRAr"); // regional

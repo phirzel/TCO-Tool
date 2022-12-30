@@ -1,25 +1,21 @@
 package ch.softenvironment.util;
 
 import ch.softenvironment.client.ResourceManager;
+import org.junit.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Peter Hirzel
  */
-public class StringUtilsTestCase extends junit.framework.TestCase {
+public class StringUtilsTest {
 
-	/**
-	 * StringUtilsTestCase constructor comment.
-	 *
-	 * @param name java.lang.String
-	 */
-	public StringUtilsTestCase(String name) {
-		super(name);
-	}
 
-	public void testGetString() {
+	@Test
+	public void getString() {
 		// getString(String)
 		assertEquals("StringUtils.getString(null)", "", StringUtils.getString(null));
 		assertEquals("StringUtils.getString(empty)", "", StringUtils.getString(""));
@@ -33,23 +29,29 @@ public class StringUtilsTestCase extends junit.framework.TestCase {
 		assertEquals("StringUtils.getString(Boolean.FALSE)", ResourceManager.getResource(StringUtils.class, "CI_No_text"), StringUtils.getString(Boolean.FALSE));
 	}
 
-	public void testGetNextWord() {
+	@Test
+	public void getNextWord() {
 		assertEquals("StringUtils.getNextWord(null)", "", StringUtils.getNextWord(null, 8));
 		assertEquals("StringUtils.getNextWord(Hello world)", "Hello", StringUtils.getNextWord("Hello world", 0));
 		assertEquals("StringUtils.getNextWord(Hello world)", "world", StringUtils.getNextWord("Hello world", 5));
 	}
 
-	public void testPackageName() {
+	@Test
+	@Deprecated(since = "1.6.0")
+	public void getPackageName() {
 		assertEquals("StringUtils", "java.util", StringUtils.getPackageName(new ArrayList<Boolean>()));
 		assertEquals("StringUtils", "java.util", StringUtils.getPackageName(ArrayList.class));
 	}
 
-	public void testPureClassName() {
+	@Test
+	@Deprecated(since = "1.6.0")
+	public void getPureClassName() {
 		assertEquals("Object", StringUtils.getPureClassName(new Object()));
 		assertEquals("Statistic", StringUtils.getPureClassName(Statistic.class));
 	}
 
-	public void testReplace() {
+	@Test
+	public void replace() {
 		assertNull("StringUtils", StringUtils.replace((String) null, "", ""));
 		assertNull("StringUtils", StringUtils.replace((StringBuffer) null, "", ""));
 		assertEquals("StringUtils", "", StringUtils.replace("", "", ""));
@@ -67,7 +69,8 @@ public class StringUtilsTestCase extends junit.framework.TestCase {
 		assertEquals("StringUtils", "BeginEnd", StringUtils.replace(buf.toString(), " ", ""));
 	}
 
-	public void testFirstLetterToLowercase() {
+	@Test
+	public void firstLetterToLowercase() {
 		assertEquals("StringUtils", "myProperty", StringUtils.firstLetterToLowercase("myProperty"));
 		assertEquals("StringUtils", "myProperty", StringUtils.firstLetterToLowercase("MyProperty"));
 		assertEquals("StringUtils", "123", StringUtils.firstLetterToLowercase("123"));
@@ -76,7 +79,8 @@ public class StringUtilsTestCase extends junit.framework.TestCase {
 		assertNull("StringUtils", StringUtils.firstLetterToLowercase(null));
 	}
 
-	public void testFirstLetterToUppercase() {
+	@Test
+	public void firstLetterToUppercase() {
 		assertEquals("StringUtils", "MyProperty", StringUtils.firstLetterToUppercase("myProperty"));
 		assertEquals("StringUtils", "MyProperty", StringUtils.firstLetterToUppercase("MyProperty"));
 		assertEquals("StringUtils", "123", StringUtils.firstLetterToUppercase("123"));
@@ -85,17 +89,8 @@ public class StringUtilsTestCase extends junit.framework.TestCase {
 		assertNull("StringUtils", StringUtils.firstLetterToUppercase(null));
 	}
 
-	public void testMakeValidFileName() {
+	@Test
+	public void makeValidFileName() {
 		assertEquals("StringUtils", "m_y_F_le(_).txt", StringUtils.makeValidFileName("m:y/F\\le(\").txt", "_"));
-	}
-
-	/**
-	 * Trial method.
-	 */
-	public void testEncoding() {
-		assertEquals("Character same in ANSI & UTF-8", "<", new String("<".getBytes(), StandardCharsets.ISO_8859_1));
-		String valISO = new String("ä".getBytes(), StandardCharsets.ISO_8859_1);
-		//assertTrue("Character  same in ANSI & UTF-8", "ä".equals(valISO));
-		//assertFalse("Character reversed to UTF-8", "ä".equals(new String("ä".getBytes(), Charset.forName("UTF-8"))));
 	}
 }

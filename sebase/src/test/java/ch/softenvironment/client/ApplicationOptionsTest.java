@@ -16,12 +16,12 @@ package ch.softenvironment.client;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import static org.junit.Assert.assertTrue;
-
-import java.awt.Color;
-import java.awt.Font;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * TestCase for ApplicationOptions.
@@ -31,13 +31,12 @@ import org.junit.Test;
  */
 public class ApplicationOptionsTest {
 
-    private final String fileName = "ApplicationOptions.test";
     private ApplicationOptions settings = null;
 
     @Before
     public void setUp() {
         //        super.setUp();
-        settings = new ApplicationOptions(fileName);
+        settings = new ApplicationOptions("ApplicationOptions.test");
     }
 
     @Test
@@ -45,9 +44,9 @@ public class ApplicationOptionsTest {
         Font font = new java.awt.Font("Arial", java.awt.Font.BOLD, 12);
         settings.setFont(font);
         Font fontGet = settings.getFont();
-        assertTrue("Font-Family", font.getFamily().equals(fontGet.getFamily()));
-        assertTrue("Font-Style", font.getStyle() == fontGet.getStyle());
-        assertTrue("Font-Size", font.getSize() == fontGet.getSize());
+        assertEquals("Font-Family", font.getFamily(), fontGet.getFamily());
+        assertEquals("Font-Style", font.getStyle(), fontGet.getStyle());
+        assertEquals("Font-Size", font.getSize(), fontGet.getSize());
     }
 
     @Test
@@ -55,11 +54,11 @@ public class ApplicationOptionsTest {
         Color color = Color.MAGENTA;
         settings.setBackgroundColor(color);
         Color colorGet = settings.getBackgroundColor();
-        assertTrue("BackgroundColor", color.equals(colorGet));
+        assertEquals("BackgroundColor", color, colorGet);
 
         color = new Color(10, 99, 87);
         settings.setForegroundColor(color);
         colorGet = settings.getForegroundColor();
-        assertTrue("ForegroundColor", color.equals(colorGet));
+        assertEquals("ForegroundColor", color, colorGet);
     }
 }

@@ -15,12 +15,15 @@
 
 
 # TODO
-* provide sample.xml
-* bug fixes:
-  * Dialogs open in background
-  * https://sourceforge.net/p/tcotool/discussion/491266/thread/e234d2db/?limit=25#1dfc Deleting dependency
-* upgrade JHotDraw lib
-* modernize old Java 1.4/6 code-style
-* replace @Deprecated code
-* XmlObjectService::retrieveCodes -> logs missing DbCode's -> perhaps add a default Set to new configs?
-* replace softEnvironment logo (splash-screen, ..)
+* known bugs:
+  * if tree-element is double-clicked on name, the sub-window might be opened in background (workaround double-click on
+    Icon in tree instead)
+  * Deleting dependency by Edit-Dialog-Panel works but any open Dependency-Graphs are not visually updated yet (needs
+    Dialog close and regenerate)
+* improvements:
+  * Dependencies in Panel on dialog show only suppliers having dependencies (Supplier's from Client side not shown yet)
+  * upgrade JHotDraw lib
+  * modernize old Java 1.4/6 code-style (Date, List, Apache libs, ..)
+  * replace @Deprecated code
+  * XmlObjectService::retrieveCodes -> logs missing DbCode's -> perhaps add a default Set to new configs?
+  * replace softEnvironment logo (splash-screen, ..)
