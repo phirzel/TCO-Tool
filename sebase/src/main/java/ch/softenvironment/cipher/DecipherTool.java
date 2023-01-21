@@ -34,7 +34,7 @@ public class DecipherTool {
 	private javax.crypto.Cipher cipher = null;
 
 	/**
-	 * Ctreate Instance of DecipherTool.
+	 * Create Instance of DecipherTool.
 	 */
 	public DecipherTool(Key key) {
 		super();

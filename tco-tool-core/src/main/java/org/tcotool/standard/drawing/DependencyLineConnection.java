@@ -28,7 +28,6 @@ import org.tcotool.model.Dependency;
  *
  * @author Peter Hirzel
  */
-
 @Slf4j
 class DependencyLineConnection extends EdgeFigure {
 
