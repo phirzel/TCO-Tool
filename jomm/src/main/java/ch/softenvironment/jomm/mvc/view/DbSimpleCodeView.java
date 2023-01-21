@@ -28,8 +28,8 @@ import javax.swing.JPanel;
 /**
  * Display a simple DbCode (by means concrete DbCode has no further propertiese than #name).
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2006-05-07 14:09:23 $
+ * @author Peter Hirzel
+ * @since 1.4 (2006-07-05)
  * @see DbCodeManageView
  */
 class DbSimpleCodeView extends BaseDialog implements PropertyChangeListener {

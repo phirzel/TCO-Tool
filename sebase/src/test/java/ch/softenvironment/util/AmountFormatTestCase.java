@@ -15,8 +15,8 @@ package ch.softenvironment.util;
 import java.util.Locale;
 
 /**
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2008-04-18 18:45:44 $
+ * @author Peter Hirzel
+ * @since 1.4 (2008-04-18)
  */
 public class AmountFormatTestCase extends junit.framework.TestCase {
 

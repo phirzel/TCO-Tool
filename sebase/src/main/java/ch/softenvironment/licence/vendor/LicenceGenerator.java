@@ -20,7 +20,7 @@ package ch.softenvironment.licence.vendor;
 /**
  * Generator to generate a Licence Key for an Application-Product.
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 @Deprecated(since = "1.6.0")
 public class LicenceGenerator {

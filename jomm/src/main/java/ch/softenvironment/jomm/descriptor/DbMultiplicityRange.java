@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Define a Cardinality for an Association defined by DbDescriptor.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2006-07-05 15:59:53 $
+ * @author Peter Hirzel
+ * @since 1.2 (2006-07-05)
  */
 @Slf4j
 public class DbMultiplicityRange {

@@ -21,8 +21,8 @@ import junit.framework.TestCase;
 /**
  * TestCase for  ViewManager
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2008-01-16 17:19:36 $
+ * @author Peter Hirzel
+ * @since 1.2 (2008-01-16)
  */
 public class ViewManagerTestCase extends TestCase {
 

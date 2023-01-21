@@ -16,8 +16,8 @@ import java.util.EventObject;
 /**
  * Method-Set for typical List-Actions for e.g. in a JTable's PopupMenu.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2007-02-20 12:43:38 $
+ * @author Peter Hirzel
+ * @since 1.3 (2007-02-20)
  */
 public interface ListMenuChoice {
 

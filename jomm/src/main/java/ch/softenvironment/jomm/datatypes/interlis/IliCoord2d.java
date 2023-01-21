@@ -20,8 +20,8 @@ import ch.softenvironment.jomm.descriptor.DbFieldType;
 /**
  * Structure of 2 dimensional Coordinates according to INTERLIS V2.2.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:25 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public class IliCoord2d implements DbFieldType {
 

@@ -20,8 +20,8 @@ import ch.softenvironment.jomm.descriptor.DbFieldType;
 /**
  * Structure of Polygon specifying a Surface.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:25 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public class IliSurface implements DbFieldType {
 

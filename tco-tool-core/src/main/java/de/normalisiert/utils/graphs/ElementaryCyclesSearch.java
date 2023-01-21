@@ -15,7 +15,7 @@ import java.util.Vector;
  * In: SIAM Journal on Computing. Volume 1, Nr. 2 (1972), pp. 146-160.<br>
  *
  * @author Frank Meyer, web_at_normalisiert_dot_de
- * @version 1.2, 22.03.2009
+ * @since 1.2 (2009-03-22)
  */
 public class ElementaryCyclesSearch {
 

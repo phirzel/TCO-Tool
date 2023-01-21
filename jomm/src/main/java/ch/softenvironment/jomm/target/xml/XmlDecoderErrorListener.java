@@ -23,8 +23,8 @@ import org.xml.sax.SAXParseException;
  * ErrorHandler for XmlDecoder.
  *
  * @author ce
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2006-07-05 16:32:25 $
+ * @author Peter Hirzel
+ * @since 1.2 (2006-07-05)
  */
 @Slf4j
 class XmlDecoderErrorListener implements org.xml.sax.ErrorHandler {

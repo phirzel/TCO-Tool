@@ -16,7 +16,7 @@ package ch.softenvironment.view;
  * Listener for any Implementors who need to open a file when chosen in the File History.
  *
  * @author Peter Hirzel <i>soft</i> Environment
- * @version $Revision: 1.1 $ $Date: 2004-05-08 13:29:51 $
+ * @since 1.1 (2004-05-08)
  */
 public interface FileHistoryListener {
 

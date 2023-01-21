@@ -17,8 +17,8 @@ import java.util.Calendar;
 /**
  * Utilities for Date calculations.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.8 $ $Date: 2008-01-14 21:54:14 $
+ * @author Peter Hirzel
+ * @since 1.8 (2008-01-14)
  */
 public class DateUtils {
 

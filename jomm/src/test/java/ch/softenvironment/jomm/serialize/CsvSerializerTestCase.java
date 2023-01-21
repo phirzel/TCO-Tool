@@ -18,8 +18,8 @@ import junit.framework.TestCase;
 /**
  * TestCase for CsvSerializer.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2008-04-18 18:30:16 $
+ * @author Peter Hirzel
+ * @since 1.2 (2008-04-18)
  */
 public class CsvSerializerTestCase extends TestCase {
 

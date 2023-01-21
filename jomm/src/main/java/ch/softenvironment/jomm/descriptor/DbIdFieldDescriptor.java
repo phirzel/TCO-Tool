@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * Description of an Id.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:24 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public class DbIdFieldDescriptor extends DbNumericFieldDescriptor {
 

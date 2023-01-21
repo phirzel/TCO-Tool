@@ -27,8 +27,8 @@ import java.sql.DriverManager;
  * <p>
  * http://msdn.microsoft.com/downloads/default.asp?URL=/downloads/sample.asp?url=/MSDN-FILES/027/001/779/msdncompositedoc.xml http://support.microsoft.com/default.aspx?scid=KB;EN-US;Q313100&
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1 $ $Date: 2006-04-25 14:57:54 $
+ * @author Peter Hirzel
+ * @since 1.1 (2006-04-25)
  * @deprecated not used by TCO-Tool
  */
 @Deprecated(since = "1.6.0")

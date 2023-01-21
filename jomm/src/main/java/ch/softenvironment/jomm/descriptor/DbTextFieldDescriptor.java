@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * Describes any String fields.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2006-07-05 15:59:53 $
+ * @author Peter Hirzel
+ * @since 1.3 (2006-07-05)
  */
 public class DbTextFieldDescriptor extends DbFieldTypeDescriptor {
 

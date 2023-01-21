@@ -19,14 +19,22 @@
     </description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <compiler.source.level>1.17</compiler.source.level>
+        <java.version>1.17</java.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <!--maven-install-plugin.version>3.1.0</maven-install-plugin.version-->
 
         <lombok.version>1.18.24</lombok.version>
 
         <org.slf4j.version>2.0.6</org.slf4j.version>
         <ch.qos.logback>1.4.5</ch.qos.logback>
 
+        <javax-jdo.version>3.1</javax-jdo.version>
         <junit.version>4.13.2</junit.version>
         <jfcunit.version>2.08</jfcunit.version>
     </properties>
@@ -34,6 +42,7 @@
     <modules>
         <module>sebase</module>
         <module>jomm</module>
+        <module>jhotdraw60b1</module>
         <module>tco-tool-core</module>
     </modules>
 
@@ -47,6 +56,11 @@
             <dependency>
                 <groupId>org.tcotool</groupId>
                 <artifactId>jomm</artifactId>
+                <version>1.6.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tcotool</groupId>
+                <artifactId>jhotdraw60b1</artifactId>
                 <version>1.6.0-SNAPSHOT</version>
             </dependency>
             <dependency>

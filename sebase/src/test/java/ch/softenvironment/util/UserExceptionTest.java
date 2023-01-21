@@ -19,8 +19,8 @@ import org.junit.Test;
 /**
  * Test class UserException.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1 $ $Date: 2006-06-29 22:31:57 $
+ * @author Peter Hirzel
+ * @since 1.1 (2006-06-29)
  */
 public class UserExceptionTest {
 

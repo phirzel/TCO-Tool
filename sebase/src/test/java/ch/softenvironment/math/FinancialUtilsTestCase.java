@@ -21,8 +21,8 @@ import junit.framework.TestCase;
 /**
  * TestCase for FinancialUtils.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2008-08-04 20:32:52 $
+ * @author Peter Hirzel
+ * @since 1.3 (2008-08-04)
  */
 public class FinancialUtilsTestCase extends TestCase {
 

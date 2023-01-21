@@ -20,9 +20,9 @@ import ch.softenvironment.jomm.implementation.DbPropertyChange;
 /**
  * Definition for a User specific ConsistencyController. Register a DbObjectValidator in DbObjectListener.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:20 $
- * @see DbObjectListener#addValidator()
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
+ * @see DbObjectListener#addValidator(DbObjectValidator)
  */
 public interface DbObjectValidator {
 

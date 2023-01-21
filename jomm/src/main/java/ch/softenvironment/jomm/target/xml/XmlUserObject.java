@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.target.xml;
 /**
  * User definable Object to be passed to XmlObjectServer.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2005-10-17 10:13:21 $
+ * @author Peter Hirzel
+ * @since 1.3 (2005-10-17)
  */
 public class XmlUserObject {
 

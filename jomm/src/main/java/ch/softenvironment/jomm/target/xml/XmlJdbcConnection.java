@@ -36,8 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * This is just a dummy implementation to stay compatible with the basic ch.softenvironment.jomm Framework.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.5 $ $Date: 2007-06-05 20:40:14 $
+ * @author Peter Hirzel
+ * @since 1.5 (2007-06-05)
  * @deprecated (should be replaced by a real XML - Database driver)
  */
 @Slf4j

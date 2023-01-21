@@ -19,8 +19,8 @@ import javax.swing.*;
 /**
  * NLS-Utility for common reusable User Interface expressions (CUA).
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.8 $ $Date: 2005-06-30 07:27:43 $
+ * @author Peter Hirzel
+ * @since 1.8 (2005-06-30)
  */
 public abstract class CommonUserAccess {
 

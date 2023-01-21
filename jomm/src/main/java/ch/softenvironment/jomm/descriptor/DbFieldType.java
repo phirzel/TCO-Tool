@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * Implement this Interface for any Class-Type representing a specific DBMS-Type. For e.g. - ch.softenvironment.jomm.interlis.IliSurface corresponds to ORACLE's MDSYS.SDO_GEOMETRY
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:23 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  * @see DbFieldTypeDescriptor(Class baseType)
  */
 public interface DbFieldType {

@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Set of reusable String Utilities.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.9 $ $Date: 2007-02-20 12:50:52 $
+ * @author Peter Hirzel
+ * @since 1.9 (2007-02-20)
  */
 @Slf4j
 public abstract class NlsUtils {

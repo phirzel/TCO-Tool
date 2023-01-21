@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test DbMapper
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2007-09-18 12:47:30 $
+ * @author Peter Hirzel
+ * @since 1.4 (2007-09-18)
  * @deprecated not used by TCO-Tool
  */
 @Deprecated(since = "1.6.0")

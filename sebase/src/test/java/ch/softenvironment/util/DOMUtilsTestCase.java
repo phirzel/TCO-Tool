@@ -25,8 +25,8 @@ import org.w3c.dom.Text;
 /**
  * TestCase for DOMUtils.
  *
- * @author Peter Hirzel <i>soft</i>Environment GmbH
- * @version $Revision: 1.2 $ $Date: 2006-05-07 14:53:51 $
+ * @author Peter Hirzel GmbH
+ * @since 1.2 (2006-05-07)
  * @see ch.softenvironment.util.DOMUtils
  */
 public class DOMUtilsTestCase extends TestCase {

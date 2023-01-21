@@ -21,8 +21,8 @@ import java.util.Date;
 /**
  * Writer-Tool to encode comma separated files (*.CSV).
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2008-03-14 20:15:21 $
+ * @author Peter Hirzel
+ * @since 1.4 (2008-03-14)
  */
 public class CsvSerializer extends ch.softenvironment.jomm.serialize.SimpleSerializer {
 

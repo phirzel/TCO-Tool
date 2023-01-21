@@ -21,8 +21,8 @@ import ch.softenvironment.jomm.implementation.DbPropertyChange;
 /**
  * Listener to be notified when a DbObject's property changed.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2006-11-14 22:33:59 $
+ * @author Peter Hirzel
+ * @since 1.2 (2006-11-14)
  */
 public interface DbObjectListener extends java.beans.PropertyChangeListener {
     // Consistency-Rules

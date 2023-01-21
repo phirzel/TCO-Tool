@@ -23,8 +23,8 @@ import ch.softenvironment.view.FileChooser;
 /**
  * Login Dialog for Application startup.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2008-04-18 18:22:55 $
+ * @author Peter Hirzel
+ * @since 1.4 (2008-04-18)
  */
 public class DbLoginDialog extends BaseDialog {
 

@@ -15,8 +15,8 @@ package ch.softenvironment.jomm.serialize;
  * Visit an Object and register it for later treatment.
  *
  * @author ce
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:11 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public interface Visitor {
 
