@@ -24,8 +24,8 @@ import java.sql.SQLException;
 /**
  * SQL-Schema utilitiy.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1 $ $Date: 2006-11-14 22:51:56 $
+ * @author Peter Hirzel
+ * @since 1.1 (2006-11-14)
  */
 public class MetaDataUtils {
 

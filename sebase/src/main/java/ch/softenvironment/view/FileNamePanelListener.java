@@ -13,8 +13,8 @@ package ch.softenvironment.view;
  */
 
 /**
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2004-02-05 11:32:59 $
+ * @author Peter Hirzel
+ * @since 1.2 (2004-02-05) $ $Date: 2004-02-05 11:32:59 $
  */
 public interface FileNamePanelListener extends java.util.EventListener {
 

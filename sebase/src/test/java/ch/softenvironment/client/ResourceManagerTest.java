@@ -24,8 +24,8 @@ import org.junit.Test;
 /**
  * TestCase for ResourceManager.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2007-02-20 12:27:24 $
+ * @author Peter Hirzel
+ * @since 1.3 (2007-02-20)
  */
 public class ResourceManagerTest {
 

@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * Description of the primitive type boolean.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:24 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  * @deprecated (use java.lang.Boolean instead)
  */
 public class DbPrimitiveBoolean extends DbFieldTypeDescriptor {

@@ -20,8 +20,8 @@ package org.tcotool.application;
 /**
  * Dialog for Risk-Parameter settings.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2008-05-18 15:44:58 $
+ * @author Peter Hirzel
+ * @since 1.3 (2008-05-18)
  * @deprecated
  */
 

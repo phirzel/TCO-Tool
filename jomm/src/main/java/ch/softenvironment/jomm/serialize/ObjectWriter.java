@@ -17,8 +17,8 @@ import java.io.IOException;
  * Definition of a Writer capable to write a certain object into a serialized stream.
  *
  * @author ce
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:11 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public interface ObjectWriter {
 

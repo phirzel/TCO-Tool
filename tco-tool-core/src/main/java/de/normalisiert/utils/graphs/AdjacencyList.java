@@ -6,7 +6,7 @@ import java.util.Vector;
  * Calculates the adjacency-list for a given adjacency-matrix.
  *
  * @author Frank Meyer, web@normalisiert.de
- * @version 1.0, 26.08.2006
+ *@since 1.0 (2006-08-26)
  */
 public class AdjacencyList {
 

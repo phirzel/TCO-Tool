@@ -3,7 +3,7 @@ package ch.softenvironment.math;
 /**
  * Utility for extended Mathematics.
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 public class MathUtils {
 

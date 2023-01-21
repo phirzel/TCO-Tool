@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.descriptor;
 /**
  * Target-Field with Date-Character.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:01:22 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public class DbDateFieldDescriptor extends DbFieldTypeDescriptor {
 

@@ -3,7 +3,7 @@ package ch.softenvironment.math;
 /**
  * This is a simple C-Array Vector used for vectorial (mathematical sense) operations. Ths vector is not ment to be resized after initialization.
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 public class DoubleVector {
 

@@ -24,8 +24,8 @@ package ch.softenvironment.jomm;
  * <p>
  * A JDO-ObjectId must further be transmittable and therefore Serializable and cloneable for certain methods by PersistenceManager.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1.1.1 $ $Date: 2005-04-25 10:00:53 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public interface DbIdentity extends java.io.Serializable, Cloneable {
 

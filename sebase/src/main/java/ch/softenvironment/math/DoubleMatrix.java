@@ -3,7 +3,7 @@ package ch.softenvironment.math;
 /**
  * Mathematical Matrix with rows and columns.
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 public class DoubleMatrix {
 

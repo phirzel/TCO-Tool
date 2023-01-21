@@ -15,8 +15,8 @@ package ch.softenvironment.jomm.serialize;
 /**
  * ASCII-Stream-Generator.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2008-04-18 18:22:55 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public abstract class SimpleSerializer implements Serializer {
 

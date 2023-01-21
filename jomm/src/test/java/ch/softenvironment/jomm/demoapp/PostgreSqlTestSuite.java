@@ -33,8 +33,8 @@ import java.util.List;
  * Run this JUnit TestSuite to testsuite JOMM with PostgreSQL. Make sure appropriate vendor specific JDBC-Driver is found in classpath at runtime and a PostgreSQL-Server (V8.0 or higher) is running in
  * the background.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2007-02-20 13:33:18 $
+ * @author Peter Hirzel
+ * @since 1.4 (2007-02-20)
  * @deprecated not used by TCO-Tool
  */
 @Deprecated(since = "1.6.0")

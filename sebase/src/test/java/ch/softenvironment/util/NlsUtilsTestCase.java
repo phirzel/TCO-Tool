@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2006-05-07 14:53:51 $
+ * @author Peter Hirzel
+ * @since 1.2 (2006-05-07)
  */
 public class NlsUtilsTestCase extends junit.framework.TestCase {
 

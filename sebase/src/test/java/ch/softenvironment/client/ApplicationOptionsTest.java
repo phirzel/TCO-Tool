@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * TestCase for ApplicationOptions.
  *
- * @author Peter Hirzel <i>soft</i>Environment GmbH
+ * @author Peter Hirzel GmbH
  * @since 2006-05-07
  */
 public class ApplicationOptionsTest {

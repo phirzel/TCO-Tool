@@ -18,9 +18,9 @@ import ch.softenvironment.jomm.mvc.model.DbCodeType;
 /**
  * Encapsulate an INTERLIS Basket structure to be mapped to an XML-instance.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2006-07-05 16:32:25 $
- * @see XmlEncoder#encodeBasket()
+ * @author Peter Hirzel
+ * @since 1.2 (2006-07-05)
+ * @see XmlEncoder#encodeBasket(IliBasket)
  */
 public interface IliBasket {
 

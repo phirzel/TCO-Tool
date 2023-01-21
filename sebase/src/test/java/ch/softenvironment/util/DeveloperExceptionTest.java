@@ -19,8 +19,8 @@ import org.junit.Test;
 /**
  * Test class DeveloperException.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.4 $ $Date: 2007-02-20 12:59:54 $
+ * @author Peter Hirzel
+ * @since 1.4 (2007-02-20)
  */
 public class DeveloperExceptionTest {
 

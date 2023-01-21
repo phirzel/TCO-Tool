@@ -13,7 +13,7 @@ import java.util.Vector;
  * Directed Graph. SIAM Journal on Computing. Volumne 4, Nr. 1 (1975), pp. 77-84.<br><br>
  *
  * @author Frank Meyer, web_at_normalisiert_dot_de
- * @version 1.1, 22.03.2009
+ * @since 1.1 (2009-03-22)
  */
 public class StrongConnectedComponents {
 

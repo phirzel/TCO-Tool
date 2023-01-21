@@ -15,7 +15,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 @Deprecated(since = "1.6.0")
 public class CipherTest {

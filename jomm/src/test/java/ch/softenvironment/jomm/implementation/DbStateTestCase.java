@@ -18,8 +18,8 @@ package ch.softenvironment.jomm.implementation;
 /**
  * Test DbState.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1 $ $Date: 2005-05-06 12:37:17 $
+ * @author Peter Hirzel
+ * @since 1.1 (2005-05-06)
  */
 public class DbStateTestCase extends junit.framework.TestCase {
 

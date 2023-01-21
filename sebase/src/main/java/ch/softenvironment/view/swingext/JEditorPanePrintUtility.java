@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Kei G. Gauthier (original)
  * @author Peter Hirzel by <i>soft</i>Environment (slightly refactored)
- * @version $Revision: 1.1 $ $Date: 2007-05-31 13:58:17 $
+ * @since 1.1 (2007-05-31)
  */
 @Slf4j
 public class JEditorPanePrintUtility implements Printable {

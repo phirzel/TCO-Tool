@@ -18,8 +18,8 @@ import ch.softenvironment.view.ListMenuChoice;
 /**
  * Manage individual Rights for a certain Model-Class which might be represented by a DetailView and/or SearchView. The defined rights match with User-Actions defined by ListMenuChoice interface.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.3 $ $Date: 2008-01-16 17:17:41 $
+ * @author Peter Hirzel
+ * @since 1.3 (2008-01-16)
  * @see ListMenuChoice#adaptUserAction(java.util.EventObject, Object)
  */
 public class UserActionRights {

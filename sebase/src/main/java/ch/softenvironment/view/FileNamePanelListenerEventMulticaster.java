@@ -15,8 +15,8 @@ package ch.softenvironment.view;
 /**
  * This is the event multicaster class to support the ch.softenvironment.view.FileNamePanelListenerEventMulticaster interface.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2004-02-05 11:32:59 $
+ * @author Peter Hirzel
+ * @since 1.2 (2004-02-05) $ $Date: 2004-02-05 11:32:59 $
  */
 public class FileNamePanelListenerEventMulticaster extends java.awt.AWTEventMulticaster implements ch.softenvironment.view.FileNamePanelListener {
 

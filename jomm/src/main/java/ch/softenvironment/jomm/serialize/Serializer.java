@@ -14,8 +14,8 @@ package ch.softenvironment.jomm.serialize;
 /**
  * Contains a set of mapping methods to transform given value into a serializable Stream.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2008-08-07 05:30:59 $
+ * @author Peter Hirzel
+ * @since 1.1.1.1 (2005-04-25)
  */
 public interface Serializer {
 

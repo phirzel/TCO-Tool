@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Tool for an Application to check wether licence is ok.
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  * @deprecated not used by TCO-Tool anymore
  */
 @Slf4j

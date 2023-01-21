@@ -21,8 +21,8 @@ import ch.softenvironment.jomm.datatypes.DbNlsString;
 /**
  * Structure for reusable Codes. They must have at least an NLS "name" property.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2005-12-28 11:45:34 $
+ * @author Peter Hirzel
+ * @since 1.2 (2005-12-28)
  */
 public interface DbCodeType {
 

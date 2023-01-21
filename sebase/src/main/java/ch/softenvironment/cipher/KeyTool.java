@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  * Tool to administrate secret Keys (symmetric and asymmetric type). This Class uses Java JCE. Possible <b>Crypto-Algorithms</b>: - DES - DESede - AES (with Java 2 SDK, v 1.4.2) - Blowfish -
  * PBEWithMD5AndDES - PBEWithMD5AndTripleDES - Diffie-Hellman key agreement among multiple parties - HmacMD5 - HmacSHA1
  *
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 @Slf4j
 @Deprecated(since = "1.6.0")

@@ -23,8 +23,8 @@ import junit.framework.TestCase;
 /**
  * Test DbDataGenerator.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.2 $ $Date: 2007-01-24 17:12:42 $
+ * @author Peter Hirzel
+ * @since 1.2 (2007-01-14)
  */
 public class DbDataGeneratorTestCase extends TestCase {
 

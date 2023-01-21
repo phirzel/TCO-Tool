@@ -25,7 +25,7 @@ import javax.crypto.NoSuchPaddingException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Peter Hirzel <i>soft</i>Environment
+ * @author Peter Hirzel
  */
 @Slf4j
 @Deprecated(since = "1.6.0")

@@ -14,8 +14,8 @@ package ch.softenvironment.util;
 /**
  * Interface to specify generic evaluation for given object and property.
  *
- * @author Peter Hirzel <i>soft</i>Environment
- * @version $Revision: 1.1 $ $Date: 2007-02-27 17:38:10 $
+ * @author Peter Hirzel
+ * @since 1.1 (2007-02-27)
  */
 public interface Evaluator {
 
